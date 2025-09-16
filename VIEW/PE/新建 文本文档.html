@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HigheriPE - 第三方 WinPE</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部导航栏 - 修复为原图样式 */
+        .top-nav {
+            background-color: #2c3e50;
+            color: white;
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .top-nav-links li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .top-nav-links li:not(:last-child):after {
+            content: "|";
+            position: absolute;
+            right: -12px;
+            color: #7f8c8d;
+        }
+        
+        .top-nav-links a {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        
+        .top-nav-links a:hover {
+            color: #3498db;
+        }
+        
+        /* 主导航栏 - 修复为原图样式 */
+        .main-nav {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        
+        .main-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2980b9;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .docs-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        /* 主标题区域 */
+        .hero {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 特性网格 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #3498db;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+        
+        .feature-card p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaecef;
+            font-size: 1.6rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-section a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .top-nav-container, .main-nav-container {
+                flex-direction: column;
+            }
+            
+            .top-nav-links, .nav-links {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .top-nav-links li, .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="container top-nav-container">
+            <div class="top-nav-logo">HigheriPE WinPE 系统维护平台</div>
+            <ul class="top-nav-links">
+                <li><a href="#">首页</a></li>
+                <li><a href="#">下载</a></li>
+                <li><a href="#">文档</a></li>
+                <li><a href="#">论坛</a></li>
+                <li><a href="#">支持</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 主导航栏 -->
+    <nav class="main-nav">
+        <div class="container main-nav-container">
+            <div class="logo">
+                <span class="logo-icon">🔥</span>
+                <span>HigheriPE</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">产品介绍</a></li>
+                <li><a href="#">功能特性</a></li>
+                <li><a href="#">更新日志</a></li>
+                <li><a href="#">常见问题</a></li>
+                <li><a href="#" class="docs-btn">使用文档</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 主标题区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>HigheriPE 第三方 WinPE</h1>
+            <p>也许是最适合年轻人使用的第三方 WinPE。</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <!-- 产品特性区域 -->
+        <section class="content-section">
+            <h2 class="section-title">产品特性</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">📦</span> 万叶佳发配</h3>
+                    <p>京东 Winfree® 与 Winfree™ 互为核心，全面覆盖和应用于华为、华为 UltraVapary 及云端领域。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🔄</span> 天极安卓与维护</h3>
+                    <p>全球首款安卓、备份、修复和维护等功能，能够有效提高系统安全能力。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">💾</span> 多维自动盘软件</h3>
+                    <p>全球首款第三方接入Winfrey 多种版本的升级，帮助用户实现更高效、更高效的运行。通过多维自动盘软件，提升系统安全能力。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🌐</span> 多维网络支持</h3>
+                    <p>支持有线/无线网络、集成大屏等IP服务，支持 64M 共享连接、IP 配置等数据传输。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🎨</span> 通信个性化定制</h3>
+                    <p>支持移动IOXO 协议、分辨率测试、视频监控、智能语音识别、智能语音识别等功能。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🔧</span> 开放操作系统</h3>
+                    <p>支持基于LightNet/Albert 硬件体系、以下两项的协议，约占到平均 200 元以上。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 安装指南区域 -->
+        <section class="content-section">
+            <h2 class="section-title">安装与自动加载机制</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">📁</span> 放置插件</h3>
+                    <p>直接将下载好的 .2% 或 .1gm 文件放到程序目录，无需编程。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🔍</span> 启动后扫描</h3>
+                    <p>WinPF 启动后，会扫描 Resources 和 input 目录，按文件名顺序依次加载所有插件包。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">⚡</span> 加载效果</h3>
+                    <p>EdgeHex 插件：自动加载并注入新的文件系统，可添加工具、替换界面资源等。</p>
+                    <p>HPM 模块：通过 HotPEModeLib 引擎加载，支持添加工具、加载驱动等功能。</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 组件信息区域 -->
+        <section class="content-section">
+            <h2 class="section-title">组件名称</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">👤</span> 创建者</h3>
+                    <p>HigheriPE 开发团队由多位系统维护专家组成，拥有多年WinPE开发经验。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🤝</span> 合作伙伴</h3>
+                    <p>与多家科技公司建立合作关系，共同推进系统维护工具的发展。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">©</span> 版权所有</h3>
+                    <p>HigheriPE 遵循开源协议，但部分组件保留所有权利。</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>资源下载</h3>
+                    <ul>
+                        <li><a href="#">HigheriPE 主程序</a></li>
+                        <li><a href="#">插件与扩展</a></li>
+                        <li><a href="#">驱动程序包</a></li>
+                        <li><a href="#">文档与教程</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>技术支持</h3>
+                    <ul>
+                        <li><a href="#">常见问题解答</a></li>
+                        <li><a href="#">用户手册</a></li>
+                        <li><a href="#">视频教程</a></li>
+                        <li><a href="#">联系支持</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>社区</h3>
+                    <ul>
+                        <li><a href="#">用户论坛</a></li>
+                        <li><a href="#">开发者博客</a></li>
+                        <li><a href="#">GitHub 项目</a></li>
+                        <li><a href="#">贡献指南</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <ul>
+                        <li><a href="#">团队介绍</a></li>
+                        <li><a href="#">更新日志</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 HigheriPE 项目团队。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
