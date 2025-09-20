@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Categories on ALEX1NG</title>
+        <link>/BLOG/categories/</link>
+        <description>Recent content in Categories on ALEX1NG</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>STAR HigheriTech</copyright>
+        <lastBuildDate>Sat, 20 Sep 2025 10:42:22 +0800</lastBuildDate><atom:link href="/BLOG/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>HigheriPE更新日志</title>
+        <link>/BLOG/categories/higheripe%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</link>
+        <pubDate>Sat, 20 Sep 2025 10:42:22 +0800</pubDate>
+        
+        <guid>/BLOG/categories/higheripe%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>杂</title>
+        <link>/BLOG/categories/%E6%9D%82/</link>
+        <pubDate>Sat, 20 Sep 2025 09:37:52 +0800</pubDate>
+        
+        <guid>/BLOG/categories/%E6%9D%82/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>
