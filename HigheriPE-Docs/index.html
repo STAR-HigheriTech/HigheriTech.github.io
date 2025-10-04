@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR HigheriTech 中途岛</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部导航栏 - 修复为原图样式 */
+        .top-nav {
+            background-color: #F0F0F0;
+            color: rgb(0, 0, 0);
+            padding: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .top-nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .top-nav-links li {
+            margin-left: 20px;
+            position: relative;
+        }
+        
+        .top-nav-links li:not(:last-child):after {
+            content: "|";
+            position: absolute;
+            right: -12px;
+            color: #7f8c8d;
+        }
+        
+        .top-nav-links a {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        
+        .top-nav-links a:hover {
+            color: #3498db;
+        }
+        
+        /* 主导航栏 - 修复为原图样式 */
+        .main-nav {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 12px 0;
+        }
+        
+        .main-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2980b9;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1rem;
+        }
+        
+        .nav-links a:hover {
+            color: #3498db;
+        }
+        
+        .docs-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        /* 主标题区域 */
+        .hero {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        /* 特性网格 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 6px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid #3498db;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.4rem;
+        }
+        
+        .feature-card p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        
+        /* 内容区域 */
+        .content-section {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaecef;
+            font-size: 1.6rem;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            margin-top: 50px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            color: #3498db;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .footer-section a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .top-nav-container, .main-nav-container {
+                flex-direction: column;
+            }
+            
+            .top-nav-links, .nav-links {
+                margin-top: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .top-nav-links li, .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="top-nav">
+        <div class="container top-nav-container">
+            <div class="top-nav-logo">STAR HigheriTech 中途岛</div>
+            <ul class="top-nav-links">
+
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 主导航栏 -->
+    <nav class="main-nav">
+        <div class="container main-nav-container">
+            <div class="logo">
+                <span class="logo-icon">🌏</span>
+                <span>STAR HigheriTech 中途岛</span>
+            </div>
+            <ul class="nav-links">
+
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- 主标题区域 -->
+    <section class="hero">
+        <div class="container">
+            <h1>STAR HigheriTech 中途岛</h1>
+            <p>STAR HigheriTech 中途岛</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <!-- 产品特性区域 -->
+        <section class="content-section">
+            <h2 class="section-title">链接</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🤓📑HigheriPE文档</span> </h3>
+                    <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html">https://docs.higheri.tech/HigheriPE-Docs/</a>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">✍🤓Alex的博客</span> </h3>
+                    <a href="https://docs.higheri.tech/BLOG/index.html">https://docs.higheri.tech/BLOG/</a>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🤓👍STAR HigheriTech主站</span>  </h3>
+                    <a href="https://www.higheri.tech/index.html">https://www.higheri.tech/</a>
+                </div>
+
+            </div>
+        </section>
+        
+        <!-- 安装指南区域 
+        <section class="content-section">
+            <h2 class="section-title">安装与自动加载机制</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3><span class="feature-icon">📁</span> 放置插件</h3>
+                    <p>直接将下载好的 .2% 或 .1gm 文件放到程序目录，无需编程。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">🔍</span> 启动后扫描</h3>
+                    <p>WinPF 启动后，会扫描 Resources 和 input 目录，按文件名顺序依次加载所有插件包。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h3><span class="feature-icon">⚡</span> 加载效果</h3>
+                    <p>EdgeHex 插件：自动加载并注入新的文件系统，可添加工具、替换界面资源等。</p>
+                    <p>HPM 模块：通过 HotPEModeLib 引擎加载，支持添加工具、加载驱动等功能。</p>
+                </div>
+            </div>
+        </section> -->
+        
+        <!-- 组件信息区域 -->
+        <section class="content-section"><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>
+    </div><br><br><br>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+
+                </div>
+                
+                <div class="footer-section">
+
+
+                </div>
+                
+                <div class="footer-section">
+
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 STAR HigheriTech 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
