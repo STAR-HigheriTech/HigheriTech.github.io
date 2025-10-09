@@ -13,10 +13,64 @@
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script
-      src="/script.js">
+    <script>
+              tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#722ED1',
+                        dark: '#1D2129',
+                        light: '#F2F3F5'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
     </script>
-  <link rel="stylesheet" href="/style.css">
+<style>
+            @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 100%);
+            }
+            .project-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .project-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+            /* 懒加载图片的淡入效果 */
+            .lazy-image {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+            .lazy-image[src] {
+                opacity: 1;
+            }
+            /* 放大我们的项目及服务卡片 */
+            .service-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                height: 100%;
+            }
+            .service-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.08);
+            }
+        }
+        </style>
 </head>
 <body class="font-inter bg-light text-dark">
     <!-- 导航栏 -->
@@ -30,7 +84,7 @@
             </div>
             <nav class="hidden md:flex space-x-8">
                 <a href="#" class="text-dark hover:text-primary transition-custom font-medium">首页</a>
-                <a href="#projects" class="text-dark hover:text-primary transition-custom font-medium">项目</a>
+                <a href="#services" class="text-dark hover:text-primary transition-custom font-medium">项目</a>
                 <a href="#featured" class="text-dark hover:text-primary transition-custom font-medium">详情</a>
                 <a href="#about" class="text-dark hover:text-primary transition-custom font-medium">联系</a>
             </nav>
@@ -47,7 +101,7 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
                 <a href="#" class="text-dark hover:text-primary py-2 transition-custom font-medium">首页</a>
-                <a href="#projects" class="text-dark hover:text-primary py-2 transition-custom font-medium">项目</a>
+                <a href="#services" class="text-dark hover:text-primary py-2 transition-custom font-medium">项目</a>
                 <a href="#featured" class="text-dark hover:text-primary py-2 transition-custom font-medium">详情</a>
                 <a href="#about" class="text-dark hover:text-primary py-2 transition-custom font-medium">联系</a>
                 <a href="#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-custom text-center shadow-lg hover:shadow-primary/20">
@@ -71,11 +125,11 @@
                         欢迎浏览STAR HigheriTech官方网站，这里有STAR HigheriTech工作室的一些软件项目。每个项目都会为您的计算机增添一丝光彩。
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#projects" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium transition-custom shadow-xl hover:shadow-primary/30 text-center">
+                        <a href="#services" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium transition-custom shadow-xl hover:shadow-primary/30 text-center">
                             <i class="fa fa-rocket mr-2"></i> 浏览项目
                         </a>
                         <a href="#featured" class="bg-white hover:bg-gray-50 text-primary border border-primary px-8 py-4 rounded-full font-medium transition-custom shadow-lg hover:shadow-primary/10 text-center">
-                            <i class="fa fa-info-circle mr-2"></i> 关于信息
+                            <i class="fa fa-info-circle mr-2"></i> 旗舰项目
                         </a>
                     </div>
                     <div class="mt-10 flex items-center space-x-6">
@@ -150,61 +204,175 @@
         <br>
     </section>
 
-
-
-    <!-- 推荐项目区（现在使用纯白背景） -->
-    <section id="featured" class="py-20 bg-white">
+    <!-- 我们的项目及服务区（现在使用白色背景，放在旗舰项目前面） -->
+    <section id="services" class="py-20 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">旗舰项目</h2>
-                <p class="text-gray-600 text-lg">我们最受欢迎和创新的项目</p>
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">我们的项目及服务</h2>
+                <p class="text-gray-600 text-lg">探索我们的创新项目与服务</p>
             </div>
 
-            <div class="bg-light rounded-2xl overflow-hidden shadow-2xl mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- 分类 1 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-lg service-card border border-gray-100">
+                    <div class="h-56 overflow-hidden flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-cogs text-primary text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark">装机与系统</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-600 mb-6 text-center">
+                            提供系统安装、维护和优化工具，让您的电脑运行如飞
+                        </p>
+                        <div class="project-tags flex flex-wrap gap-2 mb-6 justify-center">
+                            <span class="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full">系统工具</span>
+                            <span class="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full">装机必备</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="./VIEW/win/index.html" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
+                                <i class="fa fa-arrow-right mr-2"></i> 查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分类 2 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-lg service-card border border-gray-100">
+                    <div class="h-56 overflow-hidden flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <div class="w-24 h-24 bg-secondary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-briefcase text-secondary text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark">高效办公</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-600 mb-6 text-center">
+                            提供高效工作工具，提升您的办公效率和创造力
+                        </p>
+                        <div class="project-tags flex flex-wrap gap-2 mb-6 justify-center">
+                            <span class="bg-secondary/10 text-secondary text-sm px-3 py-1 rounded-full">生产力</span>
+                            <span class="bg-secondary/10 text-secondary text-sm px-3 py-1 rounded-full">办公工具</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="/VIEW/work/index.html" class="bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
+                                <i class="fa fa-arrow-right mr-2"></i> 查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分类 3 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-lg service-card border border-gray-100">
+                    <div class="h-56 overflow-hidden flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <div class="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-microchip text-accent text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark">微型操作系统</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-600 mb-6 text-center">
+                            轻量级系统解决方案，为特定场景提供高效运行环境
+                        </p>
+                        <div class="project-tags flex flex-wrap gap-2 mb-6 justify-center">
+                            <span class="bg-accent/10 text-accent text-sm px-3 py-1 rounded-full">轻量系统</span>
+                            <span class="bg-accent/10 text-accent text-sm px-3 py-1 rounded-full">专用环境</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
+                                <i class="fa fa-arrow-right mr-2"></i> 敬请期待
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 分类 4 -->
+                <div class="bg-light rounded-xl overflow-hidden shadow-lg service-card border border-gray-100">
+                    <div class="h-56 overflow-hidden flex items-center justify-center">
+                        <div class="text-center p-4">
+                            <div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <i class="fa fa-gamepad text-primary text-4xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-dark">游戏风云</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-600 mb-6 text-center">
+                            游戏优化工具和平台，提升您的游戏体验和性能
+                        </p>
+                        <div class="project-tags flex flex-wrap gap-2 mb-6 justify-center">
+                            <span class="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full">游戏工具</span>
+                            <span class="bg-primary/10 text-primary text-sm px-3 py-1 rounded-full">性能优化</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
+                                <i class="fa fa-arrow-right mr-2"></i> 敬请期待
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 推荐项目区（现在使用蓝绿渐变背景） -->
+    <section id="featured" class="py-20 bg-gradient-blue text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">旗舰项目</h2>
+                <p class="text-white/80 text-lg">我们最受欢迎和创新的项目</p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-sm rounded-2xl overflow-hidden shadow-2xl mb-16">
                 <div class="flex flex-col lg:flex-row">
                     <div class="lg:w-1/2 p-8 lg:p-12">
                         <div class="flex items-center mb-6">
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">旗舰产品</span>
-                            <span class="ml-2 bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">装机必备</span>
+                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">旗舰产品</span>
+                            <span class="ml-2 bg-white/20 text-white text-xs px-3 py-1 rounded-full">装机必备</span>
                         </div>
-                        <h3 class="text-2xl lg:text-3xl font-bold text-dark mb-4">HigheriPE工具箱</h3>
-                        <p class="text-gray-600 mb-6">
+                        <h3 class="text-2xl lg:text-3xl font-bold mb-4">HigheriPE工具箱</h3>
+                        <p class="text-white/90 mb-6">
                             功能强大的PE系统，支持市面上大部分装机必备软件、附带IT天空精品EIX一键装机软件，小白也能立刻上手。
                         </p>
                         <ul class="space-y-3 mb-8">
                             <li class="flex items-start">
-                                <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                <i class="fa fa-check-circle text-green-300 mt-1 mr-3"></i>
                                 <span>附带IT天空精品EIX一键装机软件</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check-circle text-primary mt-1 mr-3"></i>
+                                <i class="fa fa-check-circle text-green-300 mt-1 mr-3"></i>
                                 <span>Windows 11 内核</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check-circle text-primary mt=1 mr=3"></i>
+                                <i class="fa fa-check-circle text-green-300 mt=1 mr=3"></i>
                                 <span>附带TODESK等主流远程控制软件</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check-circle text-primary mt=1 mr=3"></i>
+                                <i class="fa fa-check-circle text-green-300 mt=1 mr=3"></i>
                                 <span>经典设计+现代化设计的完美结合</span>
                             </li>
                         </ul>
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                            <a href="/VIEW/PE/PE.html" target="_blank" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-full font-medium transition-custom shadow-xl hover:shadow-primary/30 text-center">
+                            <a href="/VIEW/PE/PE.html" target="_blank" class="bg-white hover:bg-white/90 text-primary px-8 py-4 rounded-full font-medium transition-custom shadow-xl hover:shadow-white/30 text-center">
                                 <i class="fa fa-download mr-2"></i> 立即下载
                             </a>
-                            <a href="/VIEW/PE/PE.html" class="bg-white border border-primary text-primary px-8 py-4 rounded-full font-medium transition-custom hover:bg-gray-50 text-center">
+                            <a href="/VIEW/PE/PE.html" class="bg-transparent border border-white text-white px-8 py-4 rounded-full font-medium transition-custom hover:bg-white/10 text-center">
                                 <i class="fa fa-info-circle mr-2"></i> 了解更多
                             </a>
                         </div>
                     </div>
                     <div class="lg:w-1/2 flex items-center justify-center p-8">
                         <div class="relative">
-                            <div class="relative z-10 bg-light border border-gray-200 rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="relative z-10 bg-light border border-white/20 rounded-2xl shadow-2xl overflow-hidden">
                                 <img src="https://tc.z.wiki/autoupload/f/9N_u8o2-NHYExq43-j5XZ8SZW8uZg2pdX9tNOMtzPj6yl5f0KlZfm6UsKj-HyTuv/20250810/zPo8/1658X1243/lQLPKILMLKa4cJ3NA2TNBIKw8h-mcGFgg4sIY0rIxYqGAA_1154_868.png">
                             </div>
-                            <div class="absolute -top-6 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-2xl -z-10"></div>
-                            <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-secondary/20 rounded-full blur-2xl -z-10"></div>
+                            <div class="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full blur-2xl -z-10"></div>
+                            <div class="absolute -bottom-6 -left-6 w-40 h-40 bg-white/10 rounded-full blur-2xl -z-10"></div>
                         </div>
                     </div>
                 </div>
@@ -212,262 +380,40 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- 推荐项目 1 -->
-                <div class="bg-light rounded-xl p-8 hover:bg-gray-50 transition-custom border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fa fa-home text-2xl text-primary"></i>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/15 transition-custom border border-white/20">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fa fa-home text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark">活力起始页插件</h3>
-                    <p class="text-gray-600 mb-6">最简洁的设计，包含壁纸、搜索引擎、快捷卡片等功能皆可自定义。</p>
-                    <a href="/tab/index.html" target="_blank" class="text-primary font-medium flex items-center">
+                    <h3 class="text-xl font-bold mb-3">活力起始页插件</h3>
+                    <p class="text-white/90 mb-6">最简洁的设计，包含壁纸、搜索引擎、快捷卡片等功能皆可自定义。</p>
+                    <a href="/tab/index.html" target="_blank" class="text-white font-medium flex items-center">
                         在线体验 <i class="fa fa-arrow-right ml-2 text-sm"></i>
                     </a>
                 </div>
 
                 <!-- 推荐项目 2 -->
-                <div class="bg-light rounded-xl p-8 hover:bg-gray-50 transition-custom border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fa fa-tasks text-2xl text-primary"></i>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/15 transition-custom border border-white/20">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fa fa-tasks text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark">活力多功能草稿记事本</h3>
-                    <p class="text-gray-600 mb-6">电脑备忘录功能，让电脑工作尽然有序；电脑草稿本功能，让一切不再复杂。</p>
-                    <a href="/webp/DRAFT/index.html" target="_blank" class="text-primary font-medium flex items-center">
+                    <h3 class="text-xl font-bold mb-3">活力多功能草稿记事本</h3>
+                    <p class="text-white/90 mb-6">电脑备忘录功能，让电脑工作尽然有序；电脑草稿本功能，让一切不再复杂。</p>
+                    <a href="/webp/DRAFT/index.html" target="_blank" class="text-white font-medium flex items-center">
                         在线体验 <i class="fa fa-arrow-right ml-2 text-sm"></i>
                     </a>
                 </div>
 
                 <!-- 推荐项目 3 -->
-                <div class="bg-light rounded-xl p-8 hover:bg-gray-50 transition-custom border border-gray-100">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
-                        <i class="fa fa-terminal text-2xl text-primary"></i>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-8 hover:bg-white/15 transition-custom border border-white/20">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fa fa-terminal text-2xl text-white"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark">活力EasyCMD</h3>
-                    <p class="text-gray-600 mb-6">用拼积木的方式来执行CMD命令，小白快速上手，让一切不再复杂。</p>
-                    <a href="/webp/ezcmd/index.html" target="_blank" class="text-primary font-medium flex items-center">
+                    <h3 class="text-xl font-bold mb-3">活力EasyCMD</h3>
+                    <p class="text-white/90 mb-6">用拼积木的方式来执行CMD命令，小白快速上手，让一切不再复杂。</p>
+                    <a href="/webp/ezcmd/index.html" target="_blank" class="text-white font-medium flex items-center">
                         在线体验 <i class="fa fa-arrow-right ml-2 text-sm"></i>
                     </a>
                 </div>
-            </div>
-        </div>
-    </section>
-    
-        <!-- 项目展示区（现在使用蓝绿渐变背景） -->
-    <section id="projects" class="py-20 bg-gradient-blue text-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center max-w-3xl mx-auto mb-16">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-4">精选项目展示</h2>
-                <p class="text-white/80 text-lg">探索我们的创新项目</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 项目 1 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-custom project-card border border-white/20">
-                    <div class="h-48 overflow-hidden flex items-center justify-center">
-                        <h3 class="text-2xl font-bold text-white">HigheriPE 5.1 25H2</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">系统工具</span>
-                            <span class="ml-2 bg-white/20 text-white text-xs px-3 py-1 rounded-full">装机必备</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-white">
-                            <i class="fa fa-windows text-white mr-2"></i> 活力PE工具箱
-                        </h3>
-                        <p class="text-white/90 mb-6">
-                            功能强大的PE系统，附带市面上大部分装机必备软件、附带IT天空精品EIX一键装机软件，小白也能立刻上手。
-                        </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>附带IT天空精品EIX一键装机软件</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>Windows 11 内核</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>附带TODESK等主流远程控制软件</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>经典设计+现代化设计的完美结合</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Win 11</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">ISO</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">外置包可修改</span>
-                        </div>
-                        
-                        <div class="project-links">
-                            <a href="/VIEW/PE/PE.html" target="_blank" class="bg-white text-primary px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-gray-100">
-                                <i class="fa fa-eye mr-2"></i> 查看详情 / 下载
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 项目 2 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-custom project-card border border-white/20">
-                    <div class="h-48 overflow-hidden flex items-center justify-center">
-                        <h3 class="text-2xl font-bold text-white">HigheriTab 2.0</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">浏览器插件</span>
-                            <span class="ml-2 bg-white/20 text-white text-xs px-3 py-1 rounded-full">起始页</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-white">
-                            <i class="fa fa-home text-white mr-2"></i> 活力起始页插件
-                        </h3>
-                        <p class="text-white/90 mb-6">
-                            最简洁的设计，包含壁纸、搜索引擎、快捷卡片等功能皆可自定义
-                        </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>多种搜索引擎可切换</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>美丽的界面与高斯模糊渲染界面</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>高可自定义性</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>多种实用功能</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">HTML</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">CSS</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">JS</span>
-                        </div>
-                        
-                        <div class="project-links flex flex-col gap-3">
-                            <a href="/dl/TC.crx" download target="_blank" class="bg-white text-purple-600 px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-gray-100">
-                                <i class="fa fa-download mr-2"></i> 下载浏览器插件
-                            </a>
-                            <a href="/tab/index.html" target="_blank" class="bg-white/20 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-white/30">
-                                <i class="fa fa-external-link mr-2"></i> 在线体验
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 项目 3 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-custom project-card border border-white/20">
-                    <div class="h-48 overflow-hidden flex items-center justify-center">
-                        <h3 class="text-2xl font-bold text-white">HigheriDraft 2.0</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">生产力工具</span>
-                            <span class="ml-2 bg-white/20 text-white text-xs px-3 py-1 rounded-full">测试版</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-white">
-                            <i class="fa fa-tasks text-white mr-2"></i> 活力多功能草稿记事本
-                        </h3>
-                        <p class="text-white/90 mb-6">
-                            电脑备忘录功能，让电脑工作尽然有序；电脑草稿本功能，让一切不再复杂。
-                        </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>备忘录功能</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>草稿本功能</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>手写功能</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>线上保存</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">HTML</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">JS</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">CSS</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Electron</span>
-                        </div>
-                        
-                        <div class="project-links">
-                            <a href="/webp/DRAFT/index.html" target="_blank" class="bg-white text-green-600 px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-gray-100">
-                                <i class="fa fa-play-circle mr-2"></i> 在线体验测试
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- 项目 4 -->
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-custom project-card border border-white/20">
-                    <div class="h-48 overflow-hidden flex items-center justify-center">
-                        <h3 class="text-2xl font-bold text-white">HigheriEasyCMD</h3>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">图形化控制台</span>
-                            <span class="ml-2 bg-white/20 text-white text-xs px-3 py-1 rounded-full">测试版</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3 text-white">
-                            <i class="fa fa-terminal text-white mr-2"></i> 活力EasyCMD
-                        </h3>
-                        <p class="text-white/90 mb-6">
-                            用拼积木的方式来执行CMD命令，小白快速上手，让一切不再复杂。
-                        </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>图形化编程</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt-1 mr-2"></i>
-                                <span>易上手</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>线上保存</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fa fa-check text-green-300 mt=1 mr=2"></i>
-                                <span>生成代码可复制进CMD运行</span>
-                            </li>
-                        </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">HTML</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">JS</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">CSS</span>
-                            <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full">Electron</span>
-                        </div>
-                        
-                        <div class="project-links">
-                            <a href="/webp/ezcmd/index.html" target="_blank" class="bg-white text-green-600 px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-gray-100">
-                                <i class="fa fa-play-circle mr-2"></i> 在线体验测试
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center mt-16">
-                <a href="#" class="inline-block bg-white/20 backdrop-blur-sm text-white border border-white/30 px-8 py-4 rounded-full font-medium transition-custom shadow-lg hover:bg-white/30 hover:shadow-white/10">
-                    <i class="fa fa-plus mr-2"></i> 敬请期待更多项目
-                </a>
             </div>
         </div>
     </section>
@@ -600,7 +546,7 @@
                     <h3 class="text-lg font-bold mb-6">快速链接</h3>
                     <ul class="space-y-4">
                         <li><a href="#" class="text-gray-400 hover:text-white transition-custom">首页</a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white transition-custom">项目展示</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-white transition-custom">项目展示</a></li>
                     </ul>
                 </div>
 
