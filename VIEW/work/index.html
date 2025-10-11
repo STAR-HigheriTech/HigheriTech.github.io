@@ -9,10 +9,10 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://tc.z.wiki" crossorigin>
     <!-- 预加载关键资源 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
     <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
     <script>
               tailwind.config = {
             theme: {
@@ -82,22 +82,22 @@
         <div class="container mx-auto px-4 py-3 flex items-center justify-between">
             <div class="flex items-center">
                 <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
-                    <i class="fa fa-star text-xl" data-fallback="⭐"></i>
+                    <i class="fas fa-star text-xl" data-fallback="⭐"></i>
                 </div>
                 <h1 class="ml-3 text-xl font-bold text-primary">STAR HigheriTech</h1>
             </div>
             <nav class="hidden md:flex space-x-8">
                 <a href="index.html" class="text-dark hover:text-primary transition-custom font-medium">首页</a>
-                <a href="index.html#services" class="text-dark hover:text-primary transition-custom font-medium">项目</a>
+                <a href="index.html#projects" class="text-dark hover:text-primary transition-custom font-medium">项目</a>
                 <a href="index.html#featured" class="text-dark hover:text-primary transition-custom font-medium">详情</a>
-                <a href="index.html#about" class="text-dark hover:text-primary transition-custom font-medium">联系</a>
+                <a href="index.html#about" class="text-dark hover:text-primary transition-custom font-medium">文章</a>
             </nav>
             <div class="flex items-center space-x-4">
-                <a href="index.html#contact" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full font-medium transition-custom shadow-lg hover:shadow-primary/20">
-                    联系我们
+                <a href="/index.html" class="hidden md:block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-full font-medium transition-custom shadow-lg hover:shadow-primary/20">
+                    返回主页
                 </a>
                 <button id="menu-toggle" class="md:hidden text-dark focus:outline-none">
-                    <i class="fa fa-bars text-xl" data-fallback="☰"></i>
+                    <i class="fas fa-bars text-xl" data-fallback="☰"></i>
                 </button>
             </div>
         </div>
@@ -105,11 +105,11 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
             <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
                 <a href="index.html" class="text-dark hover:text-primary py-2 transition-custom font-medium">首页</a>
-                <a href="index.html#services" class="text-dark hover:text-primary py-2 transition-custom font-medium">项目</a>
-                <a href="index.html#featured" class="text-dark hover:text-primary py-2 transition-custom font-medium">详情</a>
-                <a href="index.html#about" class="text-dark hover:text-primary py-2 transition-custom font-medium">联系</a>
-                <a href="index.html#contact" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-custom text-center shadow-lg hover:shadow-primary/20">
-                    联系我们
+                <a href="#projects" class="text-dark hover:text-primary py-2 transition-custom font-medium">项目</a>
+                <a href="#featured" class="text-dark hover:text-primary py-2 transition-custom font-medium">详情</a>
+                <a href="#about" class="text-dark hover:text-primary py-2 transition-custom font-medium">文章</a>
+                <a href="/index.html" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-custom text-center shadow-lg hover:shadow-primary/20">
+                    返回主页
                 </a>
             </div>
         </div>
@@ -130,21 +130,21 @@
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                         <a href="#projects" class="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-medium transition-custom shadow-xl hover:shadow-secondary/30 text-center">
-                            <i class="fa fa-rocket mr-2" data-fallback="🚀"></i> 浏览工具
+                            <i class="fas fa-rocket mr-2" data-fallback="🚀"></i> 浏览工具
                         </a>
                         <a href="/index.html" class="bg-white hover:bg-gray-50 text-secondary border border-secondary px-6 py-4 rounded-full font-medium transition-custom shadow-lg hover:shadow-secondary/10 text-center">
-                            <i class="fa fa-info-circle mr-2" data-fallback="ℹ️"></i> 返回主页
+                            <i class="fas fa-info-circle mr-2" data-fallback="ℹ️"></i> 返回主页
                         </a>
                     </div>
                     <div class="mt-10 flex items-center space-x-6">
                         <div>
                             <div class="flex items-center">
                                 <div class="flex">
-                                    <i class="fa fa-star text-yellow-400" data-fallback="⭐"></i>
-                                    <i class="fa fa-star text-yellow-400" data-fallback="⭐"></i>
-                                    <i class="fa fa-star text-yellow-400" data-fallback="⭐"></i>
-                                    <i class="fa fa-star text-yellow-400" data-fallback="⭐"></i>
-                                    <i class="fa fa-star text-yellow-400" data-fallback="⭐"></i>
+                                    <i class="fas fa-star text-yellow-400" data-fallback="⭐"></i>
+                                    <i class="fas fa-star text-yellow-400" data-fallback="⭐"></i>
+                                    <i class="fas fa-star text-yellow-400" data-fallback="⭐"></i>
+                                    <i class="fas fa-star text-yellow-400" data-fallback="⭐"></i>
+                                    <i class="fas fa-star text-yellow-400" data-fallback="⭐"></i>
                                 </div>
                                 <span class="ml-2 font-medium">5.0</span>
                             </div>
@@ -158,7 +158,7 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-white rounded-xl shadow-xl p-6 project-card">
                                 <div class="w-16 h-16 bg-secondary/10 rounded-xl flex items-center justify-center mb-4">
-                                    <i class="fa fa-home text-secondary text-2xl" data-fallback="🏠"></i>
+                                    <i class="fas fa-home text-secondary text-2xl" data-fallback="🏠"></i>
                                 </div>
                                 <h3 class="text-xl font-bold mb-2">HigheriTab</h3>
                                 <p class="text-gray-600 mb-4">简洁美观的浏览器起始页，高度自定义</p>
@@ -169,7 +169,7 @@
                             </div>
                             <div class="bg-white rounded-xl shadow-xl p-6 project-card">
                                 <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
-                                    <i class="fa fa-tasks text-primary text-2xl" data-fallback="✅"></i>
+                                    <i class="fas fa-tasks text-primary text-2xl" data-fallback="✅"></i>
                                 </div>
                                 <h3 class="text-xl font-bold mb-2">HigheriDraft</h3>
                                 <p class="text-gray-600 mb-4">多功能草稿记事本，让工作井然有序</p>
@@ -180,7 +180,7 @@
                             </div>
                             <div class="bg-white rounded-xl shadow-xl p-6 project-card">
                                 <div class="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
-                                    <i class="fa fa-clock-o text-accent text-2xl" data-fallback="⏰"></i>
+                                    <i class="fas fa-clock text-accent text-2xl" data-fallback="⏰"></i>
                                 </div>
                                 <h3 class="text-xl font-bold mb-2">时间管理</h3>
                                 <p class="text-gray-600 mb-4">智能时间规划和任务管理工具</p>
@@ -191,7 +191,7 @@
                             </div>
                             <div class="bg-white rounded-xl shadow-xl p-6 project-card">
                                 <div class="w-16 h-16 bg-secondary/10 rounded-xl flex items-center justify-center mb-4">
-                                    <i class="fa fa-files-o text-secondary text-2xl" data-fallback="📁"></i>
+                                    <i class="fas fa-files text-secondary text-2xl" data-fallback="📁"></i>
                                 </div>
                                 <h3 class="text-xl font-bold mb-2">文档处理</h3>
                                 <p class="text-gray-600 mb-4">高效文档管理和编辑工具</p>
@@ -218,7 +218,7 @@
                     <div class="h-64 bg-gradient-to-br from-secondary/10 to-accent/10 flex items-center justify-center">
                         <div class="text-center">
                             <div class="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                                <i class="fa fa-home text-secondary text-3xl" data-fallback="🏠"></i>
+                                <i class="fas fa-home text-secondary text-3xl" data-fallback="🏠"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-dark">活力起始页插件</h3>
                         </div>
@@ -234,19 +234,19 @@
                         
                         <ul class="space-y-2 mb-6">
                             <li class="flex items-start">
-                                <i class="fa fa-check text-secondary mt-1 mr-2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-secondary mt-1 mr-2" data-fallback="✅"></i>
                                 <span>多种搜索引擎可切换</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-secondary mt-1 mr-2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-secondary mt-1 mr-2" data-fallback="✅"></i>
                                 <span>美丽的界面与高斯模糊渲染界面</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-secondary mt=1 mr=2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-secondary mt=1 mr=2" data-fallback="✅"></i>
                                 <span>高可自定义性</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-secondary mt=1 mr=2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-secondary mt=1 mr=2" data-fallback="✅"></i>
                                 <span>多种实用功能</span>
                             </li>
                         </ul>
@@ -259,10 +259,10 @@
                         
                         <div class="project-links flex flex-col gap-3">
                             <a href="/dl/TC.crx" download target="_blank" class="bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
-                                <i class="fa fa-download mr-2" data-fallback="⬇️"></i> 下载浏览器插件
+                                <i class="fas fa-download mr-2" data-fallback="⬇️"></i> 下载浏览器插件
                             </a>
                             <a href="/tab/index.html" target="_blank" class="bg-white border border-secondary text-secondary px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center hover:bg-gray-50">
-                                <i class="fa fa-external-link mr-2" data-fallback="🔗"></i> 在线体验
+                                <i class="fas fa-external-link-alt mr-2" data-fallback="🔗"></i> 在线体验
                             </a>
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                     <div class="h-64 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center">
                         <div class="text-center">
                             <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto">
-                                <i class="fa fa-tasks text-primary text-3xl" data-fallback="✅"></i>
+                                <i class="fas fa-tasks text-primary text-3xl" data-fallback="✅"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-dark">活力多功能草稿记事本</h3>
                         </div>
@@ -289,19 +289,19 @@
                         
                         <ul class="space-y-2 mb-6">
                             <li class="flex items-start">
-                                <i class="fa fa-check text-primary mt-1 mr-2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-primary mt-1 mr-2" data-fallback="✅"></i>
                                 <span>备忘录功能</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-primary mt-1 mr-2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-primary mt-1 mr-2" data-fallback="✅"></i>
                                 <span>草稿本功能</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-primary mt=1 mr=2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-primary mt=1 mr=2" data-fallback="✅"></i>
                                 <span>手写功能</span>
                             </li>
                             <li class="flex items-start">
-                                <i class="fa fa-check text-primary mt=1 mr=2" data-fallback="✅"></i>
+                                <i class="fas fa-check text-primary mt=1 mr=2" data-fallback="✅"></i>
                                 <span>线上保存</span>
                             </li>
                         </ul>
@@ -315,7 +315,7 @@
                         
                         <div class="project-links">
                             <a href="/webp/DRAFT/index.html" target="_blank" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-custom flex items-center justify-center">
-                                <i class="fa fa-play-circle mr-2" data-fallback="▶️"></i> 在线体验测试
+                                <i class="fas fa-play-circle mr-2" data-fallback="▶️"></i> 在线体验测试
                             </a>
                         </div>
                     </div>
@@ -331,17 +331,17 @@
                 <div>
                     <div class="flex items-center mb-6">
                         <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
-                            <i class="fa fa-windows text-xl" data-fallback="🪟"></i>
+                            <i class="fas fa-star text-xl" data-fallback="🪟"></i>
                         </div>
                         <h2 class="ml-3 text-xl font-bold">STAR HigheriTech</h2>
                     </div>
                     <p class="text-gray-400 mb-6">官方网站</p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-custom">
-                            <i class="fa fa-github" data-fallback="🐙"></i>
+                        <a href="https://github.com/STAR-HigheriTech" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-custom">
+                            <i class="fab fa-github" data-fallback="🐙"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-custom">
-                            <i class="fa fa-bilibili" data-fallback="📺"></i>
+                        <a href="https://space.bilibili.com/2032759759" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-custom">
+                            <i class="fab fa-bilibili" data-fallback="📺"></i>
                         </a>
                     </div>
                 </div>
@@ -350,15 +350,15 @@
                     <h3 class="text-lg font-bold mb-6">联系信息</h3>
                     <div class="contact-info">
                         <div class="flex items-start mb-4">
-                            <i class="fa fa-map-marker-alt text-primary mt-1 mr-3" data-fallback="📍"></i>
+                            <i class="fas fa-map-marker-alt text-primary mt-1 mr-3" data-fallback="📍"></i>
                             <span class="text-gray-400">暂无</span>
                         </div>
                         <div class="flex items-start mb-4">
-                            <i class="fa fa-phone text-primary mt-1 mr-3" data-fallback="📞"></i>
+                            <i class="fas fa-phone text-primary mt-1 mr-3" data-fallback="📞"></i>
                             <span class="text-gray-400">暂无</span>
                         </div>
                         <div class="flex items-start">
-                            <i class="fa fa-envelope text-primary mt-1 mr-3" data-fallback="✉️"></i>
+                            <i class="fas fa-envelope text-primary mt-1 mr-3" data-fallback="✉️"></i>
                             <span class="text-gray-400">暂无</span>
                         </div>
                     </div>
@@ -446,7 +446,7 @@
             function checkFontAwesomeLoaded() {
                 // 创建一个测试元素
                 const testElement = document.createElement('i');
-                testElement.className = 'fa fa-font-awesome';
+                testElement.className = 'fas fa-font-awesome';
                 testElement.style.position = 'absolute';
                 testElement.style.left = '-9999px';
                 document.body.appendChild(testElement);
@@ -464,7 +464,7 @@
             
             // 设置图标降级显示
             function setupFallbackIcons() {
-                const icons = document.querySelectorAll('i.fa[data-fallback]');
+                const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
                 
                 icons.forEach(icon => {
                     const fallback = icon.getAttribute('data-fallback');
@@ -488,7 +488,7 @@
                 if (!isFALoaded) {
                     console.log('Font Awesome 未加载，使用备用图标');
                     
-                    const icons = document.querySelectorAll('i.fa[data-fallback]');
+                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
                     icons.forEach(icon => {
                         const fallback = icon.getAttribute('data-fallback');
                         const fallbackSpan = icon.nextElementSibling;
@@ -503,7 +503,7 @@
                     console.log('Font Awesome 已成功加载');
                     
                     // 移除加载状态
-                    const icons = document.querySelectorAll('i.fa[data-fallback]');
+                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
                     icons.forEach(icon => {
                         icon.classList.remove('fa-loading');
                     });
