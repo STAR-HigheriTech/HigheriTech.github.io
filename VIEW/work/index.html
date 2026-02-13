@@ -71,7 +71,7 @@
                 border: 1px solid rgba(255, 255, 255, 0.2);
             }
             .neon-glow {
-                box-shadow: 0 0 20px rgba(22, 93, 255, 0.3), 0 0 40px rgba(22, 93, 255, 0.2), 0 0 80px rgba(22, 93, 255, 0.1);
+                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
             }
             .tech-border {
                 position: relative;
@@ -91,21 +91,19 @@
                 left: 100%;
             }
             .project-card {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                transform-style: preserve-3d;
+                transition: all 0.25s ease;
             }
             .project-card:hover {
-                transform: translateY(-12px) scale(1.03) rotateX(5deg);
-                box-shadow: 0 30px 40px rgba(0, 0, 0, 0.15), 0 0 30px rgba(22, 93, 255, 0.2);
+                transform: translateY(-6px);
+                box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
             }
             .service-card {
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                transform-style: preserve-3d;
+                transition: all 0.25s ease;
                 position: relative;
             }
             .service-card:hover {
-                transform: translateY(-15px) scale(1.05) rotateY(5deg);
-                box-shadow: 0 35px 50px rgba(0, 0, 0, 0.2), 0 0 50px rgba(22, 93, 255, 0.3);
+                transform: translateY(-8px);
+                box-shadow: 0 20px 32px rgba(15, 23, 42, 0.18);
             }
             .service-card::before {
                 content: '';
@@ -125,13 +123,13 @@
             
             /* 动画定义 */
             @keyframes float {
-                0%, 100% { transform: translateY(0px) rotate(0deg); }
-                50% { transform: translateY(-20px) rotate(2deg); }
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-8px); }
             }
             
             @keyframes glow {
-                0% { box-shadow: 0 0 20px rgba(22, 93, 255, 0.4); }
-                100% { box-shadow: 0 0 30px rgba(22, 93, 255, 0.8), 0 0 60px rgba(22, 93, 255, 0.4); }
+                0% { box-shadow: 0 0 8px rgba(22, 93, 255, 0.35); }
+                100% { box-shadow: 0 0 16px rgba(22, 93, 255, 0.45); }
             }
             
             @keyframes slideUp {
@@ -231,19 +229,10 @@
             /* 全息效果 */
             .holographic {
                 background: linear-gradient(
-                    45deg,
-                    rgba(22, 93, 255, 0.1),
-                    rgba(0, 200, 193, 0.1),
-                    rgba(114, 46, 209, 0.1),
-                    rgba(22, 93, 255, 0.1)
+                    135deg,
+                    rgba(22, 93, 255, 0.06),
+                    rgba(0, 200, 193, 0.06)
                 );
-                background-size: 400% 400%;
-                animation: gradientShift 4s ease infinite;
-            }
-            
-            @keyframes gradientShift {
-                0%, 100% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
             }
             
             /* 加载动画 */
@@ -306,7 +295,7 @@
                 </a>
             </nav>
             <div class="flex items-center space-x-4">
-                <a href="/index.html" class="hidden md:block bg-gradient-blue hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
+                <a href="/index.html" class="hidden md:block bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
                     返回主页
                 </a>
                 <button id="menu-toggle" class="md:hidden text-dark focus:outline-none group">
@@ -333,7 +322,7 @@
                     文章
                     <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="/index.html" class="bg-gradient-blue hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 text-center transform hover:scale-105 neon-glow">
+                <a href="/index.html" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 text-center transform hover:scale-105 neon-glow">
                     返回主页
                 </a>
             </div>
@@ -358,11 +347,10 @@
                         <span class="text-dark hover:text-secondary transition-all duration-300">提升您的工作效率</span>
                     </h1>
                     <p class="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
-                        我们提供专业的高效办公工具，从浏览器起始页到多功能记事本，让您的工作变得更加简单高效。
-                        无论是日常办公还是项目管理，都能找到适合您的解决方案。
+                        这里汇总了浏览器起始页、多功能记事本等实用工具，覆盖日常办公和项目协作等常见场景，重点在于稳定、易用和减少干扰。
                     </p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#projects" class="bg-gradient-blue hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
+                        <a href="#projects" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
                             <i class="fas fa-rocket mr-2 group-hover:animate-bounce" data-fallback="🚀"></i> 浏览工具
                         </a>
                         <a href="/index.html" class="bg-white hover:bg-gray-50 text-secondary border-2 border-secondary px-6 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-secondary/10 text-center transform hover:scale-105 group">
@@ -494,8 +482,8 @@
                         </div>
                         
                         <div class="project-links flex flex-col gap-3">
-                            <a href="/dl/TC.crx" download target="_blank" class="bg-gradient-blue hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center transform hover:scale-105 neon-glow group">
-                                <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 下载浏览器插件
+                            <a href="/dl/TC.crx" download target="_blank" class="bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center transform hover:scale-105 neon-glow group">
+                                <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 下载扩展
                             </a>
                             <a href="/tab/index.html" target="_blank" class="bg-white border border-secondary text-secondary px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center hover:bg-gray-50 transform hover:scale-105 group">
                                 <i class="fas fa-external-link-alt mr-2 group-hover:animate-pulse" data-fallback="🔗"></i> 在线体验
@@ -562,7 +550,7 @@
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-dark text-white pt-16 pb-8 relative overflow-hidden">
+    <footer class="bg-light text-dark pt-16 pb-8 relative overflow-hidden">
         <!-- 动态背景 -->
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-20 left-20 w-32 h-32 bg-primary/30 rounded-full blur-3xl animate-float"></div>
@@ -579,67 +567,67 @@
                         </div>
                         <h2 class="ml-3 text-xl font-bold group-hover:text-neon transition-colors">STAR HigheriTech</h2>
                     </div>
-                    <p class="text-gray-400 mb-6">官方网站</p>
+                    <p class="text-gray-600 mb-6">官方网站</p>
                     <div class="flex space-x-4">
-                        <a href="https://github.com/STAR-HigheriTech" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
+                        <a href="https://github.com/STAR-HigheriTech" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
                             <i class="fab fa-github group-hover:animate-bounce" data-fallback="🐙"></i>
                         </a>
-                        <a href="https://space.bilibili.com/2032759759" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
+                        <a href="https://space.bilibili.com/2032759759" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
                             <i class="fab fa-bilibili group-hover:animate-pulse" data-fallback="📺"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="animate-slide-up" style="animation-delay: 0.2s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-neon transition-colors">联系信息</h3>
+                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">联系信息</h3>
                     <div class="contact-info space-y-4">
                         <div class="flex items-start group">
                             <i class="fas fa-map-marker-alt text-primary mt-1 mr-3 group-hover:animate-bounce" data-fallback="📍"></i>
-                            <span class="text-gray-400 group-hover:text-white transition-colors">暂无</span>
+                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
                         </div>
                         <div class="flex items-start group">
                             <i class="fas fa-phone text-primary mt-1 mr-3 group-hover:animate-bounce" style="animation-delay: 0.1s;" data-fallback="📞"></i>
-                            <span class="text-gray-400 group-hover:text-white transition-colors">暂无</span>
+                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
                         </div>
                         <div class="flex items-start group">
                             <i class="fas fa-envelope text-primary mt-1 mr-3 group-hover:animate-bounce" style="animation-delay: 0.2s;" data-fallback="✉️"></i>
-                            <span class="text-gray-400 group-hover:text-white transition-colors">暂无</span>
+                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="animate-slide-up" style="animation-delay: 0.4s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-neon transition-colors">快速链接</h3>
+                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">快速链接</h3>
                     <ul class="space-y-4">
-                        <li><a href="/index.html" class="text-gray-400 hover:text-white transition-custom group">
+                        <li><a href="/index.html" class="text-gray-600 hover:text-dark transition-custom group">
                             首页 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
                         </a></li>
-                        <li><a href="#projects" class="text-gray-400 hover:text-white transition-custom group">
+                        <li><a href="#projects" class="text-gray-600 hover:text-dark transition-custom group">
                             项目展示 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
                         </a></li>
                     </ul>
                 </div>
 
                 <div class="animate-slide-up" style="animation-delay: 0.6s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-neon transition-colors">订阅更新</h3>
-                    <p class="text-gray-400 mb-6">
+                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">订阅更新</h3>
+                    <p class="text-gray-600 mb-6">
                         订阅我们的新闻通讯，获取最新项目更新和技术文章。
                     </p>
                     <form class="flex flex-col sm:flex-row gap-3">
-                        <input type="email" placeholder="您的电子邮箱" class="flex-1 px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 focus:border-white/50 transition-all">
-                        <button class="bg-gradient-blue hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
+                        <input type="email" placeholder="您的电子邮箱" class="flex-1 px-4 py-3 rounded-lg bg-white border border-gray-200 text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary/60 transition-all">
+                        <button class="bg-secondary hover:bg-secondary/90 hover:shadow-lg hover:shadow-secondary/20 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
                             订阅
                         </button>
                     </form>
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-8 animate-fade-in" style="animation-delay: 0.8s;">
+            <div class="border-t border-gray-200 pt-8 animate-fade-in" style="animation-delay: 0.8s;">
                 <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 STAR HigheriTech 信息活力工作室官方网站. 保留所有权利</p>
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 STAR HigheriTech 信息活力工作室官方网站. 保留所有权利</p>
                     <div class="flex space-x-6">
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-custom hover:underline">隐私政策</a>
-                        <a href="#" class="text-gray-400 hover:text-white text-sm transition-custom hover:underline">使用条款</a>
+                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">隐私政策</a>
+                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">使用条款</a>
                     </div>
                 </div>
             </div>
