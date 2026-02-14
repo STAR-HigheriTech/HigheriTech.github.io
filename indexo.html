@@ -442,8 +442,8 @@
 
         /* 增强版页脚 */
         footer {
-            background: var(--dark-gray);
-            color: var(--light);
+            background: var(--light-gray);
+            color: var(--dark);
             padding: 60px 0 30px;
             border-top: 4px solid var(--primary);
         }
@@ -485,7 +485,7 @@
             font-size: 2rem;
             font-weight: 800;
             margin-bottom: 15px;
-            color: var(--light);
+            color: var(--dark);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -496,7 +496,7 @@
         }
 
         .footer-desc {
-            color: var(--light-gray);
+            color: var(--gray);
             margin-bottom: 25px;
             line-height: 1.7;
             font-size: 0.95rem;
@@ -522,13 +522,13 @@
         }
 
         .contact-text {
-            color: var(--light-gray);
+            color: var(--dark-gray);
             line-height: 1.6;
             font-size: 0.95rem;
         }
 
         .contact-text a {
-            color: var(--light-gray);
+            color: var(--primary);
             text-decoration: none;
             transition: var(--transition);
         }
@@ -544,7 +544,7 @@
         }
 
         .footer-links a {
-            color: var(--light-gray);
+            color: var(--dark-gray);
             text-decoration: none;
             transition: var(--transition);
             display: flex;
@@ -575,17 +575,19 @@
             width: 42px;
             height: 42px;
             border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--light);
+            border: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--light);
+            color: var(--dark);
             font-size: 1.2rem;
             transition: var(--transition);
         }
-
+        
         .social-links a:hover {
             background: var(--primary);
+            color: #ffffff;
             transform: translateY(-4px);
         }
 
@@ -598,21 +600,21 @@
         .newsletter-form input {
             padding: 14px 18px;
             border-radius: 10px;
-            border: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
+            border: 1px solid var(--border);
+            background: var(--light);
+            color: var(--dark);
             font-size: 0.95rem;
             outline: none;
             transition: var(--transition);
         }
-
+        
         .newsletter-form input:focus {
-            background: rgba(255, 255, 255, 0.15);
+            background: var(--light);
             box-shadow: 0 0 0 2px var(--primary);
         }
-
+        
         .newsletter-form input::placeholder {
-            color: var(--light-gray);
+            color: var(--gray);
         }
 
         .newsletter-form button {
@@ -810,7 +812,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>STAR HigheriTech<span class="highlight">官方网站</span></h1>
-                <p>欢迎浏览STAR HigheriTech官方网站，这里有STAR HigheriTech工作室的一些软件项目。每个项目都会为您的计算机增添一丝光彩。</p>
+                <p>欢迎访问 STAR HigheriTech 官方网站，这里集中展示工作室的主要软件项目，帮助您更高效地管理和维护电脑系统。</p>
                 <div class="cta-buttons">
                     <a href="#projects" class="btn btn-primary">
                         <i class="fas fa-rocket"></i> 浏览项目

@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAR Hira - 高效、安全、现代化的浏览器体验</title>
-    <!-- 预连接到国内CDN以提升加载速度 -->
+    <title>STAR Hira - AI Browser | STAR HigheriTech</title>
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://tc.z.wiki">
-    <link rel="preconnect" href="https://www.123pan.com">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <!-- 使用国内CDN加载Font Awesome V6 -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,25 +20,24 @@
                         secondary: '#36CFC9',
                         accent: '#722ED1',
                         dark: '#1D2129',
+                        darker: '#0d1117',
                         light: '#F2F3F5',
-                        neon: '#00FFFF',
-                        electric: '#0080FF'
+                        pink: { // Keep for compatibility, but main theme is now Cyan/Blue/Purple
+                            500: '#EC4899',
+                            600: '#DB2777',
+                            900: '#831843',
+                        }
                     },
                     fontFamily: {
-                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
                         cyber: ['Orbitron', 'Inter', 'sans-serif'],
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-in-left': 'slideInLeft 0.8s ease-out',
-                        'slide-in-right': 'slideInRight 0.8s ease-out',
-                        'matrix': 'matrix 20s linear infinite',
-                        'tech-scan': 'techScan 3s ease-in-out infinite',
-                        'particle': 'particle 8s ease-in-out infinite',
+                    boxShadow: {
+                        'neon-glow': '0 0 20px rgba(6, 182, 212, 0.6)', // Cyan glow
+                        'purple-glow': '0 0 20px rgba(139, 92, 246, 0.6)', // Purple glow
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
                     }
                 }
             }
@@ -51,494 +46,391 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
         
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .bg-gradient-blue {
-                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 100%);
-            }
-            .bg-cyber-gradient {
-                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 50%, #722ED1 100%);
-            }
-            .glass-morphism {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-            .neon-glow {
-                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-            }
-            .tech-border {
-                position: relative;
-                overflow: hidden;
-            }
-            .tech-border::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(22, 93, 255, 0.4), transparent);
-                transition: left 0.5s;
-            }
-            .tech-border:hover::before {
-                left: 100%;
-            }
-            .project-card {
-                transition: all 0.25s ease;
-            }
-            .project-card:hover {
-                transform: translateY(-6px);
-                box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
-            }
-            
-            /* 动画定义 */
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-8px); }
-            }
-            
-            @keyframes glow {
-                from { text-shadow: 0 0 8px rgba(22, 93, 255, 0.35); }
-                to { text-shadow: 0 0 16px rgba(22, 93, 255, 0.45); }
-            }
-            
-            @keyframes slideUp {
-                from { 
-                    transform: translateY(30px);
-                    opacity: 0;
-                }
-                to { 
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            @keyframes slideInLeft {
-                from { 
-                    transform: translateX(-30px);
-                    opacity: 0;
-                }
-                to { 
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes slideInRight {
-                from { 
-                    transform: translateX(30px);
-                    opacity: 0;
-                }
-                to { 
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            
-            @keyframes matrix {
-                0% { background-position: 0% 0%; }
-                100% { background-position: 100% 100%; }
-            }
-            
-            @keyframes techScan {
-                0% { 
-                    transform: translateY(-100%);
-                    opacity: 0;
-                }
-                50% { 
-                    opacity: 1;
-                }
-                100% { 
-                    transform: translateY(100%);
-                    opacity: 0;
-                }
-            }
-            
-            @keyframes particle {
-                0%, 100% { 
-                    transform: translateY(0) translateX(0) scale(1);
-                    opacity: 0.7;
-                }
-                25% { 
-                    transform: translateY(-20px) translateX(-10px) scale(0.8);
-                    opacity: 0.6;
-                }
-                50% { 
-                    transform: translateY(-40px) translateX(-5px) scale(0.9);
-                    opacity: 0.8;
-                }
-                75% { 
-                    transform: translateY(-60px) translateX(15px) scale(1.05);
-                    opacity: 0.9;
-                }
-            }
-            
-            /* 科技背景效果 */
-            .tech-bg {
-                background: 
-                    linear-gradient(90deg, rgba(22, 93, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(rgba(22, 93, 255, 0.03) 1px, transparent 1px);
-                background-size: 20px 20px;
-            }
-            
-            /* 浮动粒子效果 */
-            .floating-particles {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                pointer-events: none;
-            }
-            
-            .particle {
-                position: absolute;
-                background: radial-gradient(circle, rgba(22, 93, 255, 0.6) 0%, transparent 70%);
-                border-radius: 50%;
-                animation: particle 8s ease-in-out infinite;
-            }
-            
-            /* 全息效果 */
-            .holographic {
-                background: linear-gradient(
-                    135deg,
-                    rgba(22, 93, 255, 0.06),
-                    rgba(54, 207, 201, 0.06)
-                );
-            }
-            
-            /* 加载动画 */
-            .loading-spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px solid rgba(22, 93, 255, 0.3);
-                border-top: 4px solid #165DFF;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
+        body {
+            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #F2F3F5;
         }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1D2129; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: #06b6d4; transition: width 0.3s; /* Cyan-500 */
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .text-glow { text-shadow: 0 0 20px rgba(6, 182, 212, 0.5); }
+        
+        .bento-item { position: relative; overflow: hidden; }
+        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(6, 182, 212, 0.2); }
     </style>
 </head>
-<body class="font-inter bg-light text-dark tech-bg">
-    <!-- 粒子背景 -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="floating-particles">
-            <div class="particle w-2 h-2 top-10 left-10" style="animation-delay: 0s;"></div>
-            <div class="particle w-1 h-1 top-1/3 right-20" style="animation-delay: 2s;"></div>
-            <div class="particle w-3 h-3 bottom-1/4 left-1/4" style="animation-delay: 4s;"></div>
-            <div class="particle w-1 h-1 top-2/3 right-1/3" style="animation-delay: 6s;"></div>
-            <div class="particle w-2 h-2 bottom-1/3 left-2/3" style="animation-delay: 1s;"></div>
-            <div class="particle w-1 h-1 top-1/2 left-3/4" style="animation-delay: 3s;"></div>
+<body class="antialiased selection:bg-purple-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-dark/80 backdrop-blur-lg border-b border-white/10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 via-violet-500 to-cyan-500 text-white flex items-center justify-center rounded-lg shadow-purple-glow group-hover:rotate-180 transition-transform duration-700">
+                            <i class="fas fa-robot text-lg"></i>
+                        </div>
+                        <span class="font-bold text-2xl text-white font-cyber tracking-wider">STAR <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Hira</span></span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">首页</a>
+                    <a href="#features" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">特性</a>
+                    <a href="#comparison" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">对比</a>
+                    <a href="#download" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">下载</a>
+                    
+                    <a href="#download" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 hover:shadow-purple-glow text-white px-5 py-2.5 rounded-full transition-all duration-300">
+                        <span>立即获取</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-purple-400 focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-white/5 mt-0 bg-dark/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-white/10 shadow-2xl">
+                <div class="flex flex-col space-y-4">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">首页</a>
+                    <a href="#features" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">特性</a>
+                    <a href="#comparison" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">对比</a>
+                    <a href="#download" class="text-purple-400 hover:text-white text-lg font-medium transition-colors block">立即下载</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-darker">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-600/20 rounded-full filter blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-block px-3 py-1 border border-cyan-500/50 text-cyan-400 text-xs font-bold tracking-widest uppercase mb-6 bg-cyan-900/10 backdrop-blur-md rounded-full">
+                        AI Native Browser
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight">
+                        优化您的 <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-fuchsia-500 to-cyan-400 text-glow">浏览体验</span>
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
+                        STAR Hira 是一款集成 AI 的现代浏览器。它是您的智能助手，内置先进的大语言模型，让信息获取更快、更准。
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="#download" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-500 hover:to-cyan-500 text-white font-bold text-lg transition-all shadow-lg hover:shadow-purple-600/50 flex items-center gap-2 rounded-lg group">
+                            免费下载 <i class="fas fa-download group-hover:translate-y-1 transition-transform"></i>
+                        </a>
+                        <a href="#features" class="px-8 py-4 border border-gray-700 hover:border-white text-gray-300 hover:text-white font-bold text-lg transition-all rounded-lg bg-white/5 backdrop-blur-sm">
+                            了解更多
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex-1 relative">
+                    <div class="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-cyan-900/30 transform md:rotate-y-12 md:rotate-x-6 hover:rotate-0 transition-all duration-700">
+                        <div class="bg-gray-900 h-8 flex items-center px-4 gap-2 border-b border-gray-800">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div class="ml-4 flex-1 h-5 bg-black/50 rounded-full flex items-center px-3 text-xs text-gray-500">
+                                <i class="fas fa-lock text-[10px] mr-2"></i> h://newtab
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 aspect-[4/3] flex items-center justify-center relative overflow-hidden group">
+                            <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-black"></div>
+                            <!-- Mock Content -->
+                            <div class="relative z-10 text-center">
+                                <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 backdrop-blur-xl border border-purple-500/30">
+                                    <i class="fas fa-robot text-purple-400 text-4xl"></i>
+                                </div>
+                                <div class="w-64 h-10 bg-gray-800 rounded-lg mx-auto border border-white/5 flex items-center px-4 text-gray-500 text-sm mb-4">
+                                    Ask anything...
+                                </div>
+                                <div class="flex gap-2 justify-center">
+                                    <div class="w-12 h-12 bg-gray-800 rounded-lg border border-white/5"></div>
+                                    <div class="w-12 h-12 bg-gray-800 rounded-lg border border-white/5"></div>
+                                    <div class="w-12 h-12 bg-gray-800 rounded-lg border border-white/5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-violet-500 rounded-full filter blur-[40px] opacity-40"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-purple-500 rounded-full filter blur-[50px] opacity-40"></div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 glass-morphism shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center group cursor-pointer">
-                <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 neon-glow">
-                    <i class="fab fa-chrome text-xl group-hover:animate-spin" data-fallback="🌐"></i>
+
+    <!-- Features Bento Grid -->
+    <div id="features" class="py-24 bg-dark relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">WHY <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">HIRA?</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <!-- Large Feature -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-cyan-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
+                    <div class="w-16 h-16 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-400 border border-cyan-500/20 group-hover:bg-cyan-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-bolt text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">优秀性能</h3>
+                    <p class="text-gray-400 text-lg max-w-lg">
+                        基于深度优化的 Chromium 内核。内存占用更低，启动速度更快。运行流畅，响应迅速。
+                    </p>
                 </div>
-                <h1 class="ml-3 text-xl font-bold text-primary font-cyber group-hover:text-neon transition-all duration-300">
-                    STAR Hira
-                </h1>
-            </div>
-            <nav class="hidden md:flex space-x-8">
-                <a href="../index.html" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    首页
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#features" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    核心功能
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#download" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    下载
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#faq" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    常见问题
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <a href="#download" class="hidden md:block bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
-                    立即下载
-                </a>
-                <button id="menu-toggle" class="md:hidden text-dark focus:outline-none group">
-                    <i class="fas fa-bars text-xl group-hover:scale-125 transition-transform duration-300" data-fallback="☰"></i>
-                </button>
+
+                <!-- Tall Feature -->
+                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-purple-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-purple-900/10 to-transparent"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-400 border border-purple-500/20">
+                            <i class="fas fa-shield-alt text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">保护隐私</h3>
+                        <p class="text-gray-400 mb-8">
+                            内置广告拦截与追踪器阻断。我们尊重您的数据主权。
+                        </p>
+                        <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs text-gray-500">Trackers Blocked</span>
+                                <span class="text-xs text-green-400 font-mono">9,421</span>
+                            </div>
+                            <div class="w-full h-1 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-green-500 w-[85%]"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medium Feature -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-violet-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
+                    <div class="flex-1">
+                        <div class="w-14 h-14 bg-violet-500/10 rounded-2xl flex items-center justify-center mb-6 text-violet-400 border border-violet-500/20">
+                            <i class="fas fa-magic text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">集成 AI 助手</h3>
+                        <p class="text-gray-400">
+                            侧边栏即时唤起 AI 助手。总结、翻译、问答，轻松完成。
+                        </p>
+                    </div>
+                    <div class="hidden md:block w-32 h-32 bg-violet-500/5 rounded-full filter blur-xl"></div>
+                </div>
+
+                <!-- Video Playback Feature -->
+                <div class="md:col-span-3 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-purple-500/30 card-hover-effect p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <div class="flex-1">
+                            <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-400 border border-purple-500/20">
+                                <i class="fas fa-play-circle text-2xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-4">沉浸式视频体验</h3>
+                            <p class="text-gray-400 mb-6">
+                                专为视频爱好者打造。无论是追番还是看电影，Hira 都能提供优质的播放体验。
+                            </p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-black/20 p-4 rounded-xl border border-white/5 flex items-start gap-3">
+                                    <i class="fas fa-hand-pointer text-cyan-400 mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-bold text-sm">扩展插件支持</h4>
+                                        <p class="text-gray-500 text-xs mt-1">
+                                            支持全部 Chrome、Edge 插件，扩展功能。
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="bg-black/20 p-4 rounded-xl border border-white/5 flex items-start gap-3">
+                                    <i class="fas fa-filter text-purple-400 mt-1"></i>
+                                    <div>
+                                        <h4 class="text-white font-bold text-sm">简洁界面</h4>
+                                        <p class="text-gray-500 text-xs mt-1">
+                                            简洁的用户界面，无需繁琐操作。
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 w-full relative h-64 bg-black/40 rounded-xl overflow-hidden border border-white/5 group-hover:border-purple-500/20 transition-colors">
+                            <!-- Mock Video Player UI -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform">
+                                    <i class="fas fa-play text-white ml-1"></i>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <div class="flex justify-between text-xs text-gray-400 mb-2">
+                                    <span>12:45</span>
+                                    <span>24:30</span>
+                                </div>
+                                <div class="h-1 bg-gray-700 rounded-full overflow-hidden">
+                                    <div class="h-full bg-gradient-to-r from-purple-500 to-cyan-400 w-1/2 relative">
+                                        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-purple-glow"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Barrage Mock -->
+                            <div class="absolute top-4 right-10 bg-black/60 px-2 py-1 rounded text-[10px] text-white animate-pulse">
+                                <i class="fas fa-magic text-purple-400 mr-1"></i> 过滤 23 条垃圾弹幕
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <!-- 主页面 -->
-    <section class="pt-32 pb-20 bg-gradient-to-br from-secondary/5 to-primary/5 relative overflow-hidden">
-        <div class="container mx-auto px-6 text-center">
-            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold text-gradient mb-6 animate-glow">STAR Hira</h1>
-            <p class="text-[clamp(1.1rem,3vw,1.5rem)] opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
-                基于Chromium内核打造的高效、安全、现代化的浏览器体验
-            </p>
-            <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed">
-                在熟悉的 Chromium 内核基础上，提供稳定、流畅且干净的浏览体验
-            </p>
-            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
-                <a href="#download" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
-                    <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 立即下载
-                </a>
-                <a href="#features" class="bg-white hover:bg-gray-50 text-primary border-2 border-primary px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-primary/10 text-center transform hover:scale-105 group">
-                    <i class="fas fa-info-circle mr-2 group-hover:animate-pulse" data-fallback="ℹ️"></i> 了解更多
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- 特性对比 -->
-    <section id="features" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">为什么选择STAR Hira？</h2>
-        
-        <div class="glass p-8 rounded-2xl shadow-xl">
-            <div class="comparison-table overflow-x-auto">
-                <table class="w-full border-collapse">
+    <!-- Comparison Section -->
+    <div id="comparison" class="py-24 bg-[#161b22] relative border-t border-white/5">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center">性能对比</h2>
+            
+            <div class="bg-gray-900 rounded-2xl border border-white/10 overflow-hidden">
+                <table class="w-full text-left border-collapse">
                     <thead>
-                        <tr class="bg-primary/20">
-                            <th class="py-4 px-6 text-left font-semibold">功能特性</th>
-                            <th class="py-4 px-6 text-center font-semibold">Google Chrome</th>
-                            <th class="py-4 px-6 text-center font-semibold">Microsoft Edge</th>
-                            <th class="py-4 px-6 text-center font-semibold">STAR Hira</th>
+                        <tr class="bg-white/5 border-b border-white/10">
+                            <th class="p-6 text-gray-400 font-medium">Feature</th>
+                            <th class="p-6 text-gray-400 font-medium text-center">Chrome</th>
+                            <th class="p-6 text-gray-400 font-medium text-center">Edge</th>
+                            <th class="p-6 text-purple-400 font-bold text-center bg-purple-500/5">STAR Hira</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="py-4 px-6">资源占用优化</td>
-                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">❌</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                    <tbody class="divide-y divide-white/5">
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 text-white font-medium">冷启动时间</td>
+                            <td class="p-6 text-gray-500 text-center">3s</td>
+                            <td class="p-6 text-gray-500 text-center">4s</td>
+                            <td class="p-6 text-green-400 font-bold text-center bg-purple-500/5">1s</td>
                         </tr>
-                        <tr>
-                            <td class="py-4 px-6">启动速度优化</td>
-                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
-                        </tr>
-
-                        <tr>
-                            <td class="py-4 px-6">扩展生态兼容</td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
-                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="p-6 text-white font-medium">AI 助手</td>
+                            <td class="p-6 text-gray-500 text-center">环中国大陆开放</td>
+                            <td class="p-6 text-gray-500 text-center">环中国大陆开放</td>
+                            <td class="p-6 text-green-400 font-bold text-center bg-purple-500/5">HigheriPilot全球可飞</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 核心功能 -->
-    <section class="py-24 px-6 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">核心功能特性</h2>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 功能卡片 1 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-bolt"></i>
+    <!-- CTA / Download -->
+    <div id="download" class="py-24 bg-gradient-to-b from-dark to-black relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-black text-white font-cyber mb-8">
+                Ready to switch?
+            </h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 max-w-2xl mx-auto">
+                下载密码：1234
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="https://alexhigheryyds.lanzouu.com/iNYB13ih81jc" class="px-10 py-5 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-purple-glow transition-all flex items-center justify-center gap-3">
+                    <i class="fab fa-windows"></i> Windows 下载
+                </a>
+
+            </div>
+            <p class="mt-8 text-gray-500 text-sm">v1.35.2 Stable</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8 text-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand Column -->
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-white text-dark flex items-center justify-center rounded-sm">
+                            <i class="fas fa-star text-xs"></i>
+                        </div>
+                        <span class="font-bold text-lg text-white font-cyber">STAR HigheriTech</span>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">减少占用</h3>
-                    <p class="text-gray-600 mb-4">优化的引擎，加载速度提升4，内存占用减少</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                    <p class="text-gray-500 mb-6">
+                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                    </div>
                 </div>
 
-                <!-- 功能卡片 2 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">智能防护</h3>
-                    <p class="text-gray-600 mb-4">内置恶意隐私获取拦截</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                <!-- Link Column 1 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="../hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1 rounded ml-1">NEW</span></a></li>
+                        <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                        <li><a href="../../webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
+                        <li><a href="../../tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
+                        <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                    </ul>
                 </div>
 
-                <!-- 功能卡片 3 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-paint-brush"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">简洁界面</h3>
-                    <p class="text-gray-600 mb-4">现代化设计语言，简洁直观的操作界面，提升用户体验和工作效率</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                <!-- Link Column 2 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                    </ul>
                 </div>
 
-                <!-- 功能卡片 4 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">扩展兼容</h3>
-                    <p class="text-gray-600 mb-4">完全兼容Chrome扩展生态系统，支持丰富的插件和工具</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                <!-- Link Column 3 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
                 </div>
+            </div>
 
-                <!-- 功能卡片 5 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-sync"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">同步功能</h3>
-                    <p class="text-gray-600 mb-4">跨设备书签、历史记录和设置同步，随时随地继续浏览</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+                <div class="mb-4 md:mb-0">
+                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
                 </div>
-
-                <!-- 功能卡片 6 -->
-                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
-                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">AI侧边栏</h3>
-                    <p class="text-gray-600 mb-4">全地区可用的AI助手，提供智能内容生成和问题解答</p>
-                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-400 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- 下载区域 -->
-    <section id="download" class="py-24 px-6 bg-gradient-to-r from-primary/10 to-secondary/10">
-        <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-6 text-gradient">准备好体验了吗？</h2>
-            <p class="text-[clamp(1.1rem,3vw,1.5rem)] mb-10 opacity-90">最新版本：v1.35.2 | 密码：1234</p>
-            <a href="https://alexhigheryyds.lanzouu.com/i6Sl43ig32pi" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-6 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group inline-flex items-center justify-center mb-6">
-                <i class="fas fa-download mr-3 text-2xl group-hover:animate-bounce"></i> 立即下载 STAR Hira
-            </a>
-            <p class="text-white/80 mb-2">系统要求：Windows 7及以上版本的64位操作系统</p>
-            <p class="text-white/60 text-sm">下载后直接安装即可使用</p>
-        </div>
-    </section>
-
-    <!-- 常见问题 -->
-    <section id="faq" class="py-24 px-6 max-w-4xl mx-auto">
-        <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">常见问题</h2>
-        
-        <div class="space-y-6">
-            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
-                <h3 class="text-lg font-semibold mb-3 text-primary">Q: STAR Hira基于什么内核？</h3>
-                <p class="text-gray-600">A: 基于最新的Chromium内核开发，兼容所有Chrome扩展和网页标准。</p>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
-                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 是否支持Chrome扩展？</h3>
-                <p class="text-gray-600">A: 完全支持，可以直接安装和使用所有扩展。</p>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
-                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 内存占用相比Chrome如何？</h3>
-                <p class="text-gray-600">A: 内存占用比Chrome减少，运行更加流畅。</p>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
-                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 是否免费使用？</h3>
-                <p class="text-gray-600">A: 完全免费，无任何收费功能或广告。</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 页脚 -->
-    <footer class="py-12 px-6 bg-light text-center">
-        <p class="text-gray-700 mb-4">© 2025 STAR HigheriTech | 高效、安全、现代化的浏览器体验 | 最终解释权归作者所有</p>
-        <p class="text-gray-500 text-sm"></p>
     </footer>
 
     <script>
-        // 粒子背景
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 50;
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                
-                // 随机位置
-                const x = Math.random() * 100;
-                const y = Math.random() * 100;
-                
-                // 随机大小
-                const size = 1 + Math.random() * 3;
-                
-                // 随机延迟
-                const delay = Math.random() * 5;
-                
-                // 随机速度
-                const duration = 20 + Math.random() * 40;
-                
-                particle.style.left = `${x}%`;
-                particle.style.top = `${y}%`;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                particle.style.animationDelay = `${delay}s`;
-                particle.style.animationDuration = `${duration}s`;
-                
-                container.appendChild(particle);
-            }
-        }
-        
-        // 导航栏滚动效果
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-xl', 'bg-white/95');
-                navbar.classList.remove('glass-morphism');
-            } else {
-                navbar.classList.remove('shadow-xl', 'bg-white/95');
-                navbar.classList.add('glass-morphism');
-            }
-        });
-        
-        // 移动端菜单切换
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const nav = document.querySelector('nav');
-            nav.classList.toggle('hidden');
-            nav.classList.toggle('flex');
-            nav.classList.toggle('flex-col');
-            nav.classList.toggle('absolute');
-            nav.classList.toggle('top-full');
-            nav.classList.toggle('left-0');
-            nav.classList.toggle('w-full');
-            nav.classList.toggle('bg-white');
-            nav.classList.toggle('p-4');
-            nav.classList.toggle('shadow-lg');
-        });
-        
-        // 页面加载动画
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            
-            // 添加进入动画
-            const elements = document.querySelectorAll('.project-card, .comparison-table, .tech-border');
-            elements.forEach((el, index) => {
-                el.style.animationDelay = `${index * 0.1}s`;
-                el.classList.add('animate-fade-in');
+        // Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        if(btn && menu) {
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
             });
-        });
+        }
     </script>
 </body>
 </html>

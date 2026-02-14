@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高效办公工具 - STAR HigheriTech</title>
-    <!-- 预连接到国内CDN以提升加载速度 -->
+    <title>高效办公工具 | STAR HigheriTech</title>
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <!-- 使用国内CDN加载Font Awesome V6 -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -22,25 +20,26 @@
                         secondary: '#00c8c1',
                         accent: '#722ED1',
                         dark: '#1D2129',
+                        darker: '#0d1117',
                         light: '#F2F3F5',
-                        neon: '#00FFFF',
-                        electric: '#0080FF'
+                        teal: {
+                            400: '#2dd4bf',
+                            500: '#14b8a6',
+                            600: '#0d9488',
+                        },
+                        indigo: {
+                            500: '#6366f1',
+                        }
                     },
                     fontFamily: {
-                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
                         cyber: ['Orbitron', 'Inter', 'sans-serif'],
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-in-left': 'slideInLeft 0.8s ease-out',
-                        'slide-in-right': 'slideInRight 0.8s ease-out',
-                        'matrix': 'matrix 20s linear infinite',
-                        'tech-scan': 'techScan 3s ease-in-out infinite',
-                        'particle': 'particle 8s ease-in-out infinite',
+                    boxShadow: {
+                        'neon-glow': '0 0 20px rgba(20, 184, 166, 0.6)', // Teal glow for Work
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
                     }
                 }
             }
@@ -49,915 +48,428 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
         
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .bg-gradient-blue {
-                background: linear-gradient(135deg, #165DFF 0%, #00c8c1 100%);
-            }
-            .bg-cyber-gradient {
-                background: linear-gradient(135deg, #165DFF 0%, #00c8c1 50%, #722ED1 100%);
-            }
-            .glass-morphism {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-            .neon-glow {
-                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-            }
-            .tech-border {
-                position: relative;
-                overflow: hidden;
-            }
-            .tech-border::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(22, 93, 255, 0.4), transparent);
-                transition: left 0.5s;
-            }
-            .tech-border:hover::before {
-                left: 100%;
-            }
-            .project-card {
-                transition: all 0.25s ease;
-            }
-            .project-card:hover {
-                transform: translateY(-6px);
-                box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
-            }
-            .service-card {
-                transition: all 0.25s ease;
-                position: relative;
-            }
-            .service-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 20px 32px rgba(15, 23, 42, 0.18);
-            }
-            .service-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, rgba(22, 93, 255, 0.1), rgba(0, 200, 193, 0.1));
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                border-radius: inherit;
-            }
-            .service-card:hover::before {
-                opacity: 1;
-            }
-            
-            /* 动画定义 */
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-8px); }
-            }
-            
-            @keyframes glow {
-                0% { box-shadow: 0 0 8px rgba(22, 93, 255, 0.35); }
-                100% { box-shadow: 0 0 16px rgba(22, 93, 255, 0.45); }
-            }
-            
-            @keyframes slideUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            @keyframes slideInLeft {
-                from {
-                    opacity: 0;
-                    transform: translateX(-50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes slideInRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes matrix {
-                0% { transform: translateY(-100vh); opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateY(100vh); opacity: 0; }
-            }
-            
-            @keyframes techScan {
-                0% { transform: translateX(-100%); }
-                50% { transform: translateX(0%); }
-                100% { transform: translateX(100%); }
-            }
-            
-            @keyframes particle {
-                0%, 100% { 
-                    transform: translateY(0px) translateX(0px) scale(1);
-                    opacity: 0.7;
-                }
-                25% { 
-                    transform: translateY(-20px) translateX(10px) scale(1.1);
-                    opacity: 1;
-                }
-                50% { 
-                    transform: translateY(-40px) translateX(-5px) scale(0.9);
-                    opacity: 0.8;
-                }
-                75% { 
-                    transform: translateY(-60px) translateX(15px) scale(1.05);
-                    opacity: 0.9;
-                }
-            }
-            
-            /* 科技背景效果 */
-            .tech-bg {
-                background: 
-                    linear-gradient(90deg, rgba(22, 93, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(rgba(22, 93, 255, 0.03) 1px, transparent 1px);
-                background-size: 20px 20px;
-            }
-            
-            /* 浮动粒子效果 */
-            .floating-particles {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                pointer-events: none;
-            }
-            
-            .particle {
-                position: absolute;
-                background: radial-gradient(circle, rgba(22, 93, 255, 0.6) 0%, transparent 70%);
-                border-radius: 50%;
-                animation: particle 8s ease-in-out infinite;
-            }
-            
-            /* 全息效果 */
-            .holographic {
-                background: linear-gradient(
-                    135deg,
-                    rgba(22, 93, 255, 0.06),
-                    rgba(0, 200, 193, 0.06)
-                );
-            }
-            
-            /* 加载动画 */
-            .loading-spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px solid rgba(22, 93, 255, 0.3);
-                border-top: 4px solid #165DFF;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
+        body {
+            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #F2F3F5;
         }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1D2129; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: #14b8a6; transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .text-glow { text-shadow: 0 0 20px rgba(20, 184, 166, 0.5); }
+        
+        .bento-item { position: relative; overflow: hidden; }
+        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.2); }
     </style>
 </head>
-<body class="font-inter bg-light text-dark tech-bg">
-    <!-- 粒子背景 -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="floating-particles">
-            <div class="particle w-2 h-2 top-10 left-10" style="animation-delay: 0s;"></div>
-            <div class="particle w-1 h-1 top-1/3 right-20" style="animation-delay: 2s;"></div>
-            <div class="particle w-3 h-3 bottom-1/4 left-1/4" style="animation-delay: 4s;"></div>
-            <div class="particle w-1 h-1 top-2/3 right-1/3" style="animation-delay: 6s;"></div>
-            <div class="particle w-2 h-2 bottom-1/3 left-2/3" style="animation-delay: 1s;"></div>
-            <div class="particle w-1 h-1 top-1/2 left-3/4" style="animation-delay: 3s;"></div>
+<body class="antialiased selection:bg-teal-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-dark/80 backdrop-blur-lg border-b border-white/10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-12 transition-transform duration-700">
+                            <i class="fas fa-briefcase text-lg"></i>
+                        </div>
+                        <span class="font-bold text-2xl text-white font-cyber tracking-wider">Higheri <span class="text-teal-500">WORK</span></span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">首页</a>
+                    <a href="#tools" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">工具箱</a>
+                    <a href="#projects" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">精选项目</a>
+                    
+                    <a href="#projects" class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300">
+                        <span>立即体验</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-teal-500 focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-white/5 mt-0 bg-dark/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-white/10 shadow-2xl">
+                <div class="flex flex-col space-y-4">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">首页</a>
+                    <a href="#tools" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">工具箱</a>
+                    <a href="#projects" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">精选项目</a>
+                    <a href="#projects" class="text-teal-500 hover:text-white text-lg font-medium transition-colors block">立即体验</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-darker">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-600/20 rounded-full filter blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-block px-3 py-1 border border-teal-500/50 text-teal-500 text-xs font-bold tracking-widest uppercase mb-6 bg-teal-900/10 backdrop-blur-md rounded-full">
+                        Productivity Suite
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight">
+                        辅助您的 <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500 text-glow">日常工作</span>
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
+                        从浏览器起始页到多功能记事本，Higheri Work 为您提供实用的效率工具，让专注成为一种习惯。
+                    </p>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="#projects" class="px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold text-lg transition-all shadow-lg hover:shadow-teal-600/50 flex items-center gap-2 rounded-lg group">
+                            探索工具 <i class="fas fa-compass group-hover:rotate-90 transition-transform"></i>
+                        </a>
+                        <a href="#tools" class="px-8 py-4 border border-gray-700 hover:border-white text-gray-300 hover:text-white font-bold text-lg transition-all rounded-lg bg-white/5 backdrop-blur-sm">
+                            了解更多
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex-1 relative">
+                    <!-- 3D Card Effect Container -->
+                    <div class="relative w-full aspect-square max-w-md mx-auto perspective-1000">
+                        <div class="relative z-10 w-full h-full bg-gradient-to-br from-gray-900 to-black rounded-3xl border border-white/10 shadow-2xl p-8 transform rotate-y-12 rotate-x-12 hover:rotate-0 transition-all duration-700 flex flex-col justify-between group">
+                            <div class="flex justify-between items-center">
+                                <div class="flex gap-2">
+                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                </div>
+                                <div class="text-gray-500 font-mono text-xs">WorkSpace v2.0</div>
+                            </div>
+                            
+                            <div class="space-y-4 mt-8">
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 group-hover:border-teal-500/30 transition-colors">
+                                    <div class="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-500">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-bold text-sm">HigheriTab</div>
+                                        <div class="text-gray-500 text-xs">每日 2.5w+ 访问</div>
+                                    </div>
+                                    <div class="ml-auto text-teal-500 text-xs">Active</div>
+                                </div>
+                                
+                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 group-hover:border-indigo-500/30 transition-colors">
+                                    <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-500">
+                                        <i class="fas fa-edit"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-bold text-sm">HigheriDraft</div>
+                                        <div class="text-gray-500 text-xs">本地 + 云端同步</div>
+                                    </div>
+                                    <div class="ml-auto text-indigo-500 text-xs">Syncing</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
+                                <div class="text-gray-400 text-xs">Efficiency Score</div>
+                                <div class="text-3xl font-bold text-white font-cyber">98<span class="text-teal-500 text-lg">%</span></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Glows -->
+                        <div class="absolute -inset-4 bg-teal-500/30 blur-3xl -z-10 rounded-full opacity-50"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 glass-morphism shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center group cursor-pointer">
-                <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 neon-glow">
-                    <i class="fas fa-star text-xl group-hover:animate-spin" data-fallback="⭐"></i>
-                </div>
-                <h1 class="ml-3 text-xl font-bold text-primary font-cyber group-hover:text-neon transition-all duration-300">
-                    STAR HigheriTech
-                </h1>
-            </div>
-            <nav class="hidden md:flex space-x-8">
-                <a href="/index.html" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    首页
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#projects" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    项目
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#featured" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    详情
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#about" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    文章
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <a href="/index.html" class="hidden md:block bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
-                    返回主页
-                </a>
-                <button id="menu-toggle" class="md:hidden text-dark focus:outline-none group">
-                    <i class="fas fa-bars text-xl group-hover:scale-125 transition-transform duration-300" data-fallback="☰"></i>
-                </button>
-            </div>
-        </div>
-        <!-- 移动端菜单 -->
-        <div id="mobile-menu" class="hidden md:hidden glass-morphism shadow-lg absolute w-full">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
-                <a href="/index.html" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    首页
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#projects" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    项目
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#featured" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    详情
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#about" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    文章
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="/index.html" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 text-center transform hover:scale-105 neon-glow">
-                    返回主页
-                </a>
-            </div>
-        </div>
-    </header>
 
-    <!-- 头图区域 -->
-    <section class="pt-32 pb-20 bg-gradient-to-br from-secondary/5 to-primary/5 relative overflow-hidden">
-        <!-- 动态背景元素 -->
-        <div class="absolute inset-0 opacity-30">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-secondary/20 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 6s;"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 animate-slide-in-left">
-                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark mb-6 font-cyber">
-                        <span class="text-secondary hover:text-neon transition-all duration-300 cursor-default">高效办公工具</span>
-                        <br>
-                        <span class="text-dark hover:text-secondary transition-all duration-300">提升您的工作效率</span>
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
-                        这里汇总了浏览器起始页、多功能记事本等实用工具，覆盖日常办公和项目协作等常见场景，重点在于稳定、易用和减少干扰。
+    <!-- Tools Bento Grid -->
+    <div id="tools" class="py-24 bg-dark relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">WORK <span class="text-teal-500">MATRIX</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <!-- Large Feature: HigheriTab -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-teal-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
+                    <div class="w-16 h-16 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 text-teal-500 border border-teal-500/20 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-home text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">HigheriTab 起始页</h3>
+                    <p class="text-gray-400 text-lg max-w-lg">
+                        极简主义的浏览器新标签页。自定义壁纸、高效搜索引擎聚合、常用网站快捷方式，让每次打开浏览器都赏心悦目。
                     </p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#projects" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
-                            <i class="fas fa-rocket mr-2 group-hover:animate-bounce" data-fallback="🚀"></i> 浏览工具
-                        </a>
-                        <a href="/index.html" class="bg-white hover:bg-gray-50 text-secondary border-2 border-secondary px-6 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-secondary/10 text-center transform hover:scale-105 group">
-                            <i class="fas fa-info-circle mr-2 group-hover:animate-pulse" data-fallback="ℹ️"></i> 返回主页
-                        </a>
-                    </div>
-                    <div class="mt-10 flex items-center space-x-6">
-                        <div>
-                            <div class="flex items-center">
-                                <div class="flex space-x-1">
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.1s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.2s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.3s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.4s;" data-fallback="⭐"></i>
-                                </div>
-                                <span class="ml-2 font-medium">5.0</span>
+                </div>
+
+                <!-- Tall Feature: Productivity -->
+                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-indigo-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-transparent"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 text-indigo-500 border border-indigo-500/20">
+                            <i class="fas fa-chart-line text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">提升效率</h3>
+                        <p class="text-gray-400 mb-8">
+                            专注于工作，减少无关干扰。
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">01</div>
+                                <div class="text-sm text-gray-300">快速启动</div>
                             </div>
-                            <p class="text-sm text-gray-500">旗舰产品</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">02</div>
+                                <div class="text-sm text-gray-300">云端同步</div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">03</div>
+                                <div class="text-sm text-gray-300">隐私保护</div>
+                            </div>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-white/10">
+                            <div class="flex justify-between text-xs text-gray-500 mb-2">
+                                <span>Time Saved</span>
+                                <span>+2.5h/day</span>
+                            </div>
+                            <div class="w-full h-1 bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-indigo-500 w-[75%]"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="md:w-1/2 relative animate-slide-in-right">
-                    <div class="relative z-10 rounded-xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-white rounded-xl shadow-xl p-6 project-card tech-border holographic">
-                                <div class="w-16 h-16 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 group">
-                                    <i class="fas fa-home text-secondary text-2xl group-hover:animate-bounce" data-fallback="🏠"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">HigheriTab</h3>
-                                <p class="text-gray-600 mb-4">简洁美观的浏览器起始页，高度自定义</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">简洁美观</span>
-                                    <span class="bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">可自定义</span>
-                                </div>
-                            </div>
-                            <div class="bg-white rounded-xl shadow-xl p-6 project-card tech-border holographic">
-                                <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group">
-                                    <i class="fas fa-tasks text-primary text-2xl group-hover:animate-pulse" data-fallback="✅"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">HigheriDraft</h3>
-                                <p class="text-gray-600 mb-4">多功能草稿记事本，让工作井然有序</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">备忘录</span>
-                                    <span class="bg-primary/10 text-primary text-xs px-2 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">草稿本</span>
-                                </div>
-                            </div>
-                            <div class="bg-white rounded-xl shadow-xl p-6 project-card tech-border holographic">
-                                <div class="w-16 h-16 bg-accent/10 rounded-xl flex items-center justify-center mb-4 group">
-                                    <i class="fas fa-clock text-accent text-2xl group-hover:animate-spin" data-fallback="⏰"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-accent transition-colors">时间管理</h3>
-                                <p class="text-gray-600 mb-4">智能时间规划和任务管理工具</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-accent/10 text-accent text-xs px-2 py-1 rounded-full hover:bg-accent hover:text-white transition-colors">任务规划</span>
-                                    <span class="bg-accent/10 text-accent text-xs px-2 py-1 rounded-full hover:bg-accent hover:text-white transition-colors">时间追踪</span>
-                                </div>
-                            </div>
-                            <div class="bg-white rounded-xl shadow-xl p-6 project-card tech-border holographic">
-                                <div class="w-16 h-16 bg-secondary/10 rounded-xl flex items-center justify-center mb-4 group">
-                                    <i class="fas fa-files text-secondary text-2xl group-hover:animate-bounce" data-fallback="📁"></i>
-                                </div>
-                                <h3 class="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">文档处理</h3>
-                                <p class="text-gray-600 mb-4">高效文档管理和编辑工具</p>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">文档管理</span>
-                                    <span class="bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">快速编辑</span>
-                                </div>
-                            </div>
+
+                <!-- Medium Feature: HigheriDraft -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-purple-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
+                    <div class="flex-1">
+                        <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-500 border border-purple-500/20">
+                            <i class="fas fa-edit text-2xl"></i>
                         </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">HigheriDraft 草稿本</h3>
+                        <p class="text-gray-400">
+                            多功能记事本。支持 Markdown、代码高亮、即时保存。灵感捕捉的便捷工具，开发者的随身便签。
+                        </p>
                     </div>
-                    <!-- 额外的科技效果 -->
-                    <div class="absolute top-1/4 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-2xl -z-10 animate-float"></div>
-                    <div class="absolute bottom-1/4 -left-8 w-40 h-40 bg-secondary/20 rounded-full blur-2xl -z-10 animate-float" style="animation-delay: 2s;"></div>
-                    <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-primary/30 rounded-full blur-xl -z-10 animate-float" style="animation-delay: 4s;"></div>
+                    <div class="hidden md:block w-32 h-32 bg-purple-500/5 rounded-full filter blur-xl"></div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 项目展示 -->
-    <section id="projects" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/3 to-secondary/3"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- 项目 1 -->
-                <div class="bg-light rounded-xl shadow-lg overflow-hidden project-card tech-border border border-gray-100 group">
-                    <div class="h-64 bg-gradient-to-br from-secondary/10 to-accent/10 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 to-secondary/5 group-hover:from-secondary/20 group-hover:to-secondary/10 transition-all duration-500"></div>
-                        <div class="text-center p-4 relative z-10">
-                            <div class="w-20 h-20 bg-secondary/20 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-home text-secondary text-3xl group-hover:animate-bounce" data-fallback="🏠"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-dark group-hover:text-secondary transition-colors">活力起始页插件</h3>
+    <!-- Selected Projects -->
+    <div id="projects" class="py-24 bg-[#161b22] border-t border-white/5">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center font-cyber">SELECTED <span class="text-teal-500">PROJECTS</span></h2>
+            
+            <div class="space-y-24 max-w-6xl mx-auto">
+                <!-- Project 1: HigheriTab -->
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="flex-1 order-2 md:order-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="px-3 py-1 rounded-full bg-teal-500/10 text-teal-500 text-xs font-bold border border-teal-500/20">BROWSER EXTENSION</span>
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-400 text-xs font-bold border border-white/10">v3.0</span>
                         </div>
-                    </div>
-                    <div class="p-8">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full animate-pulse">浏览器插件</span>
-                            <span class="ml-2 bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full">起始页</span>
-                        </div>
-                        <p class="text-gray-600 mb-6">
-                            最简洁的设计，包含壁纸、搜索引擎、快捷卡片等功能皆可自定义。
+                        <h3 class="text-3xl font-bold text-white mb-6">活力起始页插件</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            告别沉闷的空白页。HigheriTab 为您带来高斯模糊渲染的精美背景，配合精心设计的快捷图标，让每一次新建标签页都成为享受。支持多种搜索引擎无缝切换，数据完全本地化，安全无忧。
                         </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-secondary mt-1 mr-2 group-hover:animate-bounce" data-fallback="✅"></i>
-                                <span class="group-hover:text-secondary transition-colors">多种搜索引擎可切换</span>
+                        <ul class="space-y-4 mb-8 text-gray-300">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-teal-500"></i> 高度可自定义的界面布局
                             </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-secondary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.1s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-secondary transition-colors">美丽的界面与高斯模糊渲染界面</span>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-teal-500"></i> 沉浸式高斯模糊视觉效果
                             </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-secondary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.2s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-secondary transition-colors">高可自定义性</span>
-                            </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-secondary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.3s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-secondary transition-colors">多种实用功能</span>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-teal-500"></i> 轻量设计，零广告干扰
                             </li>
                         </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">HTML</span>
-                            <span class="bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">CSS</span>
-                            <span class="bg-secondary/10 text-secondary text-xs px-3 py-1 rounded-full hover:bg-secondary hover:text-white transition-colors">JS</span>
+                        <div class="flex gap-4">
+                            <a href="/dl/TC.crx" class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
+                                <i class="fas fa-download"></i> 下载扩展
+                            </a>
+                            <a href="/tab/index.html" target="_blank" class="px-6 py-3 border border-white/20 hover:border-white text-white rounded-lg font-bold transition-all flex items-center gap-2">
+                                <i class="fas fa-external-link-alt"></i> 在线演示
+                            </a>
                         </div>
-                        
-                        <div class="project-links flex flex-col gap-3">
-                            <a href="/dl/TC.crx" download target="_blank" class="bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center transform hover:scale-105 neon-glow group">
-                                <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 下载扩展
-                            </a>
-                            <a href="/tab/index.html" target="_blank" class="bg-white border border-secondary text-secondary px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center hover:bg-gray-50 transform hover:scale-105 group">
-                                <i class="fas fa-external-link-alt mr-2 group-hover:animate-pulse" data-fallback="🔗"></i> 在线体验
-                            </a>
+                    </div>
+                    <div class="flex-1 order-1 md:order-2 relative group">
+                        <div class="absolute inset-0 bg-teal-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative overflow-hidden">
+                                <!-- Abstract UI Representation -->
+                                <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-black"></div>
+                                <div class="relative z-10 w-3/4 h-3/4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 flex flex-col gap-4">
+                                    <div class="w-1/2 h-8 bg-white/10 rounded-lg"></div>
+                                    <div class="grid grid-cols-4 gap-4">
+                                        <div class="aspect-square bg-teal-500/20 rounded-lg"></div>
+                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
+                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
+                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 项目 2 -->
-                <div class="bg-light rounded-xl shadow-lg overflow-hidden project-card tech-border border border-gray-100 group">
-                    <div class="h-64 bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center relative">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary/10 to-primary/5 group-hover:from-primary/20 group-hover:to-primary/10 transition-all duration-500"></div>
-                        <div class="text-center p-4 relative z-10">
-                            <div class="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mb-4 mx-auto group-hover:scale-110 transition-transform duration-300">
-                                <i class="fas fa-tasks text-primary text-3xl group-hover:animate-pulse" data-fallback="✅"></i>
+                <!-- Project 2: HigheriDraft -->
+                <div class="flex flex-col md:flex-row gap-12 items-center">
+                    <div class="flex-1 relative group">
+                        <div class="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative overflow-hidden">
+                                <!-- Abstract UI Representation -->
+                                <div class="absolute inset-0 bg-gradient-to-bl from-gray-800 to-black"></div>
+                                <div class="relative z-10 w-3/4 h-3/4 bg-gray-800 rounded-xl border border-white/10 p-6 flex flex-col">
+                                    <div class="flex gap-2 mb-4 border-b border-white/5 pb-2">
+                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    </div>
+                                    <div class="space-y-2">
+                                        <div class="w-full h-2 bg-purple-500/20 rounded"></div>
+                                        <div class="w-2/3 h-2 bg-white/10 rounded"></div>
+                                        <div class="w-4/5 h-2 bg-white/10 rounded"></div>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="text-2xl font-bold text-dark group-hover:text-primary transition-colors">活力多功能草稿记事本</h3>
                         </div>
                     </div>
-                    <div class="p-8">
-                        <div class="flex items-center mb-4">
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">生产力工具</span>
-                            <span class="ml-2 bg-primary/10 text-primary text-xs px-3 py-1 rounded-full">测试版</span>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-500 text-xs font-bold border border-purple-500/20">PRODUCTIVITY TOOL</span>
+                            <span class="px-3 py-1 rounded-full bg-gray-800 text-gray-400 text-xs font-bold border border-white/10">BETA</span>
                         </div>
-                        <p class="text-gray-600 mb-6">
-                            电脑备忘录功能，让电脑工作尽然有序；电脑草稿本功能，让一切不再复杂。
+                        <h3 class="text-3xl font-bold text-white mb-6">活力多功能草稿记事本</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            专为碎片化信息管理打造。无论是临时的代码片段、会议记录，还是突发的灵感闪念，HigheriDraft 都能便捷记录。支持手写输入模式，还原纸笔记录的流畅感。
                         </p>
-                        
-                        <ul class="space-y-2 mb-6">
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-primary mt-1 mr-2 group-hover:animate-bounce" data-fallback="✅"></i>
-                                <span class="group-hover:text-primary transition-colors">备忘录功能</span>
+                        <ul class="space-y-4 mb-8 text-gray-300">
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-purple-500"></i> 备忘录 + 草稿本双模式
                             </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-primary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.1s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-primary transition-colors">草稿本功能</span>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-purple-500"></i> 支持触控手写输入
                             </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-primary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.2s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-primary transition-colors">手写功能</span>
-                            </li>
-                            <li class="flex items-start group">
-                                <i class="fas fa-check text-primary mt-1 mr-2 group-hover:animate-bounce" style="animation-delay: 0.3s;" data-fallback="✅"></i>
-                                <span class="group-hover:text-primary transition-colors">线上保存</span>
+                            <li class="flex items-center gap-3">
+                                <i class="fas fa-check-circle text-purple-500"></i> 基于 Electron 跨平台支持
                             </li>
                         </ul>
-                        
-                        <div class="project-tags flex flex-wrap gap-2 mb-6">
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">HTML</span>
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">JS</span>
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">CSS</span>
-                            <span class="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full hover:bg-primary hover:text-white transition-colors">Electron</span>
-                        </div>
-                        
-                        <div class="project-links">
-                            <a href="/webp/DRAFT/index.html" target="_blank" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 flex items-center justify-center transform hover:scale-105 shadow-lg hover:shadow-primary/30 group">
-                                <i class="fas fa-play-circle mr-2 group-hover:animate-pulse" data-fallback="▶️"></i> 在线体验测试
+                        <div class="flex gap-4">
+                            <a href="/webp/DRAFT/index.html" target="_blank" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
+                                <i class="fas fa-play"></i> 在线试用
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- 页脚 -->
-    <footer class="bg-light text-dark pt-16 pb-8 relative overflow-hidden">
-        <!-- 动态背景 -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 left-20 w-32 h-32 bg-primary/30 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-20 right-20 w-40 h-40 bg-secondary/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 6s;"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-                <div class="animate-slide-up">
-                    <div class="flex items-center mb-6 group">
-                        <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 neon-glow">
-                            <i class="fas fa-star text-xl group-hover:animate-spin" data-fallback="🪟"></i>
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8 text-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand Column -->
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-white text-dark flex items-center justify-center rounded-sm">
+                            <i class="fas fa-star text-xs"></i>
                         </div>
-                        <h2 class="ml-3 text-xl font-bold group-hover:text-neon transition-colors">STAR HigheriTech</h2>
+                        <span class="font-bold text-lg text-white font-cyber">STAR HigheriTech</span>
                     </div>
-                    <p class="text-gray-600 mb-6">官方网站</p>
+                    <p class="text-gray-500 mb-6">
+                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                    </p>
                     <div class="flex space-x-4">
-                        <a href="https://github.com/STAR-HigheriTech" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
-                            <i class="fab fa-github group-hover:animate-bounce" data-fallback="🐙"></i>
-                        </a>
-                        <a href="https://space.bilibili.com/2032759759" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
-                            <i class="fab fa-bilibili group-hover:animate-pulse" data-fallback="📺"></i>
-                        </a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
 
-                <div class="animate-slide-up" style="animation-delay: 0.2s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">联系信息</h3>
-                    <div class="contact-info space-y-4">
-                        <div class="flex items-start group">
-                            <i class="fas fa-map-marker-alt text-primary mt-1 mr-3 group-hover:animate-bounce" data-fallback="📍"></i>
-                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
-                        </div>
-                        <div class="flex items-start group">
-                            <i class="fas fa-phone text-primary mt-1 mr-3 group-hover:animate-bounce" style="animation-delay: 0.1s;" data-fallback="📞"></i>
-                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
-                        </div>
-                        <div class="flex items-start group">
-                            <i class="fas fa-envelope text-primary mt-1 mr-3 group-hover:animate-bounce" style="animation-delay: 0.2s;" data-fallback="✉️"></i>
-                            <span class="text-gray-600 group-hover:text-dark transition-colors">暂无</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="animate-slide-up" style="animation-delay: 0.4s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">快速链接</h3>
-                    <ul class="space-y-4">
-                        <li><a href="/index.html" class="text-gray-600 hover:text-dark transition-custom group">
-                            首页 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                        <li><a href="#projects" class="text-gray-600 hover:text-dark transition-custom group">
-                            项目展示 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
+                <!-- Link Column 1 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="../hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1 rounded ml-1">NEW</span></a></li>
+                        <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                        <li><a href="../../webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
+                        <li><a href="../../tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
+                        <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
                     </ul>
                 </div>
 
-                <div class="animate-slide-up" style="animation-delay: 0.6s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-secondary transition-colors">订阅更新</h3>
-                    <p class="text-gray-600 mb-6">
-                        订阅我们的新闻通讯，获取最新项目更新和技术文章。
-                    </p>
-                    <form class="flex flex-col sm:flex-row gap-3">
-                        <input type="email" placeholder="您的电子邮箱" class="flex-1 px-4 py-3 rounded-lg bg-white border border-gray-200 text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-secondary/40 focus:border-secondary/60 transition-all">
-                        <button class="bg-secondary hover:bg-secondary/90 hover:shadow-lg hover:shadow-secondary/20 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                            订阅
-                        </button>
-                    </form>
+                <!-- Link Column 2 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Link Column 3 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-200 pt-8 animate-fade-in" style="animation-delay: 0.8s;">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 STAR HigheriTech 信息活力工作室官方网站. 保留所有权利</p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">隐私政策</a>
-                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">使用条款</a>
-                    </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+                <div class="mb-4 md:mb-0">
+                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-400 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow-md');
-                navbar.classList.remove('py-3', 'shadow-sm');
-                navbar.classList.add('backdrop-blur-md');
-            } else {
-                navbar.classList.add('py-3', 'shadow-sm');
-                navbar.classList.remove('py-2', 'shadow-md');
-                navbar.classList.remove('backdrop-blur-md');
-            }
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
 
-        // 移动端菜单切换
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            // 添加动画效果
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.style.animation = 'slideInLeft 0.3s ease-out';
-            }
-        });
-
-        // 平滑滚动
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 关闭移动菜单（如果打开）
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-
-        // 滚动动画观察器
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = entry.target.dataset.animation || 'fadeIn 0.8s ease-out';
-                    entry.target.style.opacity = '1';
-                }
-            });
-        }, observerOptions);
-
-        // 观察所有需要动画的元素
-        document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-in-left, .animate-slide-in-right');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                observer.observe(el);
-            });
-        });
-
-        // 使用Intersection Observer API实现图片懒加载
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取所有带有lazy-image类的图片
-            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
-            
-            // 如果浏览器支持Intersection Observer
-            if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
-                        // 当图片进入视口
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            // 添加加载动画
-                            image.style.opacity = '0';
-                            image.style.transition = 'opacity 0.5s ease-in-out';
-                            
-                            // 模拟加载延迟
-                            setTimeout(() => {
-                                image.style.opacity = '1';
-                                observer.unobserve(image);
-                            }, 300);
-                        }
-                    });
-                }, {
-                    // 图片一进入视口就开始加载
-                    rootMargin: '0px 0px 50px 0px',
-                    threshold: 0.01
+                menu.classList.add('hidden'); // Close mobile menu
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-                
-                // 对每个lazy-image类的图片进行监视
-                lazyImages.forEach(function(image) {
-                    imageObserver.observe(image);
-                });
-            }
-        });
-
-        // 鼠标跟随效果
-        let mouseX = 0;
-        let mouseY = 0;
-        let isMouseMoving = false;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            isMouseMoving = true;
-
-            // 清除之前的超时
-            clearTimeout(isMouseMoving);
-
-            // 设置鼠标停止移动的超时
-            isMouseMoving = setTimeout(() => {
-                isMouseMoving = false;
-            }, 100);
-        });
-
-        // 动态粒子效果
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.position = 'fixed';
-            particle.style.width = Math.random() * 4 + 1 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.background = `radial-gradient(circle, rgba(22, 93, 255, ${Math.random() * 0.6 + 0.2}) 0%, transparent 70%)`;
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '9999';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.top = window.innerHeight + 'px';
-            particle.style.opacity = '0';
-            particle.style.transition = 'all 8s ease-out';
-
-            document.body.appendChild(particle);
-
-            // 动画
-            setTimeout(() => {
-                particle.style.opacity = '1';
-                particle.style.transform = `translateY(-${window.innerHeight + 100}px) translateX(${Math.random() * 200 - 100}px) scale(${Math.random() * 0.5 + 0.5})`;
-            }, 50);
-
-            // 清理
-            setTimeout(() => {
-                particle.remove();
-            }, 8000);
-        }
-
-        // 定期创建粒子
-        setInterval(() => {
-            if (Math.random() < 0.3) { // 30%概率创建粒子
-                createParticle();
-            }
-        }, 2000);
-
-        // 添加滚动视差效果
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.animate-float');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
-
-// 添加3D卡片效果 - 修改版本：向下倾斜改为向上倾斜，左右幅度减小
-document.querySelectorAll('.project-card, .service-card').forEach(card => {
-    card.addEventListener('mouseenter', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        // 计算左右倾斜 - 减小幅度
-        const rotateY = (centerX - x) / 20; // 从/10改为/20，幅度减半
-        
-        // 计算上下倾斜，但将向下倾斜改为向上倾斜
-        let rotateX = (y - centerY) / 10;
-        // 如果rotateX为负值（原本是向下倾斜），则改为正值（向上倾斜）
-        if (rotateX < 0) {
-            rotateX = Math.abs(rotateX); // 取绝对值，使向下倾斜变为向上倾斜
-        }
-        
-        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    });
-});
-
-        // Font Awesome 图标加载检测和优雅降级
-        document.addEventListener('DOMContentLoaded', function() {
-            // 检测Font Awesome是否加载成功
-            function checkFontAwesomeLoaded() {
-                // 创建一个测试元素
-                const testElement = document.createElement('i');
-                testElement.className = 'fas fa-font-awesome';
-                testElement.style.position = 'absolute';
-                testElement.style.left = '-9999px';
-                document.body.appendChild(testElement);
-                
-                // 获取计算后的样式
-                const computedStyle = window.getComputedStyle(testElement, ':before');
-                const contentValue = computedStyle.getPropertyValue('content');
-                
-                // 移除测试元素
-                document.body.removeChild(testElement);
-                
-                // 如果content是默认值，说明Font Awesome未加载
-                return contentValue && contentValue !== 'normal' && contentValue !== 'none';
-            }
-            
-            // 设置图标降级显示
-            function setupFallbackIcons() {
-                const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                
-                icons.forEach(icon => {
-                    const fallback = icon.getAttribute('data-fallback');
-                    
-                    // 添加加载状态类
-                    icon.classList.add('fa-loading');
-                    
-                    // 设置备用显示
-                    const fallbackSpan = document.createElement('span');
-                    fallbackSpan.className = 'fa-fallback';
-                    fallbackSpan.textContent = fallback;
-                    fallbackSpan.style.display = 'none';
-                    icon.parentNode.insertBefore(fallbackSpan, icon.nextSibling);
-                });
-            }
-            
-            // 检查并应用降级方案
-            function applyFallbackIfNeeded() {
-                const isFALoaded = checkFontAwesomeLoaded();
-                
-                if (!isFALoaded) {
-                    console.log('Font Awesome 未加载，使用备用图标');
-                    
-                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                    icons.forEach(icon => {
-                        const fallback = icon.getAttribute('data-fallback');
-                        const fallbackSpan = icon.nextElementSibling;
-                        
-                        if (fallbackSpan && fallbackSpan.classList.contains('fa-fallback')) {
-                            // 显示备用图标，隐藏原图标
-                            icon.style.display = 'none';
-                            fallbackSpan.style.display = 'inline-block';
-                        }
-                    });
-                } else {
-                    console.log('Font Awesome 已成功加载');
-                    
-                    // 移除加载状态
-                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                    icons.forEach(icon => {
-                        icon.classList.remove('fa-loading');
-                    });
-                }
-            }
-            
-            // 初始化
-            setupFallbackIcons();
-            
-            // 延迟检查，确保Font Awesome有足够时间加载
-            setTimeout(applyFallbackIfNeeded, 2000);
-            
-            // 可选：添加重试机制
-            let retryCount = 0;
-            const maxRetries = 3;
-            
-            function retryCheck() {
-                retryCount++;
-                if (retryCount <= maxRetries) {
-                    setTimeout(applyFallbackIfNeeded, 1000 * retryCount);
-                }
-            }
-            
-            // 初次检查后设置重试
-            setTimeout(retryCheck, 3000);
-        });
-
-        // 添加键盘导航支持
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', function() {
-            document.body.classList.remove('keyboard-navigation');
-        });
-
-        // 性能优化：防抖函数
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // 应用防抖到滚动事件
-        const debouncedScrollHandler = debounce(() => {
-            // 滚动处理逻辑
-        }, 10);
-
-        window.addEventListener('scroll', debouncedScrollHandler);
     </script>
 </body>
 </html>

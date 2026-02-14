@@ -3,17 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HigheriPE 5.2 - 功能强大的PE系统</title>
-    <!-- 预连接到国内CDN以提升加载速度 -->
+    <title>HigheriPE 5.2 - 功能强大的PE系统 | STAR HigheriTech</title>
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://tc.z.wiki">
-    <link rel="preconnect" href="https://www.123pan.com">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
-    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
-    <!-- 使用国内CDN加载Font Awesome V6 -->
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -23,26 +19,28 @@
                         primary: '#165DFF',
                         secondary: '#36CFC9',
                         accent: '#722ED1',
-                        dark: '#1D2129',
+                        dark: '#0a0a0a',
+                        darker: '#050505',
                         light: '#F2F3F5',
-                        neon: '#00FFFF',
-                        electric: '#0080FF'
+                        blue: {
+                            500: '#3B82F6',
+                            600: '#2563EB',
+                            900: '#1E3A8A',
+                        },
+                        cyan: {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                        }
                     },
                     fontFamily: {
-                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
                         cyber: ['Orbitron', 'Inter', 'sans-serif'],
                     },
-                    animation: {
-                        'float': 'float 6s ease-in-out infinite',
-                        'glow': 'glow 2s ease-in-out infinite alternate',
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'slide-up': 'slideUp 0.6s ease-out',
-                        'fade-in': 'fadeIn 0.8s ease-out',
-                        'slide-in-left': 'slideInLeft 0.8s ease-out',
-                        'slide-in-right': 'slideInRight 0.8s ease-out',
-                        'matrix': 'matrix 20s linear infinite',
-                        'tech-scan': 'techScan 3s ease-in-out infinite',
-                        'particle': 'particle 8s ease-in-out infinite',
+                    boxShadow: {
+                        'neon-glow': '0 0 20px rgba(59, 130, 246, 0.6)', // Blue glow for PE
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
                     }
                 }
             }
@@ -51,926 +49,458 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
         
-        @layer utilities {
-            .content-auto {
-                content-visibility: auto;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .transition-custom {
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .bg-gradient-blue {
-                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 100%);
-            }
-            .bg-cyber-gradient {
-                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 50%, #722ED1 100%);
-            }
-            .glass-morphism {
-                background: rgba(255, 255, 255, 0.1);
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-            }
-            .neon-glow {
-                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
-            }
-            .tech-border {
-                position: relative;
-                overflow: hidden;
-            }
-            .tech-border::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(22, 93, 255, 0.4), transparent);
-                transition: left 0.5s;
-            }
-            .tech-border:hover::before {
-                left: 100%;
-            }
-            .project-card {
-                transition: all 0.25s ease;
-            }
-            .project-card:hover {
-                transform: translateY(-6px);
-                box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
-            }
-            .service-card {
-                transition: all 0.25s ease;
-                position: relative;
-            }
-            .service-card:hover {
-                transform: translateY(-8px);
-                box-shadow: 0 20px 32px rgba(15, 23, 42, 0.18);
-            }
-            .service-card::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, rgba(22, 93, 255, 0.1), rgba(54, 207, 201, 0.1));
-                opacity: 0;
-                transition: opacity 0.3s ease;
-                border-radius: inherit;
-            }
-            .service-card:hover::before {
-                opacity: 1;
-            }
-            
-            /* 动画定义 */
-            @keyframes float {
-                0%, 100% { transform: translateY(0px); }
-                50% { transform: translateY(-8px); }
-            }
-            
-            @keyframes glow {
-                0% { box-shadow: 0 0 8px rgba(22, 93, 255, 0.35); }
-                100% { box-shadow: 0 0 16px rgba(22, 93, 255, 0.45); }
-            }
-            
-            @keyframes slideUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            
-            @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-            }
-            
-            @keyframes slideInLeft {
-                from {
-                    opacity: 0;
-                    transform: translateX(-50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes slideInRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-            
-            @keyframes matrix {
-                0% { transform: translateY(-100vh); opacity: 0; }
-                10% { opacity: 1; }
-                90% { opacity: 1; }
-                100% { transform: translateY(100vh); opacity: 0; }
-            }
-            
-            @keyframes techScan {
-                0% { transform: translateX(-100%); }
-                50% { transform: translateX(0%); }
-                100% { transform: translateX(100%); }
-            }
-            
-            @keyframes particle {
-                0%, 100% { 
-                    transform: translateY(0px) translateX(0px) scale(1);
-                    opacity: 0.7;
-                }
-                25% { 
-                    transform: translateY(-20px) translateX(10px) scale(1.1);
-                    opacity: 1;
-                }
-                50% { 
-                    transform: translateY(-40px) translateX(-5px) scale(0.9);
-                    opacity: 0.8;
-                }
-                75% { 
-                    transform: translateY(-60px) translateX(15px) scale(1.05);
-                    opacity: 0.9;
-                }
-            }
-            
-            /* 科技背景效果 */
-            .tech-bg {
-                background: 
-                    linear-gradient(90deg, rgba(22, 93, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(rgba(22, 93, 255, 0.03) 1px, transparent 1px);
-                background-size: 20px 20px;
-            }
-            
-            /* 浮动粒子效果 */
-            .floating-particles {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                pointer-events: none;
-            }
-            
-            .particle {
-                position: absolute;
-                background: radial-gradient(circle, rgba(22, 93, 255, 0.6) 0%, transparent 70%);
-                border-radius: 50%;
-                animation: particle 8s ease-in-out infinite;
-            }
-            
-            /* 全息效果 */
-            .holographic {
-                background: linear-gradient(
-                    135deg,
-                    rgba(22, 93, 255, 0.06),
-                    rgba(54, 207, 201, 0.06)
-                );
-            }
-            
-            /* 加载动画 */
-            .loading-spinner {
-                width: 40px;
-                height: 40px;
-                border: 4px solid rgba(22, 93, 255, 0.3);
-                border-top: 4px solid #165DFF;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-            }
-            
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
+        body {
+            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #F2F3F5;
         }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1D2129; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: #3B82F6; transition: width 0.3s;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .text-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        
+        .bento-item { position: relative; overflow: hidden; }
+        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.2); }
     </style>
 </head>
-<body class="font-inter bg-light text-dark tech-bg">
-    <!-- 粒子背景 -->
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="floating-particles">
-            <div class="particle w-2 h-2 top-10 left-10" style="animation-delay: 0s;"></div>
-            <div class="particle w-1 h-1 top-1/3 right-20" style="animation-delay: 2s;"></div>
-            <div class="particle w-3 h-3 bottom-1/4 left-1/4" style="animation-delay: 4s;"></div>
-            <div class="particle w-1 h-1 top-2/3 right-1/3" style="animation-delay: 6s;"></div>
-            <div class="particle w-2 h-2 bottom-1/3 left-2/3" style="animation-delay: 1s;"></div>
-            <div class="particle w-1 h-1 top-1/2 left-3/4" style="animation-delay: 3s;"></div>
-        </div>
-    </div>
-    
-    <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 glass-morphism shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center group cursor-pointer">
-                <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 neon-glow">
-                    <i class="fab fa-microsoft text-xl group-hover:animate-spin" data-fallback="🪟"></i>
-                </div>
-                <h1 class="ml-3 text-xl font-bold text-primary font-cyber group-hover:text-neon transition-all duration-300">
-                    HigheriPE
-                </h1>
-            </div>
-            <nav class="hidden md:flex space-x-8">
-                <a href="../index.html" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    首页
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#features" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    核心功能
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#screenshots" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    界面展示
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#download" class="text-dark hover:text-primary transition-custom font-medium relative group">
-                    下载
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-            </nav>
-            <div class="flex items-center space-x-4">
-                <a href="#download" class="hidden md:block bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
-                    立即下载
-                </a>
-                <button id="menu-toggle" class="md:hidden text-dark focus:outline-none group">
-                    <i class="fas fa-bars text-xl group-hover:scale-125 transition-transform duration-300" data-fallback="☰"></i>
-                </button>
-            </div>
-        </div>
-        <!-- 移动端菜单 -->
-        <div id="mobile-menu" class="hidden md:hidden glass-morphism shadow-lg absolute w-full">
-            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
-                <a href="../index.html" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    首页
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#features" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    核心功能
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#screenshots" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    界面展示
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#download" class="text-dark hover:text-primary py-2 transition-custom font-medium relative group">
-                    下载
-                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#download" class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full font-medium transition-all duration-300 text-center transform hover:scale-105 neon-glow">
-                    立即下载
-                </a>
-            </div>
-        </div>
-    </header>
+<body class="antialiased selection:bg-blue-500 selection:text-white">
 
-    <!-- 英雄区域 -->
-    <section class="pt-32 pb-20 bg-gradient-to-br from-primary/5 to-secondary/5 relative overflow-hidden">
-        <!-- 动态背景元素 -->
-        <div class="absolute inset-0 opacity-30">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 6s;"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 animate-slide-in-left">
-                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark mb-6 font-cyber">
-                        <span class="text-primary hover:text-neon transition-all duration-300 cursor-default">HigheriPE 5.2</span>
-                        <br>
-                        <span class="text-dark hover:text-primary transition-all duration-300">功能强大的PE系统</span>
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-8 max-w-xl leading-relaxed">
-                        集成常用装机工具和 IT 天空 EIX 一键装机软件，适合日常维护和新机部署等场景。
-                    </p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#download" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
-                            <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 立即下载
-                        </a>
-                        <a href="#faq" class="bg-white hover:bg-gray-50 text-primary border-2 border-primary px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-primary/10 text-center transform hover:scale-105 group">
-                            <i class="fas fa-info-circle mr-2 group-hover:animate-pulse" data-fallback="ℹ️"></i> 查看文档
-                        </a>
-                    </div>
-                    <div class="mt-10 flex items-center space-x-6">
-                        <div>
-                            <div class="flex items-center">
-                                <div class="flex space-x-1">
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.1s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.2s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.3s;" data-fallback="⭐"></i>
-                                    <i class="fas fa-star text-yellow-400 hover:animate-spin" style="animation-delay: 0.4s;" data-fallback="⭐"></i>
-                                </div>
-                                <span class="ml-2 font-medium">5.0</span>
-                            </div>
-                            <p class="text-sm text-gray-500">旗舰产品</p>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-dark/80 backdrop-blur-lg border-b border-white/10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-12 transition-transform duration-700">
+                            <i class="fab fa-microsoft text-lg"></i>
                         </div>
-                    </div>
-                </div>
-                <div class="md:w-1/2 relative animate-slide-in-right">
-                    <div class="relative z-10 bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-all duration-500 tech-border">
-                        <img loading="lazy" data-src="/img/PE11.png" alt="HigheriPE5.2界面预览" class="w-full h-auto">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end">
-                            <div class="p-6">
-                                <h3 class="text-white text-xl font-bold mb-2">一键装机工具</h3>
-                                <p class="text-white/80">小白用户也能轻松装机</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 额外的科技效果 -->
-                    <div class="absolute top-1/4 -right-6 w-32 h-32 bg-accent/20 rounded-full blur-2xl -z-10 animate-float"></div>
-                    <div class="absolute bottom-1/4 -left-8 w-40 h-40 bg-secondary/20 rounded-full blur-2xl -z-10 animate-float" style="animation-delay: 2s;"></div>
-                    <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-primary/30 rounded-full blur-xl -z-10 animate-float" style="animation-delay: 4s;"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 特点区域 -->
-    <section id="features" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-primary/3 to-secondary/3"></div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 font-cyber">核心功能</h2>
-                <p class="text-gray-600 text-lg">探索HigheriPE的强大功能</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 特点卡片 1 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fas fa-bolt text-primary text-2xl group-hover:animate-bounce" data-fallback="⚡"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">EIX一键装机工具</h3>
-                    <p class="text-gray-600">IT天空精品EIX一键装机工具，小白用户也能轻松装机。</p>
-                </div>
-
-                <!-- 特点卡片 2 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fas fa-cogs text-primary text-2xl group-hover:animate-spin" data-fallback="🛡️"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">支持插件</h3>
-                    <p class="text-gray-600">支持Edgeless插件与HigheriPE插件，装机时也能办公娱乐。</p>
-                </div>
-
-                <!-- 特点卡片 3 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fas fa-tasks text-primary text-2xl group-hover:animate-pulse" data-fallback="⚙️"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">装机必备软件</h3>
-                    <p class="text-gray-600">自带市面上大部分装机必备软件。</p>
-                </div>
-
-                <!-- 特点卡片 4 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fas fa-plug text-primary text-2xl group-hover:animate-bounce" data-fallback="🔌"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">双PE启动</h3>
-                    <p class="text-gray-600">Win 11 PE + Win 2003 PE双启动，老机型电脑可选兼容性更强的Win 2003 PE进行装机。</p>
-                </div>
-
-                <!-- 特点卡片 5 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fab fa-microsoft text-primary text-2xl group-hover:animate-spin" data-fallback="🪟"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">Win 11 PE</h3>
-                    <p class="text-gray-600">基于较新的Windows 11系统开发，提供最佳兼容性和性能。</p>
-                </div>
-
-                <!-- 特点卡片 6 -->
-                <div class="bg-light rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group service-card tech-border">
-                    <div class="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <i class="fas fa-computer text-primary text-2xl group-hover:animate-pulse" data-fallback="🪟"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-dark group-hover:text-primary transition-colors">Win 2003 PE</h3>
-                    <p class="text-gray-600">基于兼容旧机型的Windows 2003系统开发，提供最佳兼容性和性能。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 截图区域 -->
-    <section id="screenshots" class="py-20 bg-light relative overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute top-20 left-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-20 right-10 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-        </div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 font-cyber">界面展示</h2>
-                <p class="text-gray-600 text-lg">预览HigheriPE的用户界面</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 截图 1 -->
-                <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 project-card tech-border">
-                    <img loading="lazy" class="w-full h-auto" data-src="/img/PE11.png" alt="HigheriPE5.2截图1">
-                    <div class="p-6 bg-white">
-                        <h3 class="text-lg font-bold text-dark mb-2 group-hover:text-primary transition-colors">Win 11 PE</h3>
-                        <p class="text-gray-600">基于Windows 11最稳定的22H2版本</p>
-                    </div>
-                </div>
-
-                <!-- 截图 2 -->
-                <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 project-card tech-border">
-                    <img loading="lazy" class="w-full h-auto" data-src="/img/2003.png" alt="HigheriPE5.2截图2">
-                    <div class="p-6 bg-white">
-                        <h3 class="text-lg font-bold text-dark mb-2 group-hover:text-primary transition-colors">Win 2003 PE</h3>
-                        <p class="text-gray-600">基于对旧机型兼容性极强的Windows Server 2003</p>
-                    </div>
-                </div>
-
-                <!-- 截图 3 -->
-                <div class="rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 project-card tech-border">
-                    <img loading="lazy" class="w-full h-auto" data-src="https://tc.z.wiki/autoupload/f/9N_u8o2-NHYExq43-j5XZ8SZW8uZg2pdX9tNOMtzPj6yl5f0KlZfm6UsKj-HyTuv/20251003/oxgw/1310X983/lQLPKHIrvUHkTHXNAn_NAqywv2O32cmjEN0IZKlItSOuAA_684_639.png/webp" alt="HigheriPE5.2截图3">
-                    <div class="p-6 bg-white">
-                        <h3 class="text-lg font-bold text-dark mb-2 group-hover:text-primary transition-colors">HigheriPE_Setup Hub</h3>
-                        <p class="text-gray-600">一键安装PE与HigheriPE插件</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 下载区域 -->
-    <section id="download" class="py-20 bg-cyber-gradient text-white relative overflow-hidden">
-        <!-- 动态背景元素 -->
-        <div class="absolute inset-0">
-            <div class="absolute top-0 left-0 w-full h-full opacity-20">
-                <div class="absolute top-10 left-10 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float"></div>
-                <div class="absolute bottom-10 right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-float" style="animation-delay: 6s;"></div>
-            </div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="max-w-3xl mx-auto text-center animate-fade-in">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold mb-6 font-cyber">下载HigheriPE</h2>
-                <p class="text-white/80 text-lg mb-10">选择适合您的下载方式</p>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-10">
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 w-full sm:w-auto hover:bg-white/20 transition-all duration-300 tech-border group">
-                        <div class="flex items-center justify-center mb-4">
-                            <i class="fas fa-file-archive text-4xl group-hover:animate-bounce" data-fallback="📦"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">ISO镜像文件 (不推荐)</h3>
-                        <p class="text-white/70 mb-4">不支持插件等功能</p>
-                        <div class="flex justify-center">
-                            <a href="https://www.123912.com/s/Wcrtjv-1r9pH" target="_blank" class="bg-white text-primary px-6 py-3 rounded-full font-medium transition-all duration-300 hover:bg-gray-100 transform hover:scale-105">
-                                <i class="fas fa-download mr-2"></i> 不推荐
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 w-full sm:w-auto hover:bg-white/20 transition-all duration-300 tech-border group">
-                        <div class="flex items-center justify-center mb-4">
-                            <i class="fab fa-microsoft text-4xl group-hover:animate-spin" data-fallback="🪟"></i>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">一键安装工具 (推荐)</h3>
-                        <p class="text-white/70 mb-4">可一键安装PE与个性化插件到U盘</p>
-                        <div class="flex justify-center">
-                            <a href="https://www.123912.com/s/Wcrtjv-4r9pH" target="_blank" class="bg-white text-primary px-6 py-3 rounded-full font-medium transition-all duration-300 hover:bg-gray-100 transform hover:scale-105 neon-glow">
-                                <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 立即下载
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 max-w-lg mx-auto tech-border group">
-                    <h3 class="text-xl font-bold mb-4 group-hover:text-neon transition-colors">获取更新日志和技术文章</h3>
-                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                        <a href="https://docs.higheri.tech/BLOG/index.html" target="_blank" class="bg-white text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-gray-100 transform hover:scale-105 flex-1 text-center group">
-                            <i class="fas fa-blog mr-2 group-hover:animate-bounce" data-fallback="📝"></i> Alex的博客
-                        </a>
-                        <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="bg-white text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-gray-100 transform hover:scale-105 flex-1 text-center group">
-                            <i class="fas fa-book mr-2 group-hover:animate-pulse" data-fallback="📚"></i> PE文档
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ区域 -->
-    <section id="faq" class="py-20 bg-white relative overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute top-10 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-10 right-10 w-80 h-80 bg-secondary/5 rounded-full blur-3xl animate-float" style="animation-delay: 4s;"></div>
-        </div>
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-in">
-                <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4 font-cyber">获取使用文档</h2>
-                <p class="text-gray-600 text-lg">阅读关于HigheriPE的使用文档</p>
-            </div>
-
-            <div class="max-w-3xl mx-auto space-y-6">
-                <!-- FAQ项目 1 -->
-                <div class="bg-light rounded-xl overflow-hidden tech-border group">
-                    <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="faq-toggle w-full flex items-center justify-between p-6 text-left focus:outline-none hover:bg-primary/5 transition-all duration-300">
-                        <span class="text-xl font-bold text-dark group-hover:text-primary transition-colors">HigheriPE官方使用文档</span>
-                        <i class="fas fa-arrow-right text-primary transition-transform duration-300 group-hover:translate-x-1" data-fallback="➡️"></i>
+                        <span class="font-bold text-2xl text-white font-cyber tracking-wider">Higheri<span class="text-blue-500">PE</span></span>
                     </a>
                 </div>
+                
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">首页</a>
+                    <a href="#features" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">特性</a>
+                    <a href="#screenshots" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">截图</a>
+                    <a href="#download" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">下载</a>
+                    
+                    <a href="#download" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300">
+                        <span>立即获取</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-blue-500 focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-white/5 mt-0 bg-dark/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-white/10 shadow-2xl">
+                <div class="flex flex-col space-y-4">
+                    <a href="../../index.html" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">首页</a>
+                    <a href="#features" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">特性</a>
+                    <a href="#screenshots" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">截图</a>
+                    <a href="#download" class="text-blue-500 hover:text-white text-lg font-medium transition-colors block">立即下载</a>
+                </div>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- 页脚 -->
-    <footer class="bg-light text-dark pt-16 pb-8 relative overflow-hidden">
-        <!-- 动态背景 -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-20 left-20 w-32 h-32 bg-primary/30 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-20 right-20 w-40 h-40 bg-secondary/30 rounded-full blur-3xl animate-float" style="animation-delay: 3s;"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-accent/20 rounded-full blur-3xl animate-float" style="animation-delay: 6s;"></div>
-        </div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
-                <div class="animate-slide-up">
-                    <div class="flex items-center mb-6 group">
-                        <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300 neon-glow">
-                            <i class="fas fa-star text-xl group-hover:animate-spin" data-fallback="🪟"></i>
-                        </div>
-                        <h2 class="ml-3 text-xl font-bold group-hover:text-neon transition-colors">STAR HigheriTech</h2>
+    <!-- Hero Section -->
+    <div class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-darker">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full filter blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="flex-1 text-center md:text-left">
+                    <div class="inline-block px-3 py-1 border border-blue-500/50 text-blue-500 text-xs font-bold tracking-widest uppercase mb-6 bg-blue-900/10 backdrop-blur-md rounded-full">
+                        System Maintenance Tool
                     </div>
-                    <p class="text-gray-600 mb-6">官方网站</p>
-                    <div class="flex space-x-4">
-                        <a href="https://github.com/STAR-HigheriTech" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
-                            <i class="fab fa-github group-hover:animate-bounce" data-fallback="🐙"></i>
-                        </a>
-                        <a href="https://space.bilibili.com/2032759759" target="_blank" class="w-12 h-12 rounded-full bg-white flex items-center justify-center hover:bg-primary transition-all duration-300 transform hover:scale-110 group">
-                            <i class="fab fa-bilibili group-hover:animate-pulse" data-fallback="📺"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="animate-slide-up" style="animation-delay: 0.2s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-primary transition-colors">感谢链接</h3>
-                    <ul class="space-y-4">
-                        <li><a href="https://firpe.cn/" target="_blank" class="text-gray-600 hover:text-dark transition-custom group">
-                            FirPE <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                        <li><a href="https://home.edgeless.top/" target="_blank" class="text-gray-600 hover:text-dark transition-custom group">
-                            EdgelessPE <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                        <li><a href="http://wuyou.net/" target="_blank" class="text-gray-600 hover:text-dark transition-custom group">
-                            无忧论坛 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                    </ul>
-                </div>
-
-                <div class="animate-slide-up" style="animation-delay: 0.4s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-primary transition-colors">快速链接</h3>
-                    <ul class="space-y-4">
-                        <li><a href="../index.html" class="text-gray-600 hover:text-dark transition-custom group">
-                            首页 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                        <li><a href="#features" class="text-gray-600 hover:text-dark transition-custom group">
-                            核心功能 <span class="inline-block group-hover:translate-x-1 transition-transform">→</span>
-                        </a></li>
-                    </ul>
-                </div>
-
-                <div class="animate-slide-up" style="animation-delay: 0.6s;">
-                    <h3 class="text-lg font-bold mb-6 hover:text-primary transition-colors">订阅更新</h3>
-                    <p class="text-gray-600 mb-6">
-                        订阅我们的新闻通讯，获取最新项目更新和技术文章。
+                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight">
+                        优化您的 <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400 text-glow">维护体验</span>
+                    </h1>
+                    <p class="text-xl text-gray-400 mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
+                        HigheriPE 5.2 集成 EIX 一键装机与专业维护工具。Win 11 + Win 2003 双内核，新老机型兼容。
                     </p>
-                    <form class="flex flex-col sm:flex-row gap-3">
-                        <input type="email" placeholder="您的电子邮箱" class="flex-1 px-4 py-3 rounded-lg bg-white border border-gray-200 text-dark placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 transition-all">
-                        <button class="bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105">
-                            订阅
-                        </button>
-                    </form>
+                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                        <a href="#download" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/50 flex items-center gap-2 rounded-lg group">
+                            立即下载 <i class="fas fa-download group-hover:translate-y-1 transition-transform"></i>
+                        </a>
+                        <a href="#features" class="px-8 py-4 border border-gray-700 hover:border-white text-gray-300 hover:text-white font-bold text-lg transition-all rounded-lg bg-white/5 backdrop-blur-sm">
+                            了解更多
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex-1 relative">
+                    <div class="relative z-10 rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-900/30 transform md:rotate-y-12 md:rotate-x-6 hover:rotate-0 transition-all duration-700 group">
+                        <!-- Mock PE Interface -->
+                        <img src="/img/PE11.png" alt="HigheriPE Interface" class="w-full h-auto object-cover opacity-90 group-hover:opacity-100 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent"></div>
+                    </div>
+                    <!-- Decorative Elements -->
+                    <div class="absolute -top-10 -right-10 w-24 h-24 bg-blue-500 rounded-full filter blur-[40px] opacity-40"></div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-cyan-500 rounded-full filter blur-[50px] opacity-40"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bold Bento Grid Products -->
+    <div id="products" class="py-24 bg-[#161b22] relative">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">POWERFUL <span class="text-blue-500">CORE</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
+                <!-- Large Feature: EIX -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-blue-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
+                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 text-blue-500 border border-blue-500/20 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-bolt text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">EIX 一键装机</h3>
+                    <p class="text-gray-400 text-lg max-w-lg">
+                        内置 IT 天空精品 EIX 2 工具。自动识别镜像，一键分区、还原，轻松重装系统。
+                    </p>
+                </div>
+
+                <!-- Tall Feature: Dual Core -->
+                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-cyan-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-b from-cyan-900/10 to-transparent"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-500 border border-cyan-500/20">
+                            <i class="fab fa-microsoft text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">双核驱动</h3>
+                        <p class="text-gray-400 mb-8">
+                            Win 11 + Win 2003 双 PE 系统。
+                        </p>
+                        <div class="space-y-4">
+                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm text-white font-bold">Win 11 PE</span>
+                                    <span class="text-xs text-green-400">新机首选</span>
+                                </div>
+                                <p class="text-xs text-gray-500">支持 NVMe, UEFI, 最新硬件</p>
+                            </div>
+                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="text-sm text-white font-bold">Win 2003 PE</span>
+                                    <span class="text-xs text-yellow-400">老机兼容</span>
+                                </div>
+                                <p class="text-xs text-gray-500">兼容 IDE, BIOS, 256M 内存</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medium Feature: Plugins -->
+                <div class="md:col-span-2 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-purple-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
+                    <div class="flex-1">
+                        <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-500 border border-purple-500/20">
+                            <i class="fas fa-plug text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">插件扩展</h3>
+                        <p class="text-gray-400">
+                            支持 Edgeless 与 HigheriPE 专属插件包。办公、娱乐、网管工具，即插即用，随身携带的操作系统。
+                        </p>
+                    </div>
+                    <div class="hidden md:block w-32 h-32 bg-purple-500/5 rounded-full filter blur-xl"></div>
+                </div>
+
+                <!-- Small Feature: Network -->
+                <div class="md:col-span-1 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-green-500/30 card-hover-effect p-8 flex flex-col justify-center">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 text-green-500 border border-green-500/20">
+                        <i class="fas fa-wifi text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">全能网络</h3>
+                    <p class="text-gray-400 text-sm">
+                        内置万能网卡驱动，支持 WiFi、有线网络、蓝牙连接。
+                    </p>
+                </div>
+
+                <!-- Small Feature: Pure -->
+                <div class="md:col-span-1 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-white/30 card-hover-effect p-8 flex flex-col justify-center">
+                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-4 text-white border border-white/20">
+                        <i class="fas fa-leaf text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">纯净无广</h3>
+                    <p class="text-gray-400 text-sm">
+                        无捆绑软件，无锁定主页，还原最纯粹的维护体验。
+                    </p>
+                </div>
+
+                <!-- Small Feature: Rescue -->
+                <div class="md:col-span-1 group bento-item bg-gray-900/50 rounded-3xl border border-white/5 hover:border-red-500/30 card-hover-effect p-8 flex flex-col justify-center">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-4 text-red-500 border border-red-500/20">
+                        <i class="fas fa-life-ring text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">数据救援</h3>
+                    <p class="text-gray-400 text-sm">
+                        集成 DiskGenius 等专业数据恢复工具，挽救珍贵数据。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toolbox Section -->
+    <div class="py-24 bg-darker border-t border-white/5">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center font-cyber">POWERFUL <span class="text-cyan-400">TOOLBOX</span></h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- Tool Category 1 -->
+                <div class="bg-gray-900/40 rounded-2xl p-6 border border-white/5 hover:border-blue-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all text-blue-500">
+                        <i class="fas fa-hdd"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-3">磁盘工具</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>DiskGenius</li>
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>傲梅分区助手</li>
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>HDTune Pro</li>
+                    </ul>
+                </div>
+
+                <!-- Tool Category 2 -->
+                <div class="bg-gray-900/40 rounded-2xl p-6 border border-white/5 hover:border-cyan-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-cyan-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-cyan-500 group-hover:text-white transition-all text-cyan-500">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-3">系统维护</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>Dism++</li>
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>WinNTSetup</li>
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>CPU-Z / GPU-Z</li>
+                    </ul>
+                </div>
+
+                <!-- Tool Category 3 -->
+                <div class="bg-gray-900/40 rounded-2xl p-6 border border-white/5 hover:border-purple-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition-all text-purple-500">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-3">密码恢复</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>NTPWEdit</li>
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Windows 密码修改</li>
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Office 密码移除</li>
+                    </ul>
+                </div>
+
+                <!-- Tool Category 4 -->
+                <div class="bg-gray-900/40 rounded-2xl p-6 border border-white/5 hover:border-green-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-500 group-hover:text-white transition-all text-green-500">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-white font-bold mb-3">网络远程</h3>
+                    <ul class="text-gray-400 text-sm space-y-2">
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>ToDesk 远程</li>
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>AnyDesk</li>
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>Edge 浏览器</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Use Section -->
+    <div class="py-24 bg-dark relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-16 text-center font-cyber">HOW TO <span class="text-blue-500">USE</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
+                <!-- Connector Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gray-800 z-0"></div>
+                
+                <!-- Step 1 -->
+                <div class="relative z-10 text-center">
+                    <div class="w-24 h-24 bg-darker rounded-full border-4 border-gray-800 flex items-center justify-center mx-auto mb-6 shadow-xl relative group">
+                        <div class="absolute inset-0 rounded-full border-4 border-blue-500 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+                        <span class="text-4xl font-black text-gray-700 group-hover:text-blue-500 transition-colors">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">下载制作</h3>
+                    <p class="text-gray-400 text-sm">下载一键制作工具，插入 U 盘并点击制作。</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 text-center">
+                    <div class="w-24 h-24 bg-darker rounded-full border-4 border-gray-800 flex items-center justify-center mx-auto mb-6 shadow-xl relative group">
+                        <div class="absolute inset-0 rounded-full border-4 border-cyan-500 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+                        <span class="text-4xl font-black text-gray-700 group-hover:text-cyan-500 transition-colors">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">设置启动</h3>
+                    <p class="text-gray-400 text-sm">重启电脑，按下启动热键 (F12/F8/Del) 选择 U 盘启动。</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 text-center">
+                    <div class="w-24 h-24 bg-darker rounded-full border-4 border-gray-800 flex items-center justify-center mx-auto mb-6 shadow-xl relative group">
+                        <div class="absolute inset-0 rounded-full border-4 border-purple-500 scale-0 group-hover:scale-100 transition-transform duration-500"></div>
+                        <span class="text-4xl font-black text-gray-700 group-hover:text-purple-500 transition-colors">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">开始维护</h3>
+                    <p class="text-gray-400 text-sm">进入 PE 系统，开始系统重装或故障排查。</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- Screenshots Section -->
+    <div id="screenshots" class="py-24 bg-black border-t border-white/5">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 text-center font-cyber">INTERFACE</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="group relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="/img/PE11.png" alt="Win 11 PE" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <h3 class="text-xl font-bold text-white mb-2">Windows 11 PE</h3>
+                        <p class="text-gray-400 text-sm">现代化 UI，支持 WiFi、蓝牙与高分屏。</p>
+                    </div>
+                </div>
+                <div class="group relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                    <img src="/img/2003.png" alt="Win 2003 PE" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-0 left-0 p-8">
+                        <h3 class="text-xl font-bold text-white mb-2">Windows 2003 PE</h3>
+                        <p class="text-gray-400 text-sm">经典界面，极低资源占用，启动飞快。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download Section -->
+    <div id="download" class="py-24 bg-gradient-to-b from-dark to-black relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-black text-white font-cyber mb-8">
+                Ready to Deploy?
+            </h2>
+            <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+                提升装机维护效率。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                <a href="https://www.123912.com/s/Wcrtjv-4r9pH" target="_blank" class="px-10 py-5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-neon-glow transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-download"></i> 一键制作工具
+                </a>
+                <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="px-10 py-5 bg-gray-800 hover:bg-gray-700 text-white font-bold text-xl rounded-full shadow-lg transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-book"></i> 查看文档
+                </a>
+            </div>
+            <p class="mt-8 text-gray-500 text-sm">v5.2 Stable | 支持 BIOS/UEFI 双启动</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/10 pt-16 pb-8 text-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand Column -->
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-8 h-8 bg-white text-dark flex items-center justify-center rounded-sm">
+                            <i class="fas fa-star text-xs"></i>
+                        </div>
+                        <span class="font-bold text-lg text-white font-cyber">STAR HigheriTech</span>
+                    </div>
+                    <p class="text-gray-500 mb-6">
+                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+
+                <!-- Link Column 1 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="../hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1 rounded ml-1">NEW</span></a></li>
+                        <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                        <li><a href="../../webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
+                        <li><a href="../../tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
+                        <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                    </ul>
+                </div>
+
+                <!-- Link Column 2 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
+                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Link Column 3 -->
+                <div>
+                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+                    <ul class="space-y-3 text-gray-500">
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
+                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-200 pt-8 animate-fade-in" style="animation-delay: 0.8s;">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 STAR HigheriTech 信息活力工作室官方网站. 保留所有权利</p>
-                    <div class="flex space-x-6">
-                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">隐私政策</a>
-                        <a href="#" class="text-gray-500 hover:text-dark text-sm transition-custom hover:underline">使用条款</a>
-                    </div>
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+                <div class="mb-4 md:mb-0">
+                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-400 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // 导航栏滚动效果
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('py-2', 'shadow-md');
-                navbar.classList.remove('py-3', 'shadow-sm');
-                navbar.classList.add('backdrop-blur-md');
-            } else {
-                navbar.classList.add('py-3', 'shadow-sm');
-                navbar.classList.remove('py-2', 'shadow-md');
-                navbar.classList.remove('backdrop-blur-md');
-            }
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
 
-        // 移动端菜单切换
-        const menuToggle = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-        menuToggle.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            // 添加动画效果
-            if (!mobileMenu.classList.contains('hidden')) {
-                mobileMenu.style.animation = 'slideInLeft 0.3s ease-out';
-            }
-        });
-
-        // 平滑滚动
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 关闭移动菜单（如果打开）
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-
-        // 滚动动画观察器
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = entry.target.dataset.animation || 'fadeIn 0.8s ease-out';
-                    entry.target.style.opacity = '1';
-                }
-            });
-        }, observerOptions);
-
-        // 观察所有需要动画的元素
-        document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.animate-fade-in, .animate-slide-up, .animate-slide-in-left, .animate-slide-in-right');
-            animatedElements.forEach(el => {
-                el.style.opacity = '0';
-                observer.observe(el);
-            });
-        });
-
-        // 使用Intersection Observer API实现图片懒加载
-        document.addEventListener('DOMContentLoaded', function() {
-            // 获取所有图片
-            const lazyImages = document.querySelectorAll('img[data-src]');
-            
-            // 如果浏览器支持Intersection Observer
-            if ('IntersectionObserver' in window) {
-                const imageObserver = new IntersectionObserver(function(entries, observer) {
-                    entries.forEach(function(entry) {
-                        // 当图片进入视口
-                        if (entry.isIntersecting) {
-                            const image = entry.target;
-                            // 设置src属性
-                            image.src = image.dataset.src;
-                            // 移除data-src属性
-                            image.removeAttribute('data-src');
-                            // 停止观察
-                            observer.unobserve(image);
-                        }
-                    });
-                }, {
-                    // 图片一进入视口就开始加载
-                    rootMargin: '0px 0px 50px 0px',
-                    threshold: 0.01
+                menu.classList.add('hidden'); // Close mobile menu
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-                
-                // 对每个图片进行监视
-                lazyImages.forEach(function(image) {
-                    imageObserver.observe(image);
-                });
-            }
-        });
-
-        // 动态粒子效果
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.position = 'fixed';
-            particle.style.width = Math.random() * 4 + 1 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.background = `radial-gradient(circle, rgba(22, 93, 255, ${Math.random() * 0.6 + 0.2}) 0%, transparent 70%)`;
-            particle.style.borderRadius = '50%';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '9999';
-            particle.style.left = Math.random() * window.innerWidth + 'px';
-            particle.style.top = window.innerHeight + 'px';
-            particle.style.opacity = '0';
-            particle.style.transition = 'all 8s ease-out';
-
-            document.body.appendChild(particle);
-
-            // 动画
-            setTimeout(() => {
-                particle.style.opacity = '1';
-                particle.style.transform = `translateY(-${window.innerHeight + 100}px) translateX(${Math.random() * 200 - 100}px) scale(${Math.random() * 0.5 + 0.5})`;
-            }, 50);
-
-            // 清理
-            setTimeout(() => {
-                particle.remove();
-            }, 8000);
-        }
-
-        // 定期创建粒子
-        setInterval(() => {
-            if (Math.random() < 0.3) { // 30%概率创建粒子
-                createParticle();
-            }
-        }, 2000);
-
-        // 添加滚动视差效果
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.animate-float');
-            
-            parallaxElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
             });
         });
-
-// 添加3D卡片效果 - 修改版本：向下倾斜改为向上倾斜，左右幅度减小
-document.querySelectorAll('.project-card, .service-card').forEach(card => {
-    card.addEventListener('mouseenter', function(e) {
-        const rect = this.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        
-        // 计算左右倾斜 - 减小幅度
-        const rotateY = (centerX - x) / 20; // 从/10改为/20，幅度减半
-        
-        // 计算上下倾斜，但将向下倾斜改为向上倾斜
-        let rotateX = (y - centerY) / 10;
-        // 如果rotateX为负值（原本是向下倾斜），则改为正值（向上倾斜）
-        if (rotateX < 0) {
-            rotateX = Math.abs(rotateX); // 取绝对值，使向下倾斜变为向上倾斜
-        }
-        
-        this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateZ(0px)';
-    });
-});
-
-        // Font Awesome 图标加载检测和优雅降级
-        document.addEventListener('DOMContentLoaded', function() {
-            // 检测Font Awesome是否加载成功
-            function checkFontAwesomeLoaded() {
-                // 创建一个测试元素
-                const testElement = document.createElement('i');
-                testElement.className = 'fas fa-font-awesome';
-                testElement.style.position = 'absolute';
-                testElement.style.left = '-9999px';
-                document.body.appendChild(testElement);
-                
-                // 获取计算后的样式
-                const computedStyle = window.getComputedStyle(testElement, ':before');
-                const contentValue = computedStyle.getPropertyValue('content');
-                
-                // 移除测试元素
-                document.body.removeChild(testElement);
-                
-                // 如果content是默认值，说明Font Awesome未加载
-                return contentValue && contentValue !== 'normal' && contentValue !== 'none';
-            }
-            
-            // 设置图标降级显示
-            function setupFallbackIcons() {
-                const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                
-                icons.forEach(icon => {
-                    const fallback = icon.getAttribute('data-fallback');
-                    
-                    // 添加加载状态类
-                    icon.classList.add('fa-loading');
-                    
-                    // 设置备用显示
-                    const fallbackSpan = document.createElement('span');
-                    fallbackSpan.className = 'fa-fallback';
-                    fallbackSpan.textContent = fallback;
-                    fallbackSpan.style.display = 'none';
-                    icon.parentNode.insertBefore(fallbackSpan, icon.nextSibling);
-                });
-            }
-            
-            // 检查并应用降级方案
-            function applyFallbackIfNeeded() {
-                const isFALoaded = checkFontAwesomeLoaded();
-                
-                if (!isFALoaded) {
-                    console.log('Font Awesome 未加载，使用备用图标');
-                    
-                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                    icons.forEach(icon => {
-                        const fallback = icon.getAttribute('data-fallback');
-                        const fallbackSpan = icon.nextElementSibling;
-                        
-                        if (fallbackSpan && fallbackSpan.classList.contains('fa-fallback')) {
-                            // 显示备用图标，隐藏原图标
-                            icon.style.display = 'none';
-                            fallbackSpan.style.display = 'inline-block';
-                        }
-                    });
-                } else {
-                    console.log('Font Awesome 已成功加载');
-                    
-                    // 移除加载状态
-                    const icons = document.querySelectorAll('i.fas[data-fallback], i.fab[data-fallback]');
-                    icons.forEach(icon => {
-                        icon.classList.remove('fa-loading');
-                    });
-                }
-            }
-            
-            // 初始化
-            setupFallbackIcons();
-            
-            // 延迟检查，确保Font Awesome有足够时间加载
-            setTimeout(applyFallbackIfNeeded, 2000);
-            
-            // 可选：添加重试机制
-            let retryCount = 0;
-            const maxRetries = 3;
-            
-            function retryCheck() {
-                retryCount++;
-                if (retryCount <= maxRetries) {
-                    setTimeout(applyFallbackIfNeeded, 1000 * retryCount);
-                }
-            }
-            
-            // 初次检查后设置重试
-            setTimeout(retryCheck, 3000);
-        });
-
-        // 添加键盘导航支持
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') {
-                document.body.classList.add('keyboard-navigation');
-            }
-        });
-
-        document.addEventListener('mousedown', function() {
-            document.body.classList.remove('keyboard-navigation');
-        });
-
-        // 性能优化：防抖函数
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        // 应用防抖到滚动事件
-        const debouncedScrollHandler = debounce(() => {
-            // 滚动处理逻辑
-        }, 10);
-
-        window.addEventListener('scroll', debouncedScrollHandler);
     </script>
 </body>
 </html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR Hira - 高效、安全、现代化的浏览器体验</title>
+    <!-- 预连接到国内CDN以提升加载速度 -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://tc.z.wiki">
+    <link rel="preconnect" href="https://www.123pan.com">
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" crossorigin="anonymous">
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <!-- 使用国内CDN加载Font Awesome V6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#36CFC9',
+                        accent: '#722ED1',
+                        dark: '#1D2129',
+                        light: '#F2F3F5',
+                        neon: '#00FFFF',
+                        electric: '#0080FF'
+                    },
+                    fontFamily: {
+                        inter: ['Inter', 'system-ui', 'sans-serif'],
+                        cyber: ['Orbitron', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'matrix': 'matrix 20s linear infinite',
+                        'tech-scan': 'techScan 3s ease-in-out infinite',
+                        'particle': 'particle 8s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .transition-custom {
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .bg-gradient-blue {
+                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 100%);
+            }
+            .bg-cyber-gradient {
+                background: linear-gradient(135deg, #165DFF 0%, #36CFC9 50%, #722ED1 100%);
+            }
+            .glass-morphism {
+                background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .neon-glow {
+                box-shadow: 0 12px 24px rgba(15, 23, 42, 0.18);
+            }
+            .tech-border {
+                position: relative;
+                overflow: hidden;
+            }
+            .tech-border::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(22, 93, 255, 0.4), transparent);
+                transition: left 0.5s;
+            }
+            .tech-border:hover::before {
+                left: 100%;
+            }
+            .project-card {
+                transition: all 0.25s ease;
+            }
+            .project-card:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 18px 30px rgba(15, 23, 42, 0.16);
+            }
+            
+            /* 动画定义 */
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-8px); }
+            }
+            
+            @keyframes glow {
+                from { text-shadow: 0 0 8px rgba(22, 93, 255, 0.35); }
+                to { text-shadow: 0 0 16px rgba(22, 93, 255, 0.45); }
+            }
+            
+            @keyframes slideUp {
+                from { 
+                    transform: translateY(30px);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            
+            @keyframes slideInLeft {
+                from { 
+                    transform: translateX(-30px);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideInRight {
+                from { 
+                    transform: translateX(30px);
+                    opacity: 0;
+                }
+                to { 
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes matrix {
+                0% { background-position: 0% 0%; }
+                100% { background-position: 100% 100%; }
+            }
+            
+            @keyframes techScan {
+                0% { 
+                    transform: translateY(-100%);
+                    opacity: 0;
+                }
+                50% { 
+                    opacity: 1;
+                }
+                100% { 
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes particle {
+                0%, 100% { 
+                    transform: translateY(0) translateX(0) scale(1);
+                    opacity: 0.7;
+                }
+                25% { 
+                    transform: translateY(-20px) translateX(-10px) scale(0.8);
+                    opacity: 0.6;
+                }
+                50% { 
+                    transform: translateY(-40px) translateX(-5px) scale(0.9);
+                    opacity: 0.8;
+                }
+                75% { 
+                    transform: translateY(-60px) translateX(15px) scale(1.05);
+                    opacity: 0.9;
+                }
+            }
+            
+            /* 科技背景效果 */
+            .tech-bg {
+                background: 
+                    linear-gradient(90deg, rgba(22, 93, 255, 0.03) 1px, transparent 1px),
+                    linear-gradient(rgba(22, 93, 255, 0.03) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            
+            /* 浮动粒子效果 */
+            .floating-particles {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                pointer-events: none;
+            }
+            
+            .particle {
+                position: absolute;
+                background: radial-gradient(circle, rgba(22, 93, 255, 0.6) 0%, transparent 70%);
+                border-radius: 50%;
+                animation: particle 8s ease-in-out infinite;
+            }
+            
+            /* 全息效果 */
+            .holographic {
+                background: linear-gradient(
+                    135deg,
+                    rgba(22, 93, 255, 0.06),
+                    rgba(54, 207, 201, 0.06)
+                );
+            }
+            
+            /* 加载动画 */
+            .loading-spinner {
+                width: 40px;
+                height: 40px;
+                border: 4px solid rgba(22, 93, 255, 0.3);
+                border-top: 4px solid #165DFF;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+            }
+            
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        }
+    </style>
+</head>
+<body class="font-inter bg-light text-dark tech-bg">
+    <!-- 粒子背景 -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="floating-particles">
+            <div class="particle w-2 h-2 top-10 left-10" style="animation-delay: 0s;"></div>
+            <div class="particle w-1 h-1 top-1/3 right-20" style="animation-delay: 2s;"></div>
+            <div class="particle w-3 h-3 bottom-1/4 left-1/4" style="animation-delay: 4s;"></div>
+            <div class="particle w-1 h-1 top-2/3 right-1/3" style="animation-delay: 6s;"></div>
+            <div class="particle w-2 h-2 bottom-1/3 left-2/3" style="animation-delay: 1s;"></div>
+            <div class="particle w-1 h-1 top-1/2 left-3/4" style="animation-delay: 3s;"></div>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 glass-morphism shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center group cursor-pointer">
+                <div class="w-12 h-12 rounded-lg bg-gradient-blue flex items-center justify-center text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 neon-glow">
+                    <i class="fab fa-chrome text-xl group-hover:animate-spin" data-fallback="🌐"></i>
+                </div>
+                <h1 class="ml-3 text-xl font-bold text-primary font-cyber group-hover:text-neon transition-all duration-300">
+                    STAR Hira
+                </h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="../index.html" class="text-dark hover:text-primary transition-custom font-medium relative group">
+                    首页
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#features" class="text-dark hover:text-primary transition-custom font-medium relative group">
+                    核心功能
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#download" class="text-dark hover:text-primary transition-custom font-medium relative group">
+                    下载
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#faq" class="text-dark hover:text-primary transition-custom font-medium relative group">
+                    常见问题
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="#download" class="hidden md:block bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 text-white px-6 py-2 rounded-full font-medium transition-all duration-300 transform hover:scale-105 neon-glow">
+                    立即下载
+                </a>
+                <button id="menu-toggle" class="md:hidden text-dark focus:outline-none group">
+                    <i class="fas fa-bars text-xl group-hover:scale-125 transition-transform duration-300" data-fallback="☰"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主页面 -->
+    <section class="pt-32 pb-20 bg-gradient-to-br from-secondary/5 to-primary/5 relative overflow-hidden">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-bold text-gradient mb-6 animate-glow">STAR Hira</h1>
+            <p class="text-[clamp(1.1rem,3vw,1.5rem)] opacity-90 max-w-2xl mx-auto mb-10 leading-relaxed">
+                基于Chromium内核打造的高效、安全、现代化的浏览器体验
+            </p>
+            <p class="text-lg text-gray-600 mb-8 max-w-xl mx-auto leading-relaxed">
+                在熟悉的 Chromium 内核基础上，提供稳定、流畅且干净的浏览体验
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center">
+                <a href="#download" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group">
+                    <i class="fas fa-download mr-2 group-hover:animate-bounce" data-fallback="⬇️"></i> 立即下载
+                </a>
+                <a href="#features" class="bg-white hover:bg-gray-50 text-primary border-2 border-primary px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-primary/10 text-center transform hover:scale-105 group">
+                    <i class="fas fa-info-circle mr-2 group-hover:animate-pulse" data-fallback="ℹ️"></i> 了解更多
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特性对比 -->
+    <section id="features" class="py-24 px-6 max-w-6xl mx-auto">
+        <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">为什么选择STAR Hira？</h2>
+        
+        <div class="glass p-8 rounded-2xl shadow-xl">
+            <div class="comparison-table overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-primary/20">
+                            <th class="py-4 px-6 text-left font-semibold">功能特性</th>
+                            <th class="py-4 px-6 text-center font-semibold">Google Chrome</th>
+                            <th class="py-4 px-6 text-center font-semibold">Microsoft Edge</th>
+                            <th class="py-4 px-6 text-center font-semibold">STAR Hira</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="py-4 px-6">资源占用优化</td>
+                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">❌</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-4 px-6">启动速度优化</td>
+                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-red-500 text-xl">❌</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                        </tr>
+
+                        <tr>
+                            <td class="py-4 px-6">扩展生态兼容</td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                            <td class="py-4 px-6 text-center"><span class="text-green-500 text-xl">✅</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心功能 -->
+    <section class="py-24 px-6 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">核心功能特性</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 功能卡片 1 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">减少占用</h3>
+                    <p class="text-gray-600 mb-4">优化的引擎，加载速度提升4，内存占用减少</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+
+                <!-- 功能卡片 2 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">智能防护</h3>
+                    <p class="text-gray-600 mb-4">内置恶意隐私获取拦截</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+
+                <!-- 功能卡片 3 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">简洁界面</h3>
+                    <p class="text-gray-600 mb-4">现代化设计语言，简洁直观的操作界面，提升用户体验和工作效率</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+
+                <!-- 功能卡片 4 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">扩展兼容</h3>
+                    <p class="text-gray-600 mb-4">完全兼容Chrome扩展生态系统，支持丰富的插件和工具</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+
+                <!-- 功能卡片 5 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-sync"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">同步功能</h3>
+                    <p class="text-gray-600 mb-4">跨设备书签、历史记录和设置同步，随时随地继续浏览</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+
+                <!-- 功能卡片 6 -->
+                <div class="project-card bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 tech-border">
+                    <div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 text-primary text-2xl">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI侧边栏</h3>
+                    <p class="text-gray-600 mb-4">全地区可用的AI助手，提供智能内容生成和问题解答</p>
+                    <div class="tech-scan-line w-full h-1 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载区域 -->
+    <section id="download" class="py-24 px-6 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-6 text-gradient">准备好体验了吗？</h2>
+            <p class="text-[clamp(1.1rem,3vw,1.5rem)] mb-10 opacity-90">最新版本：v1.35.2 | 密码：1234</p>
+            <a href="https://alexhigheryyds.lanzouu.com/i6Sl43ig32pi" class="bg-primary hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 text-white px-8 py-6 rounded-full font-medium transition-all duration-300 transform hover:scale-105 text-center neon-glow group inline-flex items-center justify-center mb-6">
+                <i class="fas fa-download mr-3 text-2xl group-hover:animate-bounce"></i> 立即下载 STAR Hira
+            </a>
+            <p class="text-white/80 mb-2">系统要求：Windows 7及以上版本的64位操作系统</p>
+            <p class="text-white/60 text-sm">下载后直接安装即可使用</p>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section id="faq" class="py-24 px-6 max-w-4xl mx-auto">
+        <h2 class="text-[clamp(2rem,5vw,3rem)] font-bold text-center mb-16 text-gradient">常见问题</h2>
+        
+        <div class="space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
+                <h3 class="text-lg font-semibold mb-3 text-primary">Q: STAR Hira基于什么内核？</h3>
+                <p class="text-gray-600">A: 基于最新的Chromium内核开发，兼容所有Chrome扩展和网页标准。</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
+                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 是否支持Chrome扩展？</h3>
+                <p class="text-gray-600">A: 完全支持，可以直接安装和使用所有扩展。</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
+                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 内存占用相比Chrome如何？</h3>
+                <p class="text-gray-600">A: 内存占用比Chrome减少，运行更加流畅。</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-6 shadow-lg tech-border">
+                <h3 class="text-lg font-semibold mb-3 text-primary">Q: 是否免费使用？</h3>
+                <p class="text-gray-600">A: 完全免费，无任何收费功能或广告。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-12 px-6 bg-light text-center">
+        <p class="text-gray-700 mb-4">© 2025 STAR HigheriTech | 高效、安全、现代化的浏览器体验 | 最终解释权归作者所有</p>
+        <p class="text-gray-500 text-sm"></p>
+    </footer>
+
+    <script>
+        // 粒子背景
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 随机位置
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                
+                // 随机大小
+                const size = 1 + Math.random() * 3;
+                
+                // 随机延迟
+                const delay = Math.random() * 5;
+                
+                // 随机速度
+                const duration = 20 + Math.random() * 40;
+                
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-xl', 'bg-white/95');
+                navbar.classList.remove('glass-morphism');
+            } else {
+                navbar.classList.remove('shadow-xl', 'bg-white/95');
+                navbar.classList.add('glass-morphism');
+            }
+        });
+        
+        // 移动端菜单切换
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('hidden');
+            nav.classList.toggle('flex');
+            nav.classList.toggle('flex-col');
+            nav.classList.toggle('absolute');
+            nav.classList.toggle('top-full');
+            nav.classList.toggle('left-0');
+            nav.classList.toggle('w-full');
+            nav.classList.toggle('bg-white');
+            nav.classList.toggle('p-4');
+            nav.classList.toggle('shadow-lg');
+        });
+        
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            
+            // 添加进入动画
+            const elements = document.querySelectorAll('.project-card, .comparison-table, .tech-border');
+            elements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+                el.classList.add('animate-fade-in');
+            });
+        });
+    </script>
+</body>
+</html>

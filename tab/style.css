@@ -246,7 +246,7 @@
             transform: scale(1.05);
         }
 
-        /* ²à±ßÀ¸ÑùÊ½ */
+        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ */
         #settings-panel {
             position: fixed;
             top: 0;
@@ -854,7 +854,7 @@
             }
         }
         
-        /* ¸ßÁÁÌáÊ¾ */
+        /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ */
         .highlighted {
             animation: highlight 1.5s ease;
             box-shadow: 0 0 0 3px #0078D7;
@@ -866,7 +866,7 @@
             100% { box-shadow: 0 0 0 0 rgba(0, 120, 215, 0); }
         }
         
-        /* Î¢Èí·ç¸ñ×°ÊÎ */
+        /* Î¢ï¿½ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ */
         .ms-logo {
             position: absolute;
             top: 20px;
