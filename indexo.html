@@ -1176,12 +1176,20 @@
             });
         });
         
-        // 表单提交
         document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = this.querySelector('input').value;
             alert(`感谢订阅！我们将发送更新到: ${email}`);
             this.reset();
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
+            links.forEach(function (link) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
         });
     </script>
 </body>

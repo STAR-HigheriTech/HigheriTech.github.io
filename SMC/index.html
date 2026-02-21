@@ -854,5 +854,14 @@
             initTimelineAnimation();
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
+            links.forEach(function (link) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
+        });
+    </script>
 </body>
 </html>

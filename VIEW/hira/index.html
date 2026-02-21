@@ -341,15 +341,15 @@
                 Ready to switch?
             </h2>
             <h2 class="text-3xl md:text-4xl font-bold text-white mb-12 max-w-2xl mx-auto">
-                下载密码：1234
+                下载密码：Hira
             </h2>
             <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                <a href="https://alexhigheryyds.lanzouu.com/iNYB13ih81jc" class="px-10 py-5 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-purple-glow transition-all flex items-center justify-center gap-3">
+                <a href="https://alexhigheryyds.lanzouu.com/ixAl33ixlqmj" class="px-10 py-5 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold text-xl rounded-full shadow-lg hover:shadow-purple-glow transition-all flex items-center justify-center gap-3">
                     <i class="fab fa-windows"></i> Windows 下载
                 </a>
 
             </div>
-            <p class="mt-8 text-gray-500 text-sm">v1.35.2 Stable</p>
+            <p class="mt-8 text-gray-500 text-sm">v26.140.3 Stable</p>
         </div>
     </div>
 
@@ -423,14 +423,22 @@
     </footer>
 
     <script>
-        // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-        if(btn && menu) {
+        if (btn && menu) {
             btn.addEventListener('click', () => {
                 menu.classList.toggle('hidden');
             });
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
+            links.forEach(function (link) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
+        });
     </script>
 </body>
 </html>

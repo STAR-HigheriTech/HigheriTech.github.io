@@ -528,15 +528,21 @@
             nav.classList.toggle('shadow-lg');
         });
         
-        // 页面加载动画
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
-            
-            // 添加进入动画
             const elements = document.querySelectorAll('.project-card, .comparison-table, .tech-border');
             elements.forEach((el, index) => {
                 el.style.animationDelay = `${index * 0.1}s`;
                 el.classList.add('animate-fade-in');
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
+            links.forEach(function (link) {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
             });
         });
     </script>
