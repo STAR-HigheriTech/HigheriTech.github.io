@@ -35,7 +35,7 @@
                         'neon-glow-sec': '0 0 20px rgba(54, 207, 201, 0.6)',
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
                     }
                 }
             }
@@ -46,8 +46,8 @@
         
         body {
             font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #0d1117; /* Darker background for more impact */
-            color: #F2F3F5;
+            background-color: #F9FAFB; /* Light background */
+            color: #1F2937; /* Dark text */
         }
         
         /* Custom Scrollbar */
@@ -55,21 +55,21 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1D2129; 
+            background: #F3F4F6; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #333; 
+            background: #D1D5DB; 
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #555; 
+            background: #9CA3AF; 
         }
 
         .hero-bg {
-            background-color: #1D2129;
+            background-color: #F9FAFB;
             background-image: 
-                radial-gradient(circle at 15% 50%, rgba(22, 93, 255, 0.15) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(54, 207, 201, 0.15) 0%, transparent 25%);
+                radial-gradient(circle at 15% 50%, rgba(22, 93, 255, 0.05) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(54, 207, 201, 0.05) 0%, transparent 25%);
         }
         
         .nav-link {
@@ -146,7 +146,7 @@
 <body class="antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation (Floating/Glass) -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-dark/80 backdrop-blur-lg border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
@@ -154,43 +154,43 @@
                         <div class="w-10 h-10 bg-gradient-to-br from-primary to-electric text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-180 transition-transform duration-700">
                             <i class="fas fa-star text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-white font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
+                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
                     </a>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-10">
-                    <a href="#" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="#features" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">特性</a>
-                    <a href="#products" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">产品</a>
-                    <a href="#solutions" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">解决方案</a>
-                    <a href="#roadmap" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">路线图</a>
-                    <a href="#community" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">社区</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">FAQ</a>
+                    <a href="#" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">首页</a>
+                    <a href="#features" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">特性</a>
+                    <a href="#products" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">产品</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">解决方案</a>
+                    <a href="#roadmap" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">路线图</a>
+                    <a href="#community" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">社区</a>
+                    <a href="#faq" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">FAQ</a>
                     
-                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-white/10 hover:bg-primary hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300 border border-white/10">
+                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white px-5 py-2.5 rounded-full transition-all duration-300 border border-primary/20">
                         <span>文档中心</span>
                         <i class="fas fa-external-link-alt text-xs"></i>
                     </a>
                 </div>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-primary focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-white/5 mt-0 bg-dark/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-white/10 shadow-2xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="#" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">首页</a>
-                    <a href="#features" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">特性</a>
-                    <a href="#products" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">产品</a>
-                    <a href="#solutions" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">解决方案</a>
-                    <a href="#roadmap" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">路线图</a>
-                    <a href="#community" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">社区</a>
-                    <a href="#faq" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">FAQ</a>
-                    <a href="https://docs.higheri.tech/" class="text-primary hover:text-white text-lg font-medium transition-colors block">文档中心</a>
+                    <a href="#" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
+                    <a href="#features" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
+                    <a href="#products" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
+                    <a href="#solutions" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">解决方案</a>
+                    <a href="#roadmap" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">路线图</a>
+                    <a href="#community" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">社区</a>
+                    <a href="#faq" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">FAQ</a>
+                    <a href="https://docs.higheri.tech/" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">文档中心</a>
                 </div>
             </div>
         </div>
@@ -264,23 +264,23 @@
             <!-- Slide 3: HigheriDraft -->
             <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="2">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-teal-900/10 to-transparent z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/50 to-transparent z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
                     <div class="max-w-3xl pt-20">
-                        <div class="inline-block px-3 py-1 border border-secondary/50 text-secondary text-xs font-bold tracking-widest uppercase mb-4 bg-black/50 backdrop-blur-md rounded-sm">
+                        <div class="inline-block px-3 py-1 border border-secondary/50 text-teal-600 text-xs font-bold tracking-widest uppercase mb-4 bg-teal-50 backdrop-blur-md rounded-sm">
                             Productivity
                         </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight drop-shadow-lg">
+                        <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight font-cyber mb-6 tracking-tight drop-shadow-sm">
                             HIGHERI <br>
                             <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-teal-400 text-glow">DRAFT</span>
                         </h1>
-                        <p class="text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed drop-shadow-md">
+                        <p class="text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
                             提升办公效率。<br>
                             灵感，随时记录。云端草稿本。
                         </p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="px-8 py-4 bg-secondary hover:bg-secondary/90 text-black font-bold text-lg transition-all shadow-lg hover:shadow-secondary/50 flex items-center gap-2 group/btn">
+                            <a href="#products" class="px-8 py-4 bg-secondary hover:bg-secondary/90 text-white font-bold text-lg transition-all shadow-lg hover:shadow-secondary/50 flex items-center gap-2 group/btn">
                                 开始使用 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
                             </a>
                         </div>
@@ -359,68 +359,68 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="bg-gray-900 border-y border-white/5 py-12 relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <div class="bg-white border-y border-gray-200 py-12 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="stat-item group p-4 hover:bg-white/5 rounded-lg transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 font-cyber group-hover:text-primary transition-colors">2</div>
-                    <div class="text-gray-400 text-sm uppercase tracking-widest">新</div>
+                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors">
+                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-primary transition-colors">2</div>
+                    <div class="text-gray-500 text-sm uppercase tracking-widest">新</div>
                 </div>
-                <div class="stat-item group p-4 hover:bg-white/5 rounded-lg transition-colors" style="animation-delay: 0.1s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 font-cyber group-hover:text-secondary transition-colors">0</div>
-                    <div class="text-gray-400 text-sm uppercase tracking-widest">年</div>
+                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.1s">
+                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-secondary transition-colors">0</div>
+                    <div class="text-gray-500 text-sm uppercase tracking-widest">年</div>
                 </div>
-                <div class="stat-item group p-4 hover:bg-white/5 rounded-lg transition-colors" style="animation-delay: 0.2s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 font-cyber group-hover:text-accent transition-colors">2</div>
-                    <div class="text-gray-400 text-sm uppercase tracking-widest">快</div>
+                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.2s">
+                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-accent transition-colors">2</div>
+                    <div class="text-gray-500 text-sm uppercase tracking-widest">快</div>
                 </div>
-                <div class="stat-item group p-4 hover:bg-white/5 rounded-lg transition-colors" style="animation-delay: 0.3s">
-                    <div class="text-4xl md:text-5xl font-black text-white mb-2 font-cyber group-hover:text-electric transition-colors">6</div>
-                    <div class="text-gray-400 text-sm uppercase tracking-widest">乐</div>
+                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.3s">
+                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-electric transition-colors">6</div>
+                    <div class="text-gray-500 text-sm uppercase tracking-widest">乐</div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Why Choose Us (Features) -->
-    <div id="features" class="py-24 bg-dark relative">
+    <div id="features" class="py-24 bg-gray-50 relative">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">为什么选择 <span class="text-primary">HigheriTech</span></h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">不仅仅是工具，更是追求。</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">为什么选择 <span class="text-primary">HigheriTech</span></h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">不仅仅是工具，更是追求。</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="group p-8 bg-gray-800/50 rounded-2xl border border-white/5 hover:border-primary/50 transition-all hover:bg-gray-800 hover:-translate-y-2">
+                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-2">
                     <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                         <i class="fas fa-bolt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">高效稳定</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">高效稳定</h3>
+                    <p class="text-gray-600 leading-relaxed">
                         经过深度优化。我们的工具专为速度而生，确保在任何设备上都能流畅运行，减少卡顿。
                     </p>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="group p-8 bg-gray-800/50 rounded-2xl border border-white/5 hover:border-secondary/50 transition-all hover:bg-gray-800 hover:-translate-y-2">
+                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-secondary/50 transition-all hover:shadow-lg hover:-translate-y-2">
                     <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
                         <i class="fas fa-shield-alt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">安全可靠</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">安全可靠</h3>
+                    <p class="text-gray-600 leading-relaxed">
                         数据隐私是我们的底线。所有工具均无广告，纯净体验。
                     </p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="group p-8 bg-gray-800/50 rounded-2xl border border-white/5 hover:border-accent/50 transition-all hover:bg-gray-800 hover:-translate-y-2">
+                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-accent/50 transition-all hover:shadow-lg hover:-translate-y-2">
                     <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent group-hover:bg-accent group-hover:text-white transition-colors">
                         <i class="fas fa-code text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">开源精神</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">开源精神</h3>
+                    <p class="text-gray-600 leading-relaxed">
                         拥抱开源社区。我们在 GitHub 上持续贡献，与开发者共同成长，打造更透明的技术生态。
                     </p>
                 </div>
@@ -429,16 +429,16 @@
     </div>
 
     <!-- Bold Bento Grid Products -->
-    <div id="products" class="py-24 bg-[#161b22] relative">
+    <div id="products" class="py-24 bg-white relative">
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-4">CORE PRODUCTS</h2>
+                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-4">CORE PRODUCTS</h2>
                     <div class="h-2 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
                 </div>
-                <p class="text-gray-400 max-w-md text-right md:text-lg">
+                <p class="text-gray-600 max-w-md text-right md:text-lg">
                     为用户打造的工具矩阵。
                 </p>
             </div>
@@ -502,30 +502,30 @@
                 </div>
 
                 <!-- Main Feature (Large Item) - HigheriPE -->
-                <div class="md:col-span-2 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-white/5 hover:border-primary/50 card-hover-effect">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-500 group-hover:scale-105 transform"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/80 to-transparent"></div>
+                <div class="md:col-span-2 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-primary/50 card-hover-effect shadow-lg">
+                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500 group-hover:scale-105 transform"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
                     
                     <div class="bento-content h-full p-8 md:p-12 flex flex-col justify-end">
-                        <div class="w-16 h-16 bg-primary/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-primary/30 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                        <div class="w-16 h-16 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                             <i class="fas fa-cogs text-3xl text-primary group-hover:text-white"></i>
                         </div>
                         <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">HigheriPE</h3>
-                        <p class="text-gray-300 text-lg mb-8 max-w-xl">
+                        <p class="text-gray-400 text-lg mb-8 max-w-xl">
                             优化系统维护体验。全新的 PE 工具箱，集成了专业的诊断与修复工具。
                             <br>一键装机，智能驱动，无缝体验。
                         </p>
-                        <a href="VIEW/PE/PE.html" class="inline-flex items-center text-primary font-bold hover:text-white transition-colors">
+                        <a href="VIEW/PE/PE.html" class="inline-flex items-center text-primary font-bold hover:text-primary/80 transition-colors">
                             立即获取 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Tall Item - HigheriDraft -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-white/5 hover:border-secondary/50 card-hover-effect">
+                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-secondary/50 card-hover-effect shadow-lg">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent"></div>
                     <div class="bento-content h-full p-8 flex flex-col">
-                        <div class="w-14 h-14 bg-secondary/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-secondary/30">
+                        <div class="w-14 h-14 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700">
                             <i class="fas fa-tasks text-2xl text-secondary"></i>
                         </div>
                         <h3 class="text-2xl font-bold text-white mb-2">HigheriDraft</h3>
@@ -533,38 +533,38 @@
                         
                         <!-- Visual representation of list/draft -->
                         <div class="mt-8 space-y-3 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <div class="h-2 w-full bg-white/10 rounded-full"></div>
-                            <div class="h-2 w-3/4 bg-white/10 rounded-full"></div>
-                            <div class="h-2 w-5/6 bg-white/10 rounded-full"></div>
+                            <div class="h-2 w-full bg-gray-700 rounded-full"></div>
+                            <div class="h-2 w-3/4 bg-gray-700 rounded-full"></div>
+                            <div class="h-2 w-5/6 bg-gray-700 rounded-full"></div>
                         </div>
                         
-                        <a href="webp/DRAFT/index.html" class="mt-8 inline-block px-6 py-2 rounded-full border border-secondary/30 text-secondary hover:bg-secondary hover:text-dark transition-all text-center">
+                        <a href="webp/DRAFT/index.html" class="mt-8 inline-block px-6 py-2 rounded-full border border-secondary/30 text-secondary hover:bg-secondary hover:text-white transition-all text-center">
                             开始记录
                         </a>
                     </div>
                 </div>
 
                 <!-- Wide Item - HigheriTab -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-white/5 hover:border-accent/50 card-hover-effect min-h-[250px]">
+                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-accent/50 card-hover-effect min-h-[250px] shadow-lg">
                     <div class="absolute inset-0 bg-gradient-to-r from-accent/10 to-transparent"></div>
                     <div class="bento-content h-full p-8 flex flex-col md:flex-row items-center gap-8">
                         <div class="flex-1">
-                            <div class="w-14 h-14 bg-accent/20 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-accent/30">
+                            <div class="w-14 h-14 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700">
                                 <i class="fas fa-home text-2xl text-accent"></i>
                             </div>
                             <h3 class="text-2xl font-bold text-white mb-2">HigheriTab</h3>
                             <p class="text-gray-400">重新定义你的新标签页。极简，高效，完全自定义。</p>
-                            <a href="VIEW/hira/index.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-accent/30 text-accent hover:bg-accent hover:text-dark transition-all text-center">
+                            <a href="VIEW/hira/index.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-accent/30 text-accent hover:bg-accent hover:text-white transition-all text-center">
                                 开始使用
                             </a>
                         </div>
-                        <div class="w-full md:w-1/3 aspect-video bg-black/50 rounded-lg border border-white/10 p-2 group-hover:scale-105 transition-transform">
+                        <div class="w-full md:w-1/3 aspect-video bg-gray-800 rounded-lg border border-gray-700 p-2 group-hover:scale-105 transition-transform shadow-xl">
                             <!-- Mockup browser -->
                             <div class="flex gap-1 mb-2">
-                                <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                                <div class="w-2 h-2 rounded-full bg-red-400"></div>
+                                <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
                             </div>
-                            <div class="w-full h-full bg-gray-800/50 rounded flex items-center justify-center">
+                            <div class="w-full h-full bg-gray-900 rounded flex items-center justify-center border border-gray-700">
                                 <span class="text-xs text-gray-500">New Tab</span>
                             </div>
                         </div>
@@ -572,15 +572,15 @@
                 </div>
 
                 <!-- Small Item - STAR EasyCMD -->
-                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-white/5 hover:border-white/30 card-hover-effect min-h-[250px]">
-                    <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-black"></div>
+                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-gray-600 card-hover-effect min-h-[250px] shadow-lg">
+                    <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
                     <div class="bento-content h-full p-8 flex flex-col justify-center text-center items-center">
-                        <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-terminal text-3xl text-gray-300"></i>
+                        <div class="w-16 h-16 bg-gray-800/50 rounded-full flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
+                            <i class="fas fa-terminal text-3xl text-gray-400"></i>
                         </div>
                         <h3 class="text-xl font-bold text-white mb-2">STAR EasyCMD</h3>
-                        <p class="text-gray-500 text-sm">简化复杂指令。<br>积木式构建命令。</p>
-                        <a href="VIEW/PE/PE.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-white/30 text-white hover:bg-white/30 hover:text-dark transition-all text-center">
+                        <p class="text-gray-400 text-sm">简化复杂指令。<br>积木式构建命令。</p>
+                        <a href="VIEW/PE/PE.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-gray-600 text-gray-400 hover:bg-gray-700 hover:text-white transition-all text-center">
                             立即体验
                         </a>
                     </div>
@@ -593,34 +593,34 @@
     </div>
 
     <!-- Asymmetrical Solutions Section -->
-    <div id="solutions" class="py-24 bg-dark relative overflow-hidden">
+    <div id="solutions" class="py-24 bg-gray-50 relative overflow-hidden">
         <!-- Background Grid Pattern -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-20 text-center">SOLUTIONS</h2>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-20 text-center">SOLUTIONS</h2>
             
             <div class="space-y-24">
                 <!-- Solution 1: Left Aligned -->
                 <div class="flex flex-col md:flex-row items-center gap-12 group">
                     <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-primary/20 transform -translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:translate-x-4 group-hover:-translate-y-4"></div>
-                        <div class="relative h-80 bg-gray-800 rounded-sm overflow-hidden border border-white/10">
-                            <div class="absolute inset-0 bg-gradient-to-r from-primary/80 to-dark/80 z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="System" class="w-full h-full object-cover opacity-50">
+                        <div class="absolute inset-0 bg-primary/10 transform -translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:translate-x-4 group-hover:-translate-y-4"></div>
+                        <div class="relative h-80 bg-white rounded-sm overflow-hidden border border-gray-200 shadow-sm">
+                            <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="System" class="w-full h-full object-cover opacity-90">
                             <div class="absolute bottom-0 left-0 p-8 z-20">
-                                <i class="fas fa-microchip text-5xl text-white/20 mb-4 block"></i>
+                                <i class="fas fa-microchip text-5xl text-gray-200 mb-4 block"></i>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-2/5 text-left">
-                        <h3 class="text-3xl font-bold text-white mb-4 group-hover:text-primary transition-colors">装机与系统</h3>
-                        <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">装机与系统</h3>
+                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
                             从系统安装到日常维护，我们提供多种工具。
                             包括但不限于系统安装、驱动管理、密码破解等。
                             小白也能轻松上手。
                         </p>
-                        <a href="VIEW/win/index.html" class="text-white font-bold border-b-2 border-primary pb-1 hover:text-primary transition-colors">
+                        <a href="VIEW/win/index.html" class="text-gray-900 font-bold border-b-2 border-primary pb-1 hover:text-primary transition-colors">
                             查看更多产品
                         </a>
                     </div>
@@ -629,22 +629,22 @@
                 <!-- Solution 2: Right Aligned -->
                 <div class="flex flex-col md:flex-row-reverse items-center gap-12 group">
                     <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-secondary/20 transform translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:-translate-x-4 group-hover:-translate-y-4"></div>
-                        <div class="relative h-80 bg-gray-800 rounded-sm overflow-hidden border border-white/10">
-                            <div class="absolute inset-0 bg-gradient-to-l from-secondary/80 to-dark/80 z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Office" class="w-full h-full object-cover opacity-50">
+                        <div class="absolute inset-0 bg-secondary/10 transform translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:-translate-x-4 group-hover:-translate-y-4"></div>
+                        <div class="relative h-80 bg-white rounded-sm overflow-hidden border border-gray-200 shadow-sm">
+                            <div class="absolute inset-0 bg-gradient-to-l from-black/80 to-transparent z-10"></div>
+                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Office" class="w-full h-full object-cover opacity-90">
                             <div class="absolute bottom-0 right-0 p-8 z-20">
-                                <i class="fas fa-network-wired text-5xl text-white/20 mb-4 block"></i>
+                                <i class="fas fa-network-wired text-5xl text-gray-200 mb-4 block"></i>
                             </div>
                         </div>
                     </div>
                     <div class="w-full md:w-2/5 text-right">
-                        <h3 class="text-3xl font-bold text-white mb-4 group-hover:text-secondary transition-colors">高效办公</h3>
-                        <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-secondary transition-colors">高效办公</h3>
+                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
                             不仅仅是工具，更是工作流的革新。
                             通过 HigheriDraft 和 STAR EasyCMD，让繁琐的操作变得简单直观。
                         </p>
-                        <a href="VIEW/work/index.html" class="text-white font-bold border-b-2 border-secondary pb-1 hover:text-secondary transition-colors">
+                        <a href="VIEW/work/index.html" class="text-gray-900 font-bold border-b-2 border-secondary pb-1 hover:text-secondary transition-colors">
                             查看更多产品
                         </a>
                     </div>
@@ -654,9 +654,9 @@
     </div>
 
     <!-- Roadmap Section -->
-    <div id="roadmap" class="py-24 bg-black relative border-t border-white/5">
+    <div id="roadmap" class="py-24 bg-white relative border-t border-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">OUR <span class="text-primary">ROADMAP</span></h2>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">OUR <span class="text-primary">ROADMAP</span></h2>
             
             <div class="relative max-w-4xl mx-auto">
                 <!-- Vertical Line -->
@@ -665,57 +665,57 @@
                 <!-- Item 1 -->
                 <div class="relative mb-12 w-full flex justify-center items-center">
                     <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <h3 class="text-2xl font-bold text-white mb-2">起源</h3>
-                        <p class="text-gray-400">Higheri 系列产品原型开发。</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">起源</h3>
+                        <p class="text-gray-600">Higheri 系列产品原型开发。</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-black border-4 border-primary rounded-full z-10"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-primary rounded-full z-10"></div>
                     <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
                         <span class="text-primary font-bold font-mono">2022.4</span>
-                        <h3 class="text-xl font-bold text-white md:hidden mt-1">Project Genesis</h3>
-                        <p class="text-gray-400 md:hidden">Higheri 系列产品原型开发。</p>
+                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Project Genesis</h3>
+                        <p class="text-gray-600 md:hidden">Higheri 系列产品原型开发。</p>
                     </div>
                 </div>
 
                 <!-- Item 2 -->
                 <div class="relative mb-12 w-full flex justify-center items-center flex-row-reverse md:flex-row">
                     <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <h3 class="text-2xl font-bold text-white mb-2">焕新</h3>
-                        <p class="text-gray-400">Higheri 系列产品大焕新。</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">焕新</h3>
+                        <p class="text-gray-600">Higheri 系列产品大焕新。</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-black border-4 border-secondary rounded-full z-10"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-secondary rounded-full z-10"></div>
                     <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
                         <span class="text-secondary font-bold font-mono">2025.8</span>
-                        <h3 class="text-xl font-bold text-white md:hidden mt-1">Higheri 系列产品大焕新</h3>
-                        <p class="text-gray-400 md:hidden">Higheri 系列产品大焕新，带来更多功能和更好的用户体验。</p>
+                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Higheri 系列产品大焕新</h3>
+                        <p class="text-gray-600 md:hidden">Higheri 系列产品大焕新，带来更多功能和更好的用户体验。</p>
                     </div>
                 </div>
 
                 <!-- Item 3 -->
                 <div class="relative mb-12 w-full flex justify-center items-center">
                     <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <h3 class="text-2xl font-bold text-white mb-2">智能</h3>
-                        <p class="text-gray-400">STAR 系列产品，旨在融合AI提供更强的功能。</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">智能</h3>
+                        <p class="text-gray-600">STAR 系列产品，旨在融合AI提供更强的功能。</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-black border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
                     <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
                         <span class="text-purple-500 font-bold font-mono">2025.12</span>
-                        <span class="ml-2 px-2 py-0.5 bg-purple-500/20 text-purple-300 text-xs rounded-full border border-purple-500/30">NOW</span>
-                        <h3 class="text-xl font-bold text-white md:hidden mt-1">STAR 系列产品</h3>
-                        <p class="text-gray-400 md:hidden">STAR 系列产品，旨在融合AI提供更强的功能。</p>
+                        <span class="ml-2 px-2 py-0.5 bg-purple-500/10 text-purple-600 text-xs rounded-full border border-purple-500/20">NOW</span>
+                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">STAR 系列产品</h3>
+                        <p class="text-gray-600 md:hidden">STAR 系列产品，旨在融合AI提供更强的功能。</p>
                     </div>
                 </div>
 
                  <!-- Item 4 -->
                 <div class="relative w-full flex justify-center items-center flex-row-reverse md:flex-row">
                     <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <h3 class="text-2xl font-bold text-white mb-2">继续</h3>
-                        <p class="text-gray-400">STAR 系列产品继续改进，提供强大的功能。</p>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">继续</h3>
+                        <p class="text-gray-600">STAR 系列产品继续改进，提供强大的功能。</p>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-black border-4 border-gray-700 rounded-full z-10"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-gray-300 rounded-full z-10"></div>
                     <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
                         <span class="text-gray-500 font-bold font-mono">2026+</span>
-                        <h3 class="text-xl font-bold text-white md:hidden mt-1">STAR 系列产品继续改进</h3>
-                        <p class="text-gray-400 md:hidden">STAR 系列产品继续改进，提供强大的功能。</p>
+                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">STAR 系列产品继续改进</h3>
+                        <p class="text-gray-600 md:hidden">STAR 系列产品继续改进，提供强大的功能。</p>
                     </div>
                 </div>
             </div>
@@ -723,27 +723,21 @@
     </div>
 
     <!-- Community Section (New) -->
-    <div id="community" class="py-20 bg-gradient-to-br from-gray-900 to-black relative border-t border-white/5">
+    <div id="community" class="py-20 bg-gradient-to-br from-gray-50 to-white relative border-t border-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold text-white mb-8">加入 <span class="text-primary">HigheriTech</span> 社区</h2>
+            <h2 class="text-3xl font-bold text-gray-900 mb-8">加入 <span class="text-primary">HigheriTech</span> 社区</h2>
             <div class="flex flex-wrap justify-center gap-6">
-                <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-colors border border-white/10 group">
-                    <i class="fab fa-github text-3xl text-white group-hover:scale-110 transition-transform"></i>
+                <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-4 bg-white rounded-xl hover:bg-gray-50 transition-colors border border-gray-200 group shadow-sm">
+                    <i class="fab fa-github text-3xl text-gray-900 group-hover:scale-110 transition-transform"></i>
                     <div class="text-left">
-                        <div class="text-xs text-gray-400">Follow us on</div>
-                        <div class="text-lg font-bold text-white">GitHub</div>
+                        <div class="text-xs text-gray-500">Follow us on</div>
+                        <div class="text-lg font-bold text-gray-900">GitHub</div>
                     </div>
                 </a>
-                <!--<a href="#" class="flex items-center gap-3 px-8 py-4 bg-[#5865F2] rounded-xl hover:bg-[#4752C4] transition-colors border border-white/10 group">
-                    <i class="fab fa-discord text-3xl text-white group-hover:scale-110 transition-transform"></i>
-                    <div class="text-left">
-                        <div class="text-xs text-blue-200">Join the Chat</div>
-                        <div class="text-lg font-bold text-white">Discord</div>
-                    </div>
-                </a >-->
             </div>
         </div>
     </div>
+
 
     <!-- Testimonials Section 
     <div id="testimonials" class="py-24 bg-dark relative overflow-hidden">
@@ -803,46 +797,46 @@
     </div>
 
     <!-- FAQ Section -->
-    <div id="faq" class="py-24 bg-black relative border-t border-white/5">
+    <div id="faq" class="py-24 bg-white relative border-t border-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">FAQ</h2>
+            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">FAQ</h2>
             
             <div class="space-y-4">
                 <!-- FAQ Item 1 -->
-                <details class="group bg-gray-900 rounded-xl border border-white/5 overflow-hidden open:border-primary/50 transition-colors">
+                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-primary/50 transition-colors">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors">Is HigheriPE free to use?</h3>
+                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">Is HigheriPE free to use?</h3>
                         <span class="transition group-open:rotate-180">
                             <i class="fas fa-chevron-down text-gray-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
                         Yes, HigheriPE is free for personal use. For enterprise deployment and advanced features, please check our commercial licensing options.
                     </div>
                 </details>
 
                 <!-- FAQ Item 2 -->
-                <details class="group bg-gray-900 rounded-xl border border-white/5 overflow-hidden open:border-secondary/50 transition-colors">
+                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-secondary/50 transition-colors">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-white group-hover:text-secondary transition-colors">What are the system requirements?</h3>
+                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-secondary transition-colors">What are the system requirements?</h3>
                         <span class="transition group-open:rotate-180">
                             <i class="fas fa-chevron-down text-gray-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
                         We support most modern hardware. A minimum of 4GB RAM and a 64-bit processor is recommended for the best experience.
                     </div>
                 </details>
 
                 <!-- FAQ Item 3 -->
-                <details class="group bg-gray-900 rounded-xl border border-white/5 overflow-hidden open:border-purple-500/50 transition-colors">
+                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-purple-500/50 transition-colors">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-white group-hover:text-purple-500 transition-colors">How can I contribute?</h3>
+                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-500 transition-colors">How can I contribute?</h3>
                         <span class="transition group-open:rotate-180">
                             <i class="fas fa-chevron-down text-gray-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-400 leading-relaxed border-t border-white/5 pt-4">
+                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
                         We welcome contributions! Please visit our GitHub repository to report issues, suggest features, or submit pull requests.
                     </div>
                 </details>
@@ -851,47 +845,47 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="py-24 bg-gradient-to-b from-dark to-black relative">
+    <div class="py-24 bg-gradient-to-b from-gray-50 to-white relative">
         <div class="container mx-auto px-4 text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-black text-white font-cyber mb-8 tracking-tighter">
+            <h2 class="text-5xl md:text-7xl font-black text-gray-900 font-cyber mb-8 tracking-tighter">
                 READY TO <span class="text-primary">UPGRADE?</span>
             </h2>
-            <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
+            <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
                 体验 STAR HigheriTech 带来的高效体验。
             </p>
-            <a href="#products" class="inline-block px-12 py-5 bg-white text-dark font-bold text-xl rounded-full hover:bg-primary hover:text-white hover:scale-105 transition-all shadow-lg hover:shadow-neon-glow">
+            <a href="#products" class="inline-block px-12 py-5 bg-gray-900 text-white font-bold text-xl rounded-full hover:bg-primary hover:text-white hover:scale-105 transition-all shadow-lg hover:shadow-neon-glow">
                  GET STARTED
             </a>
         </div>
     </div>
 
     <!-- Expanded Footer -->
-    <footer id="support" class="bg-black border-t border-white/10 pt-16 pb-8 text-sm">
+    <footer id="support" class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <!-- Brand Column -->
                 <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-white text-dark flex items-center justify-center rounded-sm">
+                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
                             <i class="fas fa-star text-xs"></i>
                         </div>
-                        <span class="font-bold text-lg text-white font-cyber">STAR HigheriTech</span>
+                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
                     </div>
-                    <p class="text-gray-500 mb-6">
+                    <p class="text-gray-600 mb-6">
                         打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
 
                 <!-- Link Column 1 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="VIEW/HIRA/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1 rounded ml-1">NEW</span></a></li>
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="VIEW/HIRA/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
                         <li><a href="VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
                         <li><a href="webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
                         <li><a href="tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
@@ -901,8 +895,8 @@
 
                 <!-- Link Column 2 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-500">
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+                    <ul class="space-y-3 text-gray-600">
                         <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
@@ -912,8 +906,8 @@
 
                 <!-- Link Column 3 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-500">
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+                    <ul class="space-y-3 text-gray-600">
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
@@ -922,13 +916,13 @@
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
                 <div class="mb-4 md:mb-0">
                     &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
