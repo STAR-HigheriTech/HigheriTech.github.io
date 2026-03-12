@@ -73,6 +73,8 @@
         .bento-item { position: relative; overflow: hidden; }
         .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.2); }
+        
+        .bg-grid-pattern { background-size: 40px 40px; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white">
@@ -170,45 +172,51 @@
     </div>
 
     <!-- Bold Bento Grid Products -->
-    <div id="products" class="py-24 bg-white relative">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="products" class="py-24 bg-gray-100 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+        <!-- Blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">POWERFUL <span class="text-blue-500">CORE</span></h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
                 <!-- Large Feature: EIX -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-blue-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
+                <div class="md:col-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-blue-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
                     <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 text-blue-500 border border-blue-500/20 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                         <i class="fas fa-bolt text-3xl"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">EIX 一键装机</h3>
-                    <p class="text-gray-400 text-lg max-w-lg">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">EIX 一键装机</h3>
+                    <p class="text-gray-600 text-lg max-w-lg">
                         内置 IT 天空精品 EIX 2 工具。自动识别镜像，一键分区、还原，轻松重装系统。
                     </p>
                 </div>
 
                 <!-- Tall Feature: Dual Core -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-cyan-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
+                <div class="md:col-span-1 md:row-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-cyan-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-b from-cyan-900/10 to-transparent"></div>
                     <div class="relative z-10">
                         <div class="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-500 border border-cyan-500/20">
                             <i class="fab fa-microsoft text-2xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">双核驱动</h3>
-                        <p class="text-gray-400 mb-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">双核驱动</h3>
+                        <p class="text-gray-600 mb-8">
                             Win 11 + Win 2003 双 PE 系统。
                         </p>
                         <div class="space-y-4">
-                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
+                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 backdrop-blur-sm">
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm text-white font-bold">Win 11 PE</span>
-                                    <span class="text-xs text-green-400">新机首选</span>
+                                    <span class="text-sm text-gray-900 font-bold">Win 11 PE</span>
+                                    <span class="text-xs text-green-600">新机首选</span>
                                 </div>
                                 <p class="text-xs text-gray-500">支持 NVMe, UEFI, 最新硬件</p>
                             </div>
-                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
+                            <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 backdrop-blur-sm">
                                 <div class="flex justify-between items-center mb-1">
-                                    <span class="text-sm text-white font-bold">Win 2003 PE</span>
-                                    <span class="text-xs text-yellow-400">老机兼容</span>
+                                    <span class="text-sm text-gray-900 font-bold">Win 2003 PE</span>
+                                    <span class="text-xs text-yellow-600">老机兼容</span>
                                 </div>
                                 <p class="text-xs text-gray-500">兼容 IDE, BIOS, 256M 内存</p>
                             </div>
@@ -217,13 +225,13 @@
                 </div>
 
                 <!-- Medium Feature: Plugins -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-purple-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
+                <div class="md:col-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-purple-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
                     <div class="flex-1">
                         <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-500 border border-purple-500/20">
                             <i class="fas fa-plug text-2xl"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">插件扩展</h3>
-                        <p class="text-gray-400">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-4">插件扩展</h3>
+                        <p class="text-gray-600">
                             支持 Edgeless 与 HigheriPE 专属插件包。办公、娱乐、网管工具，即插即用，随身携带的操作系统。
                         </p>
                     </div>
@@ -231,34 +239,34 @@
                 </div>
 
                 <!-- Small Feature: Network -->
-                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-green-500/30 card-hover-effect p-8 flex flex-col justify-center">
+                <div class="md:col-span-1 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-green-500/30 card-hover-effect p-8 flex flex-col justify-center">
                     <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mb-4 text-green-500 border border-green-500/20">
                         <i class="fas fa-wifi text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">全能网络</h3>
-                    <p class="text-gray-400 text-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">全能网络</h3>
+                    <p class="text-gray-600 text-sm">
                         内置万能网卡驱动，支持 WiFi、有线网络、蓝牙连接。
                     </p>
                 </div>
 
                 <!-- Small Feature: Pure -->
-                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-white/30 card-hover-effect p-8 flex flex-col justify-center">
-                    <div class="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center mb-4 text-white border border-white/20">
+                <div class="md:col-span-1 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-gray-300 card-hover-effect p-8 flex flex-col justify-center">
+                    <div class="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-4 text-gray-900 border border-gray-200">
                         <i class="fas fa-leaf text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">纯净无广</h3>
-                    <p class="text-gray-400 text-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">纯净无广</h3>
+                    <p class="text-gray-600 text-sm">
                         无捆绑软件，无锁定主页，还原最纯粹的维护体验。
                     </p>
                 </div>
 
                 <!-- Small Feature: Rescue -->
-                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-red-500/30 card-hover-effect p-8 flex flex-col justify-center">
+                <div class="md:col-span-1 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-red-500/30 card-hover-effect p-8 flex flex-col justify-center">
                     <div class="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-4 text-red-500 border border-red-500/20">
                         <i class="fas fa-life-ring text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">数据救援</h3>
-                    <p class="text-gray-400 text-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">数据救援</h3>
+                    <p class="text-gray-600 text-sm">
                         集成 DiskGenius 等专业数据恢复工具，挽救珍贵数据。
                     </p>
                 </div>
@@ -267,8 +275,8 @@
     </div>
 
     <!-- Toolbox Section -->
-    <div class="py-24 bg-gray-50 border-t border-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-24 bg-white border-t border-gray-200 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center font-cyber">POWERFUL <span class="text-cyan-400">TOOLBOX</span></h2>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -328,9 +336,14 @@
     </div>
 
     <!-- How to Use Section -->
-    <div class="py-24 bg-white relative overflow-hidden">
+    <div class="py-24 bg-gray-100 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center font-cyber">HOW TO <span class="text-blue-500">USE</span></h2>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto relative">
@@ -385,7 +398,7 @@
                     </div>
                 </div>
                 <div class="group relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-                    <img src="/img/PE2003.png" alt="Win 2003 PE" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
+                    <img src="/img/2003.png" alt="Win 2003 PE" class="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                     <div class="absolute bottom-0 left-0 p-8">
                         <h3 class="text-xl font-bold text-white mb-2">Windows 2003 PE</h3>

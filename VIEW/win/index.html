@@ -77,6 +77,8 @@
         .bento-item { position: relative; overflow: hidden; }
         .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.2); }
+        
+        .bg-grid-pattern { background-size: 40px 40px; }
     </style>
 </head>
 <body class="antialiased selection:bg-blue-500 selection:text-white">
@@ -198,72 +200,75 @@
     </div>
 
     <!-- Features Bento Grid -->
-    <div id="features" class="py-24 bg-white relative">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="features" class="py-24 bg-gray-100 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+        <!-- Blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">SYSTEM <span class="text-blue-500">MATRIX</span></h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                <!-- Large Feature: HigheriPE -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-blue-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
-                    <div class="w-16 h-16 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 text-blue-500 border border-blue-500/20 group-hover:bg-blue-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-compact-disc text-3xl"></i>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                <!-- Tool Category 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-blue-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all text-blue-500">
+                        <i class="fas fa-hdd"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">HigheriPE 系统维护</h3>
-                    <p class="text-gray-400 text-lg max-w-lg">
-                        专业级 PE 工具箱。集成 IT 天空 EIX 一键装机，支持 Win11/2003 双内核，新老机型通吃。系统崩溃？无法启动？有它就够了。
-                    </p>
+                    <h3 class="text-gray-900 font-bold mb-3">磁盘工具</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>DiskGenius</li>
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>傲梅分区助手</li>
+                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>HDTune Pro</li>
+                    </ul>
                 </div>
 
-                <!-- Tall Feature: EasyCMD -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-cyan-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-b from-cyan-900/10 to-transparent"></div>
-                    <div class="relative z-10">
-                        <div class="w-14 h-14 bg-cyan-500/10 rounded-2xl flex items-center justify-center mb-6 text-cyan-500 border border-cyan-500/20">
-                            <i class="fas fa-terminal text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">EasyCMD</h3>
-                        <p class="text-gray-400 mb-8">
-                            图形化 CMD 工具。
-                        </p>
-                        <div class="space-y-4">
-                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <i class="fas fa-magic text-cyan-400"></i>
-                                    <span class="text-white font-bold text-sm">零代码基础</span>
-                                </div>
-                                <p class="text-xs text-gray-500">像搭积木一样组合复杂的 CMD 命令。</p>
-                            </div>
-                            <div class="bg-black/40 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <i class="fas fa-eye text-cyan-400"></i>
-                                    <span class="text-white font-bold text-sm">可视化操作</span>
-                                </div>
-                                <p class="text-xs text-gray-500">直观界面，告别黑底白字枯燥命令行。</p>
-                            </div>
-                        </div>
+                <!-- Tool Category 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-cyan-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-cyan-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-cyan-500 group-hover:text-white transition-all text-cyan-500">
+                        <i class="fas fa-toolbox"></i>
                     </div>
+                    <h3 class="text-gray-900 font-bold mb-3">系统维护</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>Dism++</li>
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>WinNTSetup</li>
+                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>CPU-Z / GPU-Z</li>
+                    </ul>
                 </div>
 
-                <!-- Medium Feature: Optimization -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-blue-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
-                    <div class="flex-1">
-                        <div class="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 text-blue-500 border border-blue-500/20">
-                            <i class="fas fa-tachometer-alt text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">深度优化</h3>
-                        <p class="text-gray-400">
-                            一键清理垃圾、禁用无用服务、优化启动项。释放每一滴系统性能，让老电脑焕发新生。
-                        </p>
+                <!-- Tool Category 3 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-purple-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition-all text-purple-500">
+                        <i class="fas fa-key"></i>
                     </div>
-                    <div class="hidden md:block w-32 h-32 bg-blue-500/5 rounded-full filter blur-xl"></div>
+                    <h3 class="text-gray-900 font-bold mb-3">密码恢复</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>NTPWEdit</li>
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Windows 密码修改</li>
+                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Office 密码移除</li>
+                    </ul>
+                </div>
+
+                <!-- Tool Category 4 -->
+                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-green-500/50 transition-colors group">
+                    <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-500 group-hover:text-white transition-all text-green-500">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h3 class="text-gray-900 font-bold mb-3">网络远程</h3>
+                    <ul class="text-gray-600 text-sm space-y-2">
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>ToDesk 远程</li>
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>AnyDesk</li>
+                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>Edge 浏览器</li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Selected Projects -->
-    <div id="projects" class="py-24 bg-gray-50 border-t border-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="projects" class="py-24 bg-white border-t border-gray-200 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center font-cyber">CORE <span class="text-blue-500">TOOLS</span></h2>
             
             <div class="space-y-24 max-w-6xl mx-auto">

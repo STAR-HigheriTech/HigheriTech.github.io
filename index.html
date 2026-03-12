@@ -97,6 +97,8 @@
             box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
         }
 
+        .bg-grid-pattern { background-size: 40px 40px; }
+
         .text-glow {
             text-shadow: 0 0 20px rgba(22, 93, 255, 0.5);
         }
@@ -359,8 +361,13 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="bg-white border-y border-gray-200 py-12 relative overflow-hidden">
+    <div class="bg-gray-100 border-y border-gray-200 py-12 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+        <!-- Blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                 <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors">
@@ -384,8 +391,8 @@
     </div>
 
     <!-- Why Choose Us (Features) -->
-    <div id="features" class="py-24 bg-gray-50 relative">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="features" class="py-24 bg-white relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">为什么选择 <span class="text-primary">HigheriTech</span></h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">不仅仅是工具，更是追求。</p>
@@ -429,10 +436,16 @@
     </div>
 
     <!-- Bold Bento Grid Products -->
-    <div id="products" class="py-24 bg-white relative">
+    <div id="products" class="py-24 bg-gray-100 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+        <!-- Blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        </div>
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
         
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div>
                     <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-4">CORE PRODUCTS</h2>
@@ -593,10 +606,7 @@
     </div>
 
     <!-- Asymmetrical Solutions Section -->
-    <div id="solutions" class="py-24 bg-gray-50 relative overflow-hidden">
-        <!-- Background Grid Pattern -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        
+    <div id="solutions" class="py-24 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-20 text-center">SOLUTIONS</h2>
             
@@ -654,8 +664,14 @@
     </div>
 
     <!-- Roadmap Section -->
-    <div id="roadmap" class="py-24 bg-white relative border-t border-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div id="roadmap" class="py-24 bg-gray-100 relative border-t border-gray-200 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
+        <!-- Blobs -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">OUR <span class="text-primary">ROADMAP</span></h2>
             
             <div class="relative max-w-4xl mx-auto">
@@ -723,8 +739,8 @@
     </div>
 
     <!-- Community Section (New) -->
-    <div id="community" class="py-20 bg-gradient-to-br from-gray-50 to-white relative border-t border-gray-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div id="community" class="py-20 bg-white relative border-t border-gray-200 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <h2 class="text-3xl font-bold text-gray-900 mb-8">加入 <span class="text-primary">HigheriTech</span> 社区</h2>
             <div class="flex flex-wrap justify-center gap-6">
                 <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-4 bg-white rounded-xl hover:bg-gray-50 transition-colors border border-gray-200 group shadow-sm">

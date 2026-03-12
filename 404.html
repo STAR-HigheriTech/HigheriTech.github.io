@@ -35,7 +35,7 @@
                         'red-glow': '0 0 20px rgba(239, 68, 68, 0.6)',
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
                     }
                 }
             }
@@ -46,15 +46,15 @@
         
         body {
             font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #0d1117;
-            color: #F2F3F5;
+            background-color: #F9FAFB;
+            color: #111827;
         }
         
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #1D2129; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        ::-webkit-scrollbar-track { background: #F3F4F6; }
+        ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
 
         .nav-link { position: relative; }
         .nav-link::after {
@@ -75,12 +75,14 @@
             50% { transform: translateY(-20px); }
         }
         .animate-float { animation: float 6s ease-in-out infinite; }
+        
+        .bg-grid-pattern { background-size: 40px 40px; }
     </style>
 </head>
 <body class="antialiased selection:bg-primary selection:text-white flex flex-col min-h-screen">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-dark/80 backdrop-blur-lg border-b border-white/10">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-lg border-b border-gray-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
@@ -88,56 +90,56 @@
                         <div class="w-10 h-10 bg-gradient-to-br from-primary to-electric text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-180 transition-transform duration-700">
                             <i class="fas fa-star text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-white font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
+                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
                     </a>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-10">
-                    <a href="index.html" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="/index.html#features" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">特性</a>
-                    <a href="/index.html#products" class="text-gray-300 hover:text-white text-base font-medium nav-link transition-colors">产品</a>
-                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-white/10 hover:bg-primary hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300 border border-white/10">
+                    <a href="index.html" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">首页</a>
+                    <a href="/index.html#features" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">特性</a>
+                    <a href="/index.html#products" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">产品</a>
+                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-primary/10 hover:bg-primary hover:text-white text-primary px-5 py-2.5 rounded-full transition-all duration-300 border border-primary/20">
                         <span>文档中心</span>
                         <i class="fas fa-external-link-alt text-xs"></i>
                     </a>
                 </div>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-primary focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-white/5 mt-0 bg-dark/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-white/10 shadow-2xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-2xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="/index.html" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">首页</a>
-                    <a href="/index.html#features" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">特性</a>
-                    <a href="/index.html#products" class="text-gray-300 hover:text-white text-lg font-medium transition-colors block">产品</a>
+                    <a href="/index.html" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
+                    <a href="/index.html#features" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
+                    <a href="/index.html#products" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- 404 Content -->
-    <main class="flex-grow flex items-center justify-center relative pt-20 overflow-hidden">
+    <main class="flex-grow flex items-center justify-center relative pt-20 overflow-hidden bg-white">
         <!-- Background Elements -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full filter blur-[120px] animate-pulse"></div>
         <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
 
         <div class="container mx-auto px-4 relative z-10 py-12">
             <div class="flex flex-col items-center text-center mb-16">
                 <div class="relative mb-8 animate-float">
-                    <h1 class="text-9xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-800 to-gray-900 font-cyber select-none absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10 scale-150 opacity-50">404</h1>
-                    <h1 class="text-8xl md:text-9xl font-black text-white font-cyber relative z-10 tracking-widest text-glow-red">
+                    <h1 class="text-9xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-300 font-cyber select-none absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10 scale-150 opacity-50">404</h1>
+                    <h1 class="text-8xl md:text-9xl font-black text-gray-900 font-cyber relative z-10 tracking-widest text-glow-red">
                         4<span class="text-primary">0</span>4
                     </h1>
                 </div>
                 
-                <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">信号丢失 <span class="text-gray-500 text-2xl md:text-3xl">/ Signal Lost</span></h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">信号丢失 <span class="text-gray-400 text-2xl md:text-3xl">/ Signal Lost</span></h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
                     您所寻找的页面似乎漂流到了未知的星系。<br>
                     请检查坐标，或通过下方的星际之门返回安全地带。
                 </p>
@@ -151,39 +153,39 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 
                 <!-- Hira -->
-                <a href="/VIEW/hira/index.html" class="group bento-item bg-gray-900/50 rounded-2xl border border-white/5 hover:border-purple-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
+                <a href="/VIEW/hira/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-purple-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
                     <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4 text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors">
                         <i class="fas fa-robot text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">STAR Hira</h3>
-                    <p class="text-gray-500 text-sm">AI 浏览器</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">STAR Hira</h3>
+                    <p class="text-gray-600 text-sm">AI 浏览器</p>
                 </a>
 
                 <!-- Work -->
-                <a href="/VIEW/work/index.html" class="group bento-item bg-gray-900/50 rounded-2xl border border-white/5 hover:border-teal-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
+                <a href="/VIEW/work/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-teal-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
                     <div class="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center mb-4 text-teal-500 group-hover:bg-teal-500 group-hover:text-white transition-colors">
                         <i class="fas fa-briefcase text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">STAR Work</h3>
-                    <p class="text-gray-500 text-sm">生产力工具</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">STAR Work</h3>
+                    <p class="text-gray-600 text-sm">生产力工具</p>
                 </a>
 
                 <!-- PE -->
-                <a href="/VIEW/PE/PE.html" class="group bento-item bg-gray-900/50 rounded-2xl border border-white/5 hover:border-blue-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
+                <a href="/VIEW/PE/PE.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-blue-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
                     <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors">
                         <i class="fas fa-tools text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">HigheriPE</h3>
-                    <p class="text-gray-500 text-sm">系统维护</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">HigheriPE</h3>
+                    <p class="text-gray-600 text-sm">系统维护</p>
                 </a>
 
                 <!-- Blog -->
-                <a href="/BLOG/index.html" class="group bento-item bg-gray-900/50 rounded-2xl border border-white/5 hover:border-amber-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
+                <a href="/BLOG/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-amber-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
                     <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center mb-4 text-amber-500 group-hover:bg-amber-500 group-hover:text-white transition-colors">
                         <i class="fas fa-book text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-white mb-1">知识库</h3>
-                    <p class="text-gray-500 text-sm">文档与博客</p>
+                    <h3 class="text-lg font-bold text-gray-900 mb-1">知识库</h3>
+                    <p class="text-gray-600 text-sm">文档与博客</p>
                 </a>
 
             </div>
@@ -191,32 +193,32 @@
     </main>
 
     <!-- Expanded Footer -->
-    <footer id="support" class="bg-black border-t border-white/10 pt-16 pb-8 text-sm">
+    <footer id="support" class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <!-- Brand Column -->
                 <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-white text-dark flex items-center justify-center rounded-sm">
+                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
                             <i class="fas fa-star text-xs"></i>
                         </div>
-                        <span class="font-bold text-lg text-white font-cyber">STAR HigheriTech</span>
+                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
                     </div>
-                    <p class="text-gray-500 mb-6">
+                    <p class="text-gray-600 mb-6">
                         打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-800 rounded flex items-center justify-center text-gray-400 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
 
                 <!-- Link Column 1 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="/VIEW/hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-500/20 text-purple-400 px-1 rounded ml-1">NEW</span></a></li>
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
+                    <ul class="space-y-2 text-gray-600">
+                        <li><a href="/VIEW/hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
                         <li><a href="/VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
                         <li><a href="/webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
                         <li><a href="/tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
@@ -226,8 +228,8 @@
 
                 <!-- Link Column 2 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-500">
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
+                    <ul class="space-y-3 text-gray-600">
                         <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
@@ -237,8 +239,8 @@
 
                 <!-- Link Column 3 -->
                 <div>
-                    <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-500">
+                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
+                    <ul class="space-y-3 text-gray-600">
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
@@ -247,13 +249,13 @@
                 </div>
             </div>
 
-            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
                 <div class="mb-4 md:mb-0">
                     &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-400 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-400 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
