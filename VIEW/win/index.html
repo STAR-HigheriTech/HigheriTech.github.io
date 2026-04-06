@@ -4,458 +4,594 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>装机与系统工具 | STAR HigheriTech</title>
-    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF',
-                        secondary: '#722ED1',
-                        accent: '#eb2f96',
-                        dark: '#1D2129',
-                        darker: '#0d1117',
-                        light: '#F2F3F5',
-                        blue: {
-                            400: '#60a5fa',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        },
-                        cyan: {
-                            400: '#22d3ee',
-                            500: '#06b6d4',
-                            600: '#0891b2',
-                            900: '#164e63',
-                        }
+                        primary: '#2563EB',
+                        secondary: '#0D9488',
+                        accent: '#8B5CF6',
+                        dark: '#0F172A',
+                        light: '#F8FAFC',
+                        neon: '#06B6D4',
+                        electric: '#EC4899'
                     },
                     fontFamily: {
-                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                        cyber: ['Orbitron', 'Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        cyber: ['Inter', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
-                        'neon-glow': '0 0 20px rgba(37, 99, 235, 0.6)', // Blue glow for Win
+                        card: '0 8px 32px rgba(37, 99, 235, 0.06)',
+                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
+                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
+                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)'
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)"
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-        
-        body {
-            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #F9FAFB;
-            color: #111827;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F3F4F6; }
-        ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #8B5CF6;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 139, 92, 246;
+        }
+        body.theme-hira {
+            --brand: #8B5CF6;
+            --brand-2: #06B6D4;
+            --brand-3: #EC4899;
+            --brand-rgb: 139, 92, 246;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 236, 72, 153;
+        }
+        body.theme-pe {
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #0D9488;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 13, 148, 136;
+        }
+        body.theme-win {
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #38BDF8;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 56, 189, 248;
+        }
+        body.theme-work {
+            --brand: #0D9488;
+            --brand-2: #06B6D4;
+            --brand-3: #6366F1;
+            --brand-rgb: 13, 148, 136;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 99, 102, 241;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAFAFA; }
+        ::-webkit-scrollbar-thumb { background: #D4D4D8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
+
+        .bg-grid-pattern { background-size: 40px 40px; }
         .nav-link { position: relative; }
         .nav-link::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
-            background-color: #3b82f6; transition: width 0.3s;
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand), var(--brand-2));
+            transition: width 0.3s ease;
         }
         .nav-link:hover::after { width: 100%; }
 
-        .text-glow { text-shadow: 0 0 20px rgba(37, 99, 235, 0.5); }
-        
-        .bento-item { position: relative; overflow: hidden; }
-        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(37, 99, 235, 0.2); }
-        
-        .bg-grid-pattern { background-size: 40px 40px; }
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.14);
+            border-color: rgba(var(--brand-rgb), 0.18);
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.88);
+            color: #52525B;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .section-kicker::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.10);
+        }
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+        .brand-gradient-text {
+            background-image: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .brand-button {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.28);
+        }
+        .brand-icon {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--brand-3));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.22);
+        }
+        .text-glow { text-shadow: 0 8px 24px rgba(var(--brand-rgb), 0.28); }
+        .hero-panel {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.62));
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(24px);
+        }
+        .hero-panel-light {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(24px);
+        }
+        .surface-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .soft-dark-card {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        }
+        .section-shell {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .minimal-stat {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 1.25rem;
+        }
+        .minimal-stat strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #171717;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        .brand-soft {
+            background: rgba(var(--brand-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-rgb), 0.16);
+            color: var(--brand);
+        }
+        .brand-soft-2 {
+            background: rgba(var(--brand-2-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-2-rgb), 0.16);
+            color: var(--brand-2);
+        }
+        .brand-soft-3 {
+            background: rgba(var(--brand-3-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-3-rgb), 0.16);
+            color: var(--brand-3);
+        }
+        .divider-glow-a,
+        .divider-glow-b {
+            position: absolute;
+            width: 18rem;
+            height: 18rem;
+            border-radius: 999px;
+            filter: blur(90px);
+            pointer-events: none;
+            opacity: 0.18;
+        }
+        .divider-glow-a {
+            top: -6rem;
+            left: -6rem;
+            background: rgba(var(--brand-rgb), 0.55);
+        }
+        .divider-glow-b {
+            right: -6rem;
+            bottom: -6rem;
+            background: rgba(var(--brand-2-rgb), 0.45);
+        }
+        .metric-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.45rem 0.85rem;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.78rem;
+        }
+        .code-panel {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(15, 23, 42, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(2, 6, 23, 0.30);
+        }
+        .light-shell {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(20px);
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-500 selection:text-white">
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+<body class="theme-win antialiased selection:bg-primary selection:text-white">
+    
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
                     <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-12 transition-transform duration-700">
+                        <div class="w-11 h-11 brand-icon text-white flex items-center justify-center rounded-xl transition-all duration-500 group-hover:-translate-y-0.5">
                             <i class="fab fa-windows text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">Higheri <span class="text-blue-500">WIN</span></span>
+                        <span class="font-semibold text-2xl text-slate-950 tracking-tight">Higheri <span class="brand-gradient-text">Win</span></span>
                     </a>
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-10">
-                    <a href="../../index.html" class="text-gray-600 hover:text-blue-600 text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="#features" class="text-gray-600 hover:text-blue-600 text-base font-medium nav-link transition-colors">功能</a>
-                    <a href="#projects" class="text-gray-600 hover:text-blue-600 text-base font-medium nav-link transition-colors">项目</a>
-                    
-                    <a href="#projects" class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300">
-                        <span>获取工具</span>
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">首页</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">概览</a><a href="#products" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">产品线</a><a href="#scenarios" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">场景</a><a href="#start" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">开始</a>
+                    <a href="#start" class="brand-button text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">获取方案</a>
                 </div>
-
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-blue-500 focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-100 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-2xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-100 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-2xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="../../index.html" class="text-gray-600 hover:text-blue-600 text-lg font-medium transition-colors block">首页</a>
-                    <a href="#features" class="text-gray-600 hover:text-blue-600 text-lg font-medium transition-colors block">功能</a>
-                    <a href="#projects" class="text-gray-600 hover:text-blue-600 text-lg font-medium transition-colors block">项目</a>
-                    <a href="#projects" class="text-blue-500 hover:text-blue-600 text-lg font-medium transition-colors block">获取工具</a>
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">首页</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">概览</a><a href="#products" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">产品线</a><a href="#scenarios" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">场景</a><a href="#start" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">开始</a>
+                    <a href="#start" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">获取方案</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-darker">
-        <!-- Background Image & Overlay -->
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-blue-900/10 to-transparent"></div>
-
-        <!-- Background Elements -->
+    <section class="relative min-h-screen pt-24 flex items-center overflow-hidden bg-slate-950">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center opacity-65"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/80 to-slate-950/30"></div>
         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full filter blur-[120px] animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-600/20 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
-
+        <div class="absolute top-20 left-10 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(37, 99, 235, 0.28)"></div>
+        <div class="absolute bottom-10 right-10 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(6, 182, 212, 0.22)"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-16">
-                <div class="flex-1 text-center md:text-left">
-                    <div class="inline-block px-3 py-1 border border-blue-500/50 text-blue-500 text-xs font-bold tracking-widest uppercase mb-6 bg-blue-900/10 backdrop-blur-md rounded-full">
-                        System Optimization
+            <div class="grid lg:grid-cols-[1.02fr_0.98fr] gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <div class="hero-panel rounded-[22px] p-5">
+                        <div class="code-panel rounded-[18px] p-6 md:p-7">
+                            <div class="flex items-center justify-between mb-6">
+                                <div class="flex gap-2">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                                </div>
+                                <span class="text-xs text-slate-400 font-medium">System Console</span>
+                            </div>
+                            <div class="space-y-3 text-sm font-mono text-slate-300">
+                                <div><span class="text-emerald-400">root@higheri</span>:<span class="text-sky-400">~</span>$ diagnose --full</div>
+                                <div>[+] Disk health ................. <span class="text-emerald-400">OK</span></div>
+                                <div>[+] Boot environment ........... <span class="text-emerald-400">READY</span></div>
+                                <div>[+] Rescue modules ............. <span class="text-emerald-400">LOADED</span></div>
+                                <div>[+] Network support ............ <span class="text-emerald-400">ONLINE</span></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 mt-8">
+                                <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
+                                    <div class="text-slate-400 text-xs mb-1">Products</div>
+                                    <div class="text-white font-semibold">PE + EasyCMD</div>
+                                </div>
+                                <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
+                                    <div class="text-slate-400 text-xs mb-1">Positioning</div>
+                                    <div class="text-white font-semibold">System Lifecycle</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight">
-                        掌控您的 <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500 text-glow">操作系统</span>
+                </div>
+                <div class="order-1 lg:order-2 lg:pl-6">
+                    <div class="section-kicker mb-6">System Tools Line</div>
+                    <h1 class="section-title text-white mb-6 max-w-2xl">
+                        从重装、修复到执行命令，<br>
+                        <span class="brand-gradient-text text-glow">系统维护也能拥有统一的产品体验</span>
                     </h1>
-                    <p class="text-xl text-gray-400 mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
-                        从系统重装到性能优化，Higheri Win 提供全套专业级工具。HigheriPE、EasyCMD，让电脑维护从未如此简单。
+                    <p class="text-lg md:text-xl text-slate-300/90 max-w-xl leading-8 mb-8">
+                        Win 更适合做“左视觉、右文案”的产品线入口头图，所以我把控制台主视觉放到左侧，把产品定位与 CTA 放到右侧，阅读节奏会更明显。
                     </p>
-                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                        <a href="#projects" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/50 flex items-center gap-2 group">
-                            开始优化 <i class="fas fa-bolt group-hover:text-yellow-300 transition-colors"></i>
+                    <div class="flex flex-wrap gap-4 mb-10">
+                        <a href="#products" class="brand-button inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all">
+                            查看产品线 <i class="fas fa-arrow-right"></i>
                         </a>
-                        <a href="#features" class="px-8 py-4 border border-gray-700 hover:border-white text-gray-300 hover:text-white font-bold text-lg transition-all bg-white/5 backdrop-blur-sm">
-                            探索功能
+                        <a href="#scenarios" class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/15 rounded-lg font-semibold text-lg transition-all">
+                            应用场景 <i class="fas fa-grid-2"></i>
                         </a>
                     </div>
-                </div>
-                
-                <div class="flex-1 relative">
-                    <!-- 3D Card Effect Container -->
-                    <div class="relative w-full aspect-square max-w-md mx-auto perspective-1000">
-                        <div class="relative z-10 w-full h-full bg-gradient-to-br from-gray-900 to-black rounded-3xl border border-white/10 shadow-2xl p-8 transform rotate-y-12 rotate-x-12 hover:rotate-0 transition-all duration-700 flex flex-col justify-between group">
-                            <!-- Mock Terminal/Dashboard UI -->
-                            <div class="bg-black/50 rounded-xl p-4 font-mono text-xs text-gray-400 h-full flex flex-col border border-white/5">
-                                <div class="flex gap-2 mb-4">
-                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                </div>
-                                <div class="space-y-2">
-                                    <p><span class="text-green-500">root@STAR-WIN</span>:<span class="text-blue-500">~</span>$ system-check --full</p>
-                                    <p>[+] CPU Status: <span class="text-green-500">OPTIMIZED</span></p>
-                                    <p>[+] Memory: <span class="text-green-500">CLEANED (2.4GB Freed)</span></p>
-                                    <p>[+] Disk Health: <span class="text-green-500">GOOD</span></p>
-                                    <p>[+] Security: <span class="text-green-500">SECURE</span></p>
-                                    <p class="animate-pulse">_</p>
-                                </div>
-                                <div class="mt-auto grid grid-cols-2 gap-4">
-                                    <div class="bg-blue-500/10 p-3 rounded border border-blue-500/20 text-center">
-                                        <div class="text-blue-400 font-bold text-lg">98%</div>
-                                        <div class="text-[10px] text-gray-500">Performance</div>
-                                    </div>
-                                    <div class="bg-cyan-500/10 p-3 rounded border border-cyan-500/20 text-center">
-                                        <div class="text-cyan-400 font-bold text-lg">0</div>
-                                        <div class="text-[10px] text-gray-500">Threats</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="grid sm:grid-cols-3 gap-3 max-w-2xl">
+                        <div class="rounded-[16px] bg-white/8 border border-white/10 px-4 py-4">
+                            <div class="text-slate-400 text-xs mb-2">Rescue</div>
+                            <div class="text-white font-semibold">系统救援</div>
                         </div>
-                        <!-- Glows -->
-                        <div class="absolute -inset-4 bg-blue-500/30 blur-3xl -z-10 rounded-full opacity-50"></div>
+                        <div class="rounded-[16px] bg-white/8 border border-white/10 px-4 py-4">
+                            <div class="text-slate-400 text-xs mb-2">Command</div>
+                            <div class="text-white font-semibold">命令工具</div>
+                        </div>
+                        <div class="rounded-[16px] bg-white/8 border border-white/10 px-4 py-4">
+                            <div class="text-slate-400 text-xs mb-2">Scene</div>
+                            <div class="text-white font-semibold">专业维护</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Features Bento Grid -->
-    <div id="features" class="py-24 bg-gray-100 relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <!-- Blobs -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
-        </div>
+    <section id="overview" class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">SYSTEM <span class="text-blue-500">MATRIX</span></h2>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-                <!-- Tool Category 1 -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-blue-500/50 transition-colors group">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all text-blue-500">
-                        <i class="fas fa-hdd"></i>
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid lg:grid-cols-[0.92fr_1.08fr] gap-10 items-start">
+                    <div>
+                        <div class="section-kicker mb-5">Line Architecture</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">从单点工具，升级成系统工具矩阵</h2>
+                        <p class="text-slate-600 leading-8">
+                            这次不再把 Win 页做成“简单列表页”，而是直接提升成和主页同级的产品线入口：更强的品牌感、更清晰的层级，以及更成熟的企业软件表达。
+                        </p>
                     </div>
-                    <h3 class="text-gray-900 font-bold mb-3">磁盘工具</h3>
-                    <ul class="text-gray-600 text-sm space-y-2">
-                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>DiskGenius</li>
-                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>傲梅分区助手</li>
-                        <li><i class="fas fa-check text-blue-500/50 mr-2"></i>HDTune Pro</li>
-                    </ul>
-                </div>
-
-                <!-- Tool Category 2 -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-cyan-500/50 transition-colors group">
-                    <div class="w-12 h-12 bg-cyan-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-cyan-500 group-hover:text-white transition-all text-cyan-500">
-                        <i class="fas fa-toolbox"></i>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="minimal-stat">
+                            <strong>系统部署</strong>
+                            <span class="text-slate-600 leading-7">围绕重装、救援与初始化建立主链路。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>命令执行</strong>
+                            <span class="text-slate-600 leading-7">把复杂命令动作转化为更可读的执行体验。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>专业场景</strong>
+                            <span class="text-slate-600 leading-7">更适合运维、装机、维修与长期维护团队。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>统一体验</strong>
+                            <span class="text-slate-600 leading-7">产品之间共享同一套高级、稳定的设计语言。</span>
+                        </div>
                     </div>
-                    <h3 class="text-gray-900 font-bold mb-3">系统维护</h3>
-                    <ul class="text-gray-600 text-sm space-y-2">
-                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>Dism++</li>
-                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>WinNTSetup</li>
-                        <li><i class="fas fa-check text-cyan-500/50 mr-2"></i>CPU-Z / GPU-Z</li>
-                    </ul>
-                </div>
-
-                <!-- Tool Category 3 -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-purple-500/50 transition-colors group">
-                    <div class="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-purple-500 group-hover:text-white transition-all text-purple-500">
-                        <i class="fas fa-key"></i>
-                    </div>
-                    <h3 class="text-gray-900 font-bold mb-3">密码恢复</h3>
-                    <ul class="text-gray-600 text-sm space-y-2">
-                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>NTPWEdit</li>
-                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Windows 密码修改</li>
-                        <li><i class="fas fa-check text-purple-500/50 mr-2"></i>Office 密码移除</li>
-                    </ul>
-                </div>
-
-                <!-- Tool Category 4 -->
-                <div class="bg-white rounded-2xl p-6 border border-gray-200 hover:border-green-500/50 transition-colors group">
-                    <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-500 group-hover:text-white transition-all text-green-500">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h3 class="text-gray-900 font-bold mb-3">网络远程</h3>
-                    <ul class="text-gray-600 text-sm space-y-2">
-                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>ToDesk 远程</li>
-                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>AnyDesk</li>
-                        <li><i class="fas fa-check text-green-500/50 mr-2"></i>Edge 浏览器</li>
-                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Selected Projects -->
-    <div id="projects" class="py-24 bg-white border-t border-gray-200 relative overflow-hidden">
+    <section id="products" class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="absolute inset-0 bg-grid-pattern"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center font-cyber">CORE <span class="text-blue-500">TOOLS</span></h2>
-            
-            <div class="space-y-24 max-w-6xl mx-auto">
-                <!-- Project 1: HigheriPE -->
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="flex-1 order-2 md:order-1">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-500 text-xs font-bold border border-blue-500/20">SYSTEM RESCUE</span>
-                            <span class="px-3 py-1 rounded-full bg-white text-gray-500 text-xs font-bold border border-gray-200">v5.2</span>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-6">HigheriPE 工具箱</h3>
-                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                            最强大的系统维护利器。无论您是 IT 专家还是普通用户，HigheriPE 都能帮您轻松解决系统故障。内置 ToDesk 远程控制，让远程协助变得触手可及。
-                        </p>
-                        <ul class="space-y-4 mb-8 text-gray-600">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-blue-500"></i> 支持 UEFI/BIOS 双启动
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-blue-500"></i> 集成 EIX 一键装机，傻瓜式操作
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-blue-500"></i> 内置万能网卡驱动，联网无忧
-                            </li>
-                        </ul>
-                        <div class="flex gap-4">
-                            <a href="/VIEW/PE/PE.html" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
-                                <i class="fas fa-arrow-right"></i> 访问 PE 专页
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex-1 order-1 md:order-2 relative group">
-                        <div class="absolute inset-0 bg-blue-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl transform group-hover:scale-[1.02] transition-transform duration-500">
-                             <img src="/img/PE11.png" alt="HigheriPE Interface" class="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity">
-                             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                        </div>
-                    </div>
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+                <div>
+                    <div class="section-kicker mb-5">Product Matrix</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">两个核心产品，覆盖系统生命周期</h2>
                 </div>
+                <p class="max-w-2xl text-slate-600 leading-8">主页中的卡片配色和产品气质已经同步到这里，并进一步重构成真正的产品线陈列方式，而不是简单跳转入口。</p>
+            </div>
+            <div class="grid xl:grid-cols-2 gap-6">
+                <article class="section-shell rounded-[20px] p-8 md:p-10 card-hover-effect">
+                    <div class="flex items-center justify-between gap-4 mb-8">
+                        <div class="brand-soft rounded-lg px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">System Rescue</div>
+                        <a href="../PE/PE.html" class="text-primary font-semibold">进入详情</a>
+                    </div>
+                    <h3 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">HigheriPE</h3>
+                    <p class="text-slate-600 leading-8 mb-8">重装、救援、联网维护、工具箱整合，是整个产品线中最核心的系统维护底座。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Core</div><div class="font-semibold text-slate-950">双 PE 内核</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Network</div><div class="font-semibold text-slate-950">联网即维护</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Deploy</div><div class="font-semibold text-slate-950">EIX 装机</div></div>
+                    </div>
+                </article>
+                <article class="section-shell rounded-[20px] p-8 md:p-10 card-hover-effect">
+                    <div class="flex items-center justify-between gap-4 mb-8">
+                        <div class="brand-soft-2 rounded-lg px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">Command Experience</div>
+                        <a href="../../webp/ezcmd/index.html" class="text-secondary font-semibold">在线试用</a>
+                    </div>
+                    <h3 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">STAR EasyCMD</h3>
+                    <p class="text-slate-600 leading-8 mb-8">把命令行能力转化为更直观的操作块与执行逻辑，让复杂动作也能具备更好的可理解性。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Blocks</div><div class="font-semibold text-slate-950">图形化逻辑</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Safety</div><div class="font-semibold text-slate-950">误操作防护</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Output</div><div class="font-semibold text-slate-950">脚本生成</div></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <!-- Project 2: EasyCMD -->
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="flex-1 relative group">
-                        <div class="absolute inset-0 bg-cyan-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative overflow-hidden">
-                                <!-- Abstract UI Representation -->
-                                <div class="absolute inset-0 bg-gradient-to-bl from-gray-800 to-black"></div>
-                                <div class="relative z-10 w-3/4 h-3/4 bg-gray-800 rounded-xl border border-white/10 p-6 flex flex-col font-mono text-sm text-green-400">
-                                    <div class="border-b border-white/10 pb-2 mb-2 flex gap-2">
-                                        <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                        <div class="w-3 h-3 bg-green-500 rounded-full"></div>
-                                    </div>
-                                    <div>> Drag command block...</div>
-                                    <div>> Dropped 'Network Reset'</div>
-                                    <div>> Executing...</div>
-                                    <div class="text-white">Done. Network configuration reset.</div>
-                                    <div class="animate-pulse">_</div>
-                                </div>
-                            </div>
-                        </div>
+    <section id="scenarios" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div>
+                        <div class="section-kicker mb-5">Scenarios</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">更适合真实维护工作的三类场景</h2>
                     </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-500 text-xs font-bold border border-cyan-500/20">CLI TOOL</span>
-                            <span class="px-3 py-1 rounded-full bg-white text-gray-500 text-xs font-bold border border-gray-200">BETA</span>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-6">活力 EasyCMD</h3>
-                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                            命令行的强大，图形化的便捷。EasyCMD 将复杂的 Windows 命令封装为可视化模块。无需记忆晦涩指令，通过简单的拖拽或点击，即可完成高级系统操作。
-                        </p>
-                        <ul class="space-y-4 mb-8 text-gray-600">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-cyan-500"></i> 图形化编程体验
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-cyan-500"></i> 安全沙箱机制，防止误操作
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-cyan-500"></i> 一键生成批处理脚本
-                            </li>
-                        </ul>
-                        <div class="flex gap-4">
-                            <a href="/webp/ezcmd/index.html" target="_blank" class="px-6 py-3 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
-                                <i class="fas fa-play"></i> 在线试用
-                            </a>
-                        </div>
-                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">Win 页面已经被重构成“场景驱动”的产品页，不再只是工具罗列，而是更像大厂产品线官网的叙事方式。</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-screwdriver-wrench"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">装机与初始化</h3>
+                        <p class="text-slate-600 leading-8">从部署系统、驱动准备到基础工具就绪，把第一次开机前后的流程标准化。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-stethoscope"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">诊断与救援</h3>
+                        <p class="text-slate-600 leading-8">在系统无法正常进入时，快速切入维护环境，完成检查、恢复与数据救援。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-terminal"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">批量执行与优化</h3>
+                        <p class="text-slate-600 leading-8">把频繁命令操作收纳为可复用执行块，提升长期维护效率与可读性。</p>
+                    </article>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
+    <section id="start" class="py-28 bg-gradient-to-b from-slate-50 to-white relative border-t border-slate-200 overflow-hidden">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="soft-dark-card rounded-[20px] px-8 py-12 md:px-12 md:py-16 text-center">
+                <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Get Started</div>
+                <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
+                    用一整套产品，<span class="brand-gradient-text">接管系统维护节奏</span>
+                </h2>
+                <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
+                    从 HigheriPE 到 EasyCMD，Higheri Win 现在已经被重构为真正的产品线入口页，而不是简单导航页。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="../PE/PE.html" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
+                        进入 HigheriPE
+                    </a>
+                    <a href="../../webp/ezcmd/index.html" class="inline-flex px-12 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
+                        打开 EasyCMD
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <!-- Brand Column -->
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
-                            <i class="fas fa-star text-xs"></i>
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
+                                <i class="fas fa-star text-xs"></i>
+                            </div>
+                            <span class="font-semibold text-lg text-slate-950 tracking-tight">STAR HigheriTech</span>
                         </div>
-                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
+                        <p class="text-slate-600 mb-6 leading-7">
+                            打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                            <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
+                        </div>
                     </div>
-                    <p class="text-gray-600 mb-6">
-                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
+                        <ul class="space-y-2 text-slate-600">
+                            <li><a href="../hira/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
+                            <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                            <li><a href="../win/index.html" class="text-primary transition-colors">Higheri Win</a></li>
+                            <li><a href="../work/index.html" class="hover:text-secondary transition-colors">Higheri Work</a></li>
+                            <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
+                            <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                        </ul>
                     </div>
                 </div>
-
-                <!-- Link Column 1 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="../hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
-                        <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
-                        <li><a href="../../webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
-                        <li><a href="../../tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
-                        <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 2 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-600">
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 3 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-600">
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
-                <div class="mb-4 md:mb-0">
-                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
+                <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
+                    <div class="mb-4 md:mb-0">
+                        &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
-
+    
     <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (!icon) return;
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+        }
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                menu.classList.add('hidden'); // Close mobile menu
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', (event) => {
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (!target) return;
+                event.preventDefault();
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                target.scrollIntoView({ behavior: 'smooth' });
             });
         });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
-            links.forEach(function (link) {
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach((link) => {
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
             });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAR HigheriTech - 官方网站</title>
+    <title>STAR HigheriTech | 系统工具与生产力软件</title>
     <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -16,38 +16,44 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF',
-                        secondary: '#36CFC9',
-                        accent: '#722ED1',
-                        dark: '#1D2129',
-                        light: '#F2F3F5',
-                        neon: '#00FFFF',
-                        electric: '#0080FF'
+                        primary: '#2563EB',   /* 亮丽蓝 */
+                        secondary: '#0D9488', /* 翡翠青 */
+                        accent: '#8B5CF6',    /* 亮紫色 */
+                        dark: '#0F172A',      /* 深邃蓝灰 */
+                        light: '#F8FAFC',     /* 亮冷灰 */
+                        neon: '#06B6D4',      /* 霓虹青 */
+                        electric: '#EC4899'   /* 电音粉 */
                     },
                     fontFamily: {
-                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                        cyber: ['Orbitron', 'Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        cyber: ['Inter', 'system-ui', 'sans-serif'],
                     },
                     boxShadow: {
-                        'card': '0 2px 8px rgba(0,0,0,0.08)',
-                        'card-hover': '0 4px 16px rgba(0,0,0,0.12)',
-                        'neon-glow': '0 0 20px rgba(22, 93, 255, 0.6)',
-                        'neon-glow-sec': '0 0 20px rgba(54, 207, 201, 0.6)',
+                        'card': '0 8px 32px rgba(37, 99, 235, 0.06)',
+                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
+                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
+                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)',
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)",
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #F9FAFB; /* Light background */
-            color: #1F2937; /* Dark text */
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         /* Custom Scrollbar */
@@ -55,21 +61,18 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #F3F4F6; 
+            background: #FAFAFA; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #D1D5DB; 
+            background: #D4D4D8; 
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #9CA3AF; 
+            background: #A1A1AA; 
         }
 
         .hero-bg {
-            background-color: #F9FAFB;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(22, 93, 255, 0.05) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(54, 207, 201, 0.05) 0%, transparent 25%);
+            background-color: #FAFAFA;
         }
         
         .nav-link {
@@ -79,32 +82,33 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            height: 1px;
             bottom: -4px;
             left: 0;
-            background-color: #165DFF;
-            transition: width 0.3s;
+            background-color: #171717;
+            transition: width 0.3s ease;
         }
         .nav-link:hover::after {
             width: 100%;
         }
 
         .card-hover-effect {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .card-hover-effect:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.1);
         }
 
         .bg-grid-pattern { background-size: 40px 40px; }
 
         .text-glow {
-            text-shadow: 0 0 20px rgba(22, 93, 255, 0.5);
+            text-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
         }
         
         .clip-slant-right {
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
         }
         
         /* Bento Grid Specifics */
@@ -119,7 +123,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
             z-index: 10;
         }
         .bento-content {
@@ -130,68 +134,157 @@
         /* Abstract shapes */
         .shape-blob {
             position: absolute;
-            filter: blur(80px);
+            filter: blur(100px);
             z-index: 0;
-            opacity: 0.6;
+            opacity: 0.2;
         }
 
         /* Number Counter Animation */
         @keyframes countUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .stat-item {
-            animation: countUp 1s ease-out forwards;
+            animation: countUp 0.8s ease-out forwards;
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: #FFFFFF;
+            color: #52525B;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-kicker::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #2563EB, #06B6D4);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .hero-panel {
+            background: rgba(10, 10, 10, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(24px);
+        }
+
+        .hero-control {
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        .surface-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .soft-dark-card {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-shell {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+
+        .minimal-stat {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 1.25rem;
+        }
+
+        .minimal-stat strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #171717;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .timeline-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+        }
+
+        .cta-shell {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 <body class="antialiased selection:bg-primary selection:text-white">
 
     <!-- Navigation (Floating/Glass) -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-sm">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
                     <a href="#" class="flex-shrink-0 flex items-center gap-3 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-electric text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-180 transition-transform duration-700">
+                        <div class="w-11 h-11 bg-white text-slate-900 flex items-center justify-center rounded-xl border border-slate-200 shadow-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-card-hover">
                             <i class="fas fa-star text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
+                        <span class="font-semibold text-2xl text-slate-950 font-cyber tracking-tight">STAR <span class="text-primary">HigheriTech</span></span>
                     </a>
                 </div>
                 
-                <div class="hidden md:flex items-center space-x-10">
-                    <a href="#" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="#features" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">特性</a>
-                    <a href="#products" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">产品</a>
-                    <a href="#solutions" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">解决方案</a>
-                    <a href="#roadmap" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">路线图</a>
-                    <a href="#community" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">社区</a>
-                    <a href="#faq" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">FAQ</a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">首页</a>
+                    <a href="#features" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">特性</a>
+                    <a href="#products" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">产品</a>
+                    <a href="#solutions" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">解决方案</a>
+                    <a href="#roadmap" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">路线图</a>
+                    <a href="#community" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">社区</a>
+                    <a href="#faq" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">FAQ</a>
                     
-                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-primary/10 hover:bg-primary text-primary hover:text-white px-5 py-2.5 rounded-full transition-all duration-300 border border-primary/20">
+                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-slate-900 hover:bg-primary text-white px-5 py-2.5 rounded-lg transition-all duration-300 shadow-card">
                         <span>文档中心</span>
                         <i class="fas fa-external-link-alt text-xs"></i>
                     </a>
                 </div>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-primary focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="#" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
-                    <a href="#features" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
-                    <a href="#products" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
-                    <a href="#solutions" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">解决方案</a>
-                    <a href="#roadmap" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">路线图</a>
-                    <a href="#community" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">社区</a>
-                    <a href="#faq" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">FAQ</a>
+                    <a href="#" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
+                    <a href="#features" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
+                    <a href="#products" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
+                    <a href="#solutions" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">解决方案</a>
+                    <a href="#roadmap" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">路线图</a>
+                    <a href="#community" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">社区</a>
+                    <a href="#faq" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">FAQ</a>
                     <a href="https://docs.higheri.tech/" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">文档中心</a>
                 </div>
             </div>
@@ -199,7 +292,7 @@
     </nav>
 
     <!-- Hero Carousel Section (AMD/Microsoft Style) -->
-    <div id="hero-carousel" class="relative h-screen min-h-[600px] overflow-hidden bg-dark group">
+    <div id="hero-carousel" class="relative h-screen min-h-[680px] overflow-hidden bg-dark group">
         
         <!-- Slides Container -->
         <div id="carousel-slides" class="relative w-full h-full">
@@ -207,25 +300,29 @@
             <!-- Slide 1: STAR Hira (New Release - Priority) -->
             <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 z-10" data-index="0">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-purple-900/10 to-transparent z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
                     <div class="max-w-3xl pt-20">
-                        <div class="inline-block px-3 py-1 border border-purple-500/50 text-purple-400 text-xs font-bold tracking-widest uppercase mb-4 bg-black/50 backdrop-blur-md rounded-sm">
+                        <div class="hero-panel rounded-[18px] p-8 md:p-10 max-w-2xl">
+                        <div class="section-kicker mb-5">
                             New Release
                         </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight drop-shadow-lg">
-                            STAR <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400 text-glow">HIRA</span>
+                        <h1 class="section-title font-semibold text-white mb-6">
+                            AI 浏览器，<br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neon via-electric to-accent text-glow">重新定义效率体验</span>
                         </h1>
-                        <p class="text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed drop-shadow-md">
-                            简洁快速的 AI 浏览器。<br>
-                            智能搜索，极速体验，提升您的浏览效率。
+                        <p class="text-lg md:text-xl text-slate-200/90 mb-10 max-w-xl leading-relaxed">
+                            STAR Hira 将搜索、阅读与创作整合为一个更流畅的工作界面，让 AI 能力自然融入日常浏览。
                         </p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold text-lg transition-all shadow-lg hover:shadow-purple-600/50 flex items-center gap-2 group/btn">
-                                免费下载 <i class="fas fa-download group-hover/btn:translate-y-1 transition-transform"></i>
+                            <a href="#products" class="px-8 py-4 bg-white text-slate-900 font-semibold text-lg transition-all shadow-xl hover:-translate-y-0.5 hover:shadow-neon-glow rounded-lg flex items-center gap-2 group/btn">
+                                免费下载 <i class="fas fa-download group-hover/btn:translate-y-1 transition-transform text-primary"></i>
                             </a>
+                            <a href="https://docs.higheri.tech/" class="px-8 py-4 border border-white/20 text-white font-semibold text-lg transition-all bg-white/10 hover:bg-white/20 rounded-lg backdrop-blur-md">
+                                查看文档
+                            </a>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -235,29 +332,65 @@
             <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="1">
                 <!-- Background with Gradient/Image -->
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-blue-900/10 to-transparent z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/10 z-0"></div>
                 
                 <!-- Content -->
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl pt-20">
-                        <div class="inline-block px-3 py-1 border border-primary/50 text-primary text-xs font-bold tracking-widest uppercase mb-4 bg-black/50 backdrop-blur-md rounded-sm">
-                            Flagship Product
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight drop-shadow-lg">
-                            SYSTEM <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-electric text-glow">SOLUTIONS</span>
-                        </h1>
-                        <p class="text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed drop-shadow-md">
-                            STAR HigheriTech 打造下一代系统维护与生产力工具。<br>
-                            专业的系统维护与生产力工具，助您高效管理设备。
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold text-lg transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2 group/btn">
-                                探索产品 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                            </a>
-                            <a href="https://docs.higheri.tech/" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold text-lg backdrop-blur-md border border-white/10 transition-all">
-                                查阅文档
-                            </a>
+                    <div class="w-full pt-20">
+                        <div class="grid lg:grid-cols-[minmax(0,1.15fr)_320px] gap-6 lg:gap-10 items-end max-w-6xl">
+                            <div class="hero-panel rounded-[18px] p-8 md:p-12">
+                                <div class="section-kicker mb-8">
+                                    Flagship Product
+                                </div>
+                                <div class="flex flex-col gap-10">
+                                    <p class="text-lg md:text-xl text-slate-200/90 max-w-2xl leading-relaxed">
+                                        从装机、维护到常用效率工具，STAR HigheriTech 以统一设计和清晰流程，提供可靠的桌面软件体验。
+                                    </p>
+                                    <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+                                        <h1 class="section-title font-semibold text-white max-w-3xl">
+                                            为系统维护打造<br>
+                                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary via-neon to-primary text-glow">更专业的工具体验</span>
+                                        </h1>
+                                        <div class="flex flex-wrap gap-4 lg:justify-end lg:max-w-sm">
+                                            <a href="#products" class="px-8 py-4 bg-primary hover:bg-blue-500 text-white font-semibold text-lg transition-all shadow-neon-glow rounded-lg flex items-center gap-2 group/btn">
+                                                探索产品 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
+                                            </a>
+                                            <a href="https://docs.higheri.tech/" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg backdrop-blur-md border border-white/10 transition-all rounded-lg">
+                                                查阅文档
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid sm:grid-cols-3 gap-3 mt-10">
+                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-md">
+                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Deploy</div>
+                                        <div class="text-white font-semibold text-lg">安装更稳</div>
+                                    </div>
+                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-md">
+                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Toolkit</div>
+                                        <div class="text-white font-semibold text-lg">工具更全</div>
+                                    </div>
+                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4 backdrop-blur-md">
+                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Workflow</div>
+                                        <div class="text-white font-semibold text-lg">流程更清晰</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="hero-panel rounded-[16px] p-5">
+                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-3">System Suite</div>
+                                    <div class="text-white text-3xl font-semibold tracking-tight mb-1">01</div>
+                                    <div class="text-slate-300 leading-7">面向装机、修复、驱动与基础维护场景。</div>
+                                </div>
+                                <div class="hero-panel rounded-[16px] p-5">
+                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-3">Designed For</div>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-2 rounded-lg bg-white/10 text-white text-sm">个人用户</span>
+                                        <span class="px-3 py-2 rounded-lg bg-white/10 text-white text-sm">技术支持</span>
+                                        <span class="px-3 py-2 rounded-lg bg-white/10 text-white text-sm">维护场景</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -266,25 +399,49 @@
             <!-- Slide 3: HigheriDraft -->
             <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="2">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/50 to-transparent z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-white/92 via-white/70 to-white/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl pt-20">
-                        <div class="inline-block px-3 py-1 border border-secondary/50 text-teal-600 text-xs font-bold tracking-widest uppercase mb-4 bg-teal-50 backdrop-blur-md rounded-sm">
-                            Productivity
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight font-cyber mb-6 tracking-tight drop-shadow-sm">
-                            HIGHERI <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-teal-400 text-glow">DRAFT</span>
-                        </h1>
-                        <p class="text-xl text-gray-600 mb-10 max-w-2xl leading-relaxed">
-                            提升办公效率。<br>
-                            灵感，随时记录。云端草稿本。
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="px-8 py-4 bg-secondary hover:bg-secondary/90 text-white font-bold text-lg transition-all shadow-lg hover:shadow-secondary/50 flex items-center gap-2 group/btn">
-                                开始使用 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                            </a>
+                    <div class="w-full pt-20">
+                        <div class="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl ml-auto">
+                            <div class="space-y-4 order-2 lg:order-1">
+                                <div class="surface-card rounded-[16px] p-6">
+                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Daily Notes</div>
+                                    <div class="space-y-3">
+                                        <div class="h-2 bg-slate-200 rounded-full w-full"></div>
+                                        <div class="h-2 bg-slate-200 rounded-full w-4/5"></div>
+                                        <div class="h-2 bg-slate-200 rounded-full w-3/5"></div>
+                                    </div>
+                                </div>
+                                <div class="surface-card rounded-[16px] p-6">
+                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Use Cases</div>
+                                    <div class="space-y-2 text-slate-700">
+                                        <div>灵感记录</div>
+                                        <div>轻任务整理</div>
+                                        <div>跨端草稿同步</div>
+                                    </div>
+                                    <a href="#products" class="mt-6 inline-flex items-center px-6 py-3 bg-secondary hover:bg-teal-500 text-white font-semibold transition-all shadow-neon-sec rounded-lg gap-2 group/btn">
+                                        开始使用 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="surface-card rounded-[18px] p-8 md:p-12 max-w-3xl order-1 lg:order-2 lg:ml-auto">
+                                <div class="section-kicker mb-5">
+                                    Productivity
+                                </div>
+                                <h1 class="section-title font-semibold text-slate-950 mb-6">
+                                    让记录更专注，<br>
+                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-neon text-glow">把灵感留在工作流里</span>
+                                </h1>
+                                <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
+                                    HigheriDraft 面向日常灵感与团队协作，提供更轻、更干净的跨端草稿记录体验。
+                                </p>
+                                <div class="flex flex-wrap gap-3 mb-8 text-sm text-slate-600">
+                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">轻量界面</span>
+                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">快速记录</span>
+                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">云端同步</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -293,25 +450,54 @@
             <!-- Slide 4: STAR EasyCMD -->
             <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="3">
                 <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-purple-900/10 to-transparent z-0"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl pt-20">
-                        <div class="inline-block px-3 py-1 border border-accent/50 text-accent text-xs font-bold tracking-widest uppercase mb-4 bg-black/50 backdrop-blur-md rounded-sm">
-                            Developer Tools
-                        </div>
-                        <h1 class="text-5xl md:text-7xl font-black text-white leading-tight font-cyber mb-6 tracking-tight drop-shadow-lg">
-                            EASY <br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-purple-400 text-glow">CMD</span>
-                        </h1>
-                        <p class="text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed drop-shadow-md">
-                            简化复杂指令，积木式构建您的终端工作流。<br>
-                            可视化操作，脚本生成，让您的终端更简单。
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="px-8 py-4 bg-accent hover:bg-accent/90 text-white font-bold text-lg transition-all shadow-lg hover:shadow-accent/50 flex items-center gap-2 group/btn">
-                                立即尝试 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                            </a>
+                    <div class="w-full pt-20">
+                        <div class="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl">
+                            <div class="hero-panel rounded-[16px] p-5 font-mono text-sm text-slate-300 leading-7">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                                    <span class="ml-auto text-xs uppercase tracking-[0.18em] text-slate-500">workflow</span>
+                                </div>
+                                <div class="text-slate-500">$ build command</div>
+                                <div>select task: deploy</div>
+                                <div>add step: backup</div>
+                                <div>add step: clear temp</div>
+                                <div>add step: run script</div>
+                                <div class="text-indigo-300">output: reusable pipeline ready</div>
+                            </div>
+                            <div class="hero-panel rounded-[18px] p-8 md:p-12 max-w-3xl lg:ml-auto">
+                                <div class="flex flex-col gap-8">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5">
+                                        <div class="section-kicker">
+                                            Developer Tools
+                                        </div>
+                                        <a href="#products" class="px-8 py-4 bg-accent hover:bg-purple-500 text-white font-semibold text-lg transition-all shadow-card rounded-lg inline-flex items-center gap-2 group/btn self-start shadow-[0_10px_30px_rgba(139,92,246,0.25)]">
+                                            立即尝试 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
+                                        </a>
+                                    </div>
+                                    <h1 class="section-title font-semibold text-white">
+                                        命令行不必复杂，<br>
+                                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-electric to-pink-400 text-glow">工作流也能更直观</span>
+                                    </h1>
+                                    <p class="text-lg md:text-xl text-slate-200/90 max-w-2xl leading-relaxed">
+                                        STAR EasyCMD 用更可视化的方式整理复杂命令，把开发者常用流程收敛为更清楚的操作界面。
+                                    </p>
+                                </div>
+                                <div class="grid sm:grid-cols-2 gap-3 mt-8">
+                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4">
+                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Visual Build</div>
+                                        <div class="text-white font-medium">积木式拼装命令流程</div>
+                                    </div>
+                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4">
+                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Reusable</div>
+                                        <div class="text-white font-medium">沉淀可复用脚本模板</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -323,32 +509,32 @@
         <div class="absolute bottom-12 left-0 w-full z-20">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4">
                 <!-- Play/Pause Button -->
-                <button id="carousel-play-pause" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 bg-black/30 hover:bg-white/10 text-white transition-colors backdrop-blur-sm">
+                <button id="carousel-play-pause" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
                     <i class="fas fa-pause text-xs"></i>
                 </button>
                 
                 <!-- Progress Indicators -->
                 <div class="flex items-center gap-2">
-                    <button class="carousel-dot h-1 w-12 bg-white/30 hover:bg-white/60 transition-all rounded-full overflow-hidden relative" data-index="0">
+                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="0">
                         <div class="h-full bg-purple-500 w-0 transition-all duration-[5000ms] ease-linear"></div>
                     </button>
-                    <button class="carousel-dot h-1 w-12 bg-white/30 hover:bg-white/60 transition-all rounded-full overflow-hidden relative" data-index="1">
+                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="1">
                         <div class="h-full bg-primary w-0 transition-all duration-[5000ms] ease-linear"></div>
                     </button>
-                    <button class="carousel-dot h-1 w-12 bg-white/30 hover:bg-white/60 transition-all rounded-full overflow-hidden relative" data-index="2">
+                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="2">
                         <div class="h-full bg-secondary w-0 transition-all duration-[5000ms] ease-linear"></div>
                     </button>
-                    <button class="carousel-dot h-1 w-12 bg-white/30 hover:bg-white/60 transition-all rounded-full overflow-hidden relative" data-index="3">
+                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="3">
                         <div class="h-full bg-accent w-0 transition-all duration-[5000ms] ease-linear"></div>
                     </button>
                 </div>
                 
                 <!-- Arrows -->
                 <div class="flex items-center gap-2 ml-auto">
-                    <button id="carousel-prev" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 bg-black/30 hover:bg-white/10 text-white transition-colors backdrop-blur-sm">
+                    <button id="carousel-prev" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
                         <i class="fas fa-chevron-left text-sm"></i>
                     </button>
-                    <button id="carousel-next" class="w-10 h-10 flex items-center justify-center rounded-full border border-white/20 bg-black/30 hover:bg-white/10 text-white transition-colors backdrop-blur-sm">
+                    <button id="carousel-next" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
                         <i class="fas fa-chevron-right text-sm"></i>
                     </button>
                 </div>
@@ -361,98 +547,109 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="bg-gray-100 border-y border-gray-200 py-12 relative overflow-hidden">
+    <div class="bg-gray-100 border-y border-slate-200 py-20 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <!-- Blobs -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
         </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors">
-                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-primary transition-colors">2</div>
-                    <div class="text-gray-500 text-sm uppercase tracking-widest">新</div>
-                </div>
-                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.1s">
-                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-secondary transition-colors">0</div>
-                    <div class="text-gray-500 text-sm uppercase tracking-widest">年</div>
-                </div>
-                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.2s">
-                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-accent transition-colors">2</div>
-                    <div class="text-gray-500 text-sm uppercase tracking-widest">快</div>
-                </div>
-                <div class="stat-item group p-4 hover:bg-gray-50 rounded-lg transition-colors" style="animation-delay: 0.3s">
-                    <div class="text-4xl md:text-5xl font-black text-gray-900 mb-2 font-cyber group-hover:text-electric transition-colors">6</div>
-                    <div class="text-gray-500 text-sm uppercase tracking-widest">乐</div>
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] gap-10 items-start">
+                    <div>
+                        <div class="section-kicker mb-5">Brand Principles</div>
+                        <h2 class="text-3xl md:text-4xl font-semibold text-slate-950 tracking-tight mb-4">更像一套成熟的软件体系</h2>
+                        <p class="text-slate-600 text-base md:text-lg leading-8">我们希望官网传达的不是堆砌参数，而是清楚、可靠、长期可用的产品气质。</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
+                        <div class="minimal-stat">
+                            <strong>AI Native</strong>
+                            <p class="text-slate-500 leading-7">将搜索、创作与执行整合进同一套软件体验。</p>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>Privacy First</strong>
+                            <p class="text-slate-500 leading-7">坚持纯净体验与可靠边界，让工具更值得长期使用。</p>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>Open Ecosystem</strong>
+                            <p class="text-slate-500 leading-7">拥抱开源与社区协作，让产品持续演进而不封闭。</p>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>Focused UX</strong>
+                            <p class="text-slate-500 leading-7">减少噪音与装饰，把注意力还给真正重要的任务。</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Why Choose Us (Features) -->
-    <div id="features" class="py-24 bg-white relative overflow-hidden">
+    <div id="features" class="py-28 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">为什么选择 <span class="text-primary">HigheriTech</span></h2>
-                <p class="text-gray-600 max-w-2xl mx-auto">不仅仅是工具，更是追求。</p>
+                <div class="section-kicker mb-5">Why HigheriTech</div>
+                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-5 tracking-tight">克制设计，服务真实场景</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto text-lg leading-8">我们不追求堆砌功能，而是把复杂能力收敛成更清晰、更可靠、更长期可用的软件体验。</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="section-shell rounded-[20px] p-6 md:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
                 <!-- Feature 1 -->
-                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-primary/50 transition-all hover:shadow-lg hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                <div class="group p-8 md:p-10 md:border-r md:border-slate-200/80 transition-colors">
+                    <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 text-primary transition-colors">
                         <i class="fas fa-bolt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">高效稳定</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        经过深度优化。我们的工具专为速度而生，确保在任何设备上都能流畅运行，减少卡顿。
+                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">高效稳定</h3>
+                    <p class="text-slate-600 leading-7">
+                        从启动速度到交互反馈，我们持续打磨每一个高频环节，让软件表现更沉稳、更流畅。
                     </p>
                 </div>
                 
                 <!-- Feature 2 -->
-                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-secondary/50 transition-all hover:shadow-lg hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 text-secondary group-hover:bg-secondary group-hover:text-white transition-colors">
+                <div class="group p-8 md:p-10 md:border-r md:border-slate-200/80 transition-colors">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-6 text-secondary transition-colors">
                         <i class="fas fa-shield-alt text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">安全可靠</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        数据隐私是我们的底线。所有工具均无广告，纯净体验。
+                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">安全可靠</h3>
+                    <p class="text-slate-600 leading-7">
+                        数据隐私与纯净体验是基础原则。没有冗余打扰，只有值得信赖的长期使用感。
                     </p>
                 </div>
                 
                 <!-- Feature 3 -->
-                <div class="group p-8 bg-white rounded-2xl border border-gray-200 hover:border-accent/50 transition-all hover:shadow-lg hover:-translate-y-2">
-                    <div class="w-14 h-14 bg-accent/10 rounded-xl flex items-center justify-center mb-6 text-accent group-hover:bg-accent group-hover:text-white transition-colors">
+                <div class="group p-8 md:p-10 transition-colors">
+                    <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6 text-accent transition-colors">
                         <i class="fas fa-code text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-gray-900 mb-3">开源精神</h3>
-                    <p class="text-gray-600 leading-relaxed">
-                        拥抱开源社区。我们在 GitHub 上持续贡献，与开发者共同成长，打造更透明的技术生态。
+                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">开放演进</h3>
+                    <p class="text-slate-600 leading-7">
+                        借助社区反馈与开源协作持续迭代，让产品能力更透明，也更贴近真实用户的工作流。
                     </p>
                 </div>
+            </div>
             </div>
         </div>
     </div>
 
     <!-- Bold Bento Grid Products -->
-    <div id="products" class="py-24 bg-gray-100 relative overflow-hidden">
+    <div id="products" class="py-28 bg-gray-100 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <!-- Blobs -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
         </div>
         <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
                 <div>
-                    <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-4">CORE PRODUCTS</h2>
-                    <div class="h-2 w-24 bg-gradient-to-r from-primary to-secondary rounded-full"></div>
+                    <div class="section-kicker mb-5">Core Products</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">更聚焦的产品矩阵</h2>
+                    <div class="h-1.5 w-20 bg-gradient-to-r from-primary to-sky-400 rounded-full"></div>
                 </div>
-                <p class="text-gray-600 max-w-md text-right md:text-lg">
-                    为用户打造的工具矩阵。
+                <p class="text-slate-600 max-w-md text-right md:text-lg leading-8">
+                    围绕系统维护、生产力与日常效率场景，提供统一、干净且可持续演进的软件产品。
                 </p>
             </div>
             
@@ -460,45 +657,45 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(250px,auto)]">
                 
                 <!-- Full Width Item - STAR Hira (Priority Top) -->
-                <div class="md:col-span-3 group bento-item bg-gray-900 rounded-3xl border border-purple-500/20 hover:border-purple-500/50 card-hover-effect min-h-[300px] overflow-hidden">
+                <div class="md:col-span-3 group bento-item soft-dark-card rounded-[20px] hover:border-violet-400/30 card-hover-effect min-h-[320px] overflow-hidden">
                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-purple-900/40 via-black/80 to-black"></div>
                     
                     <div class="bento-content h-full p-8 md:p-12 flex flex-col md:flex-row items-center justify-between relative z-10 gap-8">
                         <div class="flex-1 text-center md:text-left">
-                            <div class="inline-block px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-bold rounded-full mb-4">
+                            <div class="inline-block px-3 py-1 bg-purple-500/10 border border-purple-400/20 text-purple-200 text-xs font-semibold rounded-lg mb-4 tracking-[0.18em] uppercase">
                                 NEW PRODUCT
                             </div>
-                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">STAR <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Hira</span></h3>
-                            <p class="text-gray-300 text-lg mb-8 max-w-xl">
-                                集成 AI 的浏览器。内置先进的大语言模型，让搜索、阅读和创作变得更加简单。
-                                <br>极速内核，纯净无广，懂你所需。
+                            <h3 class="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight">STAR <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-cyan-300">Hira</span></h3>
+                            <p class="text-slate-300 text-lg mb-8 max-w-xl leading-8">
+                                面向高频浏览与内容处理的 AI 浏览器。
+                                <br>把搜索、理解与生成收进一个更自然的操作界面。
                             </p>
                             <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                                <a href="VIEW/hira/index.html" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold rounded-lg transition-all shadow-lg shadow-purple-900/20 flex items-center gap-2">
+                                <a href="VIEW/hira/index.html" class="px-8 py-3 bg-white text-slate-950 font-semibold rounded-lg transition-all shadow-lg shadow-slate-950/20 flex items-center gap-2 hover:-translate-y-0.5">
                                     免费下载 <i class="fas fa-download"></i>
                                 </a>
-                                <a href="VIEW/hira/index.html" class="px-8 py-3 border border-gray-600 text-gray-300 font-bold rounded-lg hover:border-white hover:text-white transition-all bg-white/5 backdrop-blur-sm">
+                                <a href="VIEW/hira/index.html" class="px-8 py-3 border border-white/15 text-slate-200 font-semibold rounded-lg hover:border-white/40 hover:text-white transition-all bg-white/5 backdrop-blur-sm">
                                     了解更多
                                 </a>
                             </div>
                         </div>
                         
                         <!-- Visual Element -->
-                        <div class="w-full md:w-1/3 aspect-video bg-gray-900 rounded-xl border border-gray-700 p-2 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 relative">
+                        <div class="w-full md:w-1/3 aspect-video bg-slate-950/90 rounded-[14px] border border-white/10 p-2 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 relative">
                             <!-- Mockup Browser Header -->
-                            <div class="h-8 bg-gray-800 rounded-t-lg flex items-center px-3 gap-2 border-b border-gray-700">
+                            <div class="h-8 bg-slate-900 rounded-t-[10px] flex items-center px-3 gap-2 border-b border-slate-700/80">
                                 <div class="flex gap-1.5">
                                     <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
                                 </div>
-                                <div class="flex-1 mx-4 h-5 bg-gray-900 rounded-full flex items-center px-3 text-[10px] text-gray-500">
+                                <div class="flex-1 mx-4 h-5 bg-slate-950 rounded-full flex items-center px-3 text-[10px] text-slate-500">
                                     <i class="fas fa-lock text-[8px] mr-1"></i> h://newtab
                                 </div>
                             </div>
                             <!-- Mockup Content -->
-                            <div class="p-4 flex flex-col items-center justify-center h-[calc(100%-2rem)] bg-black/50 rounded-b-lg relative overflow-hidden">
+                            <div class="p-4 flex flex-col items-center justify-center h-[calc(100%-2rem)] bg-black/50 rounded-b-[10px] relative overflow-hidden">
                                 <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-3 animate-pulse">
                                     <i class="fas fa-robot text-purple-400 text-xl"></i>
                                 </div>
@@ -506,7 +703,7 @@
                                 <div class="w-1/2 h-2 bg-gray-800 rounded-full"></div>
                                 
                                 <!-- Chat Bubble -->
-                                <div class="absolute bottom-4 right-4 bg-gray-800 px-3 py-2 rounded-lg rounded-tr-none border border-purple-500/30 text-[10px] text-purple-300 shadow-lg">
+                                <div class="absolute bottom-4 right-4 bg-gray-800 px-3 py-2 rounded-md border border-purple-500/30 text-[10px] text-purple-300 shadow-lg">
                                     How can I help you?
                                 </div>
                             </div>
@@ -515,34 +712,34 @@
                 </div>
 
                 <!-- Main Feature (Large Item) - HigheriPE -->
-                <div class="md:col-span-2 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-primary/50 card-hover-effect shadow-lg">
+                <div class="md:col-span-2 md:row-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-primary/35 card-hover-effect">
                     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500 group-hover:scale-105 transform"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
                     
                     <div class="bento-content h-full p-8 md:p-12 flex flex-col justify-end">
-                        <div class="w-16 h-16 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                        <div class="w-16 h-16 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                             <i class="fas fa-cogs text-3xl text-primary group-hover:text-white"></i>
                         </div>
-                        <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">HigheriPE</h3>
-                        <p class="text-gray-400 text-lg mb-8 max-w-xl">
-                            优化系统维护体验。全新的 PE 工具箱，集成了专业的诊断与修复工具。
-                            <br>一键装机，智能驱动，无缝体验。
+                        <h3 class="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight">HigheriPE</h3>
+                        <p class="text-slate-400 text-lg mb-8 max-w-xl leading-8">
+                            面向系统安装、维护与修复场景的专业工具箱。
+                            <br>流程更清晰，操作更顺手，适合高频使用。
                         </p>
-                        <a href="VIEW/PE/PE.html" class="inline-flex items-center text-primary font-bold hover:text-primary/80 transition-colors">
+                        <a href="VIEW/PE/PE.html" class="inline-flex items-center text-blue-300 font-semibold hover:text-white transition-colors">
                             立即获取 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
                         </a>
                     </div>
                 </div>
                 
                 <!-- Tall Item - HigheriDraft -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-secondary/50 card-hover-effect shadow-lg">
+                <div class="md:col-span-1 md:row-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-secondary/35 card-hover-effect">
                     <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent"></div>
                     <div class="bento-content h-full p-8 flex flex-col">
-                        <div class="w-14 h-14 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700">
+                        <div class="w-14 h-14 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80">
                             <i class="fas fa-tasks text-2xl text-secondary"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-white mb-2">HigheriDraft</h3>
-                        <p class="text-gray-400 mb-auto">灵感，随时记录。云端草稿本。</p>
+                        <h3 class="text-2xl font-semibold text-white mb-2 tracking-tight">HigheriDraft</h3>
+                        <p class="text-slate-400 mb-auto leading-7">将想法、待办与工作片段保留在一个足够轻盈的记录空间里。</p>
                         
                         <!-- Visual representation of list/draft -->
                         <div class="mt-8 space-y-3 opacity-60 group-hover:opacity-100 transition-opacity">
@@ -551,49 +748,49 @@
                             <div class="h-2 w-5/6 bg-gray-700 rounded-full"></div>
                         </div>
                         
-                        <a href="webp/DRAFT/index.html" class="mt-8 inline-block px-6 py-2 rounded-full border border-secondary/30 text-secondary hover:bg-secondary hover:text-white transition-all text-center">
+                        <a href="webp/DRAFT/index.html" class="mt-8 inline-block px-6 py-3 rounded-lg border border-secondary/30 text-teal-300 hover:bg-secondary hover:text-white transition-all text-center font-medium">
                             开始记录
                         </a>
                     </div>
                 </div>
 
                 <!-- Wide Item - HigheriTab -->
-                <div class="md:col-span-2 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-accent/50 card-hover-effect min-h-[250px] shadow-lg">
+                <div class="md:col-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-accent/35 card-hover-effect min-h-[250px]">
                     <div class="absolute inset-0 bg-gradient-to-r from-accent/10 to-transparent"></div>
                     <div class="bento-content h-full p-8 flex flex-col md:flex-row items-center gap-8">
                         <div class="flex-1">
-                            <div class="w-14 h-14 bg-gray-800 backdrop-blur-md rounded-2xl flex items-center justify-center mb-6 border border-gray-700">
+                            <div class="w-14 h-14 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80">
                                 <i class="fas fa-home text-2xl text-accent"></i>
                             </div>
-                            <h3 class="text-2xl font-bold text-white mb-2">HigheriTab</h3>
-                            <p class="text-gray-400">重新定义你的新标签页。极简，高效，完全自定义。</p>
-                            <a href="VIEW/hira/index.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-accent/30 text-accent hover:bg-accent hover:text-white transition-all text-center">
+                            <h3 class="text-2xl font-semibold text-white mb-2 tracking-tight">HigheriTab</h3>
+                            <p class="text-slate-400 leading-7">用更安静、更高效的方式重塑新标签页，把常用入口放回视线中心。</p>
+                            <a href="VIEW/hira/index.html" class="mt-4 inline-block px-6 py-3 rounded-lg border border-accent/30 text-indigo-300 hover:bg-accent hover:text-white transition-all text-center font-medium">
                                 开始使用
                             </a>
                         </div>
-                        <div class="w-full md:w-1/3 aspect-video bg-gray-800 rounded-lg border border-gray-700 p-2 group-hover:scale-105 transition-transform shadow-xl">
+                        <div class="w-full md:w-1/3 aspect-video bg-slate-800 rounded-lg border border-slate-700/80 p-2 group-hover:scale-105 transition-transform shadow-xl">
                             <!-- Mockup browser -->
                             <div class="flex gap-1 mb-2">
                                 <div class="w-2 h-2 rounded-full bg-red-400"></div>
                                 <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
                             </div>
-                            <div class="w-full h-full bg-gray-900 rounded flex items-center justify-center border border-gray-700">
-                                <span class="text-xs text-gray-500">New Tab</span>
+                            <div class="w-full h-full bg-slate-950 rounded-md flex items-center justify-center border border-slate-700/80">
+                                <span class="text-xs text-slate-500">New Tab</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Small Item - STAR EasyCMD -->
-                <div class="md:col-span-1 group bento-item bg-gray-900 rounded-3xl border border-gray-800 hover:border-gray-600 card-hover-effect min-h-[250px] shadow-lg">
+                <div class="md:col-span-1 group bento-item soft-dark-card rounded-[20px] hover:border-slate-500/40 card-hover-effect min-h-[250px]">
                     <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
                     <div class="bento-content h-full p-8 flex flex-col justify-center text-center items-center">
-                        <div class="w-16 h-16 bg-gray-800/50 rounded-full flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                            <i class="fas fa-terminal text-3xl text-gray-400"></i>
+                        <div class="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform">
+                            <i class="fas fa-terminal text-3xl text-slate-400"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-white mb-2">STAR EasyCMD</h3>
-                        <p class="text-gray-400 text-sm">简化复杂指令。<br>积木式构建命令。</p>
-                        <a href="VIEW/PE/PE.html" class="mt-4 inline-block px-6 py-2 rounded-full border border-gray-600 text-gray-400 hover:bg-gray-700 hover:text-white transition-all text-center">
+                        <h3 class="text-xl font-semibold text-white mb-2 tracking-tight">STAR EasyCMD</h3>
+                        <p class="text-slate-400 text-sm leading-6">把复杂命令整理为更容易理解的操作模块。</p>
+                        <a href="VIEW/PE/PE.html" class="mt-4 inline-block px-6 py-3 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white transition-all text-center font-medium">
                             立即体验
                         </a>
                     </div>
@@ -606,16 +803,19 @@
     </div>
 
     <!-- Asymmetrical Solutions Section -->
-    <div id="solutions" class="py-24 bg-white relative overflow-hidden">
+    <div id="solutions" class="py-28 bg-white relative overflow-hidden">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-20 text-center">SOLUTIONS</h2>
+            <div class="text-center mb-20">
+                <div class="section-kicker mb-5">Solutions</div>
+                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">围绕真实工作场景设计</h2>
+            </div>
             
-            <div class="space-y-24">
+            <div class="space-y-10">
                 <!-- Solution 1: Left Aligned -->
-                <div class="flex flex-col md:flex-row items-center gap-12 group">
+                <div class="section-shell rounded-[20px] p-6 md:p-8 flex flex-col md:flex-row items-center gap-12 group">
                     <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-primary/10 transform -translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:translate-x-4 group-hover:-translate-y-4"></div>
-                        <div class="relative h-80 bg-white rounded-sm overflow-hidden border border-gray-200 shadow-sm">
+                        <div class="absolute inset-0 bg-primary/10 transform -translate-x-4 translate-y-4 rounded-[16px] transition-transform group-hover:translate-x-2 group-hover:-translate-y-2"></div>
+                        <div class="relative h-80 bg-white rounded-[16px] overflow-hidden border border-slate-200 shadow-card">
                             <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
                             <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="System" class="w-full h-full object-cover opacity-90">
                             <div class="absolute bottom-0 left-0 p-8 z-20">
@@ -624,23 +824,24 @@
                         </div>
                     </div>
                     <div class="w-full md:w-2/5 text-left">
-                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">装机与系统</h3>
-                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">01 System Care</div>
+                        <h3 class="text-3xl font-semibold text-slate-950 mb-4 group-hover:text-primary transition-colors tracking-tight">装机与系统</h3>
+                        <p class="text-slate-600 text-lg mb-6 leading-8">
                             从系统安装到日常维护，我们提供多种工具。
                             包括但不限于系统安装、驱动管理、密码破解等。
                             小白也能轻松上手。
                         </p>
-                        <a href="VIEW/win/index.html" class="text-gray-900 font-bold border-b-2 border-primary pb-1 hover:text-primary transition-colors">
+                        <a href="VIEW/win/index.html" class="text-slate-900 font-semibold border-b-2 border-primary pb-1 hover:text-primary transition-colors">
                             查看更多产品
                         </a>
                     </div>
                 </div>
 
                 <!-- Solution 2: Right Aligned -->
-                <div class="flex flex-col md:flex-row-reverse items-center gap-12 group">
+                <div class="section-shell rounded-[20px] p-6 md:p-8 flex flex-col md:flex-row-reverse items-center gap-12 group">
                     <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-secondary/10 transform translate-x-4 translate-y-4 rounded-sm transition-transform group-hover:-translate-x-4 group-hover:-translate-y-4"></div>
-                        <div class="relative h-80 bg-white rounded-sm overflow-hidden border border-gray-200 shadow-sm">
+                        <div class="absolute inset-0 bg-secondary/10 transform translate-x-4 translate-y-4 rounded-[16px] transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
+                        <div class="relative h-80 bg-white rounded-[16px] overflow-hidden border border-slate-200 shadow-card">
                             <div class="absolute inset-0 bg-gradient-to-l from-black/80 to-transparent z-10"></div>
                             <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Office" class="w-full h-full object-cover opacity-90">
                             <div class="absolute bottom-0 right-0 p-8 z-20">
@@ -649,12 +850,13 @@
                         </div>
                     </div>
                     <div class="w-full md:w-2/5 text-right">
-                        <h3 class="text-3xl font-bold text-gray-900 mb-4 group-hover:text-secondary transition-colors">高效办公</h3>
-                        <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">02 Productivity</div>
+                        <h3 class="text-3xl font-semibold text-slate-950 mb-4 group-hover:text-secondary transition-colors tracking-tight">高效办公</h3>
+                        <p class="text-slate-600 text-lg mb-6 leading-8">
                             不仅仅是工具，更是工作流的革新。
                             通过 HigheriDraft 和 STAR EasyCMD，让繁琐的操作变得简单直观。
                         </p>
-                        <a href="VIEW/work/index.html" class="text-gray-900 font-bold border-b-2 border-secondary pb-1 hover:text-secondary transition-colors">
+                        <a href="VIEW/work/index.html" class="text-slate-900 font-semibold border-b-2 border-secondary pb-1 hover:text-secondary transition-colors">
                             查看更多产品
                         </a>
                     </div>
@@ -664,27 +866,30 @@
     </div>
 
     <!-- Roadmap Section -->
-    <div id="roadmap" class="py-24 bg-gray-100 relative border-t border-gray-200 overflow-hidden">
+    <div id="roadmap" class="py-28 bg-gray-100 relative border-t border-slate-200 overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <!-- Blobs -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
         </div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">OUR <span class="text-primary">ROADMAP</span></h2>
+            <div class="text-center mb-16">
+                <div class="section-kicker mb-5">Roadmap</div>
+                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">稳步进化，而不是盲目堆叠</h2>
+            </div>
             
-            <div class="relative max-w-4xl mx-auto">
-                <!-- Vertical Line -->
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-purple-500 to-blue-500 opacity-30"></div>
+            <div class="relative max-w-5xl mx-auto">
+                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-primary via-indigo-400 to-sky-400 opacity-40"></div>
                 
                 <!-- Item 1 -->
                 <div class="relative mb-12 w-full flex justify-center items-center">
                     <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">起源</h3>
-                        <p class="text-gray-600">Higheri 系列产品原型开发。</p>
+                        <div class="timeline-card rounded-[16px] p-6 ml-auto max-w-sm">
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">起源</h3>
+                        <p class="text-slate-600">Higheri 系列产品完成最初原型与方向验证。</p>
+                        </div>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-primary rounded-full z-10"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-primary rounded-full z-10 shadow-card"></div>
                     <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
                         <span class="text-primary font-bold font-mono">2022.4</span>
                         <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Project Genesis</h3>
@@ -695,10 +900,12 @@
                 <!-- Item 2 -->
                 <div class="relative mb-12 w-full flex justify-center items-center flex-row-reverse md:flex-row">
                     <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">焕新</h3>
-                        <p class="text-gray-600">Higheri 系列产品大焕新。</p>
+                        <div class="timeline-card rounded-[16px] p-6 max-w-sm">
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">焕新</h3>
+                        <p class="text-slate-600">品牌视觉与产品体验进入统一化升级阶段。</p>
+                        </div>
                     </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-secondary rounded-full z-10"></div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-secondary rounded-full z-10 shadow-card"></div>
                     <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
                         <span class="text-secondary font-bold font-mono">2025.8</span>
                         <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Higheri 系列产品大焕新</h3>
@@ -709,13 +916,15 @@
                 <!-- Item 3 -->
                 <div class="relative mb-12 w-full flex justify-center items-center">
                     <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">智能</h3>
-                        <p class="text-gray-600">STAR 系列产品，旨在融合AI提供更强的功能。</p>
+                        <div class="timeline-card rounded-[16px] p-6 ml-auto max-w-sm">
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">智能</h3>
+                        <p class="text-slate-600">STAR 系列产品开始系统性融合 AI 能力与更成熟的交互设计。</p>
+                        </div>
                     </div>
                     <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
                     <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
                         <span class="text-purple-500 font-bold font-mono">2025.12</span>
-                        <span class="ml-2 px-2 py-0.5 bg-purple-500/10 text-purple-600 text-xs rounded-full border border-purple-500/20">NOW</span>
+                        <span class="ml-2 px-2 py-0.5 bg-purple-500/10 text-purple-600 text-xs rounded-md border border-purple-500/20">NOW</span>
                         <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">STAR 系列产品</h3>
                         <p class="text-gray-600 md:hidden">STAR 系列产品，旨在融合AI提供更强的功能。</p>
                     </div>
@@ -724,8 +933,10 @@
                  <!-- Item 4 -->
                 <div class="relative w-full flex justify-center items-center flex-row-reverse md:flex-row">
                     <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">继续</h3>
-                        <p class="text-gray-600">STAR 系列产品继续改进，提供强大的功能。</p>
+                        <div class="timeline-card rounded-[16px] p-6 max-w-sm">
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">继续</h3>
+                        <p class="text-slate-600">继续围绕稳定性、效率与设计一致性长期打磨产品矩阵。</p>
+                        </div>
                     </div>
                     <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-gray-300 rounded-full z-10"></div>
                     <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
@@ -739,17 +950,29 @@
     </div>
 
     <!-- Community Section (New) -->
-    <div id="community" class="py-20 bg-white relative border-t border-gray-200 overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8">加入 <span class="text-primary">HigheriTech</span> 社区</h2>
-            <div class="flex flex-wrap justify-center gap-6">
-                <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-4 bg-white rounded-xl hover:bg-gray-50 transition-colors border border-gray-200 group shadow-sm">
-                    <i class="fab fa-github text-3xl text-gray-900 group-hover:scale-110 transition-transform"></i>
-                    <div class="text-left">
-                        <div class="text-xs text-gray-500">Follow us on</div>
-                        <div class="text-lg font-bold text-gray-900">GitHub</div>
+    <div id="community" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-12">
+                <div class="grid lg:grid-cols-[minmax(0,1fr)_260px] gap-8 items-center">
+                    <div>
+                        <div class="section-kicker mb-5">Community</div>
+                        <h2 class="text-4xl font-semibold text-slate-950 mb-5 tracking-tight">与我们一起持续打磨产品</h2>
+                        <p class="text-slate-600 text-lg max-w-2xl leading-8">在 GitHub 获取更新、提交建议，或直接参与产品与文档的共同建设。把产品做得更可靠，也把开放协作变成默认方式。</p>
                     </div>
-                </a>
+                    <div class="flex flex-col gap-4">
+                        <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-5 bg-white rounded-[14px] hover:bg-slate-50 transition-colors border border-slate-200 group shadow-card">
+                            <i class="fab fa-github text-3xl text-slate-900 group-hover:scale-110 transition-transform"></i>
+                            <div class="text-left">
+                                <div class="text-xs text-slate-500 uppercase tracking-[0.18em]">Follow us on</div>
+                                <div class="text-lg font-semibold text-slate-900">GitHub</div>
+                            </div>
+                        </a>
+                        <a href="https://docs.higheri.tech/" class="flex items-center justify-between px-6 py-4 rounded-lg border border-slate-200 text-slate-700 hover:text-primary hover:border-primary/30 transition-colors">
+                            <span class="font-medium">浏览产品文档</span>
+                            <i class="fas fa-arrow-right text-sm"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -757,8 +980,8 @@
 
     <!-- Testimonials Section 
     <div id="testimonials" class="py-24 bg-dark relative overflow-hidden">
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/15 rounded-full blur-3xl"></div>
         
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">COMMUNITY <span class="text-secondary">VOICES</span></h2>
@@ -813,47 +1036,50 @@
     </div>
 
     <!-- FAQ Section -->
-    <div id="faq" class="py-24 bg-white relative border-t border-gray-200">
+    <div id="faq" class="py-28 bg-white relative border-t border-slate-200">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">FAQ</h2>
+            <div class="text-center mb-16">
+                <div class="section-kicker mb-5">FAQ</div>
+                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">常见问题</h2>
+            </div>
             
             <div class="space-y-4">
                 <!-- FAQ Item 1 -->
-                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-primary/50 transition-colors">
+                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-primary/40 transition-colors shadow-card">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">Is HigheriPE free to use?</h3>
+                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-primary transition-colors">HigheriPE 可以免费使用吗？</h3>
                         <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-gray-500"></i>
+                            <i class="fas fa-chevron-down text-slate-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
-                        Yes, HigheriPE is free for personal use. For enterprise deployment and advanced features, please check our commercial licensing options.
+                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
+                        可以。HigheriPE 面向个人用户提供免费使用方式；如需更进一步的部署与支持，可关注后续说明。
                     </div>
                 </details>
 
                 <!-- FAQ Item 2 -->
-                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-secondary/50 transition-colors">
+                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-secondary/40 transition-colors shadow-card">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-secondary transition-colors">What are the system requirements?</h3>
+                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-secondary transition-colors">对设备配置有什么要求？</h3>
                         <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-gray-500"></i>
+                            <i class="fas fa-chevron-down text-slate-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
-                        We support most modern hardware. A minimum of 4GB RAM and a 64-bit processor is recommended for the best experience.
+                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
+                        当前产品覆盖主流现代硬件环境。若希望获得更流畅体验，建议使用 64 位处理器与不少于 4GB 的内存。
                     </div>
                 </details>
 
                 <!-- FAQ Item 3 -->
-                <details class="group bg-gray-50 rounded-xl border border-gray-200 overflow-hidden open:border-purple-500/50 transition-colors">
+                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-purple-500/40 transition-colors shadow-card">
                     <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-500 transition-colors">How can I contribute?</h3>
+                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-purple-500 transition-colors">如何参与共建或反馈建议？</h3>
                         <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-gray-500"></i>
+                            <i class="fas fa-chevron-down text-slate-500"></i>
                         </span>
                     </summary>
-                    <div class="px-6 pb-6 text-gray-600 leading-relaxed border-t border-gray-200 pt-4">
-                        We welcome contributions! Please visit our GitHub repository to report issues, suggest features, or submit pull requests.
+                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
+                        欢迎通过 GitHub 提交问题、功能建议或代码贡献。每一次真实反馈，都会帮助产品变得更成熟。
                     </div>
                 </details>
             </div>
@@ -861,46 +1087,55 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="py-24 bg-gradient-to-b from-gray-50 to-white relative">
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-black text-gray-900 font-cyber mb-8 tracking-tighter">
-                READY TO <span class="text-primary">UPGRADE?</span>
-            </h2>
-            <p class="text-xl text-gray-600 mb-12 max-w-2xl mx-auto">
-                体验 STAR HigheriTech 带来的高效体验。
-            </p>
-            <a href="#products" class="inline-block px-12 py-5 bg-gray-900 text-white font-bold text-xl rounded-full hover:bg-primary hover:text-white hover:scale-105 transition-all shadow-lg hover:shadow-neon-glow">
-                 GET STARTED
-            </a>
+    <div class="py-28 bg-gradient-to-b from-slate-50 to-white relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="cta-shell rounded-[20px] px-8 py-12 md:px-12 md:py-16 text-center">
+                <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Get Started</div>
+                <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
+                    现在开始，<span class="text-sky-300">体验更好的软件节奏</span>
+                </h2>
+                <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
+                    从系统工具到生产力产品，STAR HigheriTech 让工作界面更清晰，流程更顺畅。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="#products" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
+                         查看产品
+                    </a>
+                    <a href="https://docs.higheri.tech/" class="inline-flex px-12 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
+                         查看文档
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Expanded Footer -->
-    <footer id="support" class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
+    <footer id="support" class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <!-- Brand Column -->
                 <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
+                        <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
                             <i class="fas fa-star text-xs"></i>
                         </div>
-                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
+                        <span class="font-semibold text-lg text-slate-950 font-cyber tracking-tight">STAR HigheriTech</span>
                     </div>
-                    <p class="text-gray-600 mb-6">
+                    <p class="text-slate-600 mb-6 leading-7">
                         打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
 
                 <!-- Link Column 1 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-600">
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
+                    <ul class="space-y-2 text-slate-600">
                         <li><a href="VIEW/HIRA/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
                         <li><a href="VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
                         <li><a href="webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
@@ -911,8 +1146,8 @@
 
                 <!-- Link Column 2 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-600">
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
+                    <ul class="space-y-3 text-slate-600">
                         <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
@@ -922,8 +1157,8 @@
 
                 <!-- Link Column 3 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-600">
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
+                    <ul class="space-y-3 text-slate-600">
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
@@ -932,14 +1167,15 @@
                 </div>
             </div>
 
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
                 <div class="mb-4 md:mb-0">
                     &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
                 </div>
+            </div>
             </div>
         </div>
     </footer>

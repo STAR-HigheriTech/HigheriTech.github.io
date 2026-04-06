@@ -4,489 +4,608 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>高效办公工具 | STAR HigheriTech</title>
-    <!-- Preconnect -->
     <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF',
-                        secondary: '#00c8c1',
-                        accent: '#722ED1',
-                        dark: '#1D2129',
-                        darker: '#0d1117',
-                        light: '#F2F3F5',
-                        teal: {
-                            400: '#2dd4bf',
-                            500: '#14b8a6',
-                            600: '#0d9488',
-                        },
-                        indigo: {
-                            500: '#6366f1',
-                        }
+                        primary: '#2563EB',
+                        secondary: '#0D9488',
+                        accent: '#8B5CF6',
+                        dark: '#0F172A',
+                        light: '#F8FAFC',
+                        neon: '#06B6D4',
+                        electric: '#EC4899'
                     },
                     fontFamily: {
-                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                        cyber: ['Orbitron', 'Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        cyber: ['Inter', 'system-ui', 'sans-serif']
                     },
                     boxShadow: {
-                        'neon-glow': '0 0 20px rgba(20, 184, 166, 0.6)', // Teal glow for Work
+                        card: '0 8px 32px rgba(37, 99, 235, 0.06)',
+                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
+                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
+                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)'
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)"
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-        
-        body {
-            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #F9FAFB;
-            color: #111827;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F3F4F6; }
-        ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #8B5CF6;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 139, 92, 246;
+        }
+        body.theme-hira {
+            --brand: #8B5CF6;
+            --brand-2: #06B6D4;
+            --brand-3: #EC4899;
+            --brand-rgb: 139, 92, 246;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 236, 72, 153;
+        }
+        body.theme-pe {
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #0D9488;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 13, 148, 136;
+        }
+        body.theme-win {
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #38BDF8;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 56, 189, 248;
+        }
+        body.theme-work {
+            --brand: #0D9488;
+            --brand-2: #06B6D4;
+            --brand-3: #6366F1;
+            --brand-rgb: 13, 148, 136;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 99, 102, 241;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAFAFA; }
+        ::-webkit-scrollbar-thumb { background: #D4D4D8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
+
+        .bg-grid-pattern { background-size: 40px 40px; }
         .nav-link { position: relative; }
         .nav-link::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
-            background-color: #14b8a6; transition: width 0.3s;
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand), var(--brand-2));
+            transition: width 0.3s ease;
         }
         .nav-link:hover::after { width: 100%; }
 
-        .text-glow { text-shadow: 0 0 20px rgba(20, 184, 166, 0.5); }
-        
-        .bento-item { position: relative; overflow: hidden; }
-        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(20, 184, 166, 0.2); }
-        
-        .bg-grid-pattern { background-size: 40px 40px; }
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.14);
+            border-color: rgba(var(--brand-rgb), 0.18);
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.88);
+            color: #52525B;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .section-kicker::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.10);
+        }
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+        .brand-gradient-text {
+            background-image: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .brand-button {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.28);
+        }
+        .brand-icon {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--brand-3));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.22);
+        }
+        .text-glow { text-shadow: 0 8px 24px rgba(var(--brand-rgb), 0.28); }
+        .hero-panel {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.62));
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(24px);
+        }
+        .hero-panel-light {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(24px);
+        }
+        .surface-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .soft-dark-card {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        }
+        .section-shell {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .minimal-stat {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 1.25rem;
+        }
+        .minimal-stat strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #171717;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+        .brand-soft {
+            background: rgba(var(--brand-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-rgb), 0.16);
+            color: var(--brand);
+        }
+        .brand-soft-2 {
+            background: rgba(var(--brand-2-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-2-rgb), 0.16);
+            color: var(--brand-2);
+        }
+        .brand-soft-3 {
+            background: rgba(var(--brand-3-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-3-rgb), 0.16);
+            color: var(--brand-3);
+        }
+        .divider-glow-a,
+        .divider-glow-b {
+            position: absolute;
+            width: 18rem;
+            height: 18rem;
+            border-radius: 999px;
+            filter: blur(90px);
+            pointer-events: none;
+            opacity: 0.18;
+        }
+        .divider-glow-a {
+            top: -6rem;
+            left: -6rem;
+            background: rgba(var(--brand-rgb), 0.55);
+        }
+        .divider-glow-b {
+            right: -6rem;
+            bottom: -6rem;
+            background: rgba(var(--brand-2-rgb), 0.45);
+        }
+        .metric-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.08);
+            padding: 0.45rem 0.85rem;
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 0.78rem;
+        }
+        .code-panel {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(15, 23, 42, 0.92));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(2, 6, 23, 0.30);
+        }
+        .light-shell {
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            backdrop-filter: blur(20px);
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-teal-500 selection:text-white">
-
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+<body class="theme-work antialiased selection:bg-secondary selection:text-white">
+    
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
                     <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-teal-500 to-emerald-500 text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-12 transition-transform duration-700">
+                        <div class="w-11 h-11 brand-icon text-white flex items-center justify-center rounded-xl transition-all duration-500 group-hover:-translate-y-0.5">
                             <i class="fas fa-briefcase text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">Higheri <span class="text-teal-500">WORK</span></span>
+                        <span class="font-semibold text-2xl text-slate-950 tracking-tight">Higheri <span class="brand-gradient-text">Work</span></span>
                     </a>
                 </div>
-                
-                <div class="hidden md:flex items-center space-x-10">
-                    <a href="../../index.html" class="text-gray-600 hover:text-teal-600 text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="#tools" class="text-gray-600 hover:text-teal-600 text-base font-medium nav-link transition-colors">工具箱</a>
-                    <a href="#projects" class="text-gray-600 hover:text-teal-600 text-base font-medium nav-link transition-colors">精选项目</a>
-                    
-                    <a href="#projects" class="flex items-center gap-2 bg-teal-600 hover:bg-teal-700 hover:shadow-neon-glow text-white px-5 py-2.5 rounded-full transition-all duration-300">
-                        <span>立即体验</span>
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">首页</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">概览</a><a href="#products" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">产品线</a><a href="#principles" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">原则</a><a href="#start" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">开始</a>
+                    <a href="#start" class="brand-button text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">立即体验</a>
                 </div>
-
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-teal-500 focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-100 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-2xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-100 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-2xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="../../index.html" class="text-gray-600 hover:text-teal-600 text-lg font-medium transition-colors block">首页</a>
-                    <a href="#tools" class="text-gray-600 hover:text-teal-600 text-lg font-medium transition-colors block">工具箱</a>
-                    <a href="#projects" class="text-gray-600 hover:text-teal-600 text-lg font-medium transition-colors block">精选项目</a>
-                    <a href="#projects" class="text-teal-500 hover:text-teal-600 text-lg font-medium transition-colors block">立即体验</a>
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">首页</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">概览</a><a href="#products" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">产品线</a><a href="#principles" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">原则</a><a href="#start" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">开始</a>
+                    <a href="#start" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">立即体验</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <div class="relative min-h-screen pt-20 flex items-center overflow-hidden bg-white">
-        <!-- Background Image & Overlay -->
+    <section class="relative min-h-screen pt-24 flex items-center overflow-hidden bg-[#FAFAFA]">
         <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-white/90 via-white/50 to-transparent"></div>
-
-        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/78 to-white/25"></div>
         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-600/20 rounded-full filter blur-[120px] animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
-
+        <div class="absolute top-20 left-10 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(13, 148, 136, 0.20)"></div>
+        <div class="absolute bottom-10 right-10 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(99, 102, 241, 0.14)"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row items-center gap-16">
-                <div class="flex-1 text-center md:text-left">
-                    <div class="inline-block px-3 py-1 border border-teal-500/50 text-teal-600 text-xs font-bold tracking-widest uppercase mb-6 bg-teal-50 backdrop-blur-md rounded-sm">
-                        Productivity Suite
+            <div class="grid lg:grid-cols-[0.82fr_1.18fr] gap-10 items-start">
+                <div class="pt-4">
+                    <div class="section-kicker mb-6">Productivity Suite</div>
+                    <div class="space-y-4 mb-10">
+                        <a href="#products" class="brand-button inline-flex items-center gap-2 px-7 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all">
+                            查看产品线 <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <div>
+                            <a href="#principles" class="inline-flex items-center gap-2 px-7 py-4 bg-white/85 hover:bg-white text-slate-950 border border-white/80 rounded-lg font-semibold text-lg transition-all shadow-card">
+                                设计原则 <i class="fas fa-grid-2"></i>
+                            </a>
+                        </div>
                     </div>
-                    <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight font-cyber mb-6 tracking-tight">
-                        辅助您的 <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-indigo-500 text-glow">日常工作</span>
-                    </h1>
-                    <p class="text-xl text-gray-600 mb-10 max-w-xl leading-relaxed mx-auto md:mx-0">
-                        从浏览器起始页到多功能记事本，Higheri Work 为您提供实用的效率工具，让专注成为一种习惯。
-                    </p>
-                    <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                        <a href="#projects" class="px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white font-bold text-lg transition-all shadow-lg hover:shadow-teal-600/50 flex items-center gap-2 group">
-                            探索工具 <i class="fas fa-compass group-hover:rotate-90 transition-transform"></i>
-                        </a>
-                        <a href="#tools" class="px-8 py-4 border border-gray-300 hover:border-teal-600 text-gray-600 hover:text-teal-600 font-bold text-lg transition-all bg-white/50 backdrop-blur-sm">
-                            了解更多
-                        </a>
+                    <div class="space-y-3 max-w-sm">
+                        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-600"><i class="fas fa-house text-secondary"></i> 起始页工具</div>
+                        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-600"><i class="fas fa-file-lines text-secondary"></i> 记录与草稿</div>
+                        <div class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-sm text-slate-600"><i class="fas fa-cloud text-secondary"></i> 轻量工作流</div>
                     </div>
                 </div>
-                
-                <div class="flex-1 relative">
-                    <!-- 3D Card Effect Container -->
-                    <div class="relative w-full aspect-square max-w-md mx-auto perspective-1000">
-                        <div class="relative z-10 w-full h-full bg-gradient-to-br from-gray-900 to-black rounded-3xl border border-gray-200 shadow-2xl p-8 transform rotate-y-12 rotate-x-12 hover:rotate-0 transition-all duration-700 flex flex-col justify-between group">
-                            <div class="flex justify-between items-center">
+                <div class="space-y-6">
+                    <div>
+                        <h1 class="section-title text-slate-950 mb-6 max-w-4xl">
+                            让日常效率工具，<br>
+                            <span class="brand-gradient-text text-glow">也拥有统一而优雅的产品体验</span>
+                        </h1>
+                        <p class="text-lg md:text-xl text-slate-600 max-w-3xl leading-8">
+                            Work 更适合做轻办公、杂志感更强的首屏，所以我把它改成了“左侧动作区 + 右侧大标题 + 下方工作台”的分层排版，和 Hira、PE、Win 都不一样。
+                        </p>
+                    </div>
+                    <div class="hero-panel-light rounded-[22px] p-5">
+                        <div class="rounded-[18px] overflow-hidden border border-white/70 bg-white/85">
+                            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
                                 <div class="flex gap-2">
-                                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-red-300"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-yellow-300"></span>
+                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
                                 </div>
-                                <div class="text-gray-500 font-mono text-xs">WorkSpace v2.0</div>
+                                <span class="text-xs text-slate-400 font-medium">Workspace Preview</span>
                             </div>
-                            
-                            <div class="space-y-4 mt-8">
-                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 group-hover:border-teal-500/30 transition-colors">
-                                    <div class="w-10 h-10 rounded-lg bg-teal-500/20 flex items-center justify-center text-teal-500">
-                                        <i class="fas fa-home"></i>
+                            <div class="p-6 grid lg:grid-cols-[0.95fr_1.05fr] gap-4 bg-gradient-to-br from-white to-slate-50">
+                                <div class="grid gap-4">
+                                    <div class="light-shell rounded-[18px] p-5">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-11 h-11 rounded-[14px] brand-soft flex items-center justify-center"><i class="fas fa-house"></i></div>
+                                            <div>
+                                                <div class="font-semibold text-slate-950">HigheriTab</div>
+                                                <div class="text-sm text-slate-500">更清爽的起始页与搜索入口</div>
+                                            </div>
+                                            <div class="ml-auto text-xs font-medium text-secondary">Active</div>
+                                        </div>
                                     </div>
+                                    <div class="light-shell rounded-[18px] p-5">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-11 h-11 rounded-[14px] brand-soft-3 flex items-center justify-center"><i class="fas fa-pen"></i></div>
+                                            <div>
+                                                <div class="font-semibold text-slate-950">HigheriDraft</div>
+                                                <div class="text-sm text-slate-500">记录灵感、整理文本与碎片内容</div>
+                                            </div>
+                                            <div class="ml-auto text-xs font-medium text-indigo-500">Syncing</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="surface-card rounded-[18px] p-6 flex flex-col justify-between">
                                     <div>
-                                        <div class="text-white font-bold text-sm">HigheriTab</div>
-                                        <div class="text-gray-500 text-xs">每日 2.5w+ 访问</div>
+                                        <div class="text-slate-400 text-xs mb-2">Efficiency Score</div>
+                                        <div class="text-4xl font-semibold text-slate-950 mb-4">98<span class="text-secondary text-xl">%</span></div>
+                                        <p class="text-slate-600 leading-7">
+                                            把高频轻量工具放进同一个产品线语境里，让它们也拥有统一、稳定、舒服的使用氛围。
+                                        </p>
                                     </div>
-                                    <div class="ml-auto text-teal-500 text-xs">Active</div>
+                                    <div class="pt-6 border-t border-slate-100 text-sm text-slate-500">
+                                        Focused daily tools
+                                    </div>
                                 </div>
-                                
-                                <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/5 group-hover:border-indigo-500/30 transition-colors">
-                                    <div class="w-10 h-10 rounded-lg bg-indigo-500/20 flex items-center justify-center text-indigo-500">
-                                        <i class="fas fa-edit"></i>
-                                    </div>
-                                    <div>
-                                        <div class="text-white font-bold text-sm">HigheriDraft</div>
-                                        <div class="text-gray-500 text-xs">本地 + 云端同步</div>
-                                    </div>
-                                    <div class="ml-auto text-indigo-500 text-xs">Syncing</div>
-                                </div>
-                            </div>
-                            
-                            <div class="mt-8 pt-6 border-t border-white/5 flex justify-between items-center">
-                                <div class="text-gray-400 text-xs">Efficiency Score</div>
-                                <div class="text-3xl font-bold text-white font-cyber">98<span class="text-teal-500 text-lg">%</span></div>
                             </div>
                         </div>
-                        
-                        <!-- Glows -->
-                        <div class="absolute -inset-4 bg-teal-500/30 blur-3xl -z-10 rounded-full opacity-50"></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Tools Bento Grid -->
-    <div id="tools" class="py-24 bg-gray-100 relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <!-- Blobs -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
-        </div>
+    <section id="overview" class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-gray-900 font-cyber mb-16 text-center">WORK <span class="text-teal-500">MATRIX</span></h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto">
-                <!-- Large Feature: HigheriTab -->
-                <div class="md:col-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-teal-500/30 card-hover-effect p-8 md:p-12 flex flex-col justify-center min-h-[300px]">
-                    <div class="w-16 h-16 bg-teal-500/10 rounded-2xl flex items-center justify-center mb-6 text-teal-500 border border-teal-500/20 group-hover:bg-teal-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-home text-3xl"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">HigheriTab 起始页</h3>
-                    <p class="text-gray-600 text-lg max-w-lg">
-                        极简主义的浏览器新标签页。自定义壁纸、高效搜索引擎聚合、常用网站快捷方式，让每次打开浏览器都赏心悦目。
-                    </p>
-                </div>
-
-                <!-- Tall Feature: Productivity -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-indigo-500/30 card-hover-effect p-8 flex flex-col relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-b from-indigo-50/50 to-transparent"></div>
-                    <div class="relative z-10">
-                        <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 text-indigo-500 border border-indigo-500/20">
-                            <i class="fas fa-chart-line text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">提升效率</h3>
-                        <p class="text-gray-600 mb-8">
-                            专注于工作，减少无关干扰。
-                        </p>
-                        <div class="space-y-4">
-                            <div class="flex items-center gap-4">
-                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">01</div>
-                                <div class="text-sm text-gray-600">快速启动</div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">02</div>
-                                <div class="text-sm text-gray-600">云端同步</div>
-                            </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-8 h-8 rounded-full bg-teal-500/20 flex items-center justify-center text-teal-500 font-bold text-xs">03</div>
-                                <div class="text-sm text-gray-600">隐私保护</div>
-                            </div>
-                        </div>
-                        <div class="mt-8 pt-6 border-t border-gray-100">
-                            <div class="flex justify-between text-xs text-gray-500 mb-2">
-                                <span>Time Saved</span>
-                                <span>+2.5h/day</span>
-                            </div>
-                            <div class="w-full h-1 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-indigo-500 w-[75%]"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Medium Feature: HigheriDraft -->
-                <div class="md:col-span-2 group bento-item bg-white rounded-3xl border border-gray-200 hover:border-purple-500/30 card-hover-effect p-8 md:p-12 flex items-center gap-8">
-                    <div class="flex-1">
-                        <div class="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 text-purple-500 border border-purple-500/20">
-                            <i class="fas fa-edit text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">HigheriDraft 草稿本</h3>
-                        <p class="text-gray-600">
-                            多功能记事本。支持 Markdown、代码高亮、即时保存。灵感捕捉的便捷工具，开发者的随身便签。
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid lg:grid-cols-[0.92fr_1.08fr] gap-10 items-start">
+                    <div>
+                        <div class="section-kicker mb-5">Overview</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">把轻量工具做得更统一、更成熟</h2>
+                        <p class="text-slate-600 leading-8">
+                            Work 页不再只是“把产品堆一起”，而是按照和主页同样的高级感系统，重构成一个更适合承载产品线价值的入口页面。
                         </p>
                     </div>
-                    <div class="hidden md:block w-32 h-32 bg-purple-500/5 rounded-full filter blur-xl"></div>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div class="minimal-stat">
+                            <strong>清爽定位</strong>
+                            <span class="text-slate-600 leading-7">更轻的视觉气质，更适合办公与长期使用。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>高频场景</strong>
+                            <span class="text-slate-600 leading-7">起始页、草稿记录、日常效率入口为主轴。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>统一语言</strong>
+                            <span class="text-slate-600 leading-7">与主页共享同一套版式、阴影、边框和 CTA 规范。</span>
+                        </div>
+                        <div class="minimal-stat">
+                            <strong>长期可扩展</strong>
+                            <span class="text-slate-600 leading-7">适合继续接入更多轻量办公与个人效率产品。</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Selected Projects -->
-    <div id="projects" class="py-24 bg-white border-t border-gray-200 relative overflow-hidden">
+    <section id="products" class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="absolute inset-0 bg-grid-pattern"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-16 text-center font-cyber">SELECTED <span class="text-teal-500">PROJECTS</span></h2>
-            
-            <div class="space-y-24 max-w-6xl mx-auto">
-                <!-- Project 1: HigheriTab -->
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="flex-1 order-2 md:order-1">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="px-3 py-1 rounded-full bg-teal-500/10 text-teal-500 text-xs font-bold border border-teal-500/20">BROWSER EXTENSION</span>
-                            <span class="px-3 py-1 rounded-full bg-white text-gray-500 text-xs font-bold border border-gray-200">v3.0</span>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-6">活力起始页插件</h3>
-                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                            告别沉闷的空白页。HigheriTab 为您带来高斯模糊渲染的精美背景，配合精心设计的快捷图标，让每一次新建标签页都成为享受。支持多种搜索引擎无缝切换，数据完全本地化，安全无忧。
-                        </p>
-                        <ul class="space-y-4 mb-8 text-gray-600">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-teal-500"></i> 高度可自定义的界面布局
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-teal-500"></i> 沉浸式高斯模糊视觉效果
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-teal-500"></i> 轻量设计，零广告干扰
-                            </li>
-                        </ul>
-                        <div class="flex gap-4">
-                            <a href="/dl/TC.crx" class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
-                                <i class="fas fa-download"></i> 下载扩展
-                            </a>
-                            <a href="/tab/index.html" target="_blank" class="px-6 py-3 border border-gray-300 text-gray-600 hover:border-teal-500 hover:text-teal-600 rounded-lg font-bold transition-all flex items-center gap-2">
-                                <i class="fas fa-external-link-alt"></i> 在线演示
-                            </a>
-                        </div>
-                    </div>
-                    <div class="flex-1 order-1 md:order-2 relative group">
-                        <div class="absolute inset-0 bg-teal-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative overflow-hidden">
-                                <!-- Abstract UI Representation -->
-                                <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-black"></div>
-                                <div class="relative z-10 w-3/4 h-3/4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 flex flex-col gap-4">
-                                    <div class="w-1/2 h-8 bg-white/10 rounded-lg"></div>
-                                    <div class="grid grid-cols-4 gap-4">
-                                        <div class="aspect-square bg-teal-500/20 rounded-lg"></div>
-                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
-                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
-                                        <div class="aspect-square bg-white/5 rounded-lg"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+                <div>
+                    <div class="section-kicker mb-5">Product Matrix</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">两类高频产品，构成日常效率工作面</h2>
                 </div>
+                <p class="max-w-2xl text-slate-600 leading-8">主页中的卡片风格、配色倾向与高级感排版都已经同步到这里，但保留 Work 线更轻盈、偏办公的节奏。</p>
+            </div>
+            <div class="grid xl:grid-cols-2 gap-6">
+                <article class="section-shell rounded-[20px] p-8 md:p-10 card-hover-effect">
+                    <div class="flex items-center justify-between gap-4 mb-8">
+                        <div class="brand-soft rounded-lg px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">Start Page</div>
+                        <a href="../../tab/index.html" class="text-secondary font-semibold">在线演示</a>
+                    </div>
+                    <h3 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">HigheriTab</h3>
+                    <p class="text-slate-600 leading-8 mb-8">面向浏览器高频用户的起始页产品，负责承接搜索、常用入口与视觉氛围，让每一次打开新标签页都更顺手。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Search</div><div class="font-semibold text-slate-950">多搜索入口</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Visual</div><div class="font-semibold text-slate-950">沉浸背景</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Quick Links</div><div class="font-semibold text-slate-950">高频跳转</div></div>
+                    </div>
+                </article>
+                <article class="section-shell rounded-[20px] p-8 md:p-10 card-hover-effect">
+                    <div class="flex items-center justify-between gap-4 mb-8">
+                        <div class="brand-soft-3 rounded-lg px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">Writing Tool</div>
+                        <a href="../../webp/DRAFT/index.html" class="text-indigo-500 font-semibold">在线试用</a>
+                    </div>
+                    <h3 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">HigheriDraft</h3>
+                    <p class="text-slate-600 leading-8 mb-8">面向草稿、备忘与碎片化文本记录，强调更快的输入、更轻的界面，以及长期记录时的秩序感。</p>
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Writing</div><div class="font-semibold text-slate-950">即时记录</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Markdown</div><div class="font-semibold text-slate-950">结构清晰</div></div>
+                        <div class="surface-card rounded-[16px] p-4"><div class="text-slate-400 text-xs mb-2">Sync</div><div class="font-semibold text-slate-950">延展空间</div></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
 
-                <!-- Project 2: HigheriDraft -->
-                <div class="flex flex-col md:flex-row gap-12 items-center">
-                    <div class="flex-1 relative group">
-                        <div class="absolute inset-0 bg-purple-500/20 blur-3xl rounded-full opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                        <div class="relative rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
-                            <div class="aspect-video bg-gray-900 flex items-center justify-center relative overflow-hidden">
-                                <!-- Abstract UI Representation -->
-                                <div class="absolute inset-0 bg-gradient-to-bl from-gray-800 to-black"></div>
-                                <div class="relative z-10 w-3/4 h-3/4 bg-gray-800 rounded-xl border border-white/10 p-6 flex flex-col">
-                                    <div class="flex gap-2 mb-4 border-b border-white/5 pb-2">
-                                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                                    </div>
-                                    <div class="space-y-2">
-                                        <div class="w-full h-2 bg-purple-500/20 rounded"></div>
-                                        <div class="w-2/3 h-2 bg-white/10 rounded"></div>
-                                        <div class="w-4/5 h-2 bg-white/10 rounded"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <section id="principles" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div>
+                        <div class="section-kicker mb-5">Design Principles</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">更像成熟软件公司的效率产品线</h2>
                     </div>
-                    <div class="flex-1">
-                        <div class="flex items-center gap-3 mb-6">
-                            <span class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-500 text-xs font-bold border border-purple-500/20">PRODUCTIVITY TOOL</span>
-                            <span class="px-3 py-1 rounded-full bg-white text-gray-500 text-xs font-bold border border-gray-200">BETA</span>
-                        </div>
-                        <h3 class="text-3xl font-bold text-gray-900 mb-6">活力多功能草稿记事本</h3>
-                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
-                            专为碎片化信息管理打造。无论是临时的代码片段、会议记录，还是突发的灵感闪念，HigheriDraft 都能便捷记录。支持手写输入模式，还原纸笔记录的流畅感。
-                        </p>
-                        <ul class="space-y-4 mb-8 text-gray-600">
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-purple-500"></i> 备忘录 + 草稿本双模式
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-purple-500"></i> 支持触控手写输入
-                            </li>
-                            <li class="flex items-center gap-3">
-                                <i class="fas fa-check-circle text-purple-500"></i> 基于 Electron 跨平台支持
-                            </li>
-                        </ul>
-                        <div class="flex gap-4">
-                            <a href="/webp/DRAFT/index.html" target="_blank" class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-bold transition-all flex items-center gap-2">
-                                <i class="fas fa-play"></i> 在线试用
-                            </a>
-                        </div>
-                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">这次重构的目标不是“把颜色换一遍”，而是让 Work 页面在结构、节奏、组件和产品表达上都真正达到和主页一致的品质。</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-swatchbook"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">轻而不空</h3>
+                        <p class="text-slate-600 leading-8">保留白底清爽与办公感，但通过边框、阴影、间距和渐变维持高级感。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-layer-group"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">结构优先</h3>
+                        <p class="text-slate-600 leading-8">把产品信息组织为更清晰的产品线、原则与入口，而不是重复介绍。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7">
+                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-compass-drafting"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">长期生长</h3>
+                        <p class="text-slate-600 leading-8">未来无论继续扩展插件、文档还是同步能力，都能延续这套页面框架。</p>
+                    </article>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
+    <section id="start" class="py-28 bg-gradient-to-b from-slate-50 to-white relative border-t border-slate-200 overflow-hidden">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="soft-dark-card rounded-[20px] px-8 py-12 md:px-12 md:py-16 text-center">
+                <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Get Started</div>
+                <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
+                    现在开始，<span class="brand-gradient-text">让轻量工具也拥有高级工作流</span>
+                </h2>
+                <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
+                    Higheri Work 已经按主页标准完成整页重构，并把配色、排版与产品节奏统一成一套更成熟的表达。
+                </p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="../../tab/index.html" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
+                        打开 HigheriTab
+                    </a>
+                    <a href="../../webp/DRAFT/index.html" class="inline-flex px-12 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
+                        试用 HigheriDraft
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <!-- Brand Column -->
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
-                            <i class="fas fa-star text-xs"></i>
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
+                                <i class="fas fa-star text-xs"></i>
+                            </div>
+                            <span class="font-semibold text-lg text-slate-950 tracking-tight">STAR HigheriTech</span>
                         </div>
-                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
+                        <p class="text-slate-600 mb-6 leading-7">
+                            打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                            <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
+                        </div>
                     </div>
-                    <p class="text-gray-600 mb-6">
-                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
+                        <ul class="space-y-2 text-slate-600">
+                            <li><a href="../hira/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
+                            <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                            <li><a href="../win/index.html" class="hover:text-primary transition-colors">Higheri Win</a></li>
+                            <li><a href="../work/index.html" class="text-secondary transition-colors">Higheri Work</a></li>
+                            <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
+                            <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                        </ul>
                     </div>
                 </div>
-
-                <!-- Link Column 1 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="../hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
-                        <li><a href="../PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
-                        <li><a href="../../webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
-                        <li><a href="../../tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
-                        <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 2 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-600">
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 3 -->
-                <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-600">
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
-                <div class="mb-4 md:mb-0">
-                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
+                <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
+                    <div class="mb-4 md:mb-0">
+                        &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
-
+    
     <script>
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (!icon) return;
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+        }
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                menu.classList.add('hidden'); // Close mobile menu
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', (event) => {
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (!target) return;
+                event.preventDefault();
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                target.scrollIntoView({ behavior: 'smooth' });
             });
         });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
-            links.forEach(function (link) {
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach((link) => {
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
             });
