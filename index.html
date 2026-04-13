@@ -292,7 +292,7 @@
     </nav>
 
     <!-- Hero Carousel Section (AMD/Microsoft Style) -->
-    <div id="hero-carousel" class="relative h-screen min-h-[680px] overflow-hidden bg-dark group">
+    <div id="hero-carousel" class="relative h-[100svh] min-h-[640px] md:min-h-[680px] overflow-hidden bg-dark group">
         
         <!-- Slides Container -->
         <div id="carousel-slides" class="relative w-full h-full">
@@ -303,7 +303,7 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl pt-20">
+                    <div class="max-w-3xl w-full py-12 md:py-20">
                         <div class="hero-panel rounded-[18px] p-8 md:p-10 max-w-2xl">
                         <div class="section-kicker mb-5">
                             New Release
@@ -336,7 +336,7 @@
                 
                 <!-- Content -->
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="w-full pt-20">
+                    <div class="w-full py-12 md:py-20">
                         <div class="grid lg:grid-cols-[minmax(0,1.15fr)_320px] gap-6 lg:gap-10 items-end max-w-6xl">
                             <div class="hero-panel rounded-[18px] p-8 md:p-12">
                                 <div class="section-kicker mb-8">
@@ -376,7 +376,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="space-y-4">
+                            <div class="hidden lg:block space-y-4">
                                 <div class="hero-panel rounded-[16px] p-5">
                                     <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-3">System Suite</div>
                                     <div class="text-white text-3xl font-semibold tracking-tight mb-1">01</div>
@@ -402,9 +402,9 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-white/92 via-white/70 to-white/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="w-full pt-20">
+                    <div class="w-full py-12 md:py-20">
                         <div class="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl ml-auto">
-                            <div class="space-y-4 order-2 lg:order-1">
+                            <div class="hidden lg:block space-y-4 order-2 lg:order-1">
                                 <div class="surface-card rounded-[16px] p-6">
                                     <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Daily Notes</div>
                                     <div class="space-y-3">
@@ -453,9 +453,9 @@
                 <div class="absolute inset-0 bg-gradient-to-r from-slate-950/85 via-slate-950/55 to-slate-950/10 z-0"></div>
                 
                 <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="w-full pt-20">
+                    <div class="w-full py-12 md:py-20">
                         <div class="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl">
-                            <div class="hero-panel rounded-[16px] p-5 font-mono text-sm text-slate-300 leading-7">
+                            <div class="hidden lg:block hero-panel rounded-[16px] p-5 font-mono text-sm text-slate-300 leading-7">
                                 <div class="flex items-center gap-2 mb-4">
                                     <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
                                     <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
@@ -506,7 +506,7 @@
         </div>
 
         <!-- Controls / Indicators -->
-        <div class="absolute bottom-12 left-0 w-full z-20">
+        <div class="absolute bottom-16 md:bottom-12 left-0 w-full z-20">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4">
                 <!-- Play/Pause Button -->
                 <button id="carousel-play-pause" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
@@ -541,7 +541,7 @@
             </div>
         </div>
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20 pointer-events-none">
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20 pointer-events-none hidden md:block">
             <i class="fas fa-chevron-down text-white/50 text-3xl"></i>
         </div>
     </div>

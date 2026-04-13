@@ -44,7 +44,10 @@
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #FAFAFA;
+            background:
+                radial-gradient(circle at top left, rgba(139, 92, 246, 0.08), transparent 28%),
+                radial-gradient(circle at 90% 12%, rgba(6, 182, 212, 0.06), transparent 24%),
+                #FAFAFA;
             color: #171717;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -93,6 +96,14 @@
         ::-webkit-scrollbar-thumb { background: #D4D4D8; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
 
+        @keyframes floatSoft {
+            0%, 100% { transform: translate3d(0, 0, 0); }
+            50% { transform: translate3d(0, -10px, 0); }
+        }
+        @keyframes pulseSoft {
+            0%, 100% { opacity: 0.55; }
+            50% { opacity: 0.9; }
+        }
         .bg-grid-pattern { background-size: 40px 40px; }
         .nav-link { position: relative; }
         .nav-link::after {
@@ -108,11 +119,11 @@
         .nav-link:hover::after { width: 100%; }
 
         .card-hover-effect {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease, background-color 0.32s ease;
         }
         .card-hover-effect:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.14);
+            transform: translateY(-6px);
+            box-shadow: 0 24px 54px rgba(var(--brand-rgb), 0.12);
             border-color: rgba(var(--brand-rgb), 0.18);
         }
 
@@ -122,13 +133,14 @@
             gap: 0.5rem;
             padding: 0.35rem 0.8rem;
             border: 1px solid rgba(0, 0, 0, 0.06);
-            background: rgba(255, 255, 255, 0.88);
-            color: #52525B;
+            background: rgba(255, 255, 255, 0.92);
+            color: #475569;
             font-size: 0.75rem;
             font-weight: 500;
-            letter-spacing: 0.02em;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            letter-spacing: 0.03em;
+            border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+            backdrop-filter: blur(18px);
         }
         .section-kicker::before {
             content: '';
@@ -139,9 +151,9 @@
             box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.10);
         }
         .section-title {
-            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-            line-height: 1.08;
-            letter-spacing: -0.03em;
+            font-size: clamp(2.4rem, 4.8vw, 4.15rem);
+            line-height: 1.02;
+            letter-spacing: -0.045em;
             font-weight: 600;
         }
         .brand-gradient-text {
@@ -152,18 +164,39 @@
         }
         .brand-button {
             background: linear-gradient(135deg, var(--brand), var(--brand-2));
-            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.28);
+            box-shadow: 0 16px 36px rgba(var(--brand-rgb), 0.22);
+            position: relative;
+            overflow: hidden;
+        }
+        .brand-button::before {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+            opacity: 0.9;
+            pointer-events: none;
         }
         .brand-icon {
             background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--brand-3));
-            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.22);
+            box-shadow: 0 16px 32px rgba(var(--brand-rgb), 0.18);
         }
-        .text-glow { text-shadow: 0 8px 24px rgba(var(--brand-rgb), 0.28); }
+        .text-glow { text-shadow: 0 8px 26px rgba(var(--brand-rgb), 0.24); }
         .hero-panel {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.62));
+            background:
+                linear-gradient(180deg, rgba(15, 23, 42, 0.84), rgba(15, 23, 42, 0.68));
             border: 1px solid rgba(255, 255, 255, 0.10);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
-            backdrop-filter: blur(24px);
+            box-shadow: 0 34px 80px rgba(2, 6, 23, 0.34);
+            backdrop-filter: blur(26px);
+            position: relative;
+        }
+        .hero-panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 38%, rgba(255,255,255,0.03));
+            pointer-events: none;
         }
         .hero-panel-light {
             background: rgba(255, 255, 255, 0.88);
@@ -172,19 +205,21 @@
             backdrop-filter: blur(24px);
         }
         .surface-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(15, 23, 42, 0.06);
+            box-shadow: 0 12px 34px rgba(15, 23, 42, 0.04);
+            backdrop-filter: blur(16px);
         }
         .soft-dark-card {
-            background: #0A0A0A;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.96), rgba(15, 23, 42, 0.9));
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 28px 70px rgba(2, 6, 23, 0.22);
         }
         .section-shell {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.86);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+            box-shadow: 0 18px 44px rgba(15, 23, 42, 0.05);
+            backdrop-filter: blur(16px);
         }
         .minimal-stat {
             border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -243,6 +278,7 @@
             padding: 0.45rem 0.85rem;
             color: rgba(255, 255, 255, 0.88);
             font-size: 0.78rem;
+            backdrop-filter: blur(14px);
         }
         .code-panel {
             background: linear-gradient(180deg, rgba(2, 6, 23, 0.95), rgba(15, 23, 42, 0.92));
@@ -254,6 +290,52 @@
             border: 1px solid rgba(255, 255, 255, 0.55);
             box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
             backdrop-filter: blur(20px);
+        }
+        .hero-orbit {
+            animation: floatSoft 7s ease-in-out infinite;
+        }
+        .hero-orbit-delayed {
+            animation: floatSoft 9s ease-in-out infinite;
+            animation-delay: -2s;
+        }
+        .pulse-soft {
+            animation: pulseSoft 6s ease-in-out infinite;
+        }
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.975);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal-scale.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .hairline-top {
+            position: relative;
+        }
+        .hairline-top::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(var(--brand-rgb), 0.28), transparent);
+        }
+        .editorial-grid {
+            background-image:
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 28px 28px;
         }
     </style>
 </head>
@@ -272,7 +354,7 @@
                 </div>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">首页</a>
-                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">概览</a><a href="#features" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">能力</a><a href="#comparison" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">对比</a><a href="#download" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">下载</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">概览</a><a href="#features" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">场景</a><a href="#workspace" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">工作流</a><a href="#download" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">下载</a>
                     <a href="#download" class="brand-button text-white px-5 py-2.5 rounded-lg font-semibold transition-all duration-300 hover:-translate-y-0.5">立即获取</a>
                 </div>
                 <div class="md:hidden">
@@ -284,44 +366,49 @@
             <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-100 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-2xl">
                 <div class="flex flex-col space-y-4">
                     <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">首页</a>
-                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">概览</a><a href="#features" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">能力</a><a href="#comparison" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">对比</a><a href="#download" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">下载</a>
+                    <a href="#overview" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">概览</a><a href="#features" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">场景</a><a href="#workspace" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">工作流</a><a href="#download" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">下载</a>
                     <a href="#download" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">立即获取</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <section class="relative min-h-screen pt-24 flex items-center overflow-hidden bg-slate-950">
-        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-70"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/88 via-slate-950/72 to-slate-950/40"></div>
+    <section class="relative min-h-[100svh] pt-32 pb-14 md:pt-36 md:pb-16 flex items-center overflow-hidden bg-slate-950">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-62"></div>
+        <div class="absolute inset-0 backdrop-blur-[12px] bg-white/18"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-white/24 via-white/10 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-950/88 via-slate-950/74 to-slate-950/42"></div>
         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div class="absolute top-20 left-1/2 -translate-x-[140%] h-72 w-72 rounded-full blur-[120px]" style="background: rgba(139, 92, 246, 0.34)"></div>
-        <div class="absolute bottom-8 left-1/2 translate-x-[35%] h-72 w-72 rounded-full blur-[120px]" style="background: rgba(6, 182, 212, 0.28)"></div>
+        <div class="absolute top-20 left-1/2 -translate-x-[140%] h-72 w-72 rounded-full blur-[120px] hero-orbit pulse-soft" style="background: rgba(139, 92, 246, 0.34)"></div>
+        <div class="absolute bottom-8 left-1/2 translate-x-[35%] h-72 w-72 rounded-full blur-[120px] hero-orbit-delayed pulse-soft" style="background: rgba(6, 182, 212, 0.28)"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-6xl mx-auto text-center">
-                <div class="section-kicker mb-6 mx-auto">AI Native Browser</div>
-                <h1 class="section-title text-white mb-6 max-w-4xl mx-auto">
-                    把 AI 真正带进<br>
-                    <span class="brand-gradient-text text-glow">每一次浏览与决策</span>
-                </h1>
-                <p class="text-lg md:text-xl text-slate-300/90 max-w-3xl leading-8 mb-8 mx-auto">
-                    STAR Hira 更适合做居中叙事的首屏。它不是简单叠加聊天入口，而是把搜索、总结、阅读与工作流组织成一套更轻、更快、更可信的浏览体验。
-                </p>
-                <div class="flex flex-wrap items-center justify-center gap-4 mb-10">
-                    <a href="#download" class="brand-button inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all">
-                        免费下载 <i class="fas fa-download"></i>
-                    </a>
-                    <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/15 rounded-lg font-semibold text-lg transition-all">
-                        查看能力 <i class="fas fa-arrow-right"></i>
-                    </a>
+                <div class="max-w-4xl mx-auto mb-12 rounded-[28px] border border-white/10 bg-white/[0.045] backdrop-blur-[14px] shadow-[0_12px_40px_rgba(15,23,42,0.12)] px-6 py-8 md:px-10 md:py-10">
+                    <div class="section-kicker mb-6 mx-auto reveal-up">AI Browser, Reframed</div>
+                    <h1 class="section-title text-white mb-6 max-w-4xl mx-auto reveal-up" style="transition-delay: 80ms;">
+                        为高频阅读、比较与判断而设计的<br>
+                        <span class="brand-gradient-text text-glow">下一代 AI 浏览器</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-200/95 max-w-3xl leading-8 mb-8 mx-auto reveal-up" style="transition-delay: 140ms;">
+                        Hira 不想成为另一个“功能越堆越多”的浏览器。它更像一张安静而聪明的工作台，把浏览、理解、提炼和持续判断放进同一个连续界面里。
+                    </p>
+                    <div class="flex flex-wrap items-center justify-center gap-4 mb-8 reveal-up" style="transition-delay: 200ms;">
+                        <a href="#download" class="brand-button inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all">
+                            免费下载 <i class="fas fa-download"></i>
+                        </a>
+                        <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 bg-white/14 hover:bg-white/24 text-white border border-white/20 rounded-lg font-semibold text-lg transition-all">
+                            了解核心体验 <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-3 reveal-up" style="transition-delay: 260ms;">
+                        <span class="metric-chip"><i class="fas fa-sparkles"></i> AI 侧边栏</span>
+                        <span class="metric-chip"><i class="fas fa-shield-alt"></i> 更纯净的浏览体验</span>
+                        <span class="metric-chip"><i class="fas fa-puzzle-piece"></i> 兼容熟悉扩展</span>
+                        <span class="metric-chip"><i class="fas fa-circle-play"></i> 视频与内容消费更友好</span>
+                    </div>
                 </div>
-                <div class="flex flex-wrap justify-center gap-3 mb-12">
-                    <span class="metric-chip"><i class="fas fa-sparkles"></i> AI 原生工作流</span>
-                    <span class="metric-chip"><i class="fas fa-shield-alt"></i> 隐私优先</span>
-                    <span class="metric-chip"><i class="fas fa-film"></i> 视频体验优化</span>
-                </div>
-                <div class="hero-panel rounded-[22px] p-4 md:p-5 max-w-5xl mx-auto text-left">
-                    <div class="rounded-[18px] overflow-hidden border border-white/10">
+                <div class="hero-panel rounded-[22px] p-4 md:p-5 max-w-5xl mx-auto text-left reveal-scale">
+                    <div class="rounded-[18px] overflow-hidden border border-white/10 editorial-grid">
                         <div class="bg-slate-950/80 border-b border-white/10 px-4 py-3 flex items-center gap-3">
                             <div class="flex gap-2">
                                 <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
@@ -329,37 +416,76 @@
                                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
                             </div>
                             <div class="flex-1 h-9 rounded-lg bg-white/5 border border-white/5 flex items-center px-4 text-sm text-slate-400">
-                                <i class="fas fa-globe mr-3 text-xs"></i> Ask, browse, compare, decide...
+                                <i class="fas fa-globe mr-3 text-xs"></i> hira://research/ai-browser-workflow
+                            </div>
+                            <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
+                                <span>Focus</span>
+                                <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+                                <span>Summary</span>
                             </div>
                         </div>
-                        <div class="bg-slate-900/90 p-6">
-                            <div class="grid lg:grid-cols-[1.1fr_0.9fr] gap-4 items-stretch">
+                        <div class="bg-slate-900/90 p-5 md:p-6">
+                            <div class="grid gap-4 md:grid-cols-[1.15fr_0.85fr]">
                                 <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
-                                    <div class="flex items-start justify-between gap-4 mb-4">
+                                    <div class="flex items-center justify-between gap-4 mb-4">
                                         <div>
-                                            <div class="text-white font-semibold mb-1">Hira Pilot</div>
-                                            <div class="text-slate-400 text-sm">总结页面、提炼重点、对比观点</div>
+                                            <div class="text-white font-semibold mb-1">当前页面</div>
+                                            <div class="text-slate-400 text-sm">长文阅读、观点对比与快速摘要</div>
                                         </div>
-                                        <div class="brand-soft rounded-lg px-3 py-1 text-xs font-medium">Live</div>
+                                        <div class="brand-soft rounded-lg px-3 py-1 text-xs font-medium">Hira Pilot</div>
                                     </div>
-                                    <div class="space-y-3 text-sm text-slate-300">
-                                        <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">总结这篇文章的核心结论，并给出适合执行的下一步。</div>
-                                        <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">已提炼 3 个重点，并生成可复制摘要。</div>
-                                        <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">并列比较两个观点的可信度与证据强弱。</div>
+                                    <div class="space-y-3">
+                                        <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                            <div class="text-slate-500 text-xs mb-2">阅读区</div>
+                                            <div class="text-white font-medium mb-2">The calmer way to browse with AI</div>
+                                            <div class="space-y-2">
+                                                <div class="h-2 bg-white/10 rounded-full w-full"></div>
+                                                <div class="h-2 bg-white/10 rounded-full w-11/12"></div>
+                                                <div class="h-2 bg-white/10 rounded-full w-4/5"></div>
+                                            </div>
+                                        </div>
+                                        <div class="grid sm:grid-cols-2 gap-3">
+                                            <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                                <div class="text-slate-500 text-xs mb-2">标签区</div>
+                                                <div class="text-white font-medium">把多标签留在秩序里</div>
+                                            </div>
+                                            <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                                <div class="text-slate-500 text-xs mb-2">阅读模式</div>
+                                                <div class="text-white font-medium">减少干扰，保留重点</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="grid sm:grid-cols-3 lg:grid-cols-1 gap-3">
-                                    <div class="rounded-[16px] bg-white/5 border border-white/5 p-4">
-                                        <div class="text-slate-400 text-xs mb-2">Reading Focus</div>
-                                        <div class="text-white font-semibold">更少干扰</div>
+                                <div class="grid gap-3">
+                                    <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
+                                        <div class="text-slate-400 text-xs mb-2">AI Summary</div>
+                                        <div class="text-white font-semibold mb-3">页面摘要已生成</div>
+                                        <div class="space-y-2 text-sm text-slate-300">
+                                            <div>1. 提炼核心观点</div>
+                                            <div>2. 标出可疑论断</div>
+                                            <div>3. 生成下一步建议</div>
+                                        </div>
                                     </div>
-                                    <div class="rounded-[16px] bg-white/5 border border-white/5 p-4">
-                                        <div class="text-slate-400 text-xs mb-2">Workflow</div>
-                                        <div class="text-white font-semibold">更短路径</div>
-                                    </div>
-                                    <div class="rounded-[16px] bg-white/5 border border-white/5 p-4">
-                                        <div class="text-slate-400 text-xs mb-2">Video Mode</div>
-                                        <div class="text-white font-semibold">更沉浸体验</div>
+                                    <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
+                                        <div class="text-slate-400 text-xs mb-2">Why It Feels Better</div>
+                                        <div class="grid grid-cols-2 gap-3 text-sm">
+                                            <div class="rounded-lg bg-white/5 px-3 py-3">
+                                                <div class="text-slate-500 text-xs mb-1">Performance</div>
+                                                <div class="text-white font-medium">更轻的工作流</div>
+                                            </div>
+                                            <div class="rounded-lg bg-white/5 px-3 py-3">
+                                                <div class="text-slate-500 text-xs mb-1">Safety</div>
+                                                <div class="text-white font-medium">更清楚的边界</div>
+                                            </div>
+                                            <div class="rounded-lg bg-white/5 px-3 py-3">
+                                                <div class="text-slate-500 text-xs mb-1">Tabs</div>
+                                                <div class="text-white font-medium">更整齐的上下文</div>
+                                            </div>
+                                            <div class="rounded-lg bg-white/5 px-3 py-3">
+                                                <div class="text-slate-500 text-xs mb-1">Focus</div>
+                                                <div class="text-white font-medium">更安静的界面</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -370,35 +496,35 @@
         </div>
     </section>
 
-    <section id="overview" class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200">
+    <section id="overview" class="py-24 bg-slate-50 relative overflow-hidden border-t border-slate-200 hairline-top">
         <div class="divider-glow-a"></div>
         <div class="divider-glow-b"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="section-shell rounded-[20px] p-8 md:p-10">
-                <div class="grid lg:grid-cols-[0.9fr_1.1fr] gap-10 items-start">
+            <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
+                <div class="grid lg:grid-cols-[0.92fr_1.08fr] gap-10 items-start">
                     <div>
-                        <div class="section-kicker mb-5">Product Positioning</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">不是另一个浏览器，而是更成熟的 AI 入口</h2>
+                        <div class="section-kicker mb-5">Browser Philosophy</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">像浏览器一样可靠，像工作台一样有秩序</h2>
                         <p class="text-slate-600 leading-8">
-                            Hira 面向高频信息工作者，把检索、归纳、比较与持续阅读整合为一体。它更像一张稳定的工作台，而非一个塞满功能的壳。
+                            好的浏览器应该先给你稳定、性能、安全感和熟悉感，然后再谈更高级的效率体验。Hira 的目标不是推翻主流浏览习惯，而是在这个基础上把理解与判断变得更自然。
                         </p>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-6">
                         <div class="minimal-stat">
-                            <strong>AI 侧边栏</strong>
-                            <span class="text-slate-600 leading-7">阅读、提问、翻译、总结在同一交互层完成。</span>
+                            <strong>性能基线</strong>
+                            <span class="text-slate-600 leading-7">保持流畅浏览体验，把 AI 放进工作流，而不是塞进每一个角落。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>视频友好</strong>
-                            <span class="text-slate-600 leading-7">更适合内容消费、追番与长时间沉浸使用。</span>
+                            <strong>安全与纯净</strong>
+                            <span class="text-slate-600 leading-7">浏览器首先要让人安心使用，减少干扰，保持更清楚的边界。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>插件兼容</strong>
-                            <span class="text-slate-600 leading-7">继续使用熟悉的扩展生态，不打断原有习惯。</span>
+                            <strong>扩展连续性</strong>
+                            <span class="text-slate-600 leading-7">继续使用熟悉的扩展生态，不需要推翻已经形成的习惯。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>界面克制</strong>
-                            <span class="text-slate-600 leading-7">色彩鲜明但信息清晰，长时间使用也更舒适。</span>
+                            <strong>专注体验</strong>
+                            <span class="text-slate-600 leading-7">让界面退后、让内容靠前，让人能更安静地完成浏览任务。</span>
                         </div>
                     </div>
                 </div>
@@ -406,104 +532,396 @@
         </div>
     </section>
 
-    <section id="features" class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200">
+    <section class="py-24 bg-white relative border-t border-slate-200 overflow-hidden hairline-top">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div>
+                        <div class="section-kicker mb-5">Browser Foundations</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">先把浏览器该做好的部分做好</h2>
+                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">
+                        真正成熟的浏览器官网不会一上来只讲想象力，也会把性能、安全、兼容和长期使用感讲清楚。Hira 也应该先建立这层信任。
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-gauge-high"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">稳定基线</h3>
+                        <p class="text-slate-600 leading-8">不管 AI 能力多强，浏览器首先要稳定、顺手、可持续使用。Hira 把这层当成底座，而不是附属项。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">扩展连续性</h3>
+                        <p class="text-slate-600 leading-8">继续延续熟悉的扩展使用方式，不把“换浏览器”变成打断原有工作流的高成本动作。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-eye-slash"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">低干扰界面</h3>
+                        <p class="text-slate-600 leading-8">界面不过度喧闹，尽量让标签、阅读区、摘要区各自待在应有的位置，让内容本身重新成为主角。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
+                        <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-shield"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">更安心的使用感</h3>
+                        <p class="text-slate-600 leading-8">浏览器需要让人有边界感、有掌控感。Hira 的目标不是更热闹，而是更清楚地帮助你完成任务。</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200 hairline-top">
         <div class="divider-glow-a"></div>
         <div class="divider-glow-b"></div>
         <div class="absolute inset-0 bg-grid-pattern"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
                 <div>
-                    <div class="section-kicker mb-5">Core Capabilities</div>
-                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">把浏览、理解与判断连接起来</h2>
+                    <div class="section-kicker mb-5">Core Experience</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">把主流浏览器的优点，延伸到理解工作流</h2>
                 </div>
                 <p class="max-w-2xl text-slate-600 leading-8">
-                    页面结构、内容表达和视觉层次，全面切换到和主页一致的高级表达方式；同时保留 Hira 本身更偏紫青、AI 感更强的品牌气质。
+                    我参考了现代浏览器官网常见的表达方式，但没有照搬任何一个品牌，而是把 Hira 更适合用户的部分组织成自己的产品结构。
                 </p>
             </div>
-            <div class="grid lg:grid-cols-3 gap-6">
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect">
+            <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 40ms;">
                     <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-brain text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">AI 原生阅读</h3>
-                    <p class="text-slate-600 leading-8 mb-6">在不离开页面的前提下完成提问、总结与多轮追问，减少应用切换带来的注意力损耗。</p>
-                    <div class="text-sm text-slate-500">适合研究、追踪、内容整理与快速决策。</div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">AI 侧边栏</h3>
+                    <p class="text-slate-600 leading-8 mb-6">阅读中直接提问、总结、翻译和追问，不需要把页面内容搬到另一个工具里。</p>
+                    <div class="text-sm text-slate-500">更适合研究、阅读与内容整理。</div>
                 </article>
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect">
+                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 80ms;">
                     <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-layer-group text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">浏览工作台</h3>
-                    <p class="text-slate-600 leading-8 mb-6">标签、搜索、内容摘要与收藏不再分散，工作流在一个连续的界面里自然展开。</p>
-                    <div class="text-sm text-slate-500">更适合长期使用，而不是一次性的炫技体验。</div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">标签秩序</h3>
+                    <p class="text-slate-600 leading-8 mb-6">多标签、多任务、多页面之间的关系更清楚，不容易在上下文中迷失。</p>
+                    <div class="text-sm text-slate-500">适合高频切换但不想失控的用户。</div>
                 </article>
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect">
-                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-circle-play text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">沉浸式媒体</h3>
-                    <p class="text-slate-600 leading-8 mb-6">针对视频和长内容场景做了更友好的布局处理，让消费内容和处理信息都更加专注。</p>
-                    <div class="text-sm text-slate-500">适合媒体用户、学习者与高频阅读场景。</div>
+                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-shield-alt text-xl"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">纯净与安全感</h3>
+                    <p class="text-slate-600 leading-8 mb-6">浏览器的第一职责仍然是让你安心浏览，减少噪音、保持清晰可理解的交互边界。</p>
+                    <div class="text-sm text-slate-500">不是打扰你的 AI，而是帮助你的浏览器。</div>
+                </article>
+                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 160ms;">
+                    <div class="w-14 h-14 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-circle-play text-xl"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">内容消费友好</h3>
+                    <p class="text-slate-600 leading-8 mb-6">无论是长文、视频还是教程页面，都能保持更安静、更专注、更连续的内容体验。</p>
+                    <div class="text-sm text-slate-500">适合学习者、媒体用户和内容工作者。</div>
                 </article>
             </div>
         </div>
     </section>
 
-    <section id="comparison" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden">
+    <section id="workspace" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden hairline-top">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div>
+                        <div class="section-kicker mb-5">Workspace Proof</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">把浏览器真正做成一张可工作的桌面</h2>
+                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">
+                        这一屏专门回答一个问题：Hira 的体验凭什么更像一款成熟浏览器产品，而不是只会讲 AI 的概念页。
+                    </p>
+                </div>
+                <div class="grid xl:grid-cols-[1.08fr_0.92fr] gap-6">
+                    <div class="soft-dark-card rounded-[20px] p-5 md:p-6 reveal-scale">
+                        <div class="rounded-[18px] overflow-hidden border border-white/8">
+                            <div class="bg-slate-950/85 px-4 py-3 border-b border-white/8 flex items-center justify-between gap-3">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="flex gap-2">
+                                        <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+                                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                                    </div>
+                                    <div class="hidden sm:flex items-center gap-2 text-xs text-slate-400 min-w-0">
+                                        <span class="truncate">Workspace / Research Session</span>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-slate-500">3 active tabs</div>
+                            </div>
+                            <div class="grid md:grid-cols-[220px_1fr] min-h-[360px] bg-slate-900/95">
+                                <div class="border-r border-white/8 p-4 space-y-3">
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">Workspace</div>
+                                        <div class="text-white font-medium">AI Browser Notes</div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">Tabs</div>
+                                        <div class="space-y-2 text-sm text-slate-300">
+                                            <div class="truncate">Why calm browsers matter</div>
+                                            <div class="truncate">Edge vs Zen experience</div>
+                                            <div class="truncate">Hira reading workflow</div>
+                                        </div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">Saved</div>
+                                        <div class="text-sm text-slate-300">2 摘要、1 个观点对比、3 个标记段落</div>
+                                    </div>
+                                </div>
+                                <div class="p-5 space-y-4">
+                                    <div class="grid lg:grid-cols-[1fr_260px] gap-4">
+                                        <div class="rounded-[18px] bg-white/5 border border-white/5 p-5">
+                                            <div class="text-slate-500 text-xs mb-2">Reader Area</div>
+                                            <div class="text-white text-xl font-semibold mb-3">A calmer way to browse, compare and think</div>
+                                            <div class="space-y-2">
+                                                <div class="h-2 rounded-full bg-white/10 w-full"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-11/12"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-10/12"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-9/12"></div>
+                                            </div>
+                                        </div>
+                                        <div class="rounded-[18px] bg-white/5 border border-white/5 p-5">
+                                            <div class="text-slate-500 text-xs mb-2">Pilot</div>
+                                            <div class="text-white font-semibold mb-3">页面摘要</div>
+                                            <div class="space-y-2 text-sm text-slate-300">
+                                                <div>提炼 3 个重点</div>
+                                                <div>发现 1 个可疑断言</div>
+                                                <div>生成下一步追问</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid sm:grid-cols-3 gap-3">
+                                        <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                            <div class="text-slate-500 text-xs mb-1">Tabs</div>
+                                            <div class="text-white font-medium">多标签不混乱</div>
+                                        </div>
+                                        <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                            <div class="text-slate-500 text-xs mb-1">Reader</div>
+                                            <div class="text-white font-medium">长文阅读更专注</div>
+                                        </div>
+                                        <div class="rounded-xl bg-white/5 border border-white/5 p-4">
+                                            <div class="text-slate-500 text-xs mb-1">Save</div>
+                                            <div class="text-white font-medium">结论可持续留存</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid gap-6">
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">Workspaces</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">把项目留在独立上下文里</h3>
+                            <p class="text-slate-600 leading-8">无论是研究、学习还是追踪内容，Hira 都更强调上下文连续性，而不是让所有标签堆在同一层里。</p>
+                        </article>
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 140ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">Reader + Pilot</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">阅读与理解同时发生</h3>
+                            <p class="text-slate-600 leading-8">传统浏览器把阅读留在页面、把理解丢到外部工具；Hira 希望把这两件事重新接回同一个工作面。</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200 hairline-top">
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="absolute inset-0 bg-grid-pattern"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+                <div>
+                    <div class="section-kicker mb-5">Real Scenarios</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">不是功能列表，而是三类真实浏览任务</h2>
+                </div>
+                <p class="max-w-2xl text-slate-600 leading-8">
+                    这更接近成熟浏览器官网的表达方式：不只是告诉你有什么功能，而是告诉你在什么任务里，这些能力如何协同工作。
+                </p>
+            </div>
+            <div class="grid lg:grid-cols-3 gap-6">
+                <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                    <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-book-open-reader"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">研究一篇内容</h3>
+                    <p class="text-slate-600 leading-8 mb-6">打开文章，侧栏提问，提炼摘要，标记关键段落，再把结论留在当前工作区里。</p>
+                    <div class="text-sm text-slate-500">适合论文、教程、产品研究和资料整理。</div>
+                </article>
+                <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                    <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-code-compare"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">比较多个观点</h3>
+                    <p class="text-slate-600 leading-8 mb-6">在多个标签页之间切换时保留上下文，快速比较来源、判断差异，并形成自己的结论。</p>
+                    <div class="text-sm text-slate-500">适合购买决策、技术选型和资讯核对。</div>
+                </article>
+                <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-clapperboard"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">长时间内容消费</h3>
+                    <p class="text-slate-600 leading-8 mb-6">无论是视频、专栏还是课程页面，界面都尽量减少噪音，让你能稳定停留在内容本身。</p>
+                    <div class="text-sm text-slate-500">适合学习、追番和沉浸式内容体验。</div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-white relative border-t border-slate-200 overflow-hidden hairline-top">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="section-shell rounded-[20px] p-8 md:p-10">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
                     <div>
-                        <div class="section-kicker mb-5">Comparison</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">为什么 Hira 更像一个成熟产品</h2>
+                        <div class="section-kicker mb-5">Workflow</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">用浏览器完成一条完整的理解链路</h2>
                     </div>
-                    <p class="max-w-2xl text-slate-600 leading-8">不再用夸张数字来营造先进感，而是用更清晰的场景价值、界面组织和实际能力来建立产品可信度。</p>
+                    <p class="max-w-2xl text-slate-600 leading-8">
+                        这一屏相当于浏览器官网里的“使用方式说明”，把 Hira 的价值从概念落成实际步骤。
+                    </p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="surface-card rounded-[18px] p-7">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">Traditional</div>
-                        <ul class="space-y-4 text-slate-600 leading-7">
-                            <li>AI 与浏览分离，频繁切换上下文</li>
-                            <li>阅读、总结、比对依赖多工具拼接</li>
-                            <li>界面复杂但缺少稳定的信息秩序</li>
-                        </ul>
-                    </div>
-                    <div class="soft-dark-card rounded-[18px] p-7 text-white">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">STAR Hira</div>
-                        <ul class="space-y-4 text-slate-300 leading-7">
-                            <li>AI、浏览与理解在同一工作界面里发生</li>
-                            <li>把高频动作压缩成更短的使用路径</li>
-                            <li>视觉上更克制，体验上更有记忆点</li>
-                        </ul>
-                    </div>
-                    <div class="surface-card rounded-[18px] p-7">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">Best Fit</div>
-                        <ul class="space-y-4 text-slate-600 leading-7">
-                            <li>研究与内容工作者</li>
-                            <li>需要长期浏览与整理信息的人群</li>
-                            <li>偏好 AI 辅助但又追求界面质感的用户</li>
-                        </ul>
-                    </div>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                        <div class="w-11 h-11 rounded-lg brand-soft flex items-center justify-center font-semibold mb-5">1</div>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">打开与进入</h3>
+                        <p class="text-slate-600 leading-7">像平常一样开始浏览，不需要重新学习一套全新操作逻辑。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                        <div class="w-11 h-11 rounded-lg brand-soft-2 flex items-center justify-center font-semibold mb-5">2</div>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">提问与总结</h3>
+                        <p class="text-slate-600 leading-7">在当前页面直接总结、翻译、提问与追问，让理解动作贴近阅读现场。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                        <div class="w-11 h-11 rounded-lg brand-soft-3 flex items-center justify-center font-semibold mb-5">3</div>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">比较与判断</h3>
+                        <p class="text-slate-600 leading-7">切换多个标签页时保留上下文，不再反复复制、粘贴和来回跳转。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
+                        <div class="w-11 h-11 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 flex items-center justify-center font-semibold mb-5">4</div>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">留存与继续</h3>
+                        <p class="text-slate-600 leading-7">把结论、标签和关键内容留在工作区中，下一次继续时不会从零开始。</p>
+                    </article>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="download" class="py-28 bg-gradient-to-b from-slate-50 to-white relative border-t border-slate-200 overflow-hidden">
+    <section id="comparison" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden hairline-top">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
+                    <div>
+                        <div class="section-kicker mb-5">Why Hira</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">如果你已经熟悉主流浏览器，Hira 站在哪里</h2>
+                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">
+                        不是简单比参数，而是比使用哲学。不同浏览器擅长的点并不一样，而 Hira 想把几种主流优势，重新组织成更适合高频信息工作的浏览体验。
+                    </p>
+                </div>
+                <div class="grid xl:grid-cols-[0.95fr_1.05fr] gap-6 mb-6">
+                    <div class="soft-dark-card rounded-[20px] p-8 md:p-10 text-white reveal-scale">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">Hira Positioning</div>
+                        <h3 class="text-3xl font-semibold mb-4 tracking-tight">不是替代一切，而是为高频信息工作者提供更好的浏览方式</h3>
+                        <p class="text-slate-300 leading-8 mb-8">
+                            如果你看重的是浏览器的稳定、安全、扩展习惯与低门槛，Hira 保留这些基线；如果你更看重高频阅读、比较、总结与持续判断，Hira 会比传统浏览路径更顺手。
+                        </p>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
+                                <div class="text-slate-400 text-xs mb-2">Trusted Baseline</div>
+                                <div class="text-white font-semibold">先做好浏览器本职</div>
+                            </div>
+                            <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
+                                <div class="text-slate-400 text-xs mb-2">AI Layer</div>
+                                <div class="text-white font-semibold">再把理解动作自然叠上去</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">Baseline</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像主流浏览器一样顺手</h3>
+                            <p class="text-slate-600 leading-8">熟悉的地址栏、扩展、标签和浏览习惯继续保留，不把“学习新浏览器”变成额外成本。</p>
+                        </article>
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">Productivity</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像效率工具一样会思考</h3>
+                            <p class="text-slate-600 leading-8">让总结、提问、提炼重点与比较观点出现在当前页面，而不是跳去另一个对话窗口。</p>
+                        </article>
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">Calm Design</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像专注工具一样安静</h3>
+                            <p class="text-slate-600 leading-8">界面尽量保持冷静，不让每一个功能都抢主角，把注意力还给当前内容与当前任务。</p>
+                        </article>
+                        <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-rose-500 mb-4">Best Fit</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">更适合这些人</h3>
+                            <p class="text-slate-600 leading-8">研究者、内容工作者、学生、长期浏览与整理信息的人，会更能感受到 Hira 的差异。</p>
+                        </article>
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">Chrome</div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">通用基线最强</h3>
+                        <p class="text-slate-600 leading-8">更偏默认、通用、低学习成本，适合希望浏览器像空气一样存在的大多数用户。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">Edge</div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">办公效率更完整</h3>
+                        <p class="text-slate-600 leading-8">更强调侧边栏、标签管理、AI 助手与生产力增强，适合办公和任务处理导向的用户。</p>
+                    </article>
+                    <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">Zen</div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">专注氛围更突出</h3>
+                        <p class="text-slate-600 leading-8">更强调安静界面、工作区、秩序和个性化，适合非常看重专注与界面哲学的人。</p>
+                    </article>
+                    <article class="soft-dark-card rounded-[18px] p-7 reveal-scale">
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">Hira</div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">把理解工作流放到浏览现场</h3>
+                        <p class="text-slate-300 leading-8">Hira 更想把浏览器的可靠基线、效率增强和专注体验，用 AI 重新串成一条连续工作流。</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="download" class="py-28 bg-gradient-to-b from-slate-50 to-white relative border-t border-slate-200 overflow-hidden hairline-top">
         <div class="divider-glow-a"></div>
         <div class="divider-glow-b"></div>
         <div class="container mx-auto px-4 relative z-10">
-            <div class="soft-dark-card rounded-[20px] px-8 py-12 md:px-12 md:py-16 text-center">
-                <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Download</div>
-                <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
-                    现在开始，<span class="brand-gradient-text">让浏览真正成为工作流的一部分</span>
-                </h2>
-                <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
-                    当前版本提供稳定下载渠道，并延续主页同一套高级、鲜明、克制的产品表达。
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="https://alexhigheryyds.lanzouu.com/iqFCa3mmbora" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
-                        Windows 下载
-                    </a>
-                    <a href="https://docs.higheri.tech/" class="inline-flex px-12 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
-                        查看文档
-                    </a>
+            <div class="soft-dark-card rounded-[20px] px-8 py-12 md:px-12 md:py-16 reveal-scale">
+                <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center">
+                    <div class="text-left">
+                        <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Download</div>
+                        <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
+                            现在开始，<span class="brand-gradient-text">把浏览升级成理解工作流</span>
+                        </h2>
+                        <p class="text-xl text-slate-300 mb-10 max-w-xl leading-8">
+                            最终这一屏不只是 CTA，而更像一块正式发布区：告诉你当前版本适合谁、怎么获取、有哪些信息可以继续追踪。
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://www.123912.com/s/Wcrtjv-JXEpH" class="inline-flex px-10 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
+                                Windows 下载
+                            </a>
+                            <a href="https://docs.higheri.tech/" class="inline-flex px-10 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
+                                查看文档
+                            </a>
+                        </div>
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-4 text-left">
+                        <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
+                            <div class="text-slate-400 text-xs mb-2">Platform</div>
+                            <div class="text-white font-semibold mb-2">Windows 优先</div>
+                            <div class="text-slate-300 text-sm">适合日常浏览、学习与高频信息处理。</div>
+                        </div>
+                        <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
+                            <div class="text-slate-400 text-xs mb-2">Compatibility</div>
+                            <div class="text-white font-semibold mb-2">延续熟悉扩展习惯</div>
+                            <div class="text-slate-300 text-sm">不要求用户推翻原有浏览器使用方式。</div>
+                        </div>
+                        <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
+                            <div class="text-slate-400 text-xs mb-2">Version</div>
+                            <div class="text-white font-semibold mb-2">v7.0.0 Testing</div>
+                            <div class="text-slate-300 text-sm">当前可获取的最新版本，可直接进入体验。</div>
+                        </div>
+                        <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
+                            <div class="text-slate-400 text-xs mb-2">Support</div>
+                            <div class="text-white font-semibold mb-2">文档与版本信息可追踪</div>
+                            <div class="text-slate-300 text-sm">需要更多说明时可以继续查看文档中心。</div>
+                        </div>
+                        <div class="rounded-[16px] bg-white/5 border border-white/8 p-5 sm:col-span-2">
+                            <div class="text-slate-400 text-xs mb-2">Access</div>
+                            <div class="text-white font-semibold mb-2">无下载密码</div>
+                            <div class="text-slate-300 text-sm">适合先试用，再决定是否将它纳入长期浏览工作流。</div>
+                        </div>
+                    </div>
                 </div>
-                <p class="mt-8 text-slate-400 text-sm">下载密码：Hira | v26.140.3 Stable</p>
             </div>
         </div>
     </section>
@@ -603,6 +1021,25 @@
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
             });
+
+            const revealItems = document.querySelectorAll('.reveal-up, .reveal-scale');
+            if ('IntersectionObserver' in window && revealItems.length) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.18,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealItems.forEach((item) => observer.observe(item));
+            } else {
+                revealItems.forEach((item) => item.classList.add('is-visible'));
+            }
         });
     </script>
 </body>
