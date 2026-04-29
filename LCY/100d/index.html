@@ -150,7 +150,7 @@
             margin: 0 auto;
         }
 
-        /* 主卡片 - 宽度更大 */
+        /* 主卡片 */
         .card {
             position: relative;
             z-index: 10;
@@ -305,7 +305,7 @@
             transform: scale(0.97);
         }
 
-        /* 模态框 - 更宽更长，手机适配 */
+        /* 模态框 - 默认宽大，手机端全屏 */
         .modal {
             display: none;
             position: fixed;
@@ -468,7 +468,7 @@
             100% { transform: scale(0); opacity: 0; }
         }
 
-        /* 手机端专用优化 */
+        /* 手机端专用优化 - 书信卡片几乎全屏，占满可见区域 */
         @media (max-width: 760px) {
             body { padding: 12px; }
             .card { padding: 1.5rem 1.2rem 2rem; max-width: 100%; }
@@ -479,10 +479,39 @@
             .message { font-size: 0.88rem; padding: 0.9rem; }
             .envelope-btn { padding: 8px 20px; font-size: 0.9rem; }
             .envelope-pic { font-size: 95px; }
-            .modal-content { width: 95vw; padding: 1rem; }
-            .letter-paper { padding: 1rem; max-height: 70vh; }
-            .letter-content { font-size: 0.9rem; }
-            .capsule { font-size: 0.75rem; padding: 0.25rem 0.8rem; }
+            
+            /* 模态框全屏显示，去掉外边距，最大化利用屏幕 */
+            .modal {
+                padding: 0;
+            }
+            .modal-content {
+                width: 100vw;
+                max-width: none;
+                height: 100vh;
+                border-radius: 0;
+                padding: 1rem;
+                overflow-y: auto;
+            }
+            .letter-paper {
+                max-height: calc(100vh - 80px);
+                padding: 1.2rem;
+                font-size: 1rem;
+            }
+            .letter-content {
+                font-size: 0.95rem;
+                line-height: 1.65;
+            }
+            .capsule {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.8rem;
+            }
+            .close-modal {
+                top: 10px;
+                right: 10px;
+                width: 36px;
+                height: 36px;
+                background: rgba(255,240,235,0.85);
+            }
         }
     </style>
 </head>
@@ -592,7 +621,6 @@
 我是你的。你也是我的。从第一天起就是这样，不用猜，也不用问。
 
 —— 永远只爱你、永远只属于你的 PJH  ❤️‍🔥 😘😘😘`;
-
 
     // DOM 元素
     const modal = document.getElementById('letterModal');
