@@ -150,7 +150,7 @@
             margin: 0 auto;
         }
 
-        /* 主卡片 - 宽度增大，内边距增大，高度自然撑开 */
+        /* 主卡片 - 宽度更大 */
         .card {
             position: relative;
             z-index: 10;
@@ -158,9 +158,9 @@
             backdrop-filter: blur(14px);
             border-radius: 56px;
             width: 100%;
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
-            padding: 2.5rem 2.2rem 3rem;
+            padding: 2.5rem 2rem 3rem;
             box-shadow: 0 30px 45px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.8);
             text-align: center;
             animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
@@ -202,7 +202,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* 胶囊区域 */
         .capsules {
             display: flex;
             flex-wrap: wrap;
@@ -220,6 +219,7 @@
             color: #ad4b62;
             letter-spacing: 0.5px;
             border: 0.5px solid rgba(255, 140, 120, 0.4);
+            cursor: pointer;
         }
 
         .names {
@@ -305,6 +305,7 @@
             transform: scale(0.97);
         }
 
+        /* 模态框 - 更宽更长，手机适配 */
         .modal {
             display: none;
             position: fixed;
@@ -317,13 +318,13 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            padding: 16px;
+            padding: 20px;
         }
 
         .modal-content {
             background: #fff9f7;
-            width: 100%;
-            max-width: 760px;
+            width: 90vw;
+            max-width: 820px;
             border-radius: 56px;
             padding: 1.5rem;
             text-align: center;
@@ -331,7 +332,6 @@
             position: relative;
             box-shadow: 0 30px 40px rgba(0, 0, 0, 0.15);
             border: 1px solid #ffe2e8;
-            min-height: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -407,7 +407,7 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             border: 1px solid #ffe0cc;
             width: 100%;
-            max-height: 70vh;
+            max-height: 75vh;
             overflow-y: auto;
             font-family: 'Segoe UI', 'Courier New', monospace;
             animation: paperFade 0.5s ease-out;
@@ -456,8 +456,8 @@
         /* 烟花粒子 */
         .firework-particle {
             position: fixed;
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
@@ -468,6 +468,7 @@
             100% { transform: scale(0); opacity: 0; }
         }
 
+        /* 手机端专用优化 */
         @media (max-width: 760px) {
             body { padding: 12px; }
             .card { padding: 1.5rem 1.2rem 2rem; max-width: 100%; }
@@ -478,9 +479,9 @@
             .message { font-size: 0.88rem; padding: 0.9rem; }
             .envelope-btn { padding: 8px 20px; font-size: 0.9rem; }
             .envelope-pic { font-size: 95px; }
-            .modal-content { padding: 1rem; }
-            .letter-paper { padding: 1rem; }
-            .letter-content { font-size: 0.88rem; }
+            .modal-content { width: 95vw; padding: 1rem; }
+            .letter-paper { padding: 1rem; max-height: 70vh; }
+            .letter-content { font-size: 0.9rem; }
             .capsule { font-size: 0.75rem; padding: 0.25rem 0.8rem; }
         }
     </style>
@@ -554,12 +555,12 @@
 </div>
 
 <script>
-    // 漂浮背景
+    // 漂浮背景 (小爱心)
     const bgContainer = document.getElementById('floatBg');
     const symbols = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🩷', '🤍', '⭐', '🌟', '✨', '🌸', '💋', '🔥', '💗'];
     for (let i = 0; i < 85; i++) {
         let el = document.createElement('i');
-        let size = Math.random() * 26 + 12;
+        let size = Math.random() * 28 + 14;
         let left = Math.random() * 100;
         let duration = Math.random() * 15 + 8;
         let delay = Math.random() * 20;
@@ -569,10 +570,11 @@
         el.style.left = left + '%';
         el.style.animationDuration = duration + 's';
         el.style.animationDelay = delay + 's';
-        el.style.opacity = 0.5;
+        el.style.opacity = 0.55;
         bgContainer.appendChild(el);
     }
 
+    // 情书内容（保留换行）
     const fullLetterText = `❤️‍🔥 写给我永远的唯一LCY ❤️‍🔥
 
 一百天。不长，却足够你把呼吸落在我每一寸肌肤里。
@@ -585,11 +587,12 @@
 
 你越来越喜欢黏着我，像一只找到窝的小猫，把自己整个人都挂在我身上。你正在变得越来越会撒娇，越来越敢把自己交给我。你所有的依赖和主动，我都觉得是星星落进怀里——一颗也不舍得弄丢。
 
-以后的一百天，还有很多很多个。我会继续在你靠过来时张开手臂，在你扑过来的时候把你抱紧，在你睡时把你一把抱过来盖好被子。。你不用多想别的，你永远可以做我怀里那个可爱的小笨蛋。
+以后的一百天，还有很多很多个。我会继续在你靠过来时张开手臂，在你咬我的时候笑着躲也不躲，在你睡着时帮你拢一拢碎发。你不用多想别的，你永远可以做我怀里那个可爱的小笨蛋。
 
-我永远只能是你的。你也永远是我的唯一😋  从第一天起就是这样，一直都是这样！
+我是你的。你也是我的。从第一天起就是这样，不用猜，也不用问。
 
 —— 永远只爱你、永远只属于你的 PJH  ❤️‍🔥 😘😘😘`;
+
 
     // DOM 元素
     const modal = document.getElementById('letterModal');
@@ -605,6 +608,7 @@
     let typewriterTimeout = null;
     let giftShown = false;
 
+    // 打字机效果（支持换行）
     function startTypewriter() {
         if (typewriterTimeout) clearTimeout(typewriterTimeout);
         typewriterDiv.innerHTML = '';
@@ -679,19 +683,23 @@
         }
     }
 
+    // 烟花特效（全屏点击，同时响应点击的任何位置）
     function createFireworkExplosion(x, y) {
         const colors = ['#ff3366', '#ff6680', '#ff99aa', '#ffc0cb', '#ffb347', '#ff85a1', '#ff4d6d', '#ff8da1', '#ffb76e'];
-        for (let i = 0; i < 40; i++) {
+        const particleCount = 48;
+        for (let i = 0; i < particleCount; i++) {
             let particle = document.createElement('div');
             particle.classList.add('firework-particle');
             let angle = Math.random() * Math.PI * 2;
-            let speed = Math.random() * 130 + 40;
+            let speed = Math.random() * 140 + 50;
             let vx = Math.cos(angle) * speed;
             let vy = Math.sin(angle) * speed;
             let color = colors[Math.floor(Math.random() * colors.length)];
             particle.style.backgroundColor = color;
             particle.style.left = x + 'px';
             particle.style.top = y + 'px';
+            particle.style.width = '10px';
+            particle.style.height = '10px';
             document.body.appendChild(particle);
             
             let dx = 0, dy = 0;
@@ -717,7 +725,9 @@
     function globalClickFirework(e) {
         let x = e.clientX;
         let y = e.clientY;
-        if (x && y) createFireworkExplosion(x, y);
+        if (x && y) {
+            createFireworkExplosion(x, y);
+        }
     }
 
     // 密码验证
@@ -735,6 +745,7 @@
             mainContent.style.display = 'block';
             bindMainEvents();
             startLightEffect();
+            // 绑定全局烟花
             document.body.addEventListener('click', globalClickFirework);
         } else {
             errorMsgSpan.innerText = '❌ 密码错误（提示：是我的生日8位数）';
@@ -747,14 +758,14 @@
     passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') tryUnlock(); });
 
     // 额外大爱心漂浮
-    for(let i=0;i<18;i++) {
+    for(let i=0;i<20;i++) {
         let bigLove = document.createElement('div');
         bigLove.innerHTML = '🌸💖🧸';
         bigLove.style.position = 'absolute';
-        bigLove.style.fontSize = '28px';
-        bigLove.style.bottom = '-40px';
+        bigLove.style.fontSize = '30px';
+        bigLove.style.bottom = '-50px';
         bigLove.style.left = Math.random() * 100 + '%';
-        bigLove.style.opacity = '0.3';
+        bigLove.style.opacity = '0.35';
         bigLove.style.animation = `floatAnim ${Math.random() * 14 + 10}s linear infinite`;
         bigLove.style.pointerEvents = 'none';
         document.querySelector('.floating-bg').appendChild(bigLove);
