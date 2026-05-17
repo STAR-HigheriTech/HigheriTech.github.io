@@ -104,6 +104,31 @@
             0%, 100% { opacity: 0.55; }
             50% { opacity: 0.9; }
         }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes borderGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(var(--brand-rgb), 0.15), inset 0 0 20px rgba(var(--brand-rgb), 0.05); }
+            50% { box-shadow: 0 0 40px rgba(var(--brand-rgb), 0.3), inset 0 0 30px rgba(var(--brand-rgb), 0.1); }
+        }
+        @keyframes textShimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes morphingBlob {
+            0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            50% { border-radius: 50% 60% 30% 60% / 30% 60% 70% 40%; }
+            75% { border-radius: 60% 40% 60% 30% / 70% 30% 50% 60%; }
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(20px) scale(0.5); opacity: 0; }
+        }
         .bg-grid-pattern { background-size: 40px 40px; }
         .nav-link { position: relative; }
         .nav-link::after {
@@ -117,14 +142,62 @@
             transition: width 0.3s ease;
         }
         .nav-link:hover::after { width: 100%; }
-
+        .hero-particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .hero-particles .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .morphing-blob {
+            animation: morphingBlob 8s ease-in-out infinite;
+            filter: blur(0px);
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3), var(--brand-2), var(--brand));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShimmer 4s linear infinite;
+        }
+        .border-animate-glow {
+            position: relative;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
         .card-hover-effect {
             transition: transform 0.32s ease, box-shadow 0.32s ease, border-color 0.32s ease, background-color 0.32s ease;
         }
         .card-hover-effect:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 24px 54px rgba(var(--brand-rgb), 0.12);
-            border-color: rgba(var(--brand-rgb), 0.18);
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 32px 64px rgba(var(--brand-rgb), 0.18), 0 0 0 1px rgba(var(--brand-rgb), 0.1);
+            border-color: rgba(var(--brand-rgb), 0.25);
+        }
+        .card-3d-tilt {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .card-3d-tilt:hover {
+            transform: rotateX(2deg) rotateY(-2deg) translateY(-8px);
         }
 
         .section-kicker {
@@ -137,7 +210,8 @@
             color: #475569;
             font-size: 0.75rem;
             font-weight: 500;
-            letter-spacing: 0.03em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             border-radius: 10px;
             box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
             backdrop-filter: blur(18px);
@@ -148,13 +222,13 @@
             height: 0.35rem;
             border-radius: 999px;
             background: linear-gradient(135deg, var(--brand), var(--brand-2));
-            box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.10);
+            box-shadow: 0 0 0 3px rgba(var(--brand-rgb), 0.15), 0 0 12px rgba(var(--brand-rgb), 0.3);
         }
         .section-title {
             font-size: clamp(2.4rem, 4.8vw, 4.15rem);
             line-height: 1.02;
             letter-spacing: -0.045em;
-            font-weight: 600;
+            font-weight: 700;
         }
         .brand-gradient-text {
             background-image: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
@@ -164,22 +238,42 @@
         }
         .brand-button {
             background: linear-gradient(135deg, var(--brand), var(--brand-2));
-            box-shadow: 0 16px 36px rgba(var(--brand-rgb), 0.22);
+            box-shadow: 0 16px 36px rgba(var(--brand-rgb), 0.22), 0 0 20px rgba(var(--brand-rgb), 0.15);
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         .brand-button::before {
             content: '';
             position: absolute;
             inset: 1px;
             border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+            background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
             opacity: 0.9;
             pointer-events: none;
         }
+        .brand-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(var(--brand-rgb), 0.35), 0 0 30px rgba(var(--brand-rgb), 0.2);
+        }
         .brand-icon {
             background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--brand-3));
-            box-shadow: 0 16px 32px rgba(var(--brand-rgb), 0.18);
+            box-shadow: 0 16px 32px rgba(var(--brand-rgb), 0.18), 0 0 20px rgba(var(--brand-rgb), 0.15);
+            position: relative;
+        }
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            filter: blur(8px);
+            opacity: 0.5;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+        .brand-icon:hover::after {
+            opacity: 0.8;
         }
         .text-glow { text-shadow: 0 8px 26px rgba(var(--brand-rgb), 0.24); }
         .hero-panel {
@@ -209,11 +303,40 @@
             border: 1px solid rgba(15, 23, 42, 0.06);
             box-shadow: 0 12px 34px rgba(15, 23, 42, 0.04);
             backdrop-filter: blur(16px);
+            position: relative;
+            overflow: hidden;
+        }
+        .surface-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s ease;
+        }
+        .surface-card:hover::before {
+            left: 100%;
         }
         .soft-dark-card {
             background: linear-gradient(180deg, rgba(2, 6, 23, 0.96), rgba(15, 23, 42, 0.9));
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 28px 70px rgba(2, 6, 23, 0.22);
+            box-shadow: 0 28px 70px rgba(2, 6, 23, 0.22), inset 0 1px 0 rgba(255,255,255,0.05);
+            position: relative;
+        }
+        .soft-dark-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(var(--brand-rgb), 0.2), transparent 50%, rgba(var(--brand-2-rgb), 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         .section-shell {
             background: rgba(255, 255, 255, 0.86);
@@ -379,119 +502,37 @@
         <div class="absolute inset-0 bg-gradient-to-b from-white/24 via-white/10 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-b from-slate-950/88 via-slate-950/74 to-slate-950/42"></div>
         <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-        <div class="absolute top-20 left-1/2 -translate-x-[140%] h-72 w-72 rounded-full blur-[120px] hero-orbit pulse-soft" style="background: rgba(139, 92, 246, 0.34)"></div>
-        <div class="absolute bottom-8 left-1/2 translate-x-[35%] h-72 w-72 rounded-full blur-[120px] hero-orbit-delayed pulse-soft" style="background: rgba(6, 182, 212, 0.28)"></div>
+        <div class="hero-particles" id="heroParticles"></div>
+        <div class="absolute top-20 left-1/2 -translate-x-[140%] h-72 w-72 rounded-full blur-[120px] hero-orbit pulse-soft morphing-blob" style="background: rgba(139, 92, 246, 0.34)"></div>
+        <div class="absolute bottom-8 left-1/2 translate-x-[35%] h-72 w-72 rounded-full blur-[120px] hero-orbit-delayed pulse-soft morphing-blob" style="background: rgba(6, 182, 212, 0.28); animation-delay: -4s;"></div>
+        <div class="absolute top-1/4 right-1/4 w-48 h-48 rounded-full blur-[100px] pulse-soft" style="background: rgba(236, 72, 153, 0.2);"></div>
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="max-w-6xl mx-auto text-center">
-                <div class="max-w-4xl mx-auto mb-12 rounded-[28px] border border-white/10 bg-white/[0.045] backdrop-blur-[14px] shadow-[0_12px_40px_rgba(15,23,42,0.12)] px-6 py-8 md:px-10 md:py-10">
-                    <div class="section-kicker mb-6 mx-auto reveal-up">AI Browser, Reframed</div>
+                <div class="max-w-4xl mx-auto mb-12 rounded-[28px] border border-white/10 bg-black/40 backdrop-blur-[14px] shadow-[0_12px_40px_rgba(15,23,42,0.55)] px-6 py-8 md:px-10 md:py-10">
+                    <div class="section-kicker mb-6 mx-auto reveal-up">重大更新 · 全新版本 7.0 · 全新功能</div>
                     <h1 class="section-title text-white mb-6 max-w-4xl mx-auto reveal-up" style="transition-delay: 80ms;">
-                        为高频阅读、比较与判断而设计的<br>
-                        <span class="brand-gradient-text text-glow">下一代 AI 浏览器</span>
+                        向您介绍，<br>
+                        <span class="shimmer-text text-glow">全新 STAR Hira 7.0</span>
                     </h1>
                     <p class="text-lg md:text-xl text-slate-200/95 max-w-3xl leading-8 mb-8 mx-auto reveal-up" style="transition-delay: 140ms;">
-                        Hira 不想成为另一个“功能越堆越多”的浏览器。它更像一张安静而聪明的工作台，把浏览、理解、提炼和持续判断放进同一个连续界面里。
+                        STAR Hira 7.0 重磅发布！全新重构侧边栏集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让您的浏览效率全面升级。
                     </p>
                     <div class="flex flex-wrap items-center justify-center gap-4 mb-8 reveal-up" style="transition-delay: 200ms;">
                         <a href="#download" class="brand-button inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all">
-                            免费下载 <i class="fas fa-download"></i>
+                            立即体验新版 <i class="fas fa-download"></i>
                         </a>
                         <a href="#features" class="inline-flex items-center gap-2 px-8 py-4 bg-white/14 hover:bg-white/24 text-white border border-white/20 rounded-lg font-semibold text-lg transition-all">
-                            了解核心体验 <i class="fas fa-arrow-right"></i>
+                            探索全新功能 <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                     <div class="flex flex-wrap justify-center gap-3 reveal-up" style="transition-delay: 260ms;">
-                        <span class="metric-chip"><i class="fas fa-sparkles"></i> AI 侧边栏</span>
-                        <span class="metric-chip"><i class="fas fa-shield-alt"></i> 更纯净的浏览体验</span>
-                        <span class="metric-chip"><i class="fas fa-puzzle-piece"></i> 兼容熟悉扩展</span>
-                        <span class="metric-chip"><i class="fas fa-circle-play"></i> 视频与内容消费更友好</span>
+                        <span class="metric-chip"><i class="fas fa-columns"></i> 全新侧边栏</span>
+                        <span class="metric-chip"><i class="fas fa-tags"></i> 标签组管理</span>
+                        <span class="metric-chip"><i class="fas fa-layer-group"></i> 空间多开</span>
+                        <span class="metric-chip"><i class="fas fa-window-maximize"></i> 分屏浏览</span>
                     </div>
                 </div>
-                <div class="hero-panel rounded-[22px] p-4 md:p-5 max-w-5xl mx-auto text-left reveal-scale">
-                    <div class="rounded-[18px] overflow-hidden border border-white/10 editorial-grid">
-                        <div class="bg-slate-950/80 border-b border-white/10 px-4 py-3 flex items-center gap-3">
-                            <div class="flex gap-2">
-                                <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
-                                <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                            </div>
-                            <div class="flex-1 h-9 rounded-lg bg-white/5 border border-white/5 flex items-center px-4 text-sm text-slate-400">
-                                <i class="fas fa-globe mr-3 text-xs"></i> hira://research/ai-browser-workflow
-                            </div>
-                            <div class="hidden md:flex items-center gap-2 text-xs text-slate-500">
-                                <span>Focus</span>
-                                <span class="w-1 h-1 rounded-full bg-slate-600"></span>
-                                <span>Summary</span>
-                            </div>
-                        </div>
-                        <div class="bg-slate-900/90 p-5 md:p-6">
-                            <div class="grid gap-4 md:grid-cols-[1.15fr_0.85fr]">
-                                <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
-                                    <div class="flex items-center justify-between gap-4 mb-4">
-                                        <div>
-                                            <div class="text-white font-semibold mb-1">当前页面</div>
-                                            <div class="text-slate-400 text-sm">长文阅读、观点对比与快速摘要</div>
-                                        </div>
-                                        <div class="brand-soft rounded-lg px-3 py-1 text-xs font-medium">Hira Pilot</div>
-                                    </div>
-                                    <div class="space-y-3">
-                                        <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                            <div class="text-slate-500 text-xs mb-2">阅读区</div>
-                                            <div class="text-white font-medium mb-2">The calmer way to browse with AI</div>
-                                            <div class="space-y-2">
-                                                <div class="h-2 bg-white/10 rounded-full w-full"></div>
-                                                <div class="h-2 bg-white/10 rounded-full w-11/12"></div>
-                                                <div class="h-2 bg-white/10 rounded-full w-4/5"></div>
-                                            </div>
-                                        </div>
-                                        <div class="grid sm:grid-cols-2 gap-3">
-                                            <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                                <div class="text-slate-500 text-xs mb-2">标签区</div>
-                                                <div class="text-white font-medium">把多标签留在秩序里</div>
-                                            </div>
-                                            <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                                <div class="text-slate-500 text-xs mb-2">阅读模式</div>
-                                                <div class="text-white font-medium">减少干扰，保留重点</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="grid gap-3">
-                                    <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
-                                        <div class="text-slate-400 text-xs mb-2">AI Summary</div>
-                                        <div class="text-white font-semibold mb-3">页面摘要已生成</div>
-                                        <div class="space-y-2 text-sm text-slate-300">
-                                            <div>1. 提炼核心观点</div>
-                                            <div>2. 标出可疑论断</div>
-                                            <div>3. 生成下一步建议</div>
-                                        </div>
-                                    </div>
-                                    <div class="rounded-[18px] border border-white/8 bg-white/5 p-5">
-                                        <div class="text-slate-400 text-xs mb-2">Why It Feels Better</div>
-                                        <div class="grid grid-cols-2 gap-3 text-sm">
-                                            <div class="rounded-lg bg-white/5 px-3 py-3">
-                                                <div class="text-slate-500 text-xs mb-1">Performance</div>
-                                                <div class="text-white font-medium">更轻的工作流</div>
-                                            </div>
-                                            <div class="rounded-lg bg-white/5 px-3 py-3">
-                                                <div class="text-slate-500 text-xs mb-1">Safety</div>
-                                                <div class="text-white font-medium">更清楚的边界</div>
-                                            </div>
-                                            <div class="rounded-lg bg-white/5 px-3 py-3">
-                                                <div class="text-slate-500 text-xs mb-1">Tabs</div>
-                                                <div class="text-white font-medium">更整齐的上下文</div>
-                                            </div>
-                                            <div class="rounded-lg bg-white/5 px-3 py-3">
-                                                <div class="text-slate-500 text-xs mb-1">Focus</div>
-                                                <div class="text-white font-medium">更安静的界面</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <img src="./hira.png" alt="Hira AI Browser Interface" class="w-full h-auto max-w-5xl mx-auto reveal-scale rounded-[6px]">
             </div>
         </div>
     </section>
@@ -503,28 +544,28 @@
             <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
                 <div class="grid lg:grid-cols-[0.92fr_1.08fr] gap-10 items-start">
                     <div>
-                        <div class="section-kicker mb-5">Browser Philosophy</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">像浏览器一样可靠，像工作台一样有秩序</h2>
+                        <div class="section-kicker mb-5">全新升级亮点</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">7.0 全新出发，更强大的浏览体验</h2>
                         <p class="text-slate-600 leading-8">
-                            好的浏览器应该先给你稳定、性能、安全感和熟悉感，然后再谈更高级的效率体验。Hira 的目标不是推翻主流浏览习惯，而是在这个基础上把理解与判断变得更自然。
+                            STAR Hira 7.0 带来革命性升级，全新重构侧边栏、标签组管理、空间多开、笔记功能，让您的浏览体验全面进化。
                         </p>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-6">
                         <div class="minimal-stat">
-                            <strong>性能基线</strong>
-                            <span class="text-slate-600 leading-7">保持流畅浏览体验，把 AI 放进工作流，而不是塞进每一个角落。</span>
+                            <strong>全新侧边栏</strong>
+                            <span class="text-slate-600 leading-7">集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，一站式访问更高效。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>安全与纯净</strong>
-                            <span class="text-slate-600 leading-7">浏览器首先要让人安心使用，减少干扰，保持更清楚的边界。</span>
+                            <strong>标签组管理</strong>
+                            <span class="text-slate-600 leading-7">智能标签分组，一键切换工作场景，管理更有序。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>扩展连续性</strong>
-                            <span class="text-slate-600 leading-7">继续使用熟悉的扩展生态，不需要推翻已经形成的习惯。</span>
+                            <strong>空间多开</strong>
+                            <span class="text-slate-600 leading-7">每个空间独立数据，实现浏览器多开，工作生活轻松切换。</span>
                         </div>
                         <div class="minimal-stat">
-                            <strong>专注体验</strong>
-                            <span class="text-slate-600 leading-7">让界面退后、让内容靠前，让人能更安静地完成浏览任务。</span>
+                            <strong>分屏浏览</strong>
+                            <span class="text-slate-600 leading-7">多任务并行处理，提升工作效率，一次查看多个页面。</span>
                         </div>
                     </div>
                 </div>
@@ -537,33 +578,33 @@
             <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
                     <div>
-                        <div class="section-kicker mb-5">Browser Foundations</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">先把浏览器该做好的部分做好</h2>
+                        <div class="section-kicker mb-5">核心功能升级</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">全新 7.0 功能一览</h2>
                     </div>
-                    <p class="max-w-2xl text-slate-600 leading-8">
-                        真正成熟的浏览器官网不会一上来只讲想象力，也会把性能、安全、兼容和长期使用感讲清楚。Hira 也应该先建立这层信任。
+                    <png class="max-w-2xl text-slate-600 leading-8">
+                        STAR Hira 7.0 在保持稳定与安全的基础上，带来全新侧边栏、标签组、空间多开等核心功能升级。
                     </p>
                 </div>
                 <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
-                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-gauge-high"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">稳定基线</h3>
-                        <p class="text-slate-600 leading-8">不管 AI 能力多强，浏览器首先要稳定、顺手、可持续使用。Hira 把这层当成底座，而不是附属项。</p>
+                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-columns"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">全新侧边栏</h3>
+                        <p class="text-slate-600 leading-8">全新重构的侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，一站式访问更便捷。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
-                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-puzzle-piece"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">扩展连续性</h3>
-                        <p class="text-slate-600 leading-8">继续延续熟悉的扩展使用方式，不把“换浏览器”变成打断原有工作流的高成本动作。</p>
+                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-tags"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">标签组管理</h3>
+                        <p class="text-slate-600 leading-8">全新标签组功能，智能分组管理标签页，一键切换工作场景，浏览更有条理。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
-                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-eye-slash"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">低干扰界面</h3>
-                        <p class="text-slate-600 leading-8">界面不过度喧闹，尽量让标签、阅读区、摘要区各自待在应有的位置，让内容本身重新成为主角。</p>
+                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-star"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">快速固定收藏夹</h3>
+                        <p class="text-slate-600 leading-8">支持快速固定常用网站到收藏夹，一键访问，无需频繁输入网址，效率更高。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
-                        <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-shield"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">更安心的使用感</h3>
-                        <p class="text-slate-600 leading-8">浏览器需要让人有边界感、有掌控感。Hira 的目标不是更热闹，而是更清楚地帮助你完成任务。</p>
+                        <div class="w-12 h-12 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-file-text"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">全新笔记功能</h3>
+                        <p class="text-slate-600 leading-8">内置笔记功能，边浏览边记录，重要内容随时保存，方便后续查阅和整理。</p>
                     </article>
                 </div>
             </div>
@@ -577,39 +618,39 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
                 <div>
-                    <div class="section-kicker mb-5">Core Experience</div>
-                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">把主流浏览器的优点，延伸到理解工作流</h2>
+                    <div class="section-kicker mb-5">全新核心功能</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">7.0 核心功能重磅升级，全面提升浏览体验</h2>
+                    </div>
+                    <p class="max-w-2xl text-slate-600 leading-8">
+                        Hira 7.0 带来全新空间多开、分屏浏览等核心功能，让浏览器真正成为您的高效工作平台。
+                    </p>
                 </div>
-                <p class="max-w-2xl text-slate-600 leading-8">
-                    我参考了现代浏览器官网常见的表达方式，但没有照搬任何一个品牌，而是把 Hira 更适合用户的部分组织成自己的产品结构。
-                </p>
-            </div>
-            <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 40ms;">
-                    <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-brain text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">AI 侧边栏</h3>
-                    <p class="text-slate-600 leading-8 mb-6">阅读中直接提问、总结、翻译和追问，不需要把页面内容搬到另一个工具里。</p>
-                    <div class="text-sm text-slate-500">更适合研究、阅读与内容整理。</div>
-                </article>
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 80ms;">
-                    <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-layer-group text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">标签秩序</h3>
-                    <p class="text-slate-600 leading-8 mb-6">多标签、多任务、多页面之间的关系更清楚，不容易在上下文中迷失。</p>
-                    <div class="text-sm text-slate-500">适合高频切换但不想失控的用户。</div>
-                </article>
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 120ms;">
-                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-shield-alt text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">纯净与安全感</h3>
-                    <p class="text-slate-600 leading-8 mb-6">浏览器的第一职责仍然是让你安心浏览，减少噪音、保持清晰可理解的交互边界。</p>
-                    <div class="text-sm text-slate-500">不是打扰你的 AI，而是帮助你的浏览器。</div>
-                </article>
-                <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 160ms;">
-                    <div class="w-14 h-14 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-circle-play text-xl"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">内容消费友好</h3>
-                    <p class="text-slate-600 leading-8 mb-6">无论是长文、视频还是教程页面，都能保持更安静、更专注、更连续的内容体验。</p>
-                    <div class="text-sm text-slate-500">适合学习者、媒体用户和内容工作者。</div>
-                </article>
-            </div>
+                <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 40ms;">
+                        <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-layer-group text-xl"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">空间多开功能</h3>
+                        <p class="text-slate-600 leading-8 mb-6">每个空间拥有独立的用户浏览数据，实现浏览器多开，工作生活轻松隔离。</p>
+                        <div class="text-sm text-slate-500">独立数据，安全隔离，多任务并行。</div>
+                    </article>
+                    <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 80ms;">
+                        <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-window-maximize text-xl"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">分屏浏览体验</h3>
+                        <p class="text-slate-600 leading-8 mb-6">支持多页面分屏显示，一次查看多个内容，多任务浏览效率倍增。</p>
+                        <div class="text-sm text-slate-500">并行处理，高效协作，事半功倍。</div>
+                    </article>
+                    <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 120ms;">
+                        <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-list text-xl"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">垂直标签页</h3>
+                        <p class="text-slate-600 leading-8 mb-6">侧边栏集成垂直标签页，标签管理更直观，浏览更高效，节省水平空间。</p>
+                        <div class="text-sm text-slate-500">垂直布局，一目了然，高效管理。</div>
+                    </article>
+                    <article class="surface-card rounded-[20px] p-8 card-hover-effect reveal-up" style="transition-delay: 160ms;">
+                        <div class="w-14 h-14 bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-sticky-note text-xl"></i></div>
+                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">全新笔记功能</h3>
+                        <p class="text-slate-600 leading-8 mb-6">边浏览边记录，重要信息随时保存，支持富文本编辑和标签分类。</p>
+                        <div class="text-sm text-slate-500">记录灵感，整理思路，随时查阅。</div>
+                    </article>
+                </div>
         </div>
     </section>
 
@@ -618,11 +659,11 @@
             <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
                     <div>
-                        <div class="section-kicker mb-5">Workspace Proof</div>
+                        <div class="section-kicker mb-5">7.0 工作区</div>
                         <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">把浏览器真正做成一张可工作的桌面</h2>
                     </div>
                     <p class="max-w-2xl text-slate-600 leading-8">
-                        这一屏专门回答一个问题：Hira 的体验凭什么更像一款成熟浏览器产品，而不是只会讲 AI 的概念页。
+                        Hira 7.0 全新侧边栏集成所有常用功能，垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，一站式访问更高效。
                     </p>
                 </div>
                 <div class="grid xl:grid-cols-[1.08fr_0.92fr] gap-6">
@@ -644,27 +685,39 @@
                             <div class="grid md:grid-cols-[220px_1fr] min-h-[360px] bg-slate-900/95">
                                 <div class="border-r border-white/8 p-4 space-y-3">
                                     <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
-                                        <div class="text-slate-500 text-[11px] mb-1">Workspace</div>
-                                        <div class="text-white font-medium">AI Browser Notes</div>
-                                    </div>
-                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
-                                        <div class="text-slate-500 text-[11px] mb-1">Tabs</div>
+                                        <div class="text-slate-500 text-[11px] mb-1">垂直标签页</div>
                                         <div class="space-y-2 text-sm text-slate-300">
-                                            <div class="truncate">Why calm browsers matter</div>
-                                            <div class="truncate">Edge vs Zen experience</div>
-                                            <div class="truncate">Hira reading workflow</div>
+                                            <div class="truncate">新建标签页 1</div>
+                                            <div class="truncate">新建标签页 2</div>
+                                            <div class="truncate">新建标签页 3</div>
                                         </div>
                                     </div>
                                     <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
-                                        <div class="text-slate-500 text-[11px] mb-1">Saved</div>
-                                        <div class="text-sm text-slate-300">2 摘要、1 个观点对比、3 个标记段落</div>
+                                        <div class="text-slate-500 text-[11px] mb-1">搜索框</div>
+                                        <div class="text-sm text-slate-300">快速搜索</div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">收藏夹</div>
+                                        <div class="text-sm text-slate-300">常用网站</div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">历史记录</div>
+                                        <div class="text-sm text-slate-300">最近访问</div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">下载管理</div>
+                                        <div class="text-sm text-slate-300">下载文件</div>
+                                    </div>
+                                    <div class="rounded-xl bg-white/5 border border-white/5 px-4 py-3">
+                                        <div class="text-slate-500 text-[11px] mb-1">插件扩展</div>
+                                        <div class="text-sm text-slate-300">扩展管理</div>
                                     </div>
                                 </div>
                                 <div class="p-5 space-y-4">
-                                    <div class="grid lg:grid-cols-[1fr_260px] gap-4">
+                                    <div class="grid lg:grid-cols-2 gap-4">
                                         <div class="rounded-[18px] bg-white/5 border border-white/5 p-5">
-                                            <div class="text-slate-500 text-xs mb-2">Reader Area</div>
-                                            <div class="text-white text-xl font-semibold mb-3">A calmer way to browse, compare and think</div>
+                                            <div class="text-slate-500 text-xs mb-2">分屏 1</div>
+                                            <div class="text-white text-xl font-semibold mb-3">页面内容区域</div>
                                             <div class="space-y-2">
                                                 <div class="h-2 rounded-full bg-white/10 w-full"></div>
                                                 <div class="h-2 rounded-full bg-white/10 w-11/12"></div>
@@ -673,27 +726,28 @@
                                             </div>
                                         </div>
                                         <div class="rounded-[18px] bg-white/5 border border-white/5 p-5">
-                                            <div class="text-slate-500 text-xs mb-2">Pilot</div>
-                                            <div class="text-white font-semibold mb-3">页面摘要</div>
-                                            <div class="space-y-2 text-sm text-slate-300">
-                                                <div>提炼 3 个重点</div>
-                                                <div>发现 1 个可疑断言</div>
-                                                <div>生成下一步追问</div>
+                                            <div class="text-slate-500 text-xs mb-2">分屏 2</div>
+                                            <div class="text-white text-xl font-semibold mb-3">并排页面内容</div>
+                                            <div class="space-y-2">
+                                                <div class="h-2 rounded-full bg-white/10 w-full"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-11/12"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-10/12"></div>
+                                                <div class="h-2 rounded-full bg-white/10 w-9/12"></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="grid sm:grid-cols-3 gap-3">
                                         <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                            <div class="text-slate-500 text-xs mb-1">Tabs</div>
-                                            <div class="text-white font-medium">多标签不混乱</div>
+                                            <div class="text-slate-500 text-xs mb-1">分屏浏览</div>
+                                            <div class="text-white font-medium">多任务并行</div>
                                         </div>
                                         <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                            <div class="text-slate-500 text-xs mb-1">Reader</div>
-                                            <div class="text-white font-medium">长文阅读更专注</div>
+                                            <div class="text-slate-500 text-xs mb-1">笔记功能</div>
+                                            <div class="text-white font-medium">边浏览边记录</div>
                                         </div>
                                         <div class="rounded-xl bg-white/5 border border-white/5 p-4">
-                                            <div class="text-slate-500 text-xs mb-1">Save</div>
-                                            <div class="text-white font-medium">结论可持续留存</div>
+                                            <div class="text-slate-500 text-xs mb-1">收藏夹</div>
+                                            <div class="text-white font-medium">快速固定访问</div>
                                         </div>
                                     </div>
                                 </div>
@@ -702,14 +756,14 @@
                     </div>
                     <div class="grid gap-6">
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">Workspaces</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">把项目留在独立上下文里</h3>
-                            <p class="text-slate-600 leading-8">无论是研究、学习还是追踪内容，Hira 都更强调上下文连续性，而不是让所有标签堆在同一层里。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">全新侧边栏</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">集成所有常用功能</h3>
+                            <p class="text-slate-600 leading-8">垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，全部集成在侧边栏，一站式访问更便捷。</p>
                         </article>
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 140ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">Reader + Pilot</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">阅读与理解同时发生</h3>
-                            <p class="text-slate-600 leading-8">传统浏览器把阅读留在页面、把理解丢到外部工具；Hira 希望把这两件事重新接回同一个工作面。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">空间多开</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">独立空间，数据隔离</h3>
+                            <p class="text-slate-600 leading-8">每个空间拥有独立的用户浏览数据，实现浏览器多开，工作生活轻松隔离，互不干扰。</p>
                         </article>
                     </div>
                 </div>
@@ -724,31 +778,31 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
                 <div>
-                    <div class="section-kicker mb-5">Real Scenarios</div>
-                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">不是功能列表，而是三类真实浏览任务</h2>
+                    <div class="section-kicker mb-5">7.0 真实场景</div>
+                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">三大场景体验全新浏览方式</h2>
                 </div>
                 <p class="max-w-2xl text-slate-600 leading-8">
-                    这更接近成熟浏览器官网的表达方式：不只是告诉你有什么功能，而是告诉你在什么任务里，这些能力如何协同工作。
+                    Hira 7.0 全新的侧边栏、空间多开、分屏浏览功能，让您的浏览体验全面升级，适合各种工作场景。
                 </p>
             </div>
             <div class="grid lg:grid-cols-3 gap-6">
                 <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 40ms;">
-                    <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-book-open-reader"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">研究一篇内容</h3>
-                    <p class="text-slate-600 leading-8 mb-6">打开文章，侧栏提问，提炼摘要，标记关键段落，再把结论留在当前工作区里。</p>
-                    <div class="text-sm text-slate-500">适合论文、教程、产品研究和资料整理。</div>
+                    <div class="w-14 h-14 brand-soft rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-columns"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">侧边栏一站式访问</h3>
+                    <p class="text-slate-600 leading-8 mb-6">垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，全部集成在侧边栏。</p>
+                    <div class="text-sm text-slate-500">适合日常浏览、信息整理和多任务处理。</div>
                 </article>
                 <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 80ms;">
-                    <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-code-compare"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">比较多个观点</h3>
-                    <p class="text-slate-600 leading-8 mb-6">在多个标签页之间切换时保留上下文，快速比较来源、判断差异，并形成自己的结论。</p>
-                    <div class="text-sm text-slate-500">适合购买决策、技术选型和资讯核对。</div>
+                    <div class="w-14 h-14 brand-soft-2 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-layer-group"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">空间多开隔离</h3>
+                    <p class="text-slate-600 leading-8 mb-6">每个空间拥有独立浏览数据，工作生活完全隔离，互不干扰，轻松切换。</p>
+                    <div class="text-sm text-slate-500">适合多项目并行、工作生活分离场景。</div>
                 </article>
                 <article class="section-shell rounded-[20px] p-8 md:p-9 card-hover-effect reveal-up" style="transition-delay: 120ms;">
-                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-clapperboard"></i></div>
-                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">长时间内容消费</h3>
-                    <p class="text-slate-600 leading-8 mb-6">无论是视频、专栏还是课程页面，界面都尽量减少噪音，让你能稳定停留在内容本身。</p>
-                    <div class="text-sm text-slate-500">适合学习、追番和沉浸式内容体验。</div>
+                    <div class="w-14 h-14 brand-soft-3 rounded-[16px] flex items-center justify-center mb-6"><i class="fas fa-window-maximize"></i></div>
+                    <h3 class="text-2xl font-semibold text-slate-950 mb-3">分屏多任务浏览</h3>
+                    <p class="text-slate-600 leading-8 mb-6">支持多页面分屏显示，一次查看多个内容，多任务并行处理效率倍增。</p>
+                    <div class="text-sm text-slate-500">适合对比浏览、资料查找和多任务协作。</div>
                 </article>
             </div>
         </div>
@@ -759,33 +813,33 @@
             <div class="section-shell rounded-[20px] p-8 md:p-10">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
                     <div>
-                        <div class="section-kicker mb-5">Workflow</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">用浏览器完成一条完整的理解链路</h2>
+                        <div class="section-kicker mb-5">7.0 使用流程</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">7.0 全新工作流程，更高效的浏览体验</h2>
                     </div>
                     <p class="max-w-2xl text-slate-600 leading-8">
-                        这一屏相当于浏览器官网里的“使用方式说明”，把 Hira 的价值从概念落成实际步骤。
+                        Hira 7.0 重新定义浏览体验，从侧边栏访问到空间切换，让每一步都更高效。
                     </p>
                 </div>
                 <div class="grid md:grid-cols-4 gap-6">
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
                         <div class="w-11 h-11 rounded-lg brand-soft flex items-center justify-center font-semibold mb-5">1</div>
-                        <h3 class="text-xl font-semibold text-slate-950 mb-3">打开与进入</h3>
-                        <p class="text-slate-600 leading-7">像平常一样开始浏览，不需要重新学习一套全新操作逻辑。</p>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">打开侧边栏</h3>
+                        <p class="text-slate-600 leading-7">全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
                         <div class="w-11 h-11 rounded-lg brand-soft-2 flex items-center justify-center font-semibold mb-5">2</div>
-                        <h3 class="text-xl font-semibold text-slate-950 mb-3">提问与总结</h3>
-                        <p class="text-slate-600 leading-7">在当前页面直接总结、翻译、提问与追问，让理解动作贴近阅读现场。</p>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">管理标签组</h3>
+                        <p class="text-slate-600 leading-7">全新标签组功能，智能分组管理，一键切换工作场景。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
                         <div class="w-11 h-11 rounded-lg brand-soft-3 flex items-center justify-center font-semibold mb-5">3</div>
-                        <h3 class="text-xl font-semibold text-slate-950 mb-3">比较与判断</h3>
-                        <p class="text-slate-600 leading-7">切换多个标签页时保留上下文，不再反复复制、粘贴和来回跳转。</p>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">切换空间</h3>
+                        <p class="text-slate-600 leading-7">空间多开功能，独立浏览数据，工作生活轻松隔离。</p>
                     </article>
                     <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
                         <div class="w-11 h-11 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-500 flex items-center justify-center font-semibold mb-5">4</div>
-                        <h3 class="text-xl font-semibold text-slate-950 mb-3">留存与继续</h3>
-                        <p class="text-slate-600 leading-7">把结论、标签和关键内容留在工作区中，下一次继续时不会从零开始。</p>
+                        <h3 class="text-xl font-semibold text-slate-950 mb-3">分屏浏览</h3>
+                        <p class="text-slate-600 leading-7">支持多页面分屏显示，多任务并行处理，提升工作效率。</p>
                     </article>
                 </div>
             </div>
@@ -797,51 +851,51 @@
             <div class="section-shell rounded-[20px] p-8 md:p-10 reveal-up">
                 <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
                     <div>
-                        <div class="section-kicker mb-5">Why Hira</div>
-                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">如果你已经熟悉主流浏览器，Hira 站在哪里</h2>
+                        <div class="section-kicker mb-5">7.0 全新定位</div>
+                        <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">Hira 7.0 - 重新定义浏览体验</h2>
                     </div>
                     <p class="max-w-2xl text-slate-600 leading-8">
-                        不是简单比参数，而是比使用哲学。不同浏览器擅长的点并不一样，而 Hira 想把几种主流优势，重新组织成更适合高频信息工作的浏览体验。
+                        Hira 7.0 在保持主流浏览器稳定性的基础上，带来全新侧边栏、空间多开、分屏浏览等核心功能。
                     </p>
                 </div>
                 <div class="grid xl:grid-cols-[0.95fr_1.05fr] gap-6 mb-6">
                     <div class="soft-dark-card rounded-[20px] p-8 md:p-10 text-white reveal-scale">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">Hira Positioning</div>
-                        <h3 class="text-3xl font-semibold mb-4 tracking-tight">不是替代一切，而是为高频信息工作者提供更好的浏览方式</h3>
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">7.0 全新升级</div>
+                        <h3 class="text-3xl font-semibold mb-4 tracking-tight">Hira 7.0 - 高效浏览新体验</h3>
                         <p class="text-slate-300 leading-8 mb-8">
-                            如果你看重的是浏览器的稳定、安全、扩展习惯与低门槛，Hira 保留这些基线；如果你更看重高频阅读、比较、总结与持续判断，Hira 会比传统浏览路径更顺手。
+                            Hira 7.0 带来全新重构的侧边栏、标签组管理、空间多开、笔记功能和分屏浏览，让您的浏览效率全面升级。
                         </p>
                         <div class="grid sm:grid-cols-2 gap-4">
                             <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
-                                <div class="text-slate-400 text-xs mb-2">Trusted Baseline</div>
-                                <div class="text-white font-semibold">先做好浏览器本职</div>
+                                <div class="text-slate-400 text-xs mb-2">全新侧边栏</div>
+                                <div class="text-white font-semibold">各类信息集成一体</div>
                             </div>
                             <div class="rounded-[16px] bg-white/5 border border-white/8 p-4">
-                                <div class="text-slate-400 text-xs mb-2">AI Layer</div>
-                                <div class="text-white font-semibold">再把理解动作自然叠上去</div>
+                                <div class="text-slate-400 text-xs mb-2">空间多开</div>
+                                <div class="text-white font-semibold">独立数据，安全隔离</div>
                             </div>
                         </div>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-6">
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 40ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">Baseline</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像主流浏览器一样顺手</h3>
-                            <p class="text-slate-600 leading-8">熟悉的地址栏、扩展、标签和浏览习惯继续保留，不把“学习新浏览器”变成额外成本。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-slate-400 mb-4">侧边栏</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">全新重构侧边栏</h3>
+                            <p class="text-slate-600 leading-8">集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，一站式访问。</p>
                         </article>
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 80ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">Productivity</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像效率工具一样会思考</h3>
-                            <p class="text-slate-600 leading-8">让总结、提问、提炼重点与比较观点出现在当前页面，而不是跳去另一个对话窗口。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">标签组</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">智能标签组管理</h3>
+                            <p class="text-slate-600 leading-8">全新标签组功能，智能分组管理，一键切换工作场景。</p>
                         </article>
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 120ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">Calm Design</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">像专注工具一样安静</h3>
-                            <p class="text-slate-600 leading-8">界面尽量保持冷静，不让每一个功能都抢主角，把注意力还给当前内容与当前任务。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">空间多开</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">独立空间隔离</h3>
+                            <p class="text-slate-600 leading-8">每个空间拥有独立浏览数据，工作生活轻松隔离。</p>
                         </article>
                         <article class="surface-card rounded-[18px] p-7 card-hover-effect reveal-up" style="transition-delay: 160ms;">
-                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-rose-500 mb-4">Best Fit</div>
-                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">更适合这些人</h3>
-                            <p class="text-slate-600 leading-8">研究者、内容工作者、学生、长期浏览与整理信息的人，会更能感受到 Hira 的差异。</p>
+                            <div class="text-sm font-semibold tracking-[0.18em] uppercase text-rose-500 mb-4">分屏浏览</div>
+                            <h3 class="text-2xl font-semibold text-slate-950 mb-3">多任务并行处理</h3>
+                            <p class="text-slate-600 leading-8">支持多页面分屏显示，一次查看多个内容，效率倍增。</p>
                         </article>
                     </div>
                 </div>
@@ -862,9 +916,9 @@
                         <p class="text-slate-600 leading-8">更强调安静界面、工作区、秩序和个性化，适合非常看重专注与界面哲学的人。</p>
                     </article>
                     <article class="soft-dark-card rounded-[18px] p-7 reveal-scale">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">Hira</div>
-                        <h3 class="text-2xl font-semibold text-white mb-3">把理解工作流放到浏览现场</h3>
-                        <p class="text-slate-300 leading-8">Hira 更想把浏览器的可靠基线、效率增强和专注体验，用 AI 重新串成一条连续工作流。</p>
+                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-white/60 mb-4">Hira 7.0</div>
+                        <h3 class="text-2xl font-semibold text-white mb-3">高效浏览新选择</h3>
+                        <p class="text-slate-300 leading-8">Hira 7.0 带来全新侧边栏、空间多开、分屏浏览，让浏览更高效。</p>
                     </article>
                 </div>
             </div>
@@ -878,47 +932,47 @@
             <div class="soft-dark-card rounded-[20px] px-8 py-12 md:px-12 md:py-16 reveal-scale">
                 <div class="grid lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center">
                     <div class="text-left">
-                        <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Download</div>
+                        <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">7.0 全新发布</div>
                         <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
-                            现在开始，<span class="brand-gradient-text">把浏览升级成理解工作流</span>
+                            立即体验，<span class="brand-gradient-text">全新 Hira 7.0</span>
                         </h2>
                         <p class="text-xl text-slate-300 mb-10 max-w-xl leading-8">
-                            最终这一屏不只是 CTA，而更像一块正式发布区：告诉你当前版本适合谁、怎么获取、有哪些信息可以继续追踪。
+                            Hira 7.0 重磅发布！全新重构侧边栏、标签组管理、空间多开、分屏浏览，为您带来高效浏览体验。 获取密码:Hira
                         </p>
                         <div class="flex flex-wrap gap-4">
-                            <a href="https://www.123912.com/s/Wcrtjv-JXEpH" class="inline-flex px-10 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
-                                Windows 下载
+                            <a href="https://alexhigheryyds.lanzouy.com/iPfrK3pnw3jg" class="inline-flex px-10 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
+                                立即下载，体验全新版本
                             </a>
-                            <a href="https://docs.higheri.tech/" class="inline-flex px-10 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
-                                查看文档
-                            </a>
+                            <!--<a href="https://docs.higheri.tech/" class="inline-flex px-10 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
+                                查看更新日志
+                            </a> -->
                         </div>
                     </div>
                     <div class="grid sm:grid-cols-2 gap-4 text-left">
                         <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
-                            <div class="text-slate-400 text-xs mb-2">Platform</div>
-                            <div class="text-white font-semibold mb-2">Windows 优先</div>
-                            <div class="text-slate-300 text-sm">适合日常浏览、学习与高频信息处理。</div>
+                            <div class="text-slate-400 text-xs mb-2">全新侧边栏</div>
+                            <div class="text-white font-semibold mb-2">集成多功能一体</div>
+                            <div class="text-slate-300 text-sm">垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理一站式访问。</div>
                         </div>
                         <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
-                            <div class="text-slate-400 text-xs mb-2">Compatibility</div>
-                            <div class="text-white font-semibold mb-2">延续熟悉扩展习惯</div>
-                            <div class="text-slate-300 text-sm">不要求用户推翻原有浏览器使用方式。</div>
+                            <div class="text-slate-400 text-xs mb-2">标签组管理</div>
+                            <div class="text-white font-semibold mb-2">智能分组管理</div>
+                            <div class="text-slate-300 text-sm">一键切换工作场景，管理更有序。</div>
                         </div>
                         <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
-                            <div class="text-slate-400 text-xs mb-2">Version</div>
-                            <div class="text-white font-semibold mb-2">v7.0.0 Testing</div>
-                            <div class="text-slate-300 text-sm">当前可获取的最新版本，可直接进入体验。</div>
+                            <div class="text-slate-400 text-xs mb-2">空间多开</div>
+                            <div class="text-white font-semibold mb-2">独立数据隔离</div>
+                            <div class="text-slate-300 text-sm">每个空间独立浏览数据，实现浏览器多开。</div>
                         </div>
                         <div class="rounded-[16px] bg-white/5 border border-white/8 p-5">
-                            <div class="text-slate-400 text-xs mb-2">Support</div>
-                            <div class="text-white font-semibold mb-2">文档与版本信息可追踪</div>
-                            <div class="text-slate-300 text-sm">需要更多说明时可以继续查看文档中心。</div>
+                            <div class="text-slate-400 text-xs mb-2">分屏浏览</div>
+                            <div class="text-white font-semibold mb-2">多任务并行处理</div>
+                            <div class="text-slate-300 text-sm">支持多页面分屏显示，提升工作效率。</div>
                         </div>
                         <div class="rounded-[16px] bg-white/5 border border-white/8 p-5 sm:col-span-2">
-                            <div class="text-slate-400 text-xs mb-2">Access</div>
-                            <div class="text-white font-semibold mb-2">无下载密码</div>
-                            <div class="text-slate-300 text-sm">适合先试用，再决定是否将它纳入长期浏览工作流。</div>
+                            <div class="text-slate-400 text-xs mb-2">永久免费</div>
+                            <div class="text-white font-semibold mb-2">获取密码:Hira</div>
+                            <div class="text-slate-300 text-sm">立即下载体验全新 Hira 7.0，开启高效浏览新纪元。</div>
                         </div>
                     </div>
                 </div>
@@ -1017,6 +1071,24 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
+            const particlesContainer = document.getElementById('heroParticles');
+            if (particlesContainer) {
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + 100 + '%';
+                    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                    particle.style.animationDelay = (Math.random() * 10) + 's';
+                    particle.style.width = (Math.random() * 4 + 2) + 'px';
+                    particle.style.height = particle.style.width;
+                    const colors = ['rgba(139, 92, 246, 0.6)', 'rgba(6, 182, 212, 0.6)', 'rgba(255, 255, 255, 0.6)', 'rgba(236, 72, 153, 0.5)'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.boxShadow = `0 0 ${Math.random() * 6 + 4}px ${particle.style.background}`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+
             document.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach((link) => {
                 link.target = '_blank';
                 link.rel = 'noopener noreferrer';
