@@ -16,246 +16,649 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#165DFF',
-                        secondary: '#36CFC9',
-                        accent: '#722ED1',
-                        dark: '#1D2129',
-                        darker: '#0d1117',
-                        light: '#F2F3F5',
-                        neon: '#00FFFF',
-                        electric: '#0080FF'
+                        primary: '#2563EB',   /* 亮丽蓝 */
+                        secondary: '#0D9488', /* 翡翠青 */
+                        accent: '#8B5CF6',    /* 亮紫色 */
+                        dark: '#0F172A',      /* 深邃蓝灰 */
+                        light: '#F8FAFC',     /* 亮冷灰 */
+                        neon: '#06B6D4',      /* 霓虹青 */
+                        electric: '#EC4899'   /* 电音粉 */
                     },
                     fontFamily: {
-                        sans: ['"Segoe UI"', 'SegoeUI', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                        cyber: ['Orbitron', 'Inter', 'sans-serif'],
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        cyber: ['Inter', 'system-ui', 'sans-serif'],
                     },
                     boxShadow: {
-                        'neon-glow': '0 0 20px rgba(22, 93, 255, 0.6)',
-                        'neon-glow-sec': '0 0 20px rgba(54, 207, 201, 0.6)',
-                        'red-glow': '0 0 20px rgba(239, 68, 68, 0.6)',
+                        'card': '0 8px 32px rgba(37, 99, 235, 0.06)',
+                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
+                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
+                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)',
                     },
                     backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px)",
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)",
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', SegoeUI, "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: #F9FAFB;
-            color: #111827;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #F3F4F6; }
-        ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAFAFA; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4D4D8; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #A1A1AA; 
+        }
 
-        .nav-link { position: relative; }
+        .hero-bg {
+            background-color: #FAFAFA;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
         .nav-link::after {
-            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
-            background-color: #165DFF; transition: width 0.3s;
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: #171717;
+            transition: width 0.3s ease;
         }
-        .nav-link:hover::after { width: 100%; }
+        .nav-link:hover::after {
+            width: 100%;
+        }
 
-        .text-glow { text-shadow: 0 0 20px rgba(22, 93, 255, 0.5); }
-        .text-glow-red { text-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-        
-        .bento-item { position: relative; overflow: hidden; }
-        .card-hover-effect { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .card-hover-effect:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 20px 40px -15px rgba(0,0,0,0.5); }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        .animate-float { animation: float 6s ease-in-out infinite; }
-        
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
         .bg-grid-pattern { background-size: 40px 40px; }
+
+        .text-glow {
+            text-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
+        }
+        
+        .clip-slant-right {
+            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
+        }
+        
+        /* Bento Grid Specifics */
+        .bento-item {
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 10;
+        }
+        .bento-content {
+            position: relative;
+            z-index: 20;
+        }
+        
+        /* Abstract shapes */
+        .shape-blob {
+            position: absolute;
+            filter: blur(100px);
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        /* Number Counter Animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stat-item {
+            animation: countUp 0.8s ease-out forwards;
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: #FFFFFF;
+            color: #52525B;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .section-kicker::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #2563EB, #06B6D4);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+
+        .hero-panel {
+            background: rgba(10, 10, 10, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(24px);
+        }
+
+        .hero-control {
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 10, 10, 0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        .surface-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        }
+
+        .soft-dark-card {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-shell {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+
+        .minimal-stat {
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding-top: 1.25rem;
+        }
+
+        .minimal-stat strong {
+            display: block;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #171717;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .timeline-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+        }
+
+        .cta-shell {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        }
     </style>
 </head>
-<body class="antialiased selection:bg-primary selection:text-white flex flex-col min-h-screen">
+<body class="antialiased selection:bg-primary selection:text-white pb-20">
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-lg border-b border-gray-200">
+    <!-- Floating Bottom Ad Banner - Prominent Style -->
+    <div id="topAdBanner" class="fixed bottom-4 left-4 right-4 z-[60] max-w-3xl mx-auto">
+        <div class="bg-gradient-to-r bg-white shadow-[0_8px_50px_rgba(37,99,235,0.5)] overflow-hidden">
+            <!-- Ad Header -->
+            <div class="px-5 py-3 flex items-center justify-between bg-gradient-to-r from-blue-700 to-blue-600">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                    <span class="text-xs text-white/80">sadidc.com</span>
+                </div>
+                <button onclick="closeTopAd()" class="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all" aria-label="关闭广告">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- Ad Content -->
+            <div class="p-4 md:p-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-purple-600 font-bold text-3xl shadow-xl">
+                            云
+                        </div>
+                        <div>
+                            <a href="https://sadidc.com/" target="_blank" class="text-gray-900 font-bold text-lg hover:text-purple-600 transition-colors">伤心的云</a>
+                            <p class="text-gray-600 text-sm">☁️ 愿我们的服务器是你的小众惊喜</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <p class="text-yellow-600 font-bold">🔥 香港¥9.9/月起</p>
+                        <a href="https://sadidc.com/" target="_blank" class="px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-bold rounded-none transition-all shadow-xl hover:scale-105">
+                            转到官网
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function closeTopAd() {
+            var ad = document.getElementById('topAdBanner');
+            ad.style.transform = 'translateY(120%)';
+            ad.style.opacity = '0';
+            setTimeout(function() {
+                ad.style.display = 'none';
+                document.body.classList.remove('pb-20');
+            }, 400);
+            localStorage.setItem('topAdClosed', 'true');
+        }
+        
+        window.onload = function() {
+            if (localStorage.getItem('topAdClosed') === 'true') {
+                var ad = document.getElementById('topAdBanner');
+                ad.style.display = 'none';
+                document.body.classList.remove('pb-20');
+            }
+        };
+    </script>
+
+    <!-- Navigation (Floating/Glass) -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 <div class="flex items-center">
                     <a href="index.html" class="flex-shrink-0 flex items-center gap-3 group">
-                        <div class="w-10 h-10 bg-gradient-to-br from-primary to-electric text-white flex items-center justify-center rounded-lg shadow-neon-glow group-hover:rotate-180 transition-transform duration-700">
+                        <div class="w-11 h-11 bg-white text-slate-900 flex items-center justify-center rounded-xl border border-slate-200 shadow-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-card-hover">
                             <i class="fas fa-star text-lg"></i>
                         </div>
-                        <span class="font-bold text-2xl text-gray-900 font-cyber tracking-wider">STAR <span class="text-primary">HigheriTech</span></span>
+                        <span class="font-semibold text-2xl text-slate-950 font-cyber tracking-tight">STAR <span class="text-primary">HigheriTech</span></span>
                     </a>
                 </div>
                 
-                <div class="hidden md:flex items-center space-x-10">
-                    <a href="index.html" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">首页</a>
-                    <a href="/index.html#features" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">特性</a>
-                    <a href="/index.html#products" class="text-gray-600 hover:text-primary text-base font-medium nav-link transition-colors">产品</a>
-                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-primary/10 hover:bg-primary hover:text-white text-primary px-5 py-2.5 rounded-full transition-all duration-300 border border-primary/20">
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">首页</a>
+                    <a href="index.html#features" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">特性</a>
+                    <a href="index.html#products" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">产品</a>
+                    <a href="index.html#solutions" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">解决方案</a>
+                    <a href="index.html#roadmap" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">路线图</a>
+                    <a href="index.html#community" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">社区</a>
+                    <a href="index.html#faq" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">FAQ</a>
+                    
+                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-slate-900 hover:bg-primary text-white px-5 py-2.5 rounded-lg transition-all duration-300 shadow-card">
                         <span>文档中心</span>
                         <i class="fas fa-external-link-alt text-xs"></i>
                     </a>
                 </div>
 
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-900 hover:text-primary focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
             </div>
             
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-gray-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-gray-200 shadow-2xl">
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-xl">
                 <div class="flex flex-col space-y-4">
-                    <a href="/index.html" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
-                    <a href="/index.html#features" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
-                    <a href="/index.html#products" class="text-gray-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
+                    <a href="index.html" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
+                    <a href="index.html#features" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
+                    <a href="index.html#products" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
+                    <a href="index.html#solutions" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">解决方案</a>
+                    <a href="index.html#roadmap" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">路线图</a>
+                    <a href="index.html#community" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">社区</a>
+                    <a href="index.html#faq" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">FAQ</a>
+                    <a href="https://docs.higheri.tech/" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">文档中心</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- 404 Content -->
-    <main class="flex-grow flex items-center justify-center relative pt-20 overflow-hidden bg-white">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full filter blur-[120px] animate-pulse"></div>
-        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full filter blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
-
-        <div class="container mx-auto px-4 relative z-10 py-12">
-            <div class="flex flex-col items-center text-center mb-16">
-                <div class="relative mb-8 animate-float">
-                    <h1 class="text-9xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-300 font-cyber select-none absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10 scale-150 opacity-50">404</h1>
-                    <h1 class="text-8xl md:text-9xl font-black text-gray-900 font-cyber relative z-10 tracking-widest text-glow-red">
-                        4<span class="text-primary">0</span>4
-                    </h1>
+    <!-- Hero Section -->
+    <section class="relative min-h-[100svh] pt-28 pb-16 flex items-center overflow-hidden bg-dark">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-60"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-dark via-dark/95 to-dark/70"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <!-- 404 Number -->
+                <div class="relative mb-10">
+                    <h1 class="text-[12rem] md:text-[16rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-800 to-slate-900 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10 scale-125 opacity-30">404</h1>
+                    <div class="flex items-center justify-center gap-4">
+                        <span class="text-7xl md:text-9xl font-black text-white">4</span>
+                        <span class="text-7xl md:text-9xl font-black text-primary">0</span>
+                        <span class="text-7xl md:text-9xl font-black text-white">4</span>
+                    </div>
                 </div>
                 
-                <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">信号丢失 <span class="text-gray-400 text-2xl md:text-3xl">/ Signal Lost</span></h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+                <div class="section-kicker mb-6 bg-white/10 text-white/80 border-white/10">Page Not Found</div>
+                
+                <h1 class="section-title text-white mb-6">
+                    信号丢失
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-300/90 max-w-2xl mx-auto mb-10 leading-relaxed">
                     您所寻找的页面似乎漂流到了未知的星系。<br>
                     请检查坐标，或通过下方的星际之门返回安全地带。
                 </p>
 
-                <a href="/index.html" class="px-8 py-4 bg-primary hover:bg-primary/90 text-white font-bold text-lg transition-all shadow-lg hover:shadow-primary/50 flex items-center gap-2 rounded-lg group">
-                    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> 返回首页
+                <a href="index.html" class="brand-button inline-flex items-center gap-2 px-10 py-5 text-white font-semibold text-lg rounded-xl hover:-translate-y-0.5 transition-all shadow-xl">
+                    <i class="fas fa-arrow-left"></i> 返回首页
                 </a>
             </div>
+        </div>
+    </section>
 
-            <!-- Navigation Portals (Bento Grid) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+    <!-- Hero Ad Card - Prominent Style -->
+    <div class="bg-gradient-to-b bg-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <!-- Ad Header -->
+                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                    </div>
+                    <!-- Ad Body -->
+                    <div class="p-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
+                                    <span class="text-purple-600 font-bold text-5xl">云</span>
+                                </div>
+                                <div>
+                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
+                                    <p class="text-yellow-600 font-bold text-lg mt-2">🔥 香港¥9.9/月起 · 限时优惠</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 sm:ml-auto">
+                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🔥 限时特惠</span>
+                            <span class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">⚡ 高性能云服务器</span>
+                            <span class="bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🛡️ 24h稳定防护</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Portals (Bento Grid) -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <div class="section-kicker mb-5">Quick Access</div>
+                <h2 class="text-3xl md:text-4xl font-semibold text-slate-950 mb-4">探索我们的产品</h2>
+                <p class="text-slate-600 max-w-xl mx-auto">从这里开始，找到适合你的工具</p>
+            </div>
+            
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
                 
                 <!-- Hira -->
-                <a href="/VIEW/hira/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-purple-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-4 text-purple-500 group-hover:bg-purple-500 group-hover:text-white transition-colors">
+                <a href="VIEW/hira/index.html" class="group surface-card rounded-[20px] p-6 card-hover-effect flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-4 text-purple-600 group-hover:bg-purple-500 group-hover:text-white transition-all">
                         <i class="fas fa-robot text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">STAR Hira</h3>
-                    <p class="text-gray-600 text-sm">AI 浏览器</p>
+                    <h3 class="text-lg font-semibold text-slate-950 mb-1">STAR Hira</h3>
+                    <p class="text-slate-500 text-sm">智能浏览器</p>
                 </a>
 
                 <!-- Work -->
-                <a href="/VIEW/work/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-teal-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-teal-500/10 rounded-xl flex items-center justify-center mb-4 text-teal-500 group-hover:bg-teal-500 group-hover:text-white transition-colors">
+                <a href="VIEW/work/index.html" class="group surface-card rounded-[20px] p-6 card-hover-effect flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mb-4 text-teal-600 group-hover:bg-teal-500 group-hover:text-white transition-all">
                         <i class="fas fa-briefcase text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">STAR Work</h3>
-                    <p class="text-gray-600 text-sm">生产力工具</p>
+                    <h3 class="text-lg font-semibold text-slate-950 mb-1">Higheri Work</h3>
+                    <p class="text-slate-500 text-sm">生产力工具</p>
                 </a>
 
                 <!-- PE -->
-                <a href="/VIEW/PE/PE.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-blue-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-4 text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                <a href="VIEW/PE/PE.html" class="group surface-card rounded-[20px] p-6 card-hover-effect flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4 text-blue-600 group-hover:bg-blue-500 group-hover:text-white transition-all">
                         <i class="fas fa-tools text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">HigheriPE</h3>
-                    <p class="text-gray-600 text-sm">系统维护</p>
+                    <h3 class="text-lg font-semibold text-slate-950 mb-1">HigheriPE</h3>
+                    <p class="text-slate-500 text-sm">系统维护</p>
                 </a>
 
                 <!-- Blog -->
-                <a href="/BLOG/index.html" class="group bento-item bg-white rounded-2xl border border-gray-200 hover:border-amber-500/30 card-hover-effect p-6 flex flex-col items-center text-center">
-                    <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center mb-4 text-amber-500 group-hover:bg-amber-500 group-hover:text-white transition-colors">
+                <a href="blog/index.html" class="group surface-card rounded-[20px] p-6 card-hover-effect flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center mb-4 text-amber-600 group-hover:bg-amber-500 group-hover:text-white transition-all">
                         <i class="fas fa-book text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-900 mb-1">知识库</h3>
-                    <p class="text-gray-600 text-sm">文档与博客</p>
+                    <h3 class="text-lg font-semibold text-slate-950 mb-1">知识库</h3>
+                    <p class="text-slate-500 text-sm">文档与博客</p>
                 </a>
 
             </div>
         </div>
-    </main>
+    </section>
 
-    <!-- Expanded Footer -->
-    <footer id="support" class="bg-white border-t border-gray-200 pt-16 pb-8 text-sm">
+    <!-- SadCloud Ad Section - Prominent Style -->
+    <div class="bg-gradient-to-b bg-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Ad Container -->
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <!-- Ad Header -->
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                        <span class="text-white/60 text-sm">伤心的云</span>
+                    </div>
+                    <!-- Ad Content -->
+                    <div class="p-8">
+                        <!-- Ad Title -->
+                        <div class="mb-6 pb-6 border-b border-gray-100 text-center">
+                            <a href="https://sadidc.com/" target="_blank" class="text-3xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                            <p class="text-gray-600 text-lg mt-2">☁️ 愿我们的服务器是你的小众惊喜</p>
+                            <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起 · 错过再等一年</p>
+                        </div>
+                        <!-- Product Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <!-- Product 1 -->
+                            <div class="border-2 border-blue-300 rounded-xl p-6 hover:border-blue-600 transition-all bg-gradient-to-br from-blue-50 to-white shadow-[0_6px_25px_rgba(37,99,235,0.2)] hover:shadow-[0_10px_35px_rgba(37,99,235,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                                        <span class="text-purple-600 font-bold text-2xl">云</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">香港 happy</span>
+                                        <span class="ml-2 text-xs bg-red-500 text-white px-2 py-1 rounded-full font-bold animate-pulse">🔥 爆款</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-blue-600 mb-2">¥9.9<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">1核/1G/30G/10Mbps · 香港CN2</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                            <!-- Product 2 -->
+                            <div class="border-2 border-emerald-300 rounded-xl p-6 hover:border-emerald-600 transition-all bg-gradient-to-br from-emerald-50 to-white shadow-[0_6px_25px_rgba(16,185,129,0.2)] hover:shadow-[0_10px_35px_rgba(16,185,129,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(16,185,129,0.4)]">
+                                        <span class="text-white font-bold text-2xl">☁</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">美国 eagle</span>
+                                        <span class="ml-2 text-xs bg-emerald-500 text-white px-2 py-1 rounded-full font-bold">⭐ 推荐</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-emerald-600 mb-2">¥12.99<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">1核/1GB/10G/500Mbps · 美国直连</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(16,185,129,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                            <!-- Product 3 -->
+                            <div class="border-2 border-purple-300 rounded-xl p-6 hover:border-purple-600 transition-all bg-gradient-to-br from-purple-50 to-white shadow-[0_6px_25px_rgba(139,92,246,0.2)] hover:shadow-[0_10px_35px_rgba(139,92,246,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(139,92,246,0.4)]">
+                                        <span class="text-white font-bold text-2xl">⚡</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">游戏云</span>
+                                        <span class="ml-2 text-xs bg-purple-500 text-white px-2 py-1 rounded-full font-bold">🎮 游戏</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-purple-600 mb-2">¥12<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">2核/4G/40G/15Mbps · 游戏优化</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(139,92,246,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Ad Card -->
+    <div class="bg-gradient-to-b bg-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <!-- Ad Header -->
+                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                    </div>
+                    <!-- Ad Body -->
+                    <div class="p-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
+                                    <span class="text-purple-600 font-bold text-5xl">云</span>
+                                </div>
+                                <div>
+                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
+                                    <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 sm:ml-auto">
+                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="support" class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
                 <!-- Brand Column -->
                 <div class="col-span-1 md:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-gray-900 text-white flex items-center justify-center rounded-sm">
+                        <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
                             <i class="fas fa-star text-xs"></i>
                         </div>
-                        <span class="font-bold text-lg text-gray-900 font-cyber">STAR HigheriTech</span>
+                        <span class="font-bold text-lg text-slate-950 tracking-tight">STAR HigheriTech</span>
                     </div>
-                    <p class="text-gray-600 mb-6">
+                    <p class="text-slate-600 mb-6">
                         打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-8 h-8 bg-gray-100 rounded flex items-center justify-center text-gray-500 hover:bg-primary hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
+                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
                     </div>
                 </div>
 
                 <!-- Link Column 1 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Products</h4>
-                    <ul class="space-y-2 text-gray-600">
-                        <li><a href="/VIEW/hira/index.html" class="hover:text-purple-400 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
-                        <li><a href="/VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
-                        <li><a href="/webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
-                        <li><a href="/tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
-                        <li><a href="/webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
+                    <ul class="space-y-2 text-slate-600">
+                        <li><a href="VIEW/hira/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
+                        <li><a href="VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
+                        <li><a href="VIEW/win/index.html" class="hover:text-primary transition-colors">Higheri Win</a></li>
+                        <li><a href="VIEW/work/index.html" class="hover:text-secondary transition-colors">Higheri Work</a></li>
+                        <li><a href="webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
                     </ul>
                 </div>
 
                 <!-- Link Column 2 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Resources</h4>
-                    <ul class="space-y-3 text-gray-600">
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
+                    <ul class="space-y-3 text-slate-600">
                         <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="blog/index.html" class="hover:text-primary transition-colors">Blog</a></li>
                     </ul>
                 </div>
 
                 <!-- Link Column 3 -->
                 <div>
-                    <h4 class="text-gray-900 font-bold mb-6 uppercase tracking-wider text-xs">Company</h4>
-                    <ul class="space-y-3 text-gray-600">
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
+                    <ul class="space-y-3 text-slate-600">
+                        <li><a href="#" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Legal</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Contact</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
                 <div class="mb-4 md:mb-0">
-                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                    &copy; 2026 STAR HigheriTech. All rights reserved.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="hover:text-gray-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-gray-900 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-950 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-950 transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -265,18 +668,12 @@
         // Mobile menu toggle
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => { menu.classList.toggle('hidden'); });
 
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-    </script>
-    <script>
+        // Open external links in new tab
         document.addEventListener('DOMContentLoaded', function () {
             var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
-            links.forEach(function (link) {
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-            });
+            links.forEach(function (link) { link.target = '_blank'; link.rel = 'noopener noreferrer'; });
         });
     </script>
 </body>

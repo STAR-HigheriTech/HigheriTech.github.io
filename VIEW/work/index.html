@@ -294,6 +294,26 @@
             </div>
         </div>
     </div>
+    <script>
+        function closeTopAd() {
+            var ad = document.getElementById('topAdBanner');
+            ad.style.transform = 'translateY(120%)';
+            ad.style.opacity = '0';
+            setTimeout(function() {
+                ad.style.display = 'none';
+                document.body.classList.remove('pb-20');
+            }, 400);
+            localStorage.setItem('topAdClosed', 'true');
+        }
+        
+        window.onload = function() {
+            if (localStorage.getItem('topAdClosed') === 'true') {
+                var ad = document.getElementById('topAdBanner');
+                ad.style.display = 'none';
+                document.body.classList.remove('pb-20');
+            }
+        };
+    </script>
     
     <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -360,7 +380,7 @@
                             <span class="brand-gradient-text text-glow">也拥有统一而优雅的产品体验</span>
                         </h1>
                         <p class="text-lg md:text-xl text-slate-600 max-w-3xl leading-8">
-                            Work 更适合做轻办公、杂志感更强的首屏，所以我把它改成了“左侧动作区 + 右侧大标题 + 下方工作台”的分层排版，和 Hira、PE、Win 都不一样。
+                            做轻办公
                         </p>
                     </div>
                     <div class="hero-panel-light rounded-[22px] p-5">
@@ -399,9 +419,9 @@
                                 <div class="surface-card rounded-[18px] p-6 flex flex-col justify-between">
                                     <div>
                                         <div class="text-slate-400 text-xs mb-2">Efficiency Score</div>
-                                        <div class="text-4xl font-semibold text-slate-950 mb-4">98<span class="text-secondary text-xl">%</span></div>
+                                        <div class="text-4xl font-semibold text-slate-950 mb-4">100<span class="text-secondary text-xl">%</span></div>
                                         <p class="text-slate-600 leading-7">
-                                            把高频轻量工具放进同一个产品线语境里，让它们也拥有统一、稳定、舒服的使用氛围。
+                                            
                                         </p>
                                     </div>
                                     <div class="pt-6 border-t border-slate-100 text-sm text-slate-500">
@@ -426,8 +446,7 @@
                         <div class="section-kicker mb-5">Overview</div>
                         <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">把轻量工具做得更统一、更成熟</h2>
                         <p class="text-slate-600 leading-8">
-                            Work 页不再只是“把产品堆一起”，而是按照和主页同样的高级感系统，重构成一个更适合承载产品线价值的入口页面。
-                        </p>
+                            
                     </div>
                     <div class="grid sm:grid-cols-2 gap-6">
                         <div class="minimal-stat">
@@ -436,21 +455,58 @@
                         </div>
                         <div class="minimal-stat">
                             <strong>高频场景</strong>
-                            <span class="text-slate-600 leading-7">起始页、草稿记录、日常效率入口为主轴。</span>
+                            <span class="text-slate-600 leading-7">起始页、草稿记录、日常效率为主。</span>
                         </div>
-                        <div class="minimal-stat">
-                            <strong>统一语言</strong>
-                            <span class="text-slate-600 leading-7">与主页共享同一套版式、阴影、边框和 CTA 规范。</span>
-                        </div>
-                        <div class="minimal-stat">
-                            <strong>长期可扩展</strong>
-                            <span class="text-slate-600 leading-7">适合继续接入更多轻量办公与个人效率产品。</span>
-                        </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Hero Ad Card - Prominent Style -->
+    <div class="bg-gradient-to-b bg-white py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Ad Card -->
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <!-- Ad Header -->
+                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                    </div>
+                    <!-- Ad Body -->
+                    <div class="p-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
+                                    <span class="text-purple-600 font-bold text-5xl">云</span>
+                                </div>
+                                <div>
+                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
+                                    <p class="text-yellow-600 font-bold text-lg mt-2">🔥 香港¥9.9/月起 · 限时优惠</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 sm:ml-auto">
+                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex flex-wrap gap-3">
+                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🔥 限时特惠</span>
+                            <span class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">⚡ 高性能云服务器</span>
+                            <span class="bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🛡️ 24h稳定防护</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="products" class="py-24 bg-gray-100 relative overflow-hidden border-t border-slate-200">
         <div class="divider-glow-a"></div>
@@ -462,7 +518,7 @@
                     <div class="section-kicker mb-5">Product Matrix</div>
                     <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">两类高频产品，构成日常效率工作面</h2>
                 </div>
-                <p class="max-w-2xl text-slate-600 leading-8">主页中的卡片风格、配色倾向与高级感排版都已经同步到这里，但保留 Work 线更轻盈、偏办公的节奏。</p>
+                <p class="max-w-2xl text-slate-600 leading-8"></p>
             </div>
             <div class="grid xl:grid-cols-2 gap-6">
                 <article class="section-shell rounded-[20px] p-8 md:p-10 card-hover-effect">
@@ -503,28 +559,124 @@
                         <div class="section-kicker mb-5">Design Principles</div>
                         <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">更像成熟软件公司的效率产品线</h2>
                     </div>
-                    <p class="max-w-2xl text-slate-600 leading-8">这次重构的目标不是“把颜色换一遍”，而是让 Work 页面在结构、节奏、组件和产品表达上都真正达到和主页一致的品质。</p>
+                    <p class="max-w-2xl text-slate-600 leading-8"></p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <article class="surface-card rounded-[18px] p-7">
-                        <div class="w-12 h-12 brand-soft rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-swatchbook"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">轻而不空</h3>
-                        <p class="text-slate-600 leading-8">保留白底清爽与办公感，但通过边框、阴影、间距和渐变维持高级感。</p>
-                    </article>
-                    <article class="surface-card rounded-[18px] p-7">
-                        <div class="w-12 h-12 brand-soft-2 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-layer-group"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">结构优先</h3>
-                        <p class="text-slate-600 leading-8">把产品信息组织为更清晰的产品线、原则与入口，而不是重复介绍。</p>
-                    </article>
-                    <article class="surface-card rounded-[18px] p-7">
-                        <div class="w-12 h-12 brand-soft-3 rounded-[14px] flex items-center justify-center mb-5"><i class="fas fa-compass-drafting"></i></div>
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-3">长期生长</h3>
-                        <p class="text-slate-600 leading-8">未来无论继续扩展插件、文档还是同步能力，都能延续这套页面框架。</p>
-                    </article>
-                </div>
+
             </div>
         </div>
     </section>
+
+    <!-- SadCloud Inline Ad - Prominent Style -->
+    <div class="bg-gradient-to-b bg-white py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Ad Card -->
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <!-- Ad Header -->
+                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                    </div>
+                    <!-- Ad Body -->
+                    <div class="p-8">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+                            <div class="flex items-center gap-5">
+                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
+                                    <span class="text-purple-600 font-bold text-5xl">云</span>
+                                </div>
+                                <div>
+                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
+                                    <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 sm:ml-auto">
+                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SadCloud Product Grid Ad - Prominent Style -->
+    <div class="bg-gradient-to-b bg-white py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
+                    <div class="px-6 py-4 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                            <span class="text-sm text-white/80">sadidc.com</span>
+                        </div>
+                        <span class="text-white/60 text-sm">伤心的云</span>
+                    </div>
+                    <div class="p-8">
+                        <div class="mb-6 pb-6 border-b border-gray-100 text-center">
+                            <a href="https://sadidc.com/" target="_blank" class="text-3xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
+                            <p class="text-gray-600 text-lg mt-2">☁️ 愿我们的服务器是你的小众惊喜</p>
+                            <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起 · 错过再等一年</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div class="border-2 border-blue-300 rounded-xl p-6 hover:border-blue-600 transition-all bg-gradient-to-br from-blue-50 to-white shadow-[0_6px_25px_rgba(37,99,235,0.2)] hover:shadow-[0_10px_35px_rgba(37,99,235,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                                        <span class="text-purple-600 font-bold text-2xl">云</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">香港 happy</span>
+                                        <span class="ml-2 text-xs bg-red-500 text-white px-2 py-1 rounded-full font-bold animate-pulse">🔥 爆款</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-blue-600 mb-2">¥9.9<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">1核/1G/30G/10Mbps · 香港CN2</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(34,197,94,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                            <div class="border-2 border-emerald-300 rounded-xl p-6 hover:border-emerald-600 transition-all bg-gradient-to-br from-emerald-50 to-white shadow-[0_6px_25px_rgba(16,185,129,0.2)] hover:shadow-[0_10px_35px_rgba(16,185,129,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(16,185,129,0.4)]">
+                                        <span class="text-white font-bold text-2xl">☁</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">美国 eagle</span>
+                                        <span class="ml-2 text-xs bg-emerald-500 text-white px-2 py-1 rounded-full font-bold">⭐ 推荐</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-emerald-600 mb-2">¥12.99<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">1核/1GB/10G/500Mbps · 美国直连</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(16,185,129,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                            <div class="border-2 border-purple-300 rounded-xl p-6 hover:border-purple-600 transition-all bg-gradient-to-br from-purple-50 to-white shadow-[0_6px_25px_rgba(139,92,246,0.2)] hover:shadow-[0_10px_35px_rgba(139,92,246,0.35)] hover:-translate-y-1">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(139,92,246,0.4)]">
+                                        <span class="text-white font-bold text-2xl">⚡</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-bold text-gray-900 text-lg">游戏云</span>
+                                        <span class="ml-2 text-xs bg-purple-500 text-white px-2 py-1 rounded-full font-bold">🎮 游戏</span>
+                                    </div>
+                                </div>
+                                <div class="text-4xl font-bold text-purple-600 mb-2">¥12<span class="text-base font-normal text-gray-500">/月</span></div>
+                                <p class="text-sm text-gray-600 mb-4">2核/4G/40G/15Mbps · 游戏优化</p>
+                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(139,92,246,0.5)] hover:scale-105">
+                                    转到官网
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="start" class="py-28 bg-gradient-to-b from-slate-50 to-white relative border-t border-slate-200 overflow-hidden">
         <div class="divider-glow-a"></div>
@@ -536,7 +688,7 @@
                     现在开始，<span class="brand-gradient-text">让轻量工具也拥有高级工作流</span>
                 </h2>
                 <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
-                    Higheri Work 已经按主页标准完成整页重构，并把配色、排版与产品节奏统一成一套更成熟的表达。
+                    Higheri Work
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
                     <a href="../../tab/index.html" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
