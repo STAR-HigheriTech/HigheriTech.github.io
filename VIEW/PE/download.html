@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载 HigheriPE 6.0 | STAR HigheriTech</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563EB',
+                        secondary: '#0D9488',
+                        accent: '#8B5CF6',
+                        dark: '#0F172A',
+                        light: '#F8FAFC',
+                        neon: '#06B6D4',
+                        electric: '#EC4899'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+                        cyber: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        card: '0 8px 32px rgba(37, 99, 235, 0.06)',
+                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
+                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
+                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)'
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #FAFAFA;
+            color: #171717;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            --brand: #2563EB;
+            --brand-2: #06B6D4;
+            --brand-3: #0D9488;
+            --brand-rgb: 37, 99, 235;
+            --brand-2-rgb: 6, 182, 212;
+            --brand-3-rgb: 13, 148, 136;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FAFAFA; }
+        ::-webkit-scrollbar-thumb { background: #D4D4D8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #A1A1AA; }
+
+        .bg-grid-pattern { background-size: 40px 40px; }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--brand), var(--brand-2));
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .card-hover-effect {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card-hover-effect:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.14);
+            border-color: rgba(var(--brand-rgb), 0.18);
+        }
+
+        .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.8rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.88);
+            color: #52525B;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+        .section-kicker::before {
+            content: '';
+            width: 0.35rem;
+            height: 0.35rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 0 0 2px rgba(var(--brand-rgb), 0.10);
+        }
+        .section-title {
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            font-weight: 600;
+        }
+        .brand-gradient-text {
+            background-image: linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .brand-button {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.28);
+        }
+        .brand-icon {
+            background: linear-gradient(135deg, var(--brand), var(--brand-2), var(--brand-3));
+            box-shadow: 0 18px 40px rgba(var(--brand-rgb), 0.22);
+        }
+        .text-glow { text-shadow: 0 8px 24px rgba(var(--brand-rgb), 0.28); }
+        .hero-panel {
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(15, 23, 42, 0.62));
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(24px);
+        }
+        .surface-card {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .soft-dark-card {
+            background: #0A0A0A;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        }
+        .section-shell {
+            background: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        }
+        .brand-soft {
+            background: rgba(var(--brand-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-rgb), 0.16);
+            color: var(--brand);
+        }
+        .brand-soft-2 {
+            background: rgba(var(--brand-2-rgb), 0.08);
+            border: 1px solid rgba(var(--brand-2-rgb), 0.16);
+            color: var(--brand-2);
+        }
+        .divider-glow-a,
+        .divider-glow-b {
+            position: absolute;
+            width: 18rem;
+            height: 18rem;
+            border-radius: 999px;
+            filter: blur(90px);
+            pointer-events: none;
+            opacity: 0.18;
+        }
+        .divider-glow-a {
+            top: -6rem;
+            left: -6rem;
+            background: rgba(var(--brand-rgb), 0.55);
+        }
+        .divider-glow-b {
+            right: -6rem;
+            bottom: -6rem;
+            background: rgba(var(--brand-2-rgb), 0.45);
+        }
+        .mirror-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.25rem 0.6rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 999px;
+        }
+        .tab-slider-container {
+            position: relative;
+            display: inline-flex;
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 6px;
+        }
+        .tab-slider {
+            position: absolute;
+            top: 6px;
+            bottom: 6px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2563EB, #06B6D4);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+        }
+        .tab-btn {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .tab-content {
+            animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .surface-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary selection:text-white pb-20">
+
+    <!-- Floating Bottom Ad Banner -->
+    <div id="topAdBanner" class="fixed bottom-4 left-4 right-4 z-[60] max-w-3xl mx-auto">
+        <div class="bg-gradient-to-r bg-white shadow-[0_8px_50px_rgba(37,99,235,0.5)] overflow-hidden">
+            <div class="px-5 py-3 flex items-center justify-between bg-gradient-to-r from-blue-700 to-blue-600">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
+                    <span class="text-xs text-white/80">sadidc.com</span>
+                </div>
+                <button onclick="closeTopAd()" class="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all" aria-label="关闭广告">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-20 h-20 bg-white rounded-xl flex items-center justify-center text-purple-600 font-bold text-4xl shadow-xl">
+                            云
+                        </div>
+                        <div>
+                            <a href="https://sadidc.com/" target="_blank" class="text-gray-900 font-bold text-xl hover:text-purple-600 transition-colors">伤心的云</a>
+                            <p class="text-gray-600 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <p class="text-yellow-600 font-bold text-xl">🔥 香港¥9.9/月起</p>
+                        <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-none transition-all shadow-xl hover:scale-105">
+                            转到官网
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function closeTopAd() {
+            var ad = document.getElementById('topAdBanner');
+            ad.style.transform = 'translateY(120%)';
+            ad.style.opacity = '0';
+            setTimeout(function() {
+                ad.style.display = 'none'; 2441
+                document.body.classList.remove('pb-20');
+            }, 400);
+            localStorage.setItem('topAdClosed', 'true');
+        }
+        
+        window.onload = function() {
+            if (localStorage.getItem('topAdClosed') === 'true') {
+                var ad = document.getElementById('topAdBanner');
+                ad.style.display = 'none';
+                document.body.classList.remove('pb-20');
+            }
+        };
+    </script>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="../../index.html" class="flex-shrink-0 flex items-center gap-3 group">
+                        <div class="w-11 h-11 brand-icon text-white flex items-center justify-center rounded-xl transition-all duration-500 group-hover:-translate-y-0.5">
+                            <i class="fab fa-microsoft text-lg"></i>
+                        </div>
+                        <span class="font-semibold text-2xl text-slate-950 tracking-tight">Higheri<span class="brand-gradient-text">PE</span></span>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">首页</a>
+                    <a href="PE.html" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">产品</a>
+                    <a href="#download" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">下载</a>
+                    <a href="#checksum" class="text-slate-600 hover:text-slate-950 text-[15px] font-medium nav-link transition-colors">校验</a>
+                    <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="flex items-center gap-2 bg-slate-950 hover:bg-primary text-white px-5 py-2.5 rounded-lg transition-all duration-300 shadow-card">
+                        <span>文档</span>
+                        <i class="fas fa-external-link-alt text-xs"></i>
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-2xl">
+                <div class="flex flex-col space-y-4">
+                    <a href="../../index.html" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">首页</a>
+                    <a href="PE.html" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">产品</a>
+                    <a href="#download" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">下载</a>
+                    <a href="#checksum" class="text-slate-600 hover:text-slate-950 text-lg font-medium transition-colors block">校验</a>
+                    <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">文档</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-16 flex items-center overflow-hidden bg-slate-950">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop')] bg-cover bg-center opacity-65"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/84 to-slate-950/36"></div>
+        <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
+        <div class="absolute top-12 left-12 h-48 w-48 rounded-full blur-[100px]" style="background: rgba(37, 99, 235, 0.30)"></div>
+        <div class="absolute bottom-8 right-10 h-48 w-48 rounded-full blur-[100px]" style="background: rgba(6, 182, 212, 0.24)"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="section-kicker mb-4 mx-auto bg-white/10 text-slate-200 border-white/10">Download HigheriPE</div>
+                <h1 class="text-4xl md:text-5xl font-semibold text-white mb-4 tracking-tight">
+                    下载 HigheriPE 6.0
+                </h1>
+                <p class="text-lg text-slate-300/90 max-w-2xl mx-auto leading-7">
+                    选择适合您的下载方式，获取最新版本的 HigheriPE
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section with Tabs -->
+    <section id="download" class="py-16 bg-gray-100 relative overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern"></div>
+        <div class="divider-glow-a"></div>
+        <div class="divider-glow-b"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <!-- Tabs Navigation -->
+                <div class="flex items-center justify-center mb-10">
+                    <div class="tab-slider-container">
+                        <div class="tab-slider" id="tabSlider"></div>
+                        <button onclick="showTab('installer')" id="tab-installer" class="tab-btn px-8 py-3 rounded-lg font-semibold text-white">
+                            <i class="fas fa-magic mr-2"></i> 一键安装工具
+                        </button>
+                        <button onclick="showTab('iso')" id="tab-iso" class="tab-btn px-8 py-3 rounded-lg font-semibold text-slate-600 hover:text-slate-900">
+                            <i class="fas fa-compact-disc mr-2"></i> ISO 镜像文件
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Installer -->
+                <div id="content-installer" class="tab-content">
+                    <div class="max-w-2xl mx-auto">
+                        <!-- 123网盘 - 推荐 -->
+                        <div class="surface-card rounded-[18px] p-8 card-hover-effect border-2 border-primary/30">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-14 h-14 bg-orange-500 text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-magic text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold text-slate-950 mb-2">123网盘</h3>
+                                    <div class="flex flex-wrap gap-2 mb-2">
+                                        <span class="mirror-tag bg-red-100 text-red-700 border border-red-200">
+                                            <i class="fas fa-fire"></i> 推荐
+                                        </span>
+                                        <span class="mirror-tag bg-green-100 text-green-700 border border-green-200">
+                                            <i class="fas fa-bolt"></i> 快速
+                                        </span>
+                                        <span class="mirror-tag bg-blue-100 text-blue-700 border border-blue-200">
+                                            <i class="fas fa-flag"></i> 中国大陆
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 leading-7 mb-6">一键安装工具，自动下载并配置 HigheriPE，简单易用，适合大多数用户。</p>
+                            <a href="https://1830035433.share.123865.com/123pan/Wcrtjv-EmaaH" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg transition-all w-full justify-center">
+                    <i class="fas fa-download"></i> 下载一键安装工具
+                </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: ISO -->
+                <div id="content-iso" class="tab-content hidden">
+                    <div class="max-w-2xl mx-auto">
+                        <!-- 123网盘 - ISO -->
+                        <div class="surface-card rounded-[18px] p-8 card-hover-effect border-2 border-primary/30">
+                            <div class="flex items-start gap-4 mb-4">
+                                <div class="w-14 h-14 bg-orange-500 text-white rounded-xl flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-compact-disc text-2xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-semibold text-slate-950 mb-2">123网盘</h3>
+                                    <div class="flex flex-wrap gap-2 mb-2">
+                                        <span class="mirror-tag bg-red-100 text-red-700 border border-red-200">
+                                            <i class="fas fa-fire"></i> 推荐
+                                        </span>
+                                        <span class="mirror-tag bg-green-100 text-green-700 border border-green-200">
+                                            <i class="fas fa-bolt"></i> 快速
+                                        </span>
+                                        <span class="mirror-tag bg-blue-100 text-blue-700 border border-blue-200">
+                                            <i class="fas fa-flag"></i> 中国大陆
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 leading-7 mb-6">完整 ISO 镜像文件，包含 Win11 PE 和 Win2003 PE 双内核，适合高级用户。</p>
+                            <a href="https://1830035433.share.123865.com/123pan/Wcrtjv-jckBH" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-primary hover:bg-blue-600 text-white font-semibold rounded-lg transition-all w-full justify-center">
+                                <i class="fas fa-download"></i> 下载 ISO 镜像
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Quick Links Section -->
+    <section class="py-28 bg-gray-100 relative border-t border-slate-200 overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern"></div>
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-10">
+                
+                <!-- Documentation -->
+                <div class="section-shell rounded-[20px] p-8 md:p-10">
+                    <div class="section-kicker mb-5">Documentation</div>
+                    <h2 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">使用文档</h2>
+                    <p class="text-slate-600 leading-7 mb-6">查看详细的安装指南、使用教程和常见问题解答。</p>
+                    <a href="https://docs.higheri.tech/HigheriPE-Docs/index.html" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-lg transition-all">
+                        <i class="fas fa-book"></i> 查看文档
+                    </a>
+                </div>
+
+                <!-- Back to Product -->
+                <div class="section-shell rounded-[20px] p-8 md:p-10">
+                    <div class="section-kicker mb-5">Product</div>
+                    <h2 class="text-3xl font-semibold text-slate-950 mb-4 tracking-tight">产品页面</h2>
+                    <p class="text-slate-600 leading-7 mb-6">了解 HigheriPE 的更多功能特性和详细介绍。</p>
+                    <a href="PE.html" class="inline-flex items-center gap-2 px-6 py-3 brand-button text-white font-semibold rounded-lg transition-all">
+                        <i class="fas fa-arrow-left"></i> 返回产品页
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-shell rounded-[20px] p-8 md:p-10">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
+                                <i class="fas fa-star text-xs"></i>
+                            </div>
+                            <span class="font-semibold text-lg text-slate-950 tracking-tight">STAR HigheriTech</span>
+                        </div>
+                        <p class="text-slate-600 mb-6 leading-7">
+                            打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                            <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
+                            <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
+                        <ul class="space-y-2 text-slate-600">
+                            <li><a href="../hira/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
+                            <li><a href="PE.html" class="text-primary transition-colors">HigheriPE</a></li>
+                            <li><a href="../win/index.html" class="hover:text-primary transition-colors">Higheri Win</a></li>
+                            <li><a href="../work/index.html" class="hover:text-secondary transition-colors">Higheri Work</a></li>
+                            <li><a href="../../webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="download.html" class="text-primary transition-colors">下载中心</a></li>
+                            <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
+                            <li><a href="../../BLOG/index.html" class="hover:text-primary transition-colors">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
+                        <ul class="space-y-3 text-slate-600">
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
+                            <li><a href="../../LICENSE.html" class="hover:text-primary transition-colors">Legal</a></li>
+                            <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
+                    <div class="mb-4 md:mb-0">
+                        &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (!icon) return;
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', (event) => {
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (!target) return;
+                event.preventDefault();
+                if (mobileMenu) mobileMenu.classList.add('hidden');
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('a[href^="http://"],a[href^="https://"]').forEach((link) => {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
+        });
+
+        // Initialize slider on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateSlider('installer');
+        });
+
+        // Tab switching functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // Remove active state from all tabs
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-white');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Show selected tab content with animation
+            const activeContent = document.getElementById('content-' + tabName);
+            activeContent.classList.remove('hidden');
+            
+            // Trigger animation reflow
+            activeContent.style.animation = 'none';
+            activeContent.offsetHeight; // Trigger reflow
+            activeContent.style.animation = null;
+
+            // Add active state to selected tab
+            document.getElementById('tab-' + tabName).classList.add('text-white');
+            document.getElementById('tab-' + tabName).classList.remove('text-slate-600');
+
+            // Update slider position
+            updateSlider(tabName);
+        }
+
+        function updateSlider(tabName) {
+            const slider = document.getElementById('tabSlider');
+            const activeTab = document.getElementById('tab-' + tabName);
+            
+            if (slider && activeTab) {
+                slider.style.left = activeTab.offsetLeft + 'px';
+                slider.style.width = activeTab.offsetWidth + 'px';
+            }
+        }
+    </script>
+</body>
+</html>
