@@ -22,7 +22,7 @@
             --success: #10b981;
             --danger: #ef4444;
             --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0.15);
             --radius: 8px;
             --radius-lg: 12px;
             --transition: all 0.2s ease;
@@ -859,7 +859,8 @@
                         <div class="room-desc">自由交流</div>
                     </div>
                 </div>
-                <div class="room-item private" data-room="private-260120">
+                <!-- 新增ID用于权限控制 -->
+                <div class="room-item private" data-room="private-260120" id="privateRoomItem">
                     <div class="room-avatar">私</div>
                     <div class="room-info">
                         <div class="room-name">私密聊天室</div>
@@ -918,6 +919,8 @@
         };
         const DEFAULT_ROOM = 'public';
         const KNOWN_ROOM_IDS = Object.keys(ROOMS);
+        // 允许访问私密房间的用户列表
+        const ALLOW_PRIVATE_USER = ['ALEX1NG', 'YUK1NG'];
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8t9QqsluQRx37krfzPdRvZYHU2xClt18",
@@ -967,6 +970,7 @@
         const onlineSidebar = document.getElementById('onlineSidebar');
         const onlineUsersContainer = document.getElementById('onlineUsers');
         const onlineCount = document.getElementById('onlineCount');
+        const privateRoomItem = document.getElementById('privateRoomItem');
 
         let isConnected = false;
         let currentRoom = null;
@@ -1016,6 +1020,11 @@
         function updateUsernameDisplay() {
             const name = currentUser?.username || '';
             currentUsernameDisplay.textContent = name ? `👤 ${name}` : '';
+
+            // 控制私密房间显示/隐藏
+            if (privateRoomItem) {
+                privateRoomItem.style.display = ALLOW_PRIVATE_USER.includes(name) ? 'flex' : 'none';
+            }
         }
 
         // 切换登录/注册模式
@@ -1178,6 +1187,12 @@
         }
 
         function enterPrivateRoom() {
+            // 权限拦截：非指定用户禁止进入
+            if (!ALLOW_PRIVATE_USER.includes(currentUser?.username)) {
+                pwdTip.innerText = "你没有权限进入私密聊天室";
+                return;
+            }
+
             const pwd = pwdInput.value.trim();
             if (!pwd) { pwdTip.innerText = "请输入密码"; return; }
             const target = targetRoomId || 'private-260120';
@@ -1206,6 +1221,10 @@
         roomItems.forEach(item => {
             item.addEventListener('click', () => {
                 const roomId = item.dataset.room;
+                // 权限拦截：普通用户点击私密房间直接返回
+                if (roomId === 'private-260120' && !ALLOW_PRIVATE_USER.includes(currentUser?.username)) {
+                    return;
+                }
                 if (roomId === currentRoom) return;
                 if (ROOMS[roomId].needPassword && !isPrivateRoomVerified()) {
                     targetRoomId = roomId;
@@ -1314,10 +1333,13 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        sendButton.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
-
         function initializeChat() {
+            // 非权限用户，清空私密房间本地记录，防止自动进入
+            if (!ALLOW_PRIVATE_USER.includes(currentUser?.username)) {
+                localStorage.removeItem('lastRoom');
+                setPrivateRoomVerified(false);
+            }
+
             const saved = getSavedRoom();
             if (saved === 'public') {
                 roomSelectMask.style.display = "none";
