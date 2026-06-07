@@ -350,6 +350,10 @@
             background-color: var(--primary-light);
             color: var(--primary);
         }
+        [data-theme="dark"] .room-item.active {
+            background-color: rgba(96, 165, 250, 0.2);
+            color: #93c5fd;
+        }
         .room-item.private .room-avatar {
             background-color: #7c3aed;
         }
@@ -771,7 +775,11 @@
             transition: opacity 0.3s ease;
             color: white;
             text-align: center;
-            padding: 16px;
+            padding: 8%;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
         }
         .transition-overlay.show .transition-content {
             opacity: 1;
@@ -784,13 +792,15 @@
         .transition-text {
             font-weight: 400;
             letter-spacing: 0.5px;
-            white-space: nowrap;
             padding: 0 12px;
+            text-align: center;
+            white-space: nowrap;
         }
         .transition-subtext {
-            font-size: 4px;
             opacity: 0.7;
             margin-top: 4px;
+            text-align: center;
+            white-space: nowrap;
         }
 
         /* 密码确认弹窗 */
@@ -1072,7 +1082,7 @@
             <div class="room-sidebar-header"><h2>聊天室</h2></div>
             <div class="room-list" id="roomList">
                 <div class="room-item active" data-room="public">
-                    <div class="room-avatar">公</div>
+                    <div class="room-avatar">💬</div>
                     <div class="room-info">
                         <div class="room-name">公共聊天室</div>
                         <div class="room-desc">自由交流</div>
@@ -1080,14 +1090,14 @@
                 </div>
                 <!-- 仅代码控制显示，默认先保留，JS 登录后判断权限 -->
                 <div class="room-item private" data-room="private-260120" id="secretRoomItem">
-                    <div class="room-avatar">私</div>
+                    <div class="room-avatar">💕</div>
                     <div class="room-info">
                         <div class="room-name">🤫</div>
                         <div class="room-desc">密码保护</div>
                     </div>
                 </div>
 				<div class="room-item private" data-room="private-test-group">
-                    <div class="room-avatar">宫</div>
+                    <div class="room-avatar">⭐</div>
                     <div class="room-info">
                         <div class="room-name">STAR Talk 测试组后宫</div>
                         <div class="room-desc">密码保护</div>
@@ -1107,7 +1117,7 @@
                 <button class="toggle-right-btn" id="toggleRightBtn" aria-label="打开在线用户列表">👥</button>
             </div>
             <div class="chat-content" id="messagesContainer">
-                <div class="system-tip">欢迎来到聊天室</div>
+                <div class="system-tip">聊天室 正在线上</div>
             </div>
             <div class="chat-input">
                 <div class="input-bar">
@@ -1161,9 +1171,9 @@
         const ALLOW_USER_LIST = ['ALEX1NG', 'YUK1NG'];
 
         const ROOMS = {
-            'public': { name: '公共聊天室', needPassword: false, icon: '公', desc: '自由交流' },
-            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '私', desc: '密码保护' },
-			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '宫', desc: '密码保护' }
+            'public': { name: '公共聊天室', needPassword: false, icon: '💬', desc: '自由交流' },
+            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '💕', desc: '密码保护' },
+			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '⭐', desc: '密码保护' }
         };
         const DEFAULT_ROOM = 'public';
         const KNOWN_ROOM_IDS = Object.keys(ROOMS);
@@ -1246,17 +1256,43 @@
         }
 
         // 主题初始化
-        function initTheme() {
-            const saved = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', saved);
-            themeToggle.textContent = saved === 'light' ? '🌙' : '☀️';
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeToggle.textContent = '🌙';
+            } else if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                // 自动模式：跟随系统
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', systemDark ? 'dark' : 'light');
+                themeToggle.textContent = '🌓';
+            }
         }
+        function initTheme() {
+            // 默认设为自动模式
+            localStorage.setItem('theme', 'auto');
+            applyTheme('auto');
+        }
+        // 监听系统主题变化（自动模式时）
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('theme') === 'auto') {
+                applyTheme('auto');
+            }
+        });
         function toggleTheme() {
-            const cur = document.documentElement.getAttribute('data-theme');
-            const next = cur === 'light' ? 'dark' : 'light';
-            document.documentElement.setAttribute('data-theme', next);
+            const cur = localStorage.getItem('theme') || 'auto';
+            let next;
+            if (cur === 'light') {
+                next = 'dark';
+            } else if (cur === 'dark') {
+                next = 'auto';
+            } else {
+                next = 'light';
+            }
             localStorage.setItem('theme', next);
-            themeToggle.textContent = next === 'light' ? '🌙' : '☀️';
+            applyTheme(next);
         }
         themeToggle.addEventListener('click', toggleTheme);
 
@@ -1455,8 +1491,15 @@
             const maxScale = minDim / 48 * 0.95;
             const scale = Math.min(25, maxScale);
             transitionCircle.style.transform = 'scale(' + scale + ')';
-            // 字体大小与圆圈同步缩放
-            transitionText.style.fontSize = (scale * 0.4) + 'px';
+            
+            // 根据文字长度动态调整字体大小，确保不换行且能完整显示
+            const text = '在' + ROOMS[roomId].name + '中';
+            const baseFontSize = scale * 0.25;
+            // 根据文字长度调整字体，8个字符用原大小，超过8个字符则缩小
+            const textLengthFactor = Math.max(0.5, 8 / Math.max(text.length, 1));
+            const fontSize = baseFontSize * textLengthFactor;
+            transitionText.style.fontSize = fontSize + 'px';
+            // 小字保持与圆圈同步缩放
             transitionSubtext.style.fontSize = (scale * 0.28) + 'px';
             
             // 动画持续时间（毫秒）
@@ -1476,7 +1519,7 @@
             saveRoom(roomId);
             currentRoomName.textContent = ROOMS[roomId].name;
             roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
-            messagesContainer.innerHTML = '<div class="system-tip">欢迎来到 ' + ROOMS[roomId].name + '</div>';
+            messagesContainer.innerHTML = ' <div class="system-tip"> ' + ROOMS[roomId].name + ' 正在线上</div>';
 
             const roomRef = database.ref('rooms/' + roomId);
             const messagesRef = roomRef.child('messages');
@@ -1642,7 +1685,7 @@
             }
             
             const text = messageInput.value.trim();
-            if (!text) { alert('请输入消息内容'); return; }
+            if (!text) { return; }
 
             database.ref('rooms/' + currentRoom).child('messages').push({
                 username: currentUser.username,
