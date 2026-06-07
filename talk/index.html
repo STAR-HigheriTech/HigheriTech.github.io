@@ -542,6 +542,18 @@
             white-space: pre-wrap;
             max-width: 100%;
             box-sizing: border-box;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
         }
         .msg-row:not(.me) .msg-bubble {
             background-color: var(--bg-secondary);
@@ -734,29 +746,20 @@
             transition: opacity 0.2s ease 0.3s;
             color: white;
             text-align: center;
-            transform: scale(0.8);
         }
         .transition-overlay.show .transition-content {
             opacity: 1;
-            transform: scale(1);
         }
         .transition-overlay.fade-out .transition-content {
             opacity: 0;
-            transform: scale(0.9);
-        }
-
-        .transition-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            animation: bounce 0.6s ease;
         }
 
         .transition-text {
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            font-size: 4px;
+            font-weight: 300;
+            letter-spacing: 0.2px;
             white-space: nowrap;
-            padding: 0 20px;
+            padding: 0 12px;
         }
 
         @keyframes bounce {
@@ -940,7 +943,6 @@
     <div class="transition-overlay" id="transitionOverlay">
         <div class="transition-circle">
             <div class="transition-content">
-                <div class="transition-icon">💬</div>
                 <div class="transition-text" id="transitionText">你正在公共聊天室聊天</div>
             </div>
         </div>
@@ -1317,7 +1319,7 @@
                 setTimeout(() => {
                     transitionOverlay.classList.add('fade-out');
                 }, 100);
-            }, 600);
+            }, 1000);
         }
 
         function enterPrivateRoom() {
@@ -1440,6 +1442,14 @@
             messageInput.focus();
         }
 
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
         function displayMessage(msg) {
             const isMe = currentUser && msg.userId === currentUser.username;
             const time = new Date(msg.timestamp).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
@@ -1488,17 +1498,13 @@
         // 页面加载
         window.addEventListener('load', () => {
             initTheme();
-            if(loadUserSession()) {
-                // 已登录
-                authMask.style.display = 'none';
-                updateUsernameDisplay();
-                initializeChat();
-            } else {
-                // 未登录，显示登录界面
-                authMask.style.display = 'flex';
-                // 未登录时先隐藏私密房
-                secretRoomItem.style.display = 'none';
-            }
+            
+            // 强制清除所有旧会话数据，用户需要重新注册登录
+            localStorage.clear();
+            
+            // 始终显示登录界面，强制用户重新注册
+            authMask.style.display = 'flex';
+            secretRoomItem.style.display = 'none';
         });
 
         window.addEventListener('resize', () => {
