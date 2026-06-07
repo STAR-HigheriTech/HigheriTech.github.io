@@ -1259,10 +1259,10 @@
         function applyTheme(theme) {
             if (theme === 'light') {
                 document.documentElement.setAttribute('data-theme', 'light');
-                themeToggle.textContent = '🌙';
+                themeToggle.textContent = '☀️';
             } else if (theme === 'dark') {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                themeToggle.textContent = '☀️';
+                themeToggle.textContent = '🌙';
             } else {
                 // 自动模式：跟随系统
                 const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -1271,9 +1271,14 @@
             }
         }
         function initTheme() {
-            // 默认设为自动模式
-            localStorage.setItem('theme', 'auto');
-            applyTheme('auto');
+            // 优先使用保存的主题，默认自动模式
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                applyTheme(saved);
+            } else {
+                localStorage.setItem('theme', 'auto');
+                applyTheme('auto');
+            }
         }
         // 监听系统主题变化（自动模式时）
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
