@@ -680,6 +680,94 @@
             display: block;
         }
 
+        /* Material Design 过渡动画 */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-secondary);
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .transition-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .transition-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .transition-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, #60a5fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .transition-overlay.show .transition-circle {
+            transform: scale(25);
+        }
+        .transition-overlay.fade-out .transition-circle {
+            transform: scale(35);
+        }
+
+        .transition-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease 0.3s;
+            color: white;
+            text-align: center;
+            transform: scale(0.8);
+        }
+        .transition-overlay.show .transition-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .transition-overlay.fade-out .transition-content {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .transition-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            animation: bounce 0.6s ease;
+        }
+
+        .transition-text {
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            padding: 0 20px;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -848,6 +936,16 @@
 
     <div class="mobile-mask" id="mobileMask"></div>
 
+    <!-- Material Design 风格过渡动画 -->
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-circle">
+            <div class="transition-content">
+                <div class="transition-icon">💬</div>
+                <div class="transition-text" id="transitionText">你正在公共聊天室聊天</div>
+            </div>
+        </div>
+    </div>
+
     <div class="chat-wrap" id="chatWrap">
         <div class="room-sidebar" id="roomSidebar">
             <div class="room-sidebar-header"><h2>聊天室</h2></div>
@@ -980,6 +1078,8 @@
         const onlineUsersContainer = document.getElementById('onlineUsers');
         const onlineCount = document.getElementById('onlineCount');
         const secretRoomItem = document.getElementById('secretRoomItem');
+        const transitionOverlay = document.getElementById('transitionOverlay');
+        const transitionText = document.getElementById('transitionText');
 
         let isConnected = false;
         let currentRoom = null;
@@ -1022,8 +1122,8 @@
             return saved && KNOWN_ROOM_IDS.includes(saved) ? saved : DEFAULT_ROOM;
         }
         function saveRoom(id) { localStorage.setItem('lastRoom', id); }
-        function isPrivateRoomVerified() { return localStorage.getItem('privateRoomVerified') === 'true'; }
-        function setPrivateRoomVerified(v) { localStorage.setItem('privateRoomVerified', v ? 'true' : 'false'); }
+        function isPrivateRoomVerified(roomId) { return localStorage.getItem('privateRoomVerified_' + roomId) === 'true'; }
+        function setPrivateRoomVerified(roomId, v) { localStorage.setItem('privateRoomVerified_' + roomId, v ? 'true' : 'false'); }
         
         // 用户登录状态
         function saveUserSession(user) {
@@ -1163,48 +1263,61 @@
 
         // 聊天室功能
         function enterRoom(roomId) {
-            if (messagesCallback) {
-                database.ref('rooms/' + currentRoom + '/messages').off('child_added', messagesCallback);
-                messagesCallback = null;
-            }
-            if (onlineUsersCallback) {
-                database.ref('rooms/' + currentRoom + '/onlineUsers').off('value', onlineUsersCallback);
-                onlineUsersCallback = null;
-            }
-            if (currentUserRef) { currentUserRef.remove(); currentUserRef = null; }
+            // 显示过渡动画
+            transitionText.textContent = '你正在' + ROOMS[roomId].name + '聊天';
+            transitionOverlay.classList.remove('fade-out');
+            transitionOverlay.classList.add('show');
 
-            currentRoom = roomId;
-            saveRoom(roomId);
-            currentRoomName.textContent = ROOMS[roomId].name;
-            roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
-            messagesContainer.innerHTML = '<div class="system-tip">欢迎来到 ' + ROOMS[roomId].name + '</div>';
+            // 动画结束后进入房间
+            setTimeout(() => {
+                if (messagesCallback) {
+                    database.ref('rooms/' + currentRoom + '/messages').off('child_added', messagesCallback);
+                    messagesCallback = null;
+                }
+                if (onlineUsersCallback) {
+                    database.ref('rooms/' + currentRoom + '/onlineUsers').off('value', onlineUsersCallback);
+                    onlineUsersCallback = null;
+                }
+                if (currentUserRef) { currentUserRef.remove(); currentUserRef = null; }
 
-            const roomRef = database.ref('rooms/' + roomId);
-            const messagesRef = roomRef.child('messages');
-            const onlineUsersRef = roomRef.child('onlineUsers');
+                currentRoom = roomId;
+                saveRoom(roomId);
+                currentRoomName.textContent = ROOMS[roomId].name;
+                roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
+                messagesContainer.innerHTML = '<div class="system-tip">欢迎来到 ' + ROOMS[roomId].name + '</div>';
 
-            messagesCallback = snapshot => {
-                const msg = snapshot.val();
-                if (msg && msg.timestamp) displayMessage(msg);
-            };
-            onlineUsersCallback = snapshot => updateOnlineUsers(snapshot);
+                const roomRef = database.ref('rooms/' + roomId);
+                const messagesRef = roomRef.child('messages');
+                const onlineUsersRef = roomRef.child('onlineUsers');
 
-            messagesRef.limitToLast(50).on('child_added', messagesCallback);
-            onlineUsersRef.on('value', onlineUsersCallback);
+                messagesCallback = snapshot => {
+                    const msg = snapshot.val();
+                    if (msg && msg.timestamp) displayMessage(msg);
+                };
+                onlineUsersCallback = snapshot => updateOnlineUsers(snapshot);
 
-            if (currentUser && isConnected) {
-                currentUserRef = onlineUsersRef.push({ 
-                    userId: currentUser.username, 
-                    username: currentUser.username 
-                });
-                currentUserRef.onDisconnect().remove();
-            }
+                messagesRef.limitToLast(50).on('child_added', messagesCallback);
+                onlineUsersRef.on('value', onlineUsersCallback);
 
-            if (window.innerWidth <= 768) {
-                roomSidebar.classList.remove('show');
-                onlineSidebar.classList.remove('show');
-                mobileMask.classList.remove('show');
-            }
+                if (currentUser && isConnected) {
+                    currentUserRef = onlineUsersRef.push({ 
+                        userId: currentUser.username, 
+                        username: currentUser.username 
+                    });
+                    currentUserRef.onDisconnect().remove();
+                }
+
+                if (window.innerWidth <= 768) {
+                    roomSidebar.classList.remove('show');
+                    onlineSidebar.classList.remove('show');
+                    mobileMask.classList.remove('show');
+                }
+
+                // 隐藏过渡动画
+                setTimeout(() => {
+                    transitionOverlay.classList.add('fade-out');
+                }, 100);
+            }, 600);
         }
 
         function enterPrivateRoom() {
@@ -1213,7 +1326,7 @@
             const target = targetRoomId || 'private-260120';
             if (pwd === ROOMS[target].password) {
                 pwdTip.innerText = "";
-                setPrivateRoomVerified(true);
+                setPrivateRoomVerified(target, true);
                 roomSelectMask.style.display = "none";
                 chatWrap.style.display = "flex";
                 enterRoom(target);
@@ -1237,7 +1350,7 @@
             item.addEventListener('click', () => {
                 const roomId = item.dataset.room;
                 if (roomId === currentRoom) return;
-                if (ROOMS[roomId].needPassword && !isPrivateRoomVerified()) {
+                if (ROOMS[roomId].needPassword && !isPrivateRoomVerified(roomId)) {
                     targetRoomId = roomId;
                     roomSelectMask.style.display = "flex";
                     chatWrap.style.display = "none";
@@ -1351,7 +1464,7 @@
                 roomSelectMask.style.display = "none";
                 chatWrap.style.display = "flex";
                 enterRoom('public');
-            } else if (saved.startsWith('private-') && !isPrivateRoomVerified()) {
+            } else if (saved.startsWith('private-') && !isPrivateRoomVerified(saved)) {
                 targetRoomId = saved;
                 roomSelectMask.style.display = "flex";
                 chatWrap.style.display = "none";
