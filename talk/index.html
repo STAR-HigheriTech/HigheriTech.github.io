@@ -21,8 +21,8 @@
             --primary-light: #dbeafe;
             --success: #10b981;
             --danger: #ef4444;
-            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --shadow: 0 1px 3px rgba(0, 0, 0.1);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0.15);
             --radius: 8px;
             --radius-lg: 12px;
             --transition: all 0.2s ease;
@@ -350,6 +350,9 @@
             background-color: var(--primary-light);
             color: var(--primary);
         }
+        .room-item.private .room-avatar {
+            background-color: #7c3aed;
+        }
         .room-avatar {
             width: 40px;
             height: 40px;
@@ -363,9 +366,6 @@
             font-weight: 600;
             margin-right: 12px;
             flex-shrink: 0;
-        }
-        .room-item.private .room-avatar {
-            background-color: #7c3aed;
         }
         .room-info {
             flex: 1;
@@ -763,8 +763,8 @@
                 width: 38px;
                 height: 38px;
                 font-size: 16px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-                z-index: 10000; /* 保持较高层级，但位置已不再右上角 */
+                box-shadow: 0 2px 8px rgba(0, 0, 0.2);
+                z-index: 10000;
             }
 
             #message-input {
@@ -859,10 +859,18 @@
                         <div class="room-desc">自由交流</div>
                     </div>
                 </div>
-                <div class="room-item private" data-room="private-260120">
+                <!-- 仅代码控制显示，默认先保留，JS 登录后判断权限 -->
+                <div class="room-item private" data-room="private-260120" id="secretRoomItem">
                     <div class="room-avatar">私</div>
                     <div class="room-info">
-                        <div class="room-name">私密聊天室</div>
+                        <div class="room-name">🤫</div>
+                        <div class="room-desc">密码保护</div>
+                    </div>
+                </div>
+				<div class="room-item private" data-room="private-test-group">
+                    <div class="room-avatar">宫</div>
+                    <div class="room-info">
+                        <div class="room-name">STAR Talk 测试组后宫</div>
                         <div class="room-desc">密码保护</div>
                     </div>
                 </div>
@@ -912,9 +920,13 @@
                 .join('');
         }
 
+        // 有权限查看 🤫 房间的用户白名单
+        const ALLOW_USER_LIST = ['ALEX1NG', 'YUK1NG'];
+
         const ROOMS = {
             'public': { name: '公共聊天室', needPassword: false, icon: '公', desc: '自由交流' },
-            'private-260120': { name: '私密聊天室', needPassword: true, password: '260120', icon: '私', desc: '密码保护' }
+            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '私', desc: '密码保护' },
+			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '宫', desc: '密码保护' }
         };
         const DEFAULT_ROOM = 'public';
         const KNOWN_ROOM_IDS = Object.keys(ROOMS);
@@ -967,6 +979,7 @@
         const onlineSidebar = document.getElementById('onlineSidebar');
         const onlineUsersContainer = document.getElementById('onlineUsers');
         const onlineCount = document.getElementById('onlineCount');
+        const secretRoomItem = document.getElementById('secretRoomItem');
 
         let isConnected = false;
         let currentRoom = null;
@@ -974,6 +987,19 @@
         let targetRoomId = null;
         let messagesCallback = null;
         let onlineUsersCallback = null;
+
+        // 根据登录用户名控制 私密🤫房间 显示/隐藏
+        function checkSecretRoomPermission(username) {
+            if (ALLOW_USER_LIST.includes(username)) {
+                secretRoomItem.style.display = 'flex';
+            } else {
+                secretRoomItem.style.display = 'none';
+                // 如果当前正好在该私密房，强制切回公共房
+                if (currentRoom === 'private-260120') {
+                    enterRoom(DEFAULT_ROOM);
+                }
+            }
+        }
 
         // 主题初始化
         function initTheme() {
@@ -1004,11 +1030,15 @@
             currentUser = user;
             localStorage.setItem('chatUser', JSON.stringify(user));
             updateUsernameDisplay();
+            // 登录后立即校验房间权限
+            checkSecretRoomPermission(user.username);
         }
         function loadUserSession() {
             const user = localStorage.getItem('chatUser');
             if(user) {
                 currentUser = JSON.parse(user);
+                // 读取本地用户后校验权限
+                checkSecretRoomPermission(currentUser.username);
                 return true;
             }
             return false;
@@ -1314,19 +1344,13 @@
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        sendButton.addEventListener('click', sendMessage);
-        messageInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
-
         function initializeChat() {
             const saved = getSavedRoom();
+            // 先校验权限，再进入房间
             if (saved === 'public') {
                 roomSelectMask.style.display = "none";
                 chatWrap.style.display = "flex";
                 enterRoom('public');
-            } else if (saved.startsWith('private-') && isPrivateRoomVerified()) {
-                roomSelectMask.style.display = "none";
-                chatWrap.style.display = "flex";
-                enterRoom(saved);
             } else if (saved.startsWith('private-') && !isPrivateRoomVerified()) {
                 targetRoomId = saved;
                 roomSelectMask.style.display = "flex";
@@ -1335,9 +1359,16 @@
                 pwdTip.innerText = "";
                 pwdInput.focus();
             } else {
-                roomSelectMask.style.display = "none";
-                chatWrap.style.display = "flex";
-                enterRoom('public');
+                // 非白名单用户禁止进入🤫房间
+                if(saved === 'private-260120' && !ALLOW_USER_LIST.includes(currentUser?.username)){
+                    enterRoom(DEFAULT_ROOM);
+                    roomSelectMask.style.display = "none";
+                    chatWrap.style.display = "flex";
+                }else{
+                    roomSelectMask.style.display = "none";
+                    chatWrap.style.display = "flex";
+                    enterRoom(saved);
+                }
             }
         }
 
@@ -1352,6 +1383,8 @@
             } else {
                 // 未登录，显示登录界面
                 authMask.style.display = 'flex';
+                // 未登录时先隐藏私密房
+                secretRoomItem.style.display = 'none';
             }
         });
 
