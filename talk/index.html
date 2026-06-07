@@ -1131,6 +1131,19 @@
         </div>
     </div>
 
+    <!-- 密码确认弹窗 -->
+    <div class="password-confirm-mask" id="passwordConfirmMask">
+        <div class="password-confirm-box">
+            <h4>确认您的密码</h4>
+            <div class="password-display" id="passwordDisplay"></div>
+            <div class="password-confirm-tip">请确认您的密码是否正确</div>
+            <div class="password-confirm-btns">
+                <button class="btn-modify" id="btnModifyPassword">继续修改</button>
+                <button class="btn-confirm" id="btnConfirmPassword">确认注册</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script>
@@ -1154,17 +1167,6 @@
         };
         const DEFAULT_ROOM = 'public';
         const KNOWN_ROOM_IDS = Object.keys(ROOMS);
-
-        // 获取必应每日壁纸
-        let bingWallpaper = '';
-        fetch('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
-            .then(res => res.json())
-            .then(data => {
-                bingWallpaper = data.images[0].urlbase + '_1920x1080.jpg';
-            })
-            .catch(() => {
-                bingWallpaper = '/api/thirdparty/getBingImg';
-            });
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8t9QqsluQRx37krfzPdRvZYHU2xClt18",
@@ -1752,18 +1754,5 @@
         });
         btnConfirmPassword.addEventListener('click', confirmRegister);
     </script>
-
-    <!-- 密码确认弹窗 -->
-    <div class="password-confirm-mask" id="passwordConfirmMask">
-        <div class="password-confirm-box">
-            <h4>确认您的密码</h4>
-            <div class="password-display" id="passwordDisplay"></div>
-            <div class="password-confirm-tip">请确认您的密码是否正确</div>
-            <div class="password-confirm-btns">
-                <button class="btn-modify" id="btnModifyPassword">继续修改</button>
-                <button class="btn-confirm" id="btnConfirmPassword">确认注册</button>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
