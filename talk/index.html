@@ -391,6 +391,33 @@
         .about-modal-content {
             padding: 20px;
         }
+        .about-project {
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .about-project-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0 2px 0;
+        }
+        .about-project-desc {
+            font-size: 12px;
+            color: #888;
+            padding: 4px 0 8px 0;
+            line-height: 1.4;
+        }
+        .about-project-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .about-project-version {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+        }
         .about-item {
             display: flex;
             justify-content: space-between;
@@ -1176,25 +1203,37 @@
                 <button class="about-close-btn" id="aboutCloseBtn">×</button>
             </div>
             <div class="about-modal-content">
+                <div class="about-project">
+                    <div class="about-project-row">
+                        <span class="about-project-name">HigheriNBS Project</span>
+                        <span class="about-project-version">4th Realized</span>
+                    </div>
+                    <div class="about-project-desc">信息活力工作室 交流社区网站计划 · 第4个设想与实现</div>
+                    <div class="about-project-row">
+                        <span class="about-project-name">STAR Web APP Project</span>
+                        <span class="about-project-version">2nd Achieved</span>
+                    </div>
+                    <div class="about-project-desc">信息活力工作室 AI时代 互联网应用计划 · 第2个设计与实现</div>
+                </div>
                 <div class="about-item">
                     <span class="about-label">开发者</span>
-                    <span class="about-value">ALEX1NG</span>
+                    <span class="about-value">ALEX1NG （ Alex P, ）</span>
                 </div>
                 <div class="about-item">
-                    <span class="about-label">功能测试</span>
-                    <span class="about-value">EVANS</span>
+                    <span class="about-label">测试者</span>
+                    <span class="about-value">EVANS（ Evans W, ）</span>
                 </div>
                 <div class="about-item">
-                    <span class="about-label">前端支持</span>
+                    <span class="about-label">前端技术支持</span>
                     <span class="about-value">Github Pages</span>
                 </div>
                 <div class="about-item">
-                    <span class="about-label">后端支持</span>
+                    <span class="about-label">后端技术支持</span>
                     <span class="about-value">Google Firebase</span>
                 </div>
                 <div class="about-item">
-                    <span class="about-label">设计参考</span>
-                    <span class="about-value">Telegram</span>
+                    <span class="about-label">设计参考提供</span>
+                    <span class="about-value">Telegram Web</span>
                 </div>
             </div>
             <div class="about-modal-footer">
