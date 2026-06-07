@@ -143,7 +143,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: url('/img/11.png') center/cover no-repeat;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -155,7 +155,7 @@
             border-radius: var(--radius-lg);
             width: 360px;
             padding: 32px 24px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             text-align: center;
         }
         .auth-box h3 {
@@ -213,7 +213,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: url('/img/11.png') center/cover no-repeat;
             z-index: 9999;
             display: flex;
             align-items: center;
@@ -225,7 +225,7 @@
             border-radius: var(--radius-lg);
             width: 360px;
             padding: 32px 24px;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             text-align: center;
         }
         .room-select-box h3 {
@@ -677,6 +677,31 @@
             text-overflow: ellipsis;
         }
 
+        .logout-section {
+            padding: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .logout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .logout-btn:hover {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
         .mobile-mask {
             display: none;
             position: fixed;
@@ -743,32 +768,107 @@
             align-items: center;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.2s ease 0.3s;
+            transition: opacity 0.3s ease;
             color: white;
             text-align: center;
+            padding: 16px;
         }
         .transition-overlay.show .transition-content {
             opacity: 1;
         }
         .transition-overlay.fade-out .transition-content {
             opacity: 0;
+            transition: opacity 0.2s ease;
         }
 
         .transition-text {
-            font-size: 4px;
-            font-weight: 300;
-            letter-spacing: 0.2px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
             white-space: nowrap;
             padding: 0 12px;
         }
+        .transition-subtext {
+            font-size: 4px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
 
-        @keyframes bounce {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.2);
-            }
+        /* 密码确认弹窗 */
+        .password-confirm-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/img/11.png') center/cover no-repeat;
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        .password-confirm-mask.show {
+            display: flex;
+        }
+        .password-confirm-box {
+            background-color: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            width: 340px;
+            padding: 24px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+        .password-confirm-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .password-display {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            font-size: 18px;
+            font-family: monospace;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        .password-confirm-tip {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .password-confirm-btns {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-confirm {
+            flex: 1;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-confirm:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-modify {
+            flex: 1;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-modify:hover {
+            background-color: var(--bg-hover);
         }
 
         ::-webkit-scrollbar {
@@ -878,6 +978,13 @@
             .room-title {
                 font-size: 15px;
             }
+            .logout-section {
+                padding: 10px;
+            }
+            .logout-btn {
+                padding: 8px;
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 400px) {
@@ -901,6 +1008,17 @@
                 width: 34px;
                 height: 34px;
                 font-size: 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .password-confirm-box {
+                width: 90%;
+                padding: 20px 16px;
+            }
+            .password-display {
+                font-size: 16px;
+                letter-spacing: 3px;
             }
         }
     </style>
@@ -943,7 +1061,8 @@
     <div class="transition-overlay" id="transitionOverlay">
         <div class="transition-circle">
             <div class="transition-content">
-                <div class="transition-text" id="transitionText">你正在公共聊天室聊天</div>
+                <div class="transition-text" id="transitionText">在公共聊天室中</div>
+                <div class="transition-subtext" id="transitionSubtext">正在载入</div>
             </div>
         </div>
     </div>
@@ -1004,6 +1123,11 @@
                 <span class="online-count" id="onlineCount">0</span>
             </div>
             <div class="online-list" id="onlineUsers"></div>
+            <div class="logout-section">
+                <button class="logout-btn" id="logoutBtn">
+                    <span>🚪</span> 退出登录
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1030,6 +1154,17 @@
         };
         const DEFAULT_ROOM = 'public';
         const KNOWN_ROOM_IDS = Object.keys(ROOMS);
+
+        // 获取必应每日壁纸
+        let bingWallpaper = '';
+        fetch('https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1')
+            .then(res => res.json())
+            .then(data => {
+                bingWallpaper = data.images[0].urlbase + '_1920x1080.jpg';
+            })
+            .catch(() => {
+                bingWallpaper = '/api/thirdparty/getBingImg';
+            });
 
         const firebaseConfig = {
             apiKey: "AIzaSyD8t9QqsluQRx37krfzPdRvZYHU2xClt18",
@@ -1081,9 +1216,14 @@
         const onlineCount = document.getElementById('onlineCount');
         const secretRoomItem = document.getElementById('secretRoomItem');
         const transitionOverlay = document.getElementById('transitionOverlay');
+        const transitionCircle = document.querySelector('.transition-circle');
+        const transitionContent = document.querySelector('.transition-content');
         const transitionText = document.getElementById('transitionText');
+        const transitionSubtext = document.getElementById('transitionSubtext');
+        const logoutBtn = document.getElementById('logoutBtn');
 
         let isConnected = false;
+        let pendingRegisterData = null;
         let currentRoom = null;
         let currentUserRef = null;
         let targetRoomId = null;
@@ -1204,6 +1344,26 @@
                     return;
                 }
                 
+                // 保存注册数据用于确认后使用
+                pendingRegisterData = data;
+                
+                // 显示密码确认弹窗
+                passwordDisplay.textContent = data.password;
+                passwordConfirmMask.classList.add('show');
+                
+            } catch (err) {
+                console.error(err);
+                authTip.textContent = '注册失败，请重试';
+            }
+        }
+        
+        // 确认注册
+        async function confirmRegister() {
+            if(!pendingRegisterData) return;
+            
+            try {
+                const data = pendingRegisterData;
+                
                 // 密码加密
                 const hashedPwd = await sha256(data.password);
                 const userData = {
@@ -1215,11 +1375,18 @@
                 // 写入数据库
                 await usersRef.child(data.username).set(userData);
                 authTip.textContent = '';
+                
+                // 隐藏弹窗
+                passwordConfirmMask.classList.remove('show');
+                pendingRegisterData = null;
+                
                 alert('注册成功！请登录');
                 toggleAuthMode();
             } catch (err) {
                 console.error(err);
                 authTip.textContent = '注册失败，请重试';
+                passwordConfirmMask.classList.remove('show');
+                pendingRegisterData = null;
             }
         }
 
@@ -1266,35 +1433,83 @@
         // 聊天室功能
         function enterRoom(roomId) {
             // 显示过渡动画
-            transitionText.textContent = '你正在' + ROOMS[roomId].name + '聊天';
+            transitionText.textContent = '在' + ROOMS[roomId].name + '中';
+            // 先重置为初始大小，确保有缩放动画
+            transitionCircle.style.transition = 'none';
+            transitionCircle.style.transform = 'scale(1)';
+            transitionSubtext.style.opacity = '1';
+            transitionContent.style.opacity = '1';
+            
+            // 强制重绘
+            void transitionCircle.offsetWidth;
+            
+            // 恢复过渡效果
+            transitionCircle.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
             transitionOverlay.classList.remove('fade-out');
             transitionOverlay.classList.add('show');
+            
+            // 根据屏幕尺寸计算缩放值，确保圆圈不会超出屏幕
+            const minDim = Math.min(window.innerWidth, window.innerHeight);
+            const maxScale = minDim / 48 * 0.95;
+            const scale = Math.min(25, maxScale);
+            transitionCircle.style.transform = 'scale(' + scale + ')';
+            // 字体大小与圆圈同步缩放
+            transitionText.style.fontSize = (scale * 0.4) + 'px';
+            transitionSubtext.style.fontSize = (scale * 0.28) + 'px';
+            
+            // 动画持续时间（毫秒）
+            const animationDuration = 500;
 
-            // 动画结束后进入房间
-            setTimeout(() => {
-                if (messagesCallback) {
-                    database.ref('rooms/' + currentRoom + '/messages').off('child_added', messagesCallback);
-                    messagesCallback = null;
+            if (messagesCallback) {
+                database.ref('rooms/' + currentRoom + '/messages').off('child_added', messagesCallback);
+                messagesCallback = null;
+            }
+            if (onlineUsersCallback) {
+                database.ref('rooms/' + currentRoom + '/onlineUsers').off('value', onlineUsersCallback);
+                onlineUsersCallback = null;
+            }
+            if (currentUserRef) { currentUserRef.remove(); currentUserRef = null; }
+
+            currentRoom = roomId;
+            saveRoom(roomId);
+            currentRoomName.textContent = ROOMS[roomId].name;
+            roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
+            messagesContainer.innerHTML = '<div class="system-tip">欢迎来到 ' + ROOMS[roomId].name + '</div>';
+
+            const roomRef = database.ref('rooms/' + roomId);
+            const messagesRef = roomRef.child('messages');
+            const onlineUsersRef = roomRef.child('onlineUsers');
+
+            // 先获取历史消息数量
+            messagesRef.limitToLast(50).once('value').then(snapshot => {
+                const messages = snapshot.val();
+                const totalMessages = messages ? Object.keys(messages).length : 0;
+                let loadedCount = 0;
+                let hideTriggered = false;
+
+                // 隐藏动画的函数，确保字体显示完整后再隐藏
+                function hideTransition() {
+                    if (!hideTriggered) {
+                        hideTriggered = true;
+                        transitionOverlay.classList.add('fade-out');
+                    }
                 }
-                if (onlineUsersCallback) {
-                    database.ref('rooms/' + currentRoom + '/onlineUsers').off('value', onlineUsersCallback);
-                    onlineUsersCallback = null;
+
+                // 如果没有历史消息，动画持续animationDuration后隐藏
+                if (totalMessages === 0) {
+                    setTimeout(hideTransition, animationDuration);
                 }
-                if (currentUserRef) { currentUserRef.remove(); currentUserRef = null; }
-
-                currentRoom = roomId;
-                saveRoom(roomId);
-                currentRoomName.textContent = ROOMS[roomId].name;
-                roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
-                messagesContainer.innerHTML = '<div class="system-tip">欢迎来到 ' + ROOMS[roomId].name + '</div>';
-
-                const roomRef = database.ref('rooms/' + roomId);
-                const messagesRef = roomRef.child('messages');
-                const onlineUsersRef = roomRef.child('onlineUsers');
 
                 messagesCallback = snapshot => {
                     const msg = snapshot.val();
-                    if (msg && msg.timestamp) displayMessage(msg);
+                    if (msg && msg.timestamp) {
+                        displayMessage(msg);
+                        loadedCount++;
+                        // 所有历史消息加载完成后，等待animationDuration后隐藏
+                        if (loadedCount >= totalMessages) {
+                            setTimeout(hideTransition, animationDuration);
+                        }
+                    }
                 };
                 onlineUsersCallback = snapshot => updateOnlineUsers(snapshot);
 
@@ -1314,12 +1529,7 @@
                     onlineSidebar.classList.remove('show');
                     mobileMask.classList.remove('show');
                 }
-
-                // 隐藏过渡动画
-                setTimeout(() => {
-                    transitionOverlay.classList.add('fade-out');
-                }, 100);
-            }, 1000);
+            });
         }
 
         function enterPrivateRoom() {
@@ -1450,6 +1660,16 @@
             }
         });
 
+        // 退出登录
+        logoutBtn.addEventListener('click', () => {
+            if(confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('chatUser');
+                localStorage.removeItem('lastRoom');
+                localStorage.removeItem('theme');
+                location.reload();
+            }
+        });
+
         function displayMessage(msg) {
             const isMe = currentUser && msg.userId === currentUser.username;
             const time = new Date(msg.timestamp).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
@@ -1518,6 +1738,32 @@
                 mobileMask.classList.remove('show');
             }
         });
+
+        // 密码确认弹窗
+        const passwordConfirmMask = document.getElementById('passwordConfirmMask');
+        const passwordDisplay = document.getElementById('passwordDisplay');
+        const btnModifyPassword = document.getElementById('btnModifyPassword');
+        const btnConfirmPassword = document.getElementById('btnConfirmPassword');
+
+        btnModifyPassword.addEventListener('click', () => {
+            passwordConfirmMask.classList.remove('show');
+            pendingRegisterData = null;
+            authPassword.focus();
+        });
+        btnConfirmPassword.addEventListener('click', confirmRegister);
     </script>
+
+    <!-- 密码确认弹窗 -->
+    <div class="password-confirm-mask" id="passwordConfirmMask">
+        <div class="password-confirm-box">
+            <h4>确认您的密码</h4>
+            <div class="password-display" id="passwordDisplay"></div>
+            <div class="password-confirm-tip">请确认您的密码是否正确</div>
+            <div class="password-confirm-btns">
+                <button class="btn-modify" id="btnModifyPassword">继续修改</button>
+                <button class="btn-confirm" id="btnConfirmPassword">确认注册</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
