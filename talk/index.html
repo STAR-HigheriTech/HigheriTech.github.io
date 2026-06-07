@@ -1498,13 +1498,17 @@
         // 页面加载
         window.addEventListener('load', () => {
             initTheme();
-            
-            // 强制清除所有旧会话数据，用户需要重新注册登录
-            localStorage.clear();
-            
-            // 始终显示登录界面，强制用户重新注册
-            authMask.style.display = 'flex';
-            secretRoomItem.style.display = 'none';
+            if(loadUserSession()) {
+                // 已登录
+                authMask.style.display = 'none';
+                updateUsernameDisplay();
+                initializeChat();
+            } else {
+                // 未登录，显示登录界面
+                authMask.style.display = 'flex';
+                // 未登录时先隐藏私密房
+                secretRoomItem.style.display = 'none';
+            }
         });
 
         window.addEventListener('resize', () => {
