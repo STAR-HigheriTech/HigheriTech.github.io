@@ -2,1597 +2,2198 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STAR HigheriTech | 系统工具与生产力软件</title>
-    <!-- Preconnect -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#2563EB',   /* 亮丽蓝 */
-                        secondary: '#0D9488', /* 翡翠青 */
-                        accent: '#8B5CF6',    /* 亮紫色 */
-                        dark: '#0F172A',      /* 深邃蓝灰 */
-                        light: '#F8FAFC',     /* 亮冷灰 */
-                        neon: '#06B6D4',      /* 霓虹青 */
-                        electric: '#EC4899'   /* 电音粉 */
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
-                        cyber: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        'card': '0 8px 32px rgba(37, 99, 235, 0.06)',
-                        'card-hover': '0 16px 48px rgba(37, 99, 235, 0.12)',
-                        'neon-glow': '0 10px 30px rgba(37, 99, 235, 0.25)',
-                        'neon-glow-sec': '0 10px 30px rgba(13, 148, 136, 0.25)',
-                    },
-                    backgroundImage: {
-                        'grid-pattern': "linear-gradient(to right, rgba(0,0,0,0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.02) 1px, transparent 1px)",
-                    }
-                }
-            }
-        }
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>STAR Talk NeXus | 在线聊天室</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-        
-        html {
-            scroll-behavior: smooth;
+        /* 全局变量 - 浅色主题（默认） */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-primary-rgb: 255, 255, 255;
+            --bg-secondary: #f5f5f5;
+            --bg-tertiary: #f0f0f0;
+            --bg-hover: #e8e8e8;
+            --bg-active: #e0e0e0;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --border: #e0e0e0;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #dbeafe;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 1px 3px rgba(0, 0, 0.1);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0.15);
+            --radius: 8px;
+            --radius-lg: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        /* 深色主题 */
+        [data-theme="dark"] {
+            --bg-primary: #1e1e1e;
+            --bg-primary-rgb: 30, 30, 30;
+            --bg-secondary: #2d2d2d;
+            --bg-tertiary: #383838;
+            --bg-hover: #404040;
+            --bg-active: #4a4a4a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --text-muted: #808080;
+            --border: #404040;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light: #1e3a8a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #FAFAFA;
-            color: #171717;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FAFAFA; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #D4D4D8; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #A1A1AA; 
-        }
-
-        .hero-bg {
-            background-color: #FAFAFA;
-        }
-        
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background-color: #171717;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .card-hover-effect {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        .card-hover-effect:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .bg-grid-pattern { background-size: 40px 40px; }
-
-        .text-glow {
-            text-shadow: 0 8px 24px rgba(37, 99, 235, 0.25);
-        }
-        
-        .clip-slant-right {
-            clip-path: polygon(0 0, 100% 0, 90% 100%, 0% 100%);
-        }
-        
-        /* Bento Grid Specifics */
-        .bento-item {
-            position: relative;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
             overflow: hidden;
+            padding-top: env(safe-area-inset-top, 0px);
         }
-        .bento-item::before {
-            content: '';
-            position: absolute;
+
+        .btn {
+            border: none;
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .btn-secondary:hover {
+            background-color: var(--bg-hover);
+        }
+
+        .input {
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            color: var(--text-primary);
+            font-size: 15px;
+            outline: none;
+            transition: var(--transition);
+        }
+        .input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+        .input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* 主题切换按钮 - 桌面端右上角 */
+        .theme-toggle {
+            position: fixed;
+            top: calc(16px + env(safe-area-inset-top, 0px));
+            right: 16px;
+            z-index: 10000;
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 50%;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .theme-toggle:hover {
+            background-color: var(--bg-hover);
+        }
+        .theme-toggle:active {
+            transform: scale(0.92);
+        }
+
+        /* 登录/注册弹窗 */
+        .auth-mask {
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
-            z-index: 10;
-        }
-        .bento-content {
-            position: relative;
-            z-index: 20;
-        }
-        
-        /* Abstract shapes */
-        .shape-blob {
-            position: absolute;
-            filter: blur(100px);
-            z-index: 0;
-            opacity: 0.2;
-        }
-
-        /* Number Counter Animation */
-        @keyframes countUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .stat-item {
-            animation: countUp 0.8s ease-out forwards;
-        }
-
-        .section-kicker {
-            display: inline-flex;
+            background: transparent;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.35rem 0.8rem;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            background: #FFFFFF;
-            color: #52525B;
-            font-size: 0.75rem;
+            justify-content: center;
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        .auth-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            width: 400px;
+            max-width: 90%;
+            padding: 40px 32px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+        [data-theme="dark"] .auth-box {
+            background-color: rgba(45, 45, 45, 0.85);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .auth-box h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .auth-box .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+        .auth-input {
+            width: 100%;
+            height: 52px;
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+        .auth-btn {
+            width: 100%;
+            height: 52px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
             font-weight: 500;
-            letter-spacing: 0.02em;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .auth-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .auth-tip {
+            font-size: 13px;
+            color: var(--danger);
+            height: 18px;
+            margin-bottom: 8px;
+        }
+        .switch-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 16px;
+            cursor: pointer;
+        }
+        .switch-text span {
+            color: var(--primary);
+            font-weight: 500;
         }
 
-        .section-kicker::before {
+        /* 聊天室选择弹窗 */
+        .room-select-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: env(safe-area-inset-top, 0px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .room-select-mask.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .room-select-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            width: 400px;
+            max-width: 90%;
+            padding: 40px 32px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .room-select-mask.show .room-select-box {
+            transform: scale(1);
+        }
+        [data-theme="dark"] .room-select-box {
+            background: rgba(35, 35, 35, 0.95);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+        }
+        .room-select-box h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .room-select-box .subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 28px;
+        }
+        .room-btn {
+            width: 100%;
+            height: 52px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .public-btn {
+            background-color: var(--primary);
+            color: white;
+        }
+        .public-btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+        .divider::before,
+        .divider::after {
             content: '';
-            width: 0.35rem;
-            height: 0.35rem;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #2563EB, #06B6D4);
-            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+            flex: 1;
+            height: 1px;
+            background-color: var(--border);
+        }
+        .divider span {
+            padding: 0 16px;
+        }
+        .private-input {
+            width: 100%;
+            height: 44px;
+            margin-bottom: 12px;
+        }
+        .private-btn {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        .private-btn:hover {
+            background-color: var(--bg-hover);
+        }
+        .tip-text {
+            font-size: 13px;
+            color: var(--danger);
+            height: 18px;
+            margin-bottom: 8px;
         }
 
-        .section-title {
-            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-            line-height: 1.08;
-            letter-spacing: -0.03em;
+        /* 聊天主容器 */
+        .chat-wrap {
+            display: none;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-primary);
+        }
+
+        /* 左侧房间列表 */
+        .room-sidebar {
+            width: 260px;
+            background-color: var(--bg-secondary);
+            border-right: none;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            height: calc(100% - 16px);
+            margin: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] .room-sidebar {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+        [data-theme="light"] .room-sidebar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+        [data-theme="light"] .room-list {
+            background-color: #f8f9fa;
+        }
+        .room-sidebar-header {
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .room-sidebar-header h2 {
+            font-size: 16px;
             font-weight: 600;
+            color: var(--text);
         }
-
-        .hero-panel {
-            background: rgba(10, 10, 10, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(24px);
+        /* 关于弹窗样式 */
+        .about-modal-overlay {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: transparent;
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        .hero-control {
+        .about-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .about-modal {
+            background: #fff;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 360px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .about-modal-overlay.show .about-modal {
+            transform: scale(1);
+        }
+        .about-modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .about-modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .about-close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        .about-close-btn:hover {
+            color: var(--text);
+        }
+        .about-modal-content {
+            padding: 20px;
+        }
+        .about-project {
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .about-project-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0 2px 0;
+        }
+        .about-project-desc {
+            font-size: 12px;
+            color: #888;
+            padding: 4px 0 8px 0;
+            line-height: 1.4;
+        }
+        .about-project-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .about-project-version {
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+        }
+        .about-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .about-item:last-child {
+            border-bottom: none;
+        }
+        .about-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .about-value {
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .about-modal-footer {
+            padding: 20px 16px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        .room-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px 12px;
+        }
+        .room-sidebar-footer {
+            padding: 8px 12px;
+        }
+        .about-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+        }
+        .about-btn:hover {
+            background-color: var(--border);
+        }
+        .room-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 8px;
             border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(10, 10, 10, 0.4);
-            backdrop-filter: blur(12px);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 4px;
+        }
+        .room-item:hover {
+            background-color: var(--bg-hover);
+        }
+        .room-item.active {
+            background-color: rgba(88, 101, 242, 0.15);
+        }
+        [data-theme="dark"] .room-item.active {
+            background-color: rgba(88, 101, 242, 0.25);
+        }
+        .room-item.private .room-avatar {
+            background-color: #7c3aed;
+        }
+        .room-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #5865F2;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        .room-info {
+            flex: 1;
+            overflow: hidden;
+        }
+        .room-name {
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--text);
+        }
+        .room-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .surface-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+        /* 中间聊天区 */
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
         }
-
-        .soft-dark-card {
-            background: #0A0A0A;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+        .chat-top {
+            height: 56px;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .section-shell {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+        [data-theme="dark"] .chat-top {
+            background-color: rgba(30, 30, 30, 0.4);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
         }
-
-        .minimal-stat {
-            border-top: 1px solid rgba(0, 0, 0, 0.08);
-            padding-top: 1.25rem;
+        [data-theme="light"] .chat-top {
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
         }
-
-        .minimal-stat strong {
-            display: block;
-            font-size: 1.1rem;
+        .toggle-left-btn {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-primary);
+            border-radius: var(--radius);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: none;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 2;
+        }
+        .toggle-left-btn:hover {
+            background-color: var(--bg-hover);
+        }
+        .toggle-right-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-primary);
+            border-radius: var(--radius);
+            font-size: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: none;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 2;
+        }
+        .toggle-right-btn:hover {
+            background-color: var(--bg-hover);
+        }
+        .room-title {
+            font-size: 17px;
             font-weight: 600;
-            color: #171717;
-            margin-bottom: 0.3rem;
-            letter-spacing: -0.01em;
+        }
+        .current-username {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+            background-color: var(--bg-tertiary);
+            padding: 2px 10px;
+            border-radius: 12px;
+        }
+        .conn-status {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .conn-status::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--danger);
+        }
+        .conn-status.connected::before {
+            background-color: var(--success);
         }
 
-        .timeline-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
+        .chat-content {
+            flex: 1;
+            padding: 16px;
+            padding-top: 80px;
+            padding-bottom: 80px;
+            overflow-y: auto;
+            background-color: var(--bg-primary);
+            -webkit-overflow-scrolling: touch;
         }
 
-        .cta-shell {
-            background: #0A0A0A;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+        /* 消息气泡 */
+        .msg-row {
+            margin-bottom: 16px;
+            display: flex;
+            width: 100%;
+        }
+        .msg-row.me {
+            flex-direction: row-reverse;
+        }
+        .msg-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 600;
+            flex-shrink: 0;
+            align-self: flex-start;
+        }
+        .msg-row.me .msg-avatar {
+            background-color: #7c3aed;
+        }
+        .msg-box {
+            max-width: 65%;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .msg-row.me .msg-box {
+            align-items: flex-end;
+        }
+        .msg-name {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-weight: 500;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .msg-bubble {
+            padding: 10px 14px;
+            border-radius: var(--radius-lg);
+            font-size: 15px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: pre-wrap;
+            max-width: 100%;
+            box-sizing: border-box;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+        .msg-row:not(.me) .msg-bubble {
+            background-color: var(--bg-secondary);
+            border-bottom-left-radius: 4px;
+        }
+        .msg-row.me .msg-bubble {
+            background-color: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        .msg-time {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-align: right;
+            align-self: flex-end;
+        }
+        .msg-row.me .msg-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .system-tip {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 16px 0;
+        }
+
+        /* Discord风格消息样式 - 仅公共聊天室使用 */
+        .msg-row.discord {
+            margin-bottom: 12px;
+            padding: 8px 8px;
+            border-radius: 4px;
+        }
+        .msg-row.discord .msg-avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 13px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .msg-row.discord .msg-box {
+            max-width: calc(100% - 52px);
+            margin: 0 10px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            align-content: flex-start;
+            line-height: 1.3;
+        }
+        .msg-row.discord .msg-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #5865F2;
+            margin-right: 8px;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .msg-row.discord .msg-content {
+            font-size: 15px;
+            color: var(--text);
+            word-break: break-word;
+            flex: 1;
+        }
+        .msg-row.discord .msg-time {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-left: 4px;
+            flex-shrink: 0;
+            white-space: nowrap;
+            align-self: baseline;
+        }
+        .msg-row.discord.me {
+            flex-direction: row;
+        }
+        .msg-row.discord.me .msg-box {
+            align-items: flex-start;
+        }
+        .msg-row.discord.me .msg-name {
+            color: #7c3aed;
+        }
+        .msg-row.discord.me .msg-content {
+            color: var(--text);
+        }
+        .msg-row.discord:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+            border-radius: 4px;
+        }
+        .msg-row.discord.grouped {
+            margin-top: -8px;
+            padding-top: 2px;
+            padding-bottom: 4px;
+        }
+        .msg-row.discord.grouped .msg-avatar {
+            visibility: hidden;
+        }
+        .msg-row.discord.grouped .msg-name {
+            display: none;
+        }
+
+        /* 底部输入区 */
+        .chat-input {
+            padding: 12px 20px;
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            right: 8px;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] .chat-input {
+            background-color: rgba(30, 30, 30, 0.4);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+        [data-theme="light"] .chat-input {
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+        .input-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #message-input {
+            flex: 1;
+            height: 40px;
+        }
+        #send-button {
+            width: 70px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        #send-button:hover:not(:disabled) {
+            background-color: var(--primary-hover);
+        }
+        #send-button:disabled {
+            background-color: var(--bg-tertiary);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        /* 右侧在线用户 */
+        .online-sidebar {
+            width: 220px;
+            background-color: var(--bg-secondary);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            height: calc(100% - 16px);
+            margin: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        }
+        [data-theme="dark"] .online-sidebar {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+        }
+        [data-theme="light"] .online-sidebar {
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+        }
+        [data-theme="light"] .online-list {
+            background-color: #f8f9fa;
+        }
+        .online-sidebar-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .online-sidebar-header h3 {
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .online-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background-color: var(--bg-tertiary);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+        .online-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+        }
+        .online-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 4px;
+        }
+        .online-item:hover {
+            background-color: var(--bg-hover);
+        }
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .online-username {
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .logout-section {
+            padding: 12px;
+        }
+        .logout-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .logout-btn:hover {
+            background-color: var(--danger);
+            color: white;
+            border-color: var(--danger);
+        }
+
+        .mobile-mask {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 98;
+        }
+        .mobile-mask.show {
+            display: block;
+        }
+
+        /* Material Design 过渡动画 */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-secondary);
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .transition-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+        .transition-overlay.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .transition-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, #60a5fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .transition-overlay.show .transition-circle {
+            transform: scale(25);
+        }
+        .transition-overlay.fade-out .transition-circle {
+            transform: scale(35);
+        }
+
+        .transition-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            color: white;
+            text-align: center;
+            padding: 8%;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .transition-overlay.show .transition-content {
+            opacity: 1;
+        }
+        .transition-overlay.fade-out .transition-content {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .transition-text {
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            padding: 0 12px;
+            text-align: center;
+            white-space: nowrap;
+        }
+        .transition-subtext {
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* 密码确认弹窗 */
+        .password-confirm-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 10001;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding-top: env(safe-area-inset-top, 0px);
+        }
+        .password-confirm-mask.show {
+            display: flex;
+        }
+        .password-confirm-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 16px;
+            width: 380px;
+            max-width: 90%;
+            padding: 28px 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            text-align: center;
+        }
+        [data-theme="dark"] .password-confirm-box {
+            background-color: rgba(45, 45, 45, 0.9);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .password-confirm-box h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .password-display {
+            background-color: var(--bg-secondary);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            font-size: 18px;
+            font-family: monospace;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+        .password-confirm-tip {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+        .password-confirm-btns {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-confirm {
+            flex: 1;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-confirm:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-modify {
+            flex: 1;
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-modify:hover {
+            background-color: var(--bg-hover);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+
+        /* ========== 移动端样式 ========== */
+        @media (max-width: 768px) {
+            .chat-wrap {
+                max-width: 100%;
+            }
+
+            .room-sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 260px;
+                transform: translateX(-100%);
+                transition: transform 0.2s ease;
+                z-index: 99;
+                padding-top: env(safe-area-inset-top, 0px);
+                border-right: none;
+                background-color: var(--bg-primary);
+            }
+            .room-sidebar.show {
+                transform: translateX(0);
+            }
+
+            .online-sidebar {
+                position: fixed;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 220px;
+                transform: translateX(100%);
+                transition: transform 0.2s ease;
+                z-index: 99;
+                padding-top: env(safe-area-inset-top, 0px);
+                background-color: var(--bg-primary);
+            }
+            .online-sidebar.show {
+                transform: translateX(0);
+            }
+
+            .toggle-left-btn,
+            .toggle-right-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .msg-box {
+                max-width: 80%;
+            }
+
+            .room-select-box,
+            .auth-box {
+                width: 400px;
+                max-width: 95%;
+                padding: 32px 24px;
+                border-radius: 16px;
+            }
+
+            /* 移动端主题按钮固定到左下角，避免遮挡右上角的在线列表按钮 */
+            .theme-toggle {
+                top: auto;
+                right: auto;
+                bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+                left: 16px;
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0.2);
+                z-index: 10000;
+            }
+
+            #message-input {
+                font-size: 14px;
+                padding: 12px 12px;
+            }
+            #send-button {
+                width: 60px;
+                font-size: 13px;
+            }
+            .input-bar {
+                gap: 6px;
+            }
+            .chat-input {
+                padding: 10px 12px;
+            }
+            .chat-top {
+                padding: 0 12px;
+            }
+            .room-title {
+                font-size: 15px;
+            }
+            .logout-section {
+                padding: 10px;
+            }
+            .logout-btn {
+                padding: 8px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #message-input {
+                font-size: 13px;
+                padding: 12px 8px;
+            }
+            #send-button {
+                width: 52px;
+                font-size: 12px;
+            }
+            .input-bar {
+                gap: 4px;
+            }
+            .chat-input {
+                padding: 8px 8px;
+            }
+            .theme-toggle {
+                bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+                left: 10px;
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .password-confirm-box {
+                width: 380px;
+                max-width: 95%;
+                padding: 24px 20px;
+                border-radius: 16px;
+            }
+            .password-display {
+                font-size: 16px;
+                letter-spacing: 3px;
+            }
         }
     </style>
 </head>
-<body class="antialiased selection:bg-primary selection:text-white pb-20">
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="切换深色/浅色主题">🌙</button>
 
-    <!-- Floating Bottom Ad Banner - Prominent Style -->
-    <div id="topAdBanner" class="fixed bottom-4 left-4 right-4 z-[60] max-w-3xl mx-auto">
-        <div class="bg-gradient-to-r bg-white shadow-[0_8px_50px_rgba(37,99,235,0.5)] overflow-hidden">
-            <!-- Ad Header -->
-            <div class="px-5 py-3 flex items-center justify-between bg-gradient-to-r from-blue-700 to-blue-600">
-                <div class="flex items-center gap-3">
-                    <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
-                    <span class="text-xs text-white/80">sadidc.com</span>
-                </div>
-                <button onclick="closeTopAd()" class="w-8 h-8 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all" aria-label="关闭广告">
-                    <i class="fas fa-times"></i>
-                </button>
+    <!-- 登录/注册弹窗 -->
+    <div class="auth-mask" id="authMask">
+        <div class="auth-box">
+            <h3>🌟 STAR Talk NeXus</h3>
+            <p class="subtitle" id="authSubtitle">账号登录</p>
+            <div class="auth-tip" id="authTip"></div>
+            <input type="text" class="input auth-input" id="authUsername" placeholder="用户名" maxlength="20" autocomplete="username">
+            <input type="password" class="input auth-input" id="authPassword" placeholder="密码" autocomplete="current-password">
+            <button class="auth-btn" id="authBtn">登录</button>
+            <p class="switch-text">没有账号？<span id="switchMode">立即注册</span></p>
+        </div>
+    </div>
+
+    <div class="room-select-mask" id="roomSelectMask">
+        <div class="room-select-box">
+            <h3>STAR Talk NeXus</h3>
+            <p class="subtitle">选择聊天室开始聊天</p>
+            <button class="room-btn public-btn" id="publicBtn">
+                <span>🌐</span> 公共聊天室
+            </button>
+            <div class="divider"><span>私密聊天</span></div>
+            <div class="tip-text" id="pwdTip"></div>
+            <input type="password" class="input private-input" id="pwdInput" placeholder="输入密码">
+            <button class="room-btn private-btn" id="privateBtn">
+                <span>🔒</span> 进入私密聊天室
+            </button>
+        </div>
+    </div>
+
+    <div class="mobile-mask" id="mobileMask"></div>
+
+    <!-- 关于弹窗 -->
+    <div class="about-modal-overlay" id="aboutModalOverlay">
+        <div class="about-modal">
+            <div class="about-modal-header">
+                <h3>关于 STAR Talk NeXus</h3>
+                <button class="about-close-btn" id="aboutCloseBtn">×</button>
             </div>
-            <!-- Ad Content -->
-            <div class="p-6">
-                <div class="flex items-center justify-between gap-4">
-                    <div class="flex items-center gap-4">
-                        <div class="w-20 h-20 bg-white rounded-xl flex items-center justify-center text-purple-600 font-bold text-4xl shadow-xl">
-                            云
-                        </div>
-                        <div>
-                            <a href="https://sadidc.com/" target="_blank" class="text-gray-900 font-bold text-xl hover:text-purple-600 transition-colors">伤心的云</a>
-                            <p class="text-gray-600 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
-                        </div>
+            <div class="about-modal-content">
+                <div class="about-project">
+                    <div class="about-project-row">
+                        <span class="about-project-name">HigheriNBS Project</span>
+                        <span class="about-project-version">4th Realized</span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <p class="text-yellow-600 font-bold text-xl">🔥 香港¥9.9/月起</p>
-                        <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-none transition-all shadow-xl hover:scale-105">
-                            转到官网
-                        </a>
+                    <div class="about-project-desc">信息活力工作室 交流社区网站计划 · 第4个设想与实现</div>
+                    <div class="about-project-row">
+                        <span class="about-project-name">STAR Web APP Project</span>
+                        <span class="about-project-version">2nd Achieved</span>
                     </div>
+                    <div class="about-project-desc">信息活力工作室 AI时代 互联网应用计划 · 第2个设计与实现</div>
                 </div>
+                <div class="about-item">
+                    <span class="about-label">开发者</span>
+                    <span class="about-value">ALEX1NG （ Alex P, ）</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-label">测试者</span>
+                    <span class="about-value">EVANS（ Evans W, ）</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-label">前端技术支持</span>
+                    <span class="about-value">Github Pages</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-label">后端技术支持</span>
+                    <span class="about-value">Google Firebase</span>
+                </div>
+                <div class="about-item">
+                    <span class="about-label">设计参考提供</span>
+                    <span class="about-value">Telegram Web</span>
+                </div>
+            </div>
+            <div class="about-modal-footer">
+                © 2026 STAR HigheriTech
             </div>
         </div>
     </div>
-    
+
+    <!-- Material Design 风格过渡动画 -->
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="transition-circle">
+            <div class="transition-content">
+                <div class="transition-text" id="transitionText">在公共聊天室中</div>
+                <div class="transition-subtext" id="transitionSubtext">正在载入</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-wrap" id="chatWrap">
+        <div class="room-sidebar" id="roomSidebar">
+            <div class="room-sidebar-header"><h2>聊天室</h2></div>
+            <div class="room-list" id="roomList">
+                <div class="room-item active" data-room="public">
+                    <div class="room-avatar">💬</div>
+                    <div class="room-info">
+                        <div class="room-name">公共聊天室</div>
+                        <div class="room-desc">自由交流</div>
+                    </div>
+                </div>
+                <!-- 仅代码控制显示，默认先保留，JS 登录后判断权限 -->
+                <div class="room-item private" data-room="private-260120" id="secretRoomItem">
+                    <div class="room-avatar">💕</div>
+                    <div class="room-info">
+                        <div class="room-name">🤫</div>
+                        <div class="room-desc">密码保护</div>
+                    </div>
+                </div>
+				<div class="room-item private" data-room="private-test-group">
+                    <div class="room-avatar">⭐</div>
+                    <div class="room-info">
+                        <div class="room-name">STAR Talk 测试组后宫</div>
+                        <div class="room-desc">密码保护</div>
+                    </div>
+                </div>
+            </div>
+            <div class="room-sidebar-footer">
+                <button class="logout-btn about-btn" id="aboutItem">
+                    <span>ℹ️</span> 关于
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="chat-top">
+                <button class="toggle-left-btn" id="toggleLeftBtn" aria-label="打开聊天室列表">☰</button>
+                <div>
+                    <span class="room-title" id="currentRoomName">公共聊天室</span>
+                    <span class="current-username" id="currentUsernameDisplay"></span>
+                    <span class="conn-status" id="connectionStatus">正在连接...</span>
+                </div>
+                <button class="toggle-right-btn" id="toggleRightBtn" aria-label="打开在线用户列表">👥</button>
+            </div>
+            <div class="chat-content" id="messagesContainer">
+                <div class="system-tip">聊天室 正在线上</div>
+            </div>
+            <div class="chat-input">
+                <div class="input-bar">
+                    <input type="text" class="input" id="message-input" placeholder="输入消息...">
+                    <button id="send-button" disabled>发送</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="online-sidebar" id="onlineSidebar">
+            <div class="online-sidebar-header">
+                <h3>在线用户</h3>
+                <span class="online-count" id="onlineCount">0</span>
+            </div>
+            <div class="online-list" id="onlineUsers"></div>
+            <div class="logout-section">
+                <button class="logout-btn" id="logoutBtn">
+                    <span>🚪</span> 退出登录
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 密码确认弹窗 -->
+    <div class="password-confirm-mask" id="passwordConfirmMask">
+        <div class="password-confirm-box">
+            <h4>确认您的密码</h4>
+            <div class="password-display" id="passwordDisplay"></div>
+            <div class="password-confirm-tip">请确认您的密码是否正确</div>
+            <div class="password-confirm-btns">
+                <button class="btn-modify" id="btnModifyPassword">继续修改</button>
+                <button class="btn-confirm" id="btnConfirmPassword">确认注册</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script>
-        function closeTopAd() {
-            var ad = document.getElementById('topAdBanner');
-            ad.style.transform = 'translateY(120%)';
-            ad.style.opacity = '0';
-            setTimeout(function() {
-                ad.style.display = 'none';
-                document.body.classList.remove('pb-20');
-            }, 400);
-            localStorage.setItem('topAdClosed', 'true');
+        // 加密函数（SHA-256）
+        async function sha256(str) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(str);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
         }
-        
-        window.onload = function() {
-            if (localStorage.getItem('topAdClosed') === 'true') {
-                var ad = document.getElementById('topAdBanner');
-                ad.style.display = 'none';
-                document.body.classList.remove('pb-20');
-            }
+
+        // 有权限查看 🤫 房间的用户白名单
+        const ALLOW_USER_LIST = ['ALEX1NG', 'YUK1NG'];
+
+        const ROOMS = {
+            'public': { name: '公共聊天室', needPassword: false, icon: '💬', desc: '自由交流' },
+            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '💕', desc: '密码保护' },
+			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '⭐', desc: '密码保护' }
         };
-    </script>
+        const DEFAULT_ROOM = 'public';
+        const KNOWN_ROOM_IDS = Object.keys(ROOMS);
 
-    <!-- Navigation (Floating/Glass) -->
-    <nav class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-2xl border-b border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.05)]">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-20 items-center">
-                <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0 flex items-center gap-3 group">
-                        <div class="w-11 h-11 bg-white text-slate-900 flex items-center justify-center rounded-xl border border-slate-200 shadow-card transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-card-hover">
-                            <i class="fas fa-star text-lg"></i>
-                        </div>
-                        <span class="font-semibold text-2xl text-slate-950 font-cyber tracking-tight">STAR <span class="text-primary">HigheriTech</span></span>
-                    </a>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">首页</a>
-                    <a href="#features" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">特性</a>
-                    <a href="#products" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">产品</a>
-                    <a href="#solutions" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">解决方案</a>
-                    <a href="#roadmap" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">路线图</a>
-                    <a href="#community" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">社区</a>
-                    <a href="#faq" class="text-slate-600 hover:text-primary text-[15px] font-medium nav-link transition-colors">FAQ</a>
-                    
-                    <a href="https://docs.higheri.tech/" class="flex items-center gap-2 bg-slate-900 hover:bg-primary text-white px-5 py-2.5 rounded-lg transition-all duration-300 shadow-card">
-                        <span>文档中心</span>
-                        <i class="fas fa-external-link-alt text-xs"></i>
-                    </a>
-                </div>
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8t9QqsluQRx37krfzPdRvZYHU2xClt18",
+            authDomain: "star-higheritech-star-talk.firebaseapp.com",
+            databaseURL: "https://star-higheritech-star-talk-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "star-higheritech-star-talk",
+            storageBucket: "star-higheritech-star-talk.firebasestorage.app",
+            messagingSenderId: "610218110599",
+            appId: "1:610218110599:web:a86650f9662cff7e441222"
+        };
 
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-slate-900 hover:text-primary focus:outline-none p-2">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-6 border-t border-slate-200 mt-0 bg-white/95 backdrop-blur-xl absolute left-0 right-0 top-20 px-6 border-b border-slate-200 shadow-xl">
-                <div class="flex flex-col space-y-4">
-                    <a href="#" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">首页</a>
-                    <a href="#features" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">特性</a>
-                    <a href="#products" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">产品</a>
-                    <a href="#solutions" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">解决方案</a>
-                    <a href="#roadmap" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">路线图</a>
-                    <a href="#community" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">社区</a>
-                    <a href="#faq" class="text-slate-600 hover:text-primary text-lg font-medium transition-colors block">FAQ</a>
-                    <a href="https://docs.higheri.tech/" class="text-primary hover:text-primary/80 text-lg font-medium transition-colors block">文档中心</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const connectedRef = database.ref('.info/connected');
+        const usersRef = database.ref('users');
 
-    <!-- Hero Carousel Section (AMD/Microsoft Style) -->
-    <div id="hero-carousel" class="relative h-[100svh] min-h-[640px] md:min-h-[680px] overflow-hidden bg-dark group">
-        
-        <!-- Slides Container -->
-        <div id="carousel-slides" class="relative w-full h-full">
-            
-            <!-- Slide 1: HigheriPE (New Release - Priority) -->
-            <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 z-10" data-index="0">
-                <div class="absolute inset-0 bg-[url('img/11.png')] bg-cover bg-center"></div>
-                <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-                <div class="absolute top-24 left-12 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(37, 99, 235, 0.30)"></div>
-                <div class="absolute bottom-16 right-10 h-72 w-72 rounded-full blur-[120px]" style="background: rgba(6, 182, 212, 0.24)"></div>
-                
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl w-full py-12 md:py-20">
-                        <div class="hero-panel rounded-[18px] p-8 md:p-10 max-w-2xl" style="background: rgba(255, 255, 255, 0.65);">
-                        <div class="section-kicker mb-5" style="background: rgba(255, 255, 255, 0.8); color: #52525B; border-color: rgba(0, 0, 0, 0.1);">
-                            全新 6.0
-                        </div>
-                        <h1 class="section-title font-semibold mb-6" style="color: #1f2937;">
-                            更干净、更稳定、<br>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400">更适合实际维护场景的 PE 体系</span>
-                        </h1>
-                        <p class="text-lg md:text-xl mb-10 max-w-xl leading-relaxed" style="color: #374151;">
-                            新功能：PE安装到本地 | 更便捷的插件功能
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="VIEW/PE/PE.html" class="px-8 py-4 bg-gradient-to-r from-primary to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-semibold text-lg transition-all shadow-neon-glow rounded-lg flex items-center gap-2 group/btn">
-                                立即获取 <i class="fas fa-download group-hover/btn:translate-y-1 transition-transform"></i>
-                            </a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // 全局状态
+        let isLoginMode = true;
+        let currentUser = null;
 
-            <!-- Slide 2: STAR Hira (New Release) -->
-            <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="1">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-62"></div>
-                <div class="absolute inset-0 backdrop-blur-[12px] bg-white/8"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-white/12 via-white/6 to-transparent"></div>
-                <div class="absolute inset-0 bg-grid-pattern opacity-20"></div>
-                <div class="absolute top-20 left-1/2 -translate-x-[140%] h-72 w-72 rounded-full blur-[120px]" style="background: rgba(139, 92, 246, 0.34)"></div>
-                <div class="absolute bottom-8 left-1/2 translate-x-[35%] h-72 w-72 rounded-full blur-[120px]" style="background: rgba(6, 182, 212, 0.28)"></div>
-                <div class="absolute top-1/4 right-1/4 w-48 h-48 rounded-full blur-[100px]" style="background: rgba(236, 72, 153, 0.2)"></div>
-                
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-3xl w-full py-12 md:py-20">
-                        <div class="hero-panel rounded-[28px] border border-white/10 backdrop-blur-[14px] shadow-[0_12px_40px_rgba(15,23,42,0.55)] px-6 py-8 md:px-10 md:py-10 max-w-2xl" style="background: rgba(191, 219, 254, 0.65);">
-                        <div class="section-kicker mb-5 mx-auto" style="background: rgba(255, 255, 255, 0.8); color: #475569; border-color: rgba(0, 0, 0, 0.06);">
-                            7.0 全新发布
-                        </div>
-                        <h1 class="section-title font-semibold mb-6" style="color: #1f2937;">
-                            为您带来，<br>
-                            <span class="relative inline-block mt-2">
-                                <span class="absolute inset-0 bg-black rounded-xl -z-10 scale-105"></span>
-                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">全新浏览体验</span>
-                            </span>
-                        </h1>
-                        <p class="text-lg md:text-xl mb-10 max-w-xl leading-relaxed" style="color: #374151;">
-                            STAR Hira 7.0 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
-                        </p>
-                        <div class="flex flex-wrap gap-4">
-                            <a href="#products" class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all" style="background: linear-gradient(135deg, #8b5cf6, #06b6d4); box-shadow: 0 16px 36px rgba(139, 92, 246, 0.22), 0 0 20px rgba(139, 92, 246, 0.15);">
-                                立即下载 7.0 <i class="fas fa-download"></i>
-                            </a>
-                            <a href="https://docs.higheri.tech/" class="inline-flex items-center gap-2 px-8 py-4 bg-white/80 hover:bg-white border border-slate-200 text-slate-950 font-semibold text-lg transition-all rounded-lg">
-                                查看更新日志
-                            </a>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // DOM元素
+        const themeToggle = document.getElementById('themeToggle');
+        const authMask = document.getElementById('authMask');
+        const authSubtitle = document.getElementById('authSubtitle');
+        const authTip = document.getElementById('authTip');
+        const authUsername = document.getElementById('authUsername');
+        const authPassword = document.getElementById('authPassword');
+        const authBtn = document.getElementById('authBtn');
+        const switchMode = document.getElementById('switchMode');
+        const roomSelectMask = document.getElementById('roomSelectMask');
+        const publicBtn = document.getElementById('publicBtn');
+        const privateBtn = document.getElementById('privateBtn');
+        const pwdInput = document.getElementById('pwdInput');
+        const pwdTip = document.getElementById('pwdTip');
+        const chatWrap = document.getElementById('chatWrap');
+        const mobileMask = document.getElementById('mobileMask');
+        const roomSidebar = document.getElementById('roomSidebar');
+        const roomItems = document.querySelectorAll('.room-item');
+        const toggleLeftBtn = document.getElementById('toggleLeftBtn');
+        const toggleRightBtn = document.getElementById('toggleRightBtn');
+        const messagesContainer = document.getElementById('messagesContainer');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const connectionStatus = document.getElementById('connectionStatus');
+        const currentRoomName = document.getElementById('currentRoomName');
+        const currentUsernameDisplay = document.getElementById('currentUsernameDisplay');
+        const onlineSidebar = document.getElementById('onlineSidebar');
+        const onlineUsersContainer = document.getElementById('onlineUsers');
+        const onlineCount = document.getElementById('onlineCount');
+        const secretRoomItem = document.getElementById('secretRoomItem');
+        const transitionOverlay = document.getElementById('transitionOverlay');
+        const transitionCircle = document.querySelector('.transition-circle');
+        const transitionContent = document.querySelector('.transition-content');
+        const transitionText = document.getElementById('transitionText');
+        const transitionSubtext = document.getElementById('transitionSubtext');
+        const logoutBtn = document.getElementById('logoutBtn');
 
-            <!-- Slide 3: SadCloud Ad - Hero Style -->
-            <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="2">
-                <div class="absolute inset-0 bg-gradient-to-br from-pink-600 via-purple-600 to-indigo-700"></div>
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40"></div>
-                
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="max-w-4xl w-full py-12 md:py-20">
-                        <div class="hero-panel rounded-[18px] p-8 md:p-12 bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)]">
-                            <!-- Ad Badge -->
-                            <div class="inline-flex items-center gap-2 mb-6">
-                                <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-4 py-2 rounded-full shadow-lg">
-                                    🔥 限时特惠
-                                </span>
-                            </div>
-                            
-                            <!-- Main Title -->
-                            <h1 class="section-title font-bold text-gray-900 mb-4 text-4xl md:text-6xl lg:text-7xl leading-tight">
-                                伤心的云
-                            </h1>
-                            
-                            <!-- Subtitle -->
-                            <p class="text-xl md:text-2xl text-gray-600 mb-3">
-                                ☁️ 愿我们的服务器是你的小众惊喜
-                            </p>
-                            
-                            <!-- Price Highlight -->
-                            <div class="mb-8">
-                                <span class="text-yellow-500 font-bold text-5xl md:text-7xl">¥9.9</span>
-                                <span class="text-gray-500 text-xl md:text-2xl ml-2">/月起</span>
-                                <p class="text-gray-500 mt-2">香港CN2 · 1核1G · 30G SSD · 10Mbps</p>
-                            </div>
-                            
-                            <!-- Features -->
-                            <div class="flex flex-wrap gap-3 mb-10">
-                                <span class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium">⚡ 高性能</span>
-                                <span class="bg-green-100 text-green-700 px-4 py-2 rounded-lg text-sm font-medium">🛡️ 稳定防护</span>
-                                <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg text-sm font-medium">🌏 全球节点</span>
-                                <span class="bg-orange-100 text-orange-700 px-4 py-2 rounded-lg text-sm font-medium">💰 性价比之王</span>
-                            </div>
-                            
-                            <!-- CTA Buttons -->
-                            <div class="flex flex-wrap gap-4">
-                                <a href="https://sadidc.com/" target="_blank" class="px-10 py-5 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold text-xl transition-all shadow-[0_8px_30px_rgba(34,197,94,0.5)] hover:-translate-y-1 rounded-xl">
-                                    转到官网
-                                </a>
-                                <a href="https://sadidc.com/" target="_blank" class="px-10 py-5 border-2 border-purple-500 text-purple-600 font-bold text-xl transition-all bg-purple-50 hover:bg-purple-100 hover:border-purple-600 rounded-xl">
-                                    了解更多
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        let isConnected = false;
+        let pendingRegisterData = null;
+        let currentRoom = null;
+        let currentUserRef = null;
+        let targetRoomId = null;
+        let messagesCallback = null;
+        let onlineUsersCallback = null;
 
-            <!-- Slide 4: HigheriDraft -->
-            <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="3">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-white/92 via-white/70 to-white/10 z-0"></div>
-                
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="w-full py-12 md:py-20">
-                        <div class="grid lg:grid-cols-[280px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl ml-auto">
-                            <div class="hidden lg:block space-y-4 order-2 lg:order-1">
-                                <div class="surface-card rounded-[16px] p-6">
-                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Daily Notes</div>
-                                    <div class="space-y-3">
-                                        <div class="h-2 bg-slate-200 rounded-full w-full"></div>
-                                        <div class="h-2 bg-slate-200 rounded-full w-4/5"></div>
-                                        <div class="h-2 bg-slate-200 rounded-full w-3/5"></div>
-                                    </div>
-                                </div>
-                                <div class="surface-card rounded-[16px] p-6">
-                                    <div class="text-xs uppercase tracking-[0.18em] text-slate-500 mb-3">Use Cases</div>
-                                    <div class="space-y-2 text-slate-700">
-                                        <div>灵感记录</div>
-                                        <div>轻任务整理</div>
-                                        <div>跨端草稿同步</div>
-                                    </div>
-                                    <a href="#products" class="mt-6 inline-flex items-center px-6 py-3 bg-secondary hover:bg-teal-500 text-white font-semibold transition-all shadow-neon-sec rounded-lg gap-2 group/btn">
-                                        开始使用 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="surface-card rounded-[18px] p-8 md:p-12 max-w-3xl order-1 lg:order-2 lg:ml-auto">
-                                <div class="section-kicker mb-5">
-                                    Productivity
-                                </div>
-                                <h1 class="section-title font-semibold text-slate-950 mb-6">
-                                    让记录更专注，<br>
-                                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-secondary to-neon text-glow">把灵感留在工作流里</span>
-                                </h1>
-                                <p class="text-lg md:text-xl text-slate-600 mb-8 max-w-2xl leading-relaxed">
-                                    HigheriDraft 面向日常灵感与团队协作，提供更轻、更干净的跨端草稿记录体验。
-                                </p>
-                                <div class="flex flex-wrap gap-3 mb-8 text-sm text-slate-600">
-                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">轻量界面</span>
-                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">快速记录</span>
-                                    <span class="px-4 py-2 rounded-lg bg-slate-100 border border-slate-200">云端同步</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Slide 5: STAR EasyCMD -->
-            <div class="carousel-slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0" data-index="4">
-                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1629654297299-c8506221ca97?q=80&w=1974&auto=format&fit=crop')] bg-cover bg-center opacity-90"></div>
-                
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center relative z-10">
-                    <div class="w-full py-12 md:py-20">
-                        <div class="grid lg:grid-cols-[360px_minmax(0,1fr)] gap-6 lg:gap-10 items-center max-w-6xl">
-                            <div class="hidden lg:block hero-panel rounded-[16px] p-5 font-mono text-sm text-slate-300 leading-7">
-                                <div class="flex items-center gap-2 mb-4">
-                                    <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
-                                    <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-                                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-                                    <span class="ml-auto text-xs uppercase tracking-[0.18em] text-slate-500">workflow</span>
-                                </div>
-                                <div class="text-slate-500">$ build command</div>
-                                <div>select task: deploy</div>
-                                <div>add step: backup</div>
-                                <div>add step: clear temp</div>
-                                <div>add step: run script</div>
-                                <div class="text-indigo-300">output: reusable pipeline ready</div>
-                            </div>
-                            <div class="hero-panel rounded-[18px] p-8 md:p-12 max-w-3xl lg:ml-auto">
-                                <div class="flex flex-col gap-8">
-                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-5">
-                                        <div class="section-kicker">
-                                            Developer Tools
-                                        </div>
-                                        <a href="#products" class="px-8 py-4 bg-accent hover:bg-purple-500 text-white font-semibold text-lg transition-all shadow-card rounded-lg inline-flex items-center gap-2 group/btn self-start shadow-[0_10px_30px_rgba(139,92,246,0.25)]">
-                                            立即尝试 <i class="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-                                        </a>
-                                    </div>
-                                    <h1 class="section-title font-semibold text-white">
-                                        命令行不必复杂，<br>
-                                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-electric to-pink-400 text-glow">工作流也能更直观</span>
-                                    </h1>
-                                    <p class="text-lg md:text-xl text-slate-200/90 max-w-2xl leading-relaxed">
-                                        STAR EasyCMD 用更可视化的方式整理复杂命令，把开发者常用流程收敛为更清楚的操作界面。
-                                    </p>
-                                </div>
-                                <div class="grid sm:grid-cols-2 gap-3 mt-8">
-                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4">
-                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Visual Build</div>
-                                        <div class="text-white font-medium">积木式拼装命令流程</div>
-                                    </div>
-                                    <div class="rounded-lg border border-white/10 bg-white/5 px-4 py-4">
-                                        <div class="text-xs uppercase tracking-[0.18em] text-slate-400 mb-2">Reusable</div>
-                                        <div class="text-white font-medium">沉淀可复用脚本模板</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Controls / Indicators -->
-        <div class="absolute bottom-16 md:bottom-12 left-0 w-full z-20">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-4">
-                <!-- Play/Pause Button -->
-                <button id="carousel-play-pause" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
-                    <i class="fas fa-pause text-xs"></i>
-                </button>
-                
-                <!-- Progress Indicators -->
-                <div class="flex items-center gap-2">
-                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="0">
-                        <div class="h-full bg-primary w-0 transition-all duration-[5000ms] ease-linear"></div>
-                    </button>
-                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="1">
-                        <div class="h-full bg-accent w-0 transition-all duration-[5000ms] ease-linear"></div>
-                    </button>
-                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="2">
-                        <div class="h-full bg-purple-500 w-0 transition-all duration-[5000ms] ease-linear"></div>
-                    </button>
-                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="3">
-                        <div class="h-full bg-secondary w-0 transition-all duration-[5000ms] ease-linear"></div>
-                    </button>
-                    <button class="carousel-dot h-1.5 w-14 bg-white/25 hover:bg-white/60 transition-all rounded-lg overflow-hidden relative" data-index="4">
-                        <div class="h-full bg-accent w-0 transition-all duration-[5000ms] ease-linear"></div>
-                    </button>
-                </div>
-                
-                <!-- Arrows -->
-                <div class="flex items-center gap-2 ml-auto">
-                    <button id="carousel-prev" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
-                        <i class="fas fa-chevron-left text-sm"></i>
-                    </button>
-                    <button id="carousel-next" class="hero-control w-11 h-11 flex items-center justify-center hover:bg-white/10 text-white transition-colors">
-                        <i class="fas fa-chevron-right text-sm"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce z-20 pointer-events-none hidden md:block">
-            <i class="fas fa-chevron-down text-white/50 text-3xl"></i>
-        </div>
-    </div>
-
-    <!-- Hero Ad Card - Prominent Style -->
-    <div class="bg-gradient-to-b bg-white py-10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Ad Card -->
-            <div class="max-w-3xl mx-auto">
-                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
-                    <!-- Ad Header -->
-                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
-                            <span class="text-sm text-white/80">sadidc.com</span>
-                        </div>
-                    </div>
-                    <!-- Ad Body -->
-                    <div class="p-8">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                            <div class="flex items-center gap-5">
-                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
-                                    <span class="text-purple-600 font-bold text-5xl">云</span>
-                                </div>
-                                <div>
-                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
-                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
-                                    <p class="text-yellow-600 font-bold text-lg mt-2">🔥 香港¥9.9/月起 · 限时优惠</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 sm:ml-auto">
-                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
-                                    转到官网
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mt-6 flex flex-wrap gap-3">
-                            <span class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🔥 限时特惠</span>
-                            <span class="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">⚡ 高性能云服务器</span>
-                            <span class="bg-gradient-to-r from-green-500 to-teal-500 text-white text-sm px-4 py-2 rounded-full font-bold shadow-lg">🛡️ 24h稳定防护</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Stats Section -->
-    <div class="bg-gray-100 border-y border-slate-200 py-20 relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/20 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
-        </div>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="section-shell rounded-[20px] p-8 md:p-10">
-                <div class="grid lg:grid-cols-[300px_minmax(0,1fr)] gap-10 items-start">
-                    <div>
-                        <div class="section-kicker mb-5">Brand Principles</div>
-                        <h2 class="text-3xl md:text-4xl font-semibold text-slate-950 tracking-tight mb-4">更像一套成熟的软件体系</h2>
-                        <p class="text-slate-600 text-base md:text-lg leading-8">我们希望官网传达的不是堆砌参数，而是清楚、可靠、长期可用的产品气质。</p>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8">
-                        <div class="minimal-stat">
-                            <strong>AI Native</strong>
-                            <p class="text-slate-500 leading-7">将搜索、创作与执行整合进同一套软件体验。</p>
-                        </div>
-                        <div class="minimal-stat">
-                            <strong>Privacy First</strong>
-                            <p class="text-slate-500 leading-7">坚持纯净体验与可靠边界，让工具更值得长期使用。</p>
-                        </div>
-                        <div class="minimal-stat">
-                            <strong>Open Ecosystem</strong>
-                            <p class="text-slate-500 leading-7">拥抱开源与社区协作，让产品持续演进而不封闭。</p>
-                        </div>
-                        <div class="minimal-stat">
-                            <strong>Focused UX</strong>
-                            <p class="text-slate-500 leading-7">减少噪音与装饰，把注意力还给真正重要的任务。</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- SadCloud Ad Section - Prominent Style -->
-    <div class="bg-gradient-to-b bg-white py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Ad Container -->
-            <div class="max-w-5xl mx-auto">
-                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
-                    <!-- Ad Header -->
-                    <div class="px-6 py-4 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
-                        <div class="flex items-center gap-3">
-                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
-                            <span class="text-sm text-white/80">sadidc.com</span>
-                        </div>
-                        <span class="text-white/60 text-sm">伤心的云</span>
-                    </div>
-                    <!-- Ad Content -->
-                    <div class="p-8">
-                        <!-- Ad Title -->
-                        <div class="mb-6 pb-6 border-b border-gray-100 text-center">
-                            <a href="https://sadidc.com/" target="_blank" class="text-3xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
-                            <p class="text-gray-600 text-lg mt-2">☁️ 愿我们的服务器是你的小众惊喜</p>
-                            <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起 · 错过再等一年</p>
-                        </div>
-                        <!-- Product Grid -->
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            <!-- Product 1 -->
-                            <div class="border-2 border-blue-300 rounded-xl p-6 hover:border-blue-600 transition-all bg-gradient-to-br from-blue-50 to-white shadow-[0_6px_25px_rgba(37,99,235,0.2)] hover:shadow-[0_10px_35px_rgba(37,99,235,0.35)] hover:-translate-y-1">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                                        <span class="text-purple-600 font-bold text-2xl">云</span>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-gray-900 text-lg">香港 happy</span>
-                                        <span class="ml-2 text-xs bg-red-500 text-white px-2 py-1 rounded-full font-bold animate-pulse">🔥 爆款</span>
-                                    </div>
-                                </div>
-                                <div class="text-4xl font-bold text-blue-600 mb-2">¥9.9<span class="text-base font-normal text-gray-500">/月</span></div>
-                                <p class="text-sm text-gray-600 mb-4">1核/1G/30G/10Mbps · 香港CN2</p>
-                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(34,197,94,0.5)] hover:scale-105">
-                                    转到官网
-                                </a>
-                            </div>
-                            <!-- Product 2 -->
-                            <div class="border-2 border-emerald-300 rounded-xl p-6 hover:border-emerald-600 transition-all bg-gradient-to-br from-emerald-50 to-white shadow-[0_6px_25px_rgba(16,185,129,0.2)] hover:shadow-[0_10px_35px_rgba(16,185,129,0.35)] hover:-translate-y-1">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(16,185,129,0.4)]">
-                                        <span class="text-white font-bold text-2xl">☁</span>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-gray-900 text-lg">美国 eagle</span>
-                                        <span class="ml-2 text-xs bg-emerald-500 text-white px-2 py-1 rounded-full font-bold">⭐ 推荐</span>
-                                    </div>
-                                </div>
-                                <div class="text-4xl font-bold text-emerald-600 mb-2">¥12.99<span class="text-base font-normal text-gray-500">/月</span></div>
-                                <p class="text-sm text-gray-600 mb-4">1核/1GB/10G/500Mbps · 美国直连</p>
-                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(16,185,129,0.5)] hover:scale-105">
-                                    转到官网
-                                </a>
-                            </div>
-                            <!-- Product 3 -->
-                            <div class="border-2 border-purple-300 rounded-xl p-6 hover:border-purple-600 transition-all bg-gradient-to-br from-purple-50 to-white shadow-[0_6px_25px_rgba(139,92,246,0.2)] hover:shadow-[0_10px_35px_rgba(139,92,246,0.35)] hover:-translate-y-1">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-[0_3px_15px_rgba(139,92,246,0.4)]">
-                                        <span class="text-white font-bold text-2xl">⚡</span>
-                                    </div>
-                                    <div>
-                                        <span class="font-bold text-gray-900 text-lg">游戏云</span>
-                                        <span class="ml-2 text-xs bg-purple-500 text-white px-2 py-1 rounded-full font-bold">🎮 游戏</span>
-                                    </div>
-                                </div>
-                                <div class="text-4xl font-bold text-purple-600 mb-2">¥12<span class="text-base font-normal text-gray-500">/月</span></div>
-                                <p class="text-sm text-gray-600 mb-4">2核/4G/40G/15Mbps · 游戏优化</p>
-                                <a href="https://sadidc.com/" target="_blank" class="block w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white text-center text-base font-bold rounded-none transition-all shadow-[0_5px_20px_rgba(139,92,246,0.5)] hover:scale-105">
-                                    转到官网
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Why Choose Us (Features) -->
-    <div id="features" class="py-28 bg-white relative overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <div class="section-kicker mb-5">Why HigheriTech</div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-5 tracking-tight">克制设计，服务真实场景</h2>
-                <p class="text-slate-600 max-w-2xl mx-auto text-lg leading-8">我们不追求堆砌功能，而是把复杂能力收敛成更清晰、更可靠、更长期可用的软件体验。</p>
-            </div>
-            
-            <div class="section-shell rounded-[20px] p-6 md:p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
-                <!-- Feature 1 -->
-                <div class="group p-8 md:p-10 md:border-r md:border-slate-200/80 transition-colors">
-                    <div class="w-14 h-14 bg-primary/10 rounded-lg flex items-center justify-center mb-6 text-primary transition-colors">
-                        <i class="fas fa-bolt text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">高效稳定</h3>
-                    <p class="text-slate-600 leading-7">
-                        从启动速度到交互反馈，我们持续打磨每一个高频环节，让软件表现更沉稳、更流畅。
-                    </p>
-                </div>
-                
-                <!-- Feature 2 -->
-                <div class="group p-8 md:p-10 md:border-r md:border-slate-200/80 transition-colors">
-                    <div class="w-14 h-14 bg-secondary/10 rounded-lg flex items-center justify-center mb-6 text-secondary transition-colors">
-                        <i class="fas fa-shield-alt text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">安全可靠</h3>
-                    <p class="text-slate-600 leading-7">
-                        数据隐私与纯净体验是基础原则。没有冗余打扰，只有值得信赖的长期使用感。
-                    </p>
-                </div>
-                
-                <!-- Feature 3 -->
-                <div class="group p-8 md:p-10 transition-colors">
-                    <div class="w-14 h-14 bg-accent/10 rounded-lg flex items-center justify-center mb-6 text-accent transition-colors">
-                        <i class="fas fa-code text-2xl"></i>
-                    </div>
-                    <h3 class="text-xl font-semibold text-slate-950 mb-3 tracking-tight">开放演进</h3>
-                    <p class="text-slate-600 leading-7">
-                        借助社区反馈与开源协作持续迭代，让产品能力更透明，也更贴近真实用户的工作流。
-                    </p>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bold Bento Grid Products -->
-    <div id="products" class="py-28 bg-gray-100 relative overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"></div>
-        </div>
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
-                <div>
-                    <div class="section-kicker mb-5">Core Products</div>
-                    <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 mb-4 tracking-tight">更聚焦的产品矩阵</h2>
-                    <div class="h-1.5 w-20 bg-gradient-to-r from-primary to-sky-400 rounded-full"></div>
-                </div>
-                <p class="text-slate-600 max-w-md text-right md:text-lg leading-8">
-                    围绕系统维护、生产力与日常效率场景，提供统一、干净且可持续演进的软件产品。
-                </p>
-            </div>
-            
-            <!-- Bento Grid Layout -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(250px,auto)]">
-                
-                <!-- Full Width Item - STAR Hira (Priority Top) -->
-                <div class="md:col-span-3 group bento-item soft-dark-card rounded-[20px] hover:border-violet-400/30 card-hover-effect min-h-[320px] overflow-hidden">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065&auto=format&fit=crop')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity"></div>
-                    <div class="absolute inset-0 bg-gradient-to-r from-purple-900/40 via-black/80 to-black"></div>
-                    
-                    <div class="bento-content h-full p-8 md:p-12 flex flex-col md:flex-row items-center justify-between relative z-10 gap-8">
-                        <div class="flex-1 text-center md:text-left">
-                            <div class="inline-block px-3 py-1 bg-purple-500/10 border border-purple-400/20 text-purple-200 text-xs font-semibold rounded-lg mb-4 tracking-[0.18em] uppercase">
-                                NEW PRODUCT
-                            </div>
-                            <h3 class="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight">STAR <span class="relative inline-block mt-1">
-                                <span class="absolute inset-0 bg-black rounded-xl -z-10 scale-105"></span>
-                                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">Hira</span>
-                            </span></h3>
-                            <p class="text-slate-300 text-lg mb-8 max-w-xl leading-8">
-                                STAR Hira 7.0 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
-                            </p>
-                            <div class="flex flex-wrap gap-4 justify-center md:justify-start">
-                                <a href="VIEW/hira/index.html" class="px-8 py-3 bg-white text-slate-950 font-semibold rounded-lg transition-all shadow-lg shadow-slate-950/20 flex items-center gap-2 hover:-translate-y-0.5">
-                                    免费下载 <i class="fas fa-download"></i>
-                                </a>
-                                <a href="VIEW/hira/index.html" class="px-8 py-3 border border-white/15 text-slate-200 font-semibold rounded-lg hover:border-white/40 hover:text-white transition-all bg-white/5 backdrop-blur-sm">
-                                    了解更多
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <!-- Visual Element -->
-                        <div class="w-full md:w-1/3 aspect-video bg-slate-950/90 rounded-[14px] border border-white/10 p-2 shadow-2xl transform group-hover:-translate-y-2 transition-transform duration-500 relative">
-                            <!-- Mockup Browser Header -->
-                            <div class="h-8 bg-slate-900 rounded-t-[10px] flex items-center px-3 gap-2 border-b border-slate-700/80">
-                                <div class="flex gap-1.5">
-                                    <div class="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
-                                </div>
-                                <div class="flex-1 mx-4 h-5 bg-slate-950 rounded-full flex items-center px-3 text-[10px] text-slate-500">
-                                    <i class="fas fa-lock text-[8px] mr-1"></i> h://newtab
-                                </div>
-                            </div>
-                            <!-- Mockup Content -->
-                            <div class="p-4 flex flex-col items-center justify-center h-[calc(100%-2rem)] bg-black/50 rounded-b-[10px] relative overflow-hidden">
-                                <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-3 animate-pulse">
-                                    <i class="fas fa-robot text-purple-400 text-xl"></i>
-                                </div>
-                                <div class="w-3/4 h-2 bg-gray-800 rounded-full mb-2"></div>
-                                <div class="w-1/2 h-2 bg-gray-800 rounded-full"></div>
-                                
-                                <!-- Chat Bubble -->
-                                <div class="absolute bottom-4 right-4 bg-gray-800 px-3 py-2 rounded-md border border-purple-500/30 text-[10px] text-purple-300 shadow-lg">
-                                    How can I help you?
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Main Feature (Large Item) - HigheriPE -->
-                <div class="md:col-span-2 md:row-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-primary/35 card-hover-effect">
-                    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500 group-hover:scale-105 transform"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent"></div>
-                    
-                    <div class="bento-content h-full p-8 md:p-12 flex flex-col justify-end">
-                        <div class="w-16 h-16 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                            <i class="fas fa-cogs text-3xl text-primary group-hover:text-white"></i>
-                        </div>
-                        <h3 class="text-3xl md:text-4xl font-semibold text-white mb-4 tracking-tight">HigheriPE</h3>
-                        <p class="text-slate-400 text-lg mb-8 max-w-xl leading-8">
-                            面向系统安装、维护与修复场景的专业工具箱。
-                            <br>流程更清晰，操作更顺手，适合高频使用。
-                        </p>
-                        <a href="VIEW/PE/PE.html" class="inline-flex items-center text-blue-300 font-semibold hover:text-white transition-colors">
-                            立即获取 <i class="fas fa-arrow-right ml-2 group-hover:translate-x-2 transition-transform"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Tall Item - HigheriDraft -->
-                <div class="md:col-span-1 md:row-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-secondary/35 card-hover-effect">
-                    <div class="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent"></div>
-                    <div class="bento-content h-full p-8 flex flex-col">
-                        <div class="w-14 h-14 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80">
-                            <i class="fas fa-tasks text-2xl text-secondary"></i>
-                        </div>
-                        <h3 class="text-2xl font-semibold text-white mb-2 tracking-tight">HigheriDraft</h3>
-                        <p class="text-slate-400 mb-auto leading-7">将想法、待办与工作片段保留在一个足够轻盈的记录空间里。</p>
-                        
-                        <!-- Visual representation of list/draft -->
-                        <div class="mt-8 space-y-3 opacity-60 group-hover:opacity-100 transition-opacity">
-                            <div class="h-2 w-full bg-gray-700 rounded-full"></div>
-                            <div class="h-2 w-3/4 bg-gray-700 rounded-full"></div>
-                            <div class="h-2 w-5/6 bg-gray-700 rounded-full"></div>
-                        </div>
-                        
-                        <a href="webp/DRAFT/index.html" class="mt-8 inline-block px-6 py-3 rounded-lg border border-secondary/30 text-teal-300 hover:bg-secondary hover:text-white transition-all text-center font-medium">
-                            开始记录
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Wide Item - HigheriTab -->
-                <div class="md:col-span-2 group bento-item soft-dark-card rounded-[20px] hover:border-accent/35 card-hover-effect min-h-[250px]">
-                    <div class="absolute inset-0 bg-gradient-to-r from-accent/10 to-transparent"></div>
-                    <div class="bento-content h-full p-8 flex flex-col md:flex-row items-center gap-8">
-                        <div class="flex-1">
-                            <div class="w-14 h-14 bg-slate-800/80 backdrop-blur-md rounded-lg flex items-center justify-center mb-6 border border-slate-700/80">
-                                <i class="fas fa-home text-2xl text-accent"></i>
-                            </div>
-                            <h3 class="text-2xl font-semibold text-white mb-2 tracking-tight">HigheriTab</h3>
-                            <p class="text-slate-400 leading-7">用更安静、更高效的方式重塑新标签页，把常用入口放回视线中心。</p>
-                            <a href="VIEW/hira/index.html" class="mt-4 inline-block px-6 py-3 rounded-lg border border-accent/30 text-indigo-300 hover:bg-accent hover:text-white transition-all text-center font-medium">
-                                开始使用
-                            </a>
-                        </div>
-                        <div class="w-full md:w-1/3 aspect-video bg-slate-800 rounded-lg border border-slate-700/80 p-2 group-hover:scale-105 transition-transform shadow-xl">
-                            <!-- Mockup browser -->
-                            <div class="flex gap-1 mb-2">
-                                <div class="w-2 h-2 rounded-full bg-red-400"></div>
-                                <div class="w-2 h-2 rounded-full bg-yellow-400"></div>
-                            </div>
-                            <div class="w-full h-full bg-slate-950 rounded-md flex items-center justify-center border border-slate-700/80">
-                                <span class="text-xs text-slate-500">New Tab</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Small Item - STAR EasyCMD -->
-                <div class="md:col-span-1 group bento-item soft-dark-card rounded-[20px] hover:border-slate-500/40 card-hover-effect min-h-[250px]">
-                    <div class="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
-                    <div class="bento-content h-full p-8 flex flex-col justify-center text-center items-center">
-                        <div class="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mb-4 group-hover:rotate-6 transition-transform">
-                            <i class="fas fa-terminal text-3xl text-slate-400"></i>
-                        </div>
-                        <h3 class="text-xl font-semibold text-white mb-2 tracking-tight">STAR EasyCMD</h3>
-                        <p class="text-slate-400 text-sm leading-6">把复杂命令整理为更容易理解的操作模块。</p>
-                        <a href="VIEW/PE/PE.html" class="mt-4 inline-block px-6 py-3 rounded-lg border border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white transition-all text-center font-medium">
-                            立即体验
-                        </a>
-                    </div>
-                </div>
-
-                <!-- (Moved to top) -->
-                
-            </div>
-        </div>
-    </div>
-
-    <!-- SadCloud Inline Ad - Prominent Style -->
-    <div class="bg-gradient-to-b bg-white py-10">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Ad Card -->
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white shadow-[0_10px_60px_rgba(0,0,0,0.3)] overflow-hidden">
-                    <!-- Ad Header -->
-                    <div class="px-5 py-3 bg-gradient-to-r from-blue-700 to-blue-600 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs text-white bg-green-500 px-2 py-1 rounded-sm font-bold">Ad</span>
-                            <span class="text-sm text-white/80">sadidc.com</span>
-                        </div>
-                    </div>
-                    <!-- Ad Body -->
-                    <div class="p-8">
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-                            <div class="flex items-center gap-5">
-                                <div class="w-24 h-24 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xl">
-                                    <span class="text-purple-600 font-bold text-5xl">云</span>
-                                </div>
-                                <div>
-                                    <a href="https://sadidc.com/" target="_blank" class="text-2xl font-bold text-purple-700 hover:text-purple-800 hover:underline">伤心的云</a>
-                                    <p class="text-gray-700 text-base mt-1">☁️ 愿我们的服务器是你的小众惊喜</p>
-                                    <p class="text-yellow-600 font-bold text-xl mt-2">🔥 限时特惠 · 香港¥9.9/月起</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 sm:ml-auto">
-                                <a href="https://sadidc.com/" target="_blank" class="px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold text-lg rounded-none transition-all shadow-[0_6px_20px_rgba(34,197,94,0.5)] hover:scale-105">
-                                    转到官网
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Asymmetrical Solutions Section -->
-    <div id="solutions" class="py-28 bg-white relative overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-20">
-                <div class="section-kicker mb-5">Solutions</div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">围绕真实工作场景设计</h2>
-            </div>
-            
-            <div class="space-y-10">
-                <!-- Solution 1: Left Aligned -->
-                <div class="section-shell rounded-[20px] p-6 md:p-8 flex flex-col md:flex-row items-center gap-12 group">
-                    <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-primary/10 transform -translate-x-4 translate-y-4 rounded-[16px] transition-transform group-hover:translate-x-2 group-hover:-translate-y-2"></div>
-                        <div class="relative h-80 bg-white rounded-[16px] overflow-hidden border border-slate-200 shadow-card">
-                            <div class="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="System" class="w-full h-full object-cover opacity-90">
-                            <div class="absolute bottom-0 left-0 p-8 z-20">
-                                <i class="fas fa-microchip text-5xl text-gray-200 mb-4 block"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-2/5 text-left">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-primary mb-4">01 System Care</div>
-                        <h3 class="text-3xl font-semibold text-slate-950 mb-4 group-hover:text-primary transition-colors tracking-tight">装机与系统</h3>
-                        <p class="text-slate-600 text-lg mb-6 leading-8">
-                            从系统安装到日常维护，我们提供多种工具。
-                            包括但不限于系统安装、驱动管理、密码破解等。
-                            小白也能轻松上手。
-                        </p>
-                        <a href="VIEW/win/index.html" class="text-slate-900 font-semibold border-b-2 border-primary pb-1 hover:text-primary transition-colors">
-                            查看更多产品
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Solution 2: Right Aligned -->
-                <div class="section-shell rounded-[20px] p-6 md:p-8 flex flex-col md:flex-row-reverse items-center gap-12 group">
-                    <div class="w-full md:w-3/5 relative">
-                        <div class="absolute inset-0 bg-secondary/10 transform translate-x-4 translate-y-4 rounded-[16px] transition-transform group-hover:-translate-x-2 group-hover:-translate-y-2"></div>
-                        <div class="relative h-80 bg-white rounded-[16px] overflow-hidden border border-slate-200 shadow-card">
-                            <div class="absolute inset-0 bg-gradient-to-l from-black/80 to-transparent z-10"></div>
-                            <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Office" class="w-full h-full object-cover opacity-90">
-                            <div class="absolute bottom-0 right-0 p-8 z-20">
-                                <i class="fas fa-network-wired text-5xl text-gray-200 mb-4 block"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-full md:w-2/5 text-right">
-                        <div class="text-sm font-semibold tracking-[0.18em] uppercase text-secondary mb-4">02 Productivity</div>
-                        <h3 class="text-3xl font-semibold text-slate-950 mb-4 group-hover:text-secondary transition-colors tracking-tight">高效办公</h3>
-                        <p class="text-slate-600 text-lg mb-6 leading-8">
-                            不仅仅是工具，更是工作流的革新。
-                            通过 HigheriDraft 和 STAR EasyCMD，让繁琐的操作变得简单直观。
-                        </p>
-                        <a href="VIEW/work/index.html" class="text-slate-900 font-semibold border-b-2 border-secondary pb-1 hover:text-secondary transition-colors">
-                            查看更多产品
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Roadmap Section -->
-    <div id="roadmap" class="py-28 bg-gray-100 relative border-t border-slate-200 overflow-hidden">
-        <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
-            <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-secondary/10 rounded-full blur-3xl"></div>
-        </div>
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <div class="section-kicker mb-5">Roadmap</div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">稳步进化，而不是盲目堆叠</h2>
-            </div>
-            
-            <div class="relative max-w-5xl mx-auto">
-                <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-px bg-gradient-to-b from-primary via-indigo-400 to-sky-400 opacity-40"></div>
-                
-                <!-- Item 1 -->
-                <div class="relative mb-12 w-full flex justify-center items-center">
-                    <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <div class="timeline-card rounded-[16px] p-6 ml-auto max-w-sm">
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">起源</h3>
-                        <p class="text-slate-600">Higheri 系列产品完成最初原型与方向验证。</p>
-                        </div>
-                    </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-primary rounded-full z-10 shadow-card"></div>
-                    <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
-                        <span class="text-primary font-bold font-mono">2022.4</span>
-                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Project Genesis</h3>
-                        <p class="text-gray-600 md:hidden">Higheri 系列产品原型开发。</p>
-                    </div>
-                </div>
-
-                <!-- Item 2 -->
-                <div class="relative mb-12 w-full flex justify-center items-center flex-row-reverse md:flex-row">
-                    <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <div class="timeline-card rounded-[16px] p-6 max-w-sm">
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">焕新</h3>
-                        <p class="text-slate-600">品牌视觉与产品体验进入统一化升级阶段。</p>
-                        </div>
-                    </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-secondary rounded-full z-10 shadow-card"></div>
-                    <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
-                        <span class="text-secondary font-bold font-mono">2025.8</span>
-                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">Higheri 系列产品大焕新</h3>
-                        <p class="text-gray-600 md:hidden">Higheri 系列产品大焕新，带来更多功能和更好的用户体验。</p>
-                    </div>
-                </div>
-
-                <!-- Item 3 -->
-                <div class="relative mb-12 w-full flex justify-center items-center">
-                    <div class="w-1/2 pr-8 text-right hidden md:block">
-                        <div class="timeline-card rounded-[16px] p-6 ml-auto max-w-sm">
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">智能</h3>
-                        <p class="text-slate-600">STAR 系列产品开始系统性融合 AI 能力与更成熟的交互设计。</p>
-                        </div>
-                    </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-purple-500 rounded-full z-10 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                    <div class="w-1/2 pl-8 md:w-1/2 md:pl-8">
-                        <span class="text-purple-500 font-bold font-mono">2025.12</span>
-                        <span class="ml-2 px-2 py-0.5 bg-purple-500/10 text-purple-600 text-xs rounded-md border border-purple-500/20">NOW</span>
-                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">STAR 系列产品</h3>
-                        <p class="text-gray-600 md:hidden">STAR 系列产品，旨在融合AI提供更强的功能。</p>
-                    </div>
-                </div>
-
-                 <!-- Item 4 -->
-                <div class="relative w-full flex justify-center items-center flex-row-reverse md:flex-row">
-                    <div class="w-1/2 pl-8 hidden md:block text-left">
-                        <div class="timeline-card rounded-[16px] p-6 max-w-sm">
-                        <h3 class="text-2xl font-semibold text-slate-950 mb-2 tracking-tight">继续</h3>
-                        <p class="text-slate-600">继续围绕稳定性、效率与设计一致性长期打磨产品矩阵。</p>
-                        </div>
-                    </div>
-                    <div class="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 bg-white border-4 border-gray-300 rounded-full z-10"></div>
-                    <div class="w-1/2 pr-8 text-right md:w-1/2 md:pr-8">
-                        <span class="text-gray-500 font-bold font-mono">2026+</span>
-                        <h3 class="text-xl font-bold text-gray-900 md:hidden mt-1">STAR 系列产品继续改进</h3>
-                        <p class="text-gray-600 md:hidden">STAR 系列产品继续改进，提供强大的功能。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Community Section (New) -->
-    <div id="community" class="py-24 bg-white relative border-t border-slate-200 overflow-hidden">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="section-shell rounded-[20px] p-8 md:p-12">
-                <div class="grid lg:grid-cols-[minmax(0,1fr)_260px] gap-8 items-center">
-                    <div>
-                        <div class="section-kicker mb-5">Community</div>
-                        <h2 class="text-4xl font-semibold text-slate-950 mb-5 tracking-tight">与我们一起持续打磨产品</h2>
-                        <p class="text-slate-600 text-lg max-w-2xl leading-8">在 GitHub 获取更新、提交建议，或直接参与产品与文档的共同建设。把产品做得更可靠，也把开放协作变成默认方式。</p>
-                    </div>
-                    <div class="flex flex-col gap-4">
-                        <a href="https://github.com/STAR-HigheriTech" class="flex items-center gap-3 px-8 py-5 bg-white rounded-[14px] hover:bg-slate-50 transition-colors border border-slate-200 group shadow-card">
-                            <i class="fab fa-github text-3xl text-slate-900 group-hover:scale-110 transition-transform"></i>
-                            <div class="text-left">
-                                <div class="text-xs text-slate-500 uppercase tracking-[0.18em]">Follow us on</div>
-                                <div class="text-lg font-semibold text-slate-900">GitHub</div>
-                            </div>
-                        </a>
-                        <a href="https://docs.higheri.tech/" class="flex items-center justify-between px-6 py-4 rounded-lg border border-slate-200 text-slate-700 hover:text-primary hover:border-primary/30 transition-colors">
-                            <span class="font-medium">浏览产品文档</span>
-                            <i class="fas fa-arrow-right text-sm"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- Testimonials Section 
-    <div id="testimonials" class="py-24 bg-dark relative overflow-hidden">
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-secondary/15 rounded-full blur-3xl"></div>
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-white font-cyber mb-16 text-center">COMMUNITY <span class="text-secondary">VOICES</span></h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8"> -->
-                <!-- Testimonial 1 
-                <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/5 backdrop-blur-sm hover:border-primary/30 transition-colors">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl">👨‍💻</div>
-                        <div>
-                            <h4 class="text-white font-bold">Alex Chen</h4>
-                            <p class="text-gray-500 text-sm">System Admin</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"HigheriPE has completely transformed how I handle system deployments. It's fast, reliable, and looks amazing."</p>
-                    <div class="mt-6 flex text-yellow-600 text-sm">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                </div> -->
-
-                <!-- Testimonial 2 
-                <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/5 backdrop-blur-sm hover:border-secondary/30 transition-colors transform md:-translate-y-4">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl">🛠️</div>
-                        <div>
-                            <h4 class="text-white font-bold">Sarah Jones</h4>
-                            <p class="text-gray-500 text-sm">IT Support</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"The STAR EasyCMD tool is a lifesaver. I can build complex scripts without remembering all the syntax. Highly recommended!"</p>
-                    <div class="mt-6 flex text-yellow-600 text-sm">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                </div> -->
-
-                <!-- Testimonial 3 
-                <div class="bg-gray-800/50 p-8 rounded-2xl border border-white/5 backdrop-blur-sm hover:border-purple-500/30 transition-colors">
-                    <div class="flex items-center gap-4 mb-6">
-                        <div class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-xl">🚀</div>
-                        <div>
-                            <h4 class="text-white font-bold">Mike Wang</h4>
-                            <p class="text-gray-500 text-sm">Developer</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"Finally, a PE system that feels modern. The UI is intuitive and the feature set is exactly what I needed."</p>
-                    <div class="mt-6 flex text-yellow-600 text-sm">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
-
-    <!-- FAQ Section -->
-    <div id="faq" class="py-28 bg-white relative border-t border-slate-200">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
-            <div class="text-center mb-16">
-                <div class="section-kicker mb-5">FAQ</div>
-                <h2 class="text-4xl md:text-5xl font-semibold text-slate-950 tracking-tight">常见问题</h2>
-            </div>
-            
-            <div class="space-y-4">
-                <!-- FAQ Item 1 -->
-                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-primary/40 transition-colors shadow-card">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-primary transition-colors">HigheriPE 可以免费使用吗？</h3>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-slate-500"></i>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
-                        可以。HigheriPE 面向个人用户提供免费使用方式；如需更进一步的部署与支持，可关注后续说明。
-                    </div>
-                </details>
-
-                <!-- FAQ Item 2 -->
-                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-secondary/40 transition-colors shadow-card">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-secondary transition-colors">对设备配置有什么要求？</h3>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-slate-500"></i>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
-                        当前产品覆盖主流现代硬件环境。若希望获得更流畅体验，建议使用 64 位处理器与不少于 4GB 的内存。
-                    </div>
-                </details>
-
-                <!-- FAQ Item 3 -->
-                <details class="group bg-white rounded-[16px] border border-slate-200 overflow-hidden open:border-purple-500/40 transition-colors shadow-card">
-                    <summary class="flex justify-between items-center p-6 cursor-pointer list-none">
-                        <h3 class="text-lg font-semibold text-slate-950 group-hover:text-purple-500 transition-colors">如何参与共建或反馈建议？</h3>
-                        <span class="transition group-open:rotate-180">
-                            <i class="fas fa-chevron-down text-slate-500"></i>
-                        </span>
-                    </summary>
-                    <div class="px-6 pb-6 text-slate-600 leading-8 border-t border-slate-200 pt-4">
-                        欢迎通过 GitHub 提交问题、功能建议或代码贡献。每一次真实反馈，都会帮助产品变得更成熟。
-                    </div>
-                </details>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section -->
-    <div class="py-28 bg-gradient-to-b from-slate-50 to-white relative">
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="cta-shell rounded-[20px] px-8 py-12 md:px-12 md:py-16 text-center">
-                <div class="section-kicker mb-5 bg-white/10 text-slate-200 border-white/10">Get Started</div>
-                <h2 class="text-5xl md:text-7xl font-semibold text-white mb-8 tracking-tighter">
-                    现在开始，<span class="text-sky-300">体验更好的软件节奏</span>
-                </h2>
-                <p class="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-8">
-                    从系统工具到生产力产品，STAR HigheriTech 让工作界面更清晰，流程更顺畅。
-                </p>
-                <div class="flex flex-wrap justify-center gap-4">
-                    <a href="#products" class="inline-flex px-12 py-5 bg-white text-slate-950 font-semibold text-xl rounded-lg hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-card">
-                         查看产品
-                    </a>
-                    <a href="https://docs.higheri.tech/" class="inline-flex px-12 py-5 bg-white/10 text-white font-semibold text-xl rounded-lg border border-white/10 hover:bg-white/15 hover:-translate-y-0.5 transition-all">
-                         查看文档
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Expanded Footer -->
-    <footer id="support" class="bg-white border-t border-slate-200 pt-16 pb-8 text-sm">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="section-shell rounded-[20px] p-8 md:p-10">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-                <!-- Brand Column -->
-                <div class="col-span-1 md:col-span-1">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div class="w-8 h-8 bg-slate-950 text-white flex items-center justify-center rounded-lg shadow-card">
-                            <i class="fas fa-star text-xs"></i>
-                        </div>
-                        <span class="font-semibold text-lg text-slate-950 font-cyber tracking-tight">STAR HigheriTech</span>
-                    </div>
-                    <p class="text-slate-600 mb-6 leading-7">
-                        打造下一代系统维护与生产力工具。让产品服务于人，而非一味的盈利。
-                    </p>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-twitter"></i></a>
-                        <a href="https://github.com/STAR-HigheriTech" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-github"></i></a>
-                        <a href="#" class="w-9 h-9 bg-white rounded-lg border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition-colors"><i class="fab fa-discord"></i></a>
-                    </div>
-                </div>
-
-                <!-- Link Column 1 -->
-                <div>
-                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Products</h4>
-                    <ul class="space-y-2 text-slate-600">
-                        <li><a href="VIEW/HIRA/index.html" class="hover:text-purple-600 transition-colors font-bold">STAR Hira <span class="text-[10px] bg-purple-100 text-purple-600 px-1 rounded ml-1">NEW</span></a></li>
-                        <li><a href="VIEW/PE/PE.html" class="hover:text-primary transition-colors">HigheriPE</a></li>
-                        <li><a href="webp/DRAFT/index.html" class="hover:text-primary transition-colors">HigheriDraft</a></li>
-                        <li><a href="tab/index.html" class="hover:text-primary transition-colors">HigheriTab</a></li>
-                        <li><a href="webp/ezcmd/index.html" class="hover:text-primary transition-colors">STAR EasyCMD</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 2 -->
-                <div>
-                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Resources</h4>
-                    <ul class="space-y-3 text-slate-600">
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Documentation</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
-                        <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
-                    </ul>
-                </div>
-
-                <!-- Link Column 3 -->
-                <div>
-                    <h4 class="text-slate-900 font-semibold mb-6 uppercase tracking-[0.18em] text-xs">Company</h4>
-                    <ul class="space-y-3 text-slate-600">
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Careers</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Legal</a></li>
-                        <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-slate-600">
-                <div class="mb-4 md:mb-0">
-                    &copy; 2026 STAR HigheriTech. All rights reserved. Designed for EVERYBODY.
-                </div>
-                <div class="flex space-x-6">
-                    <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
-                </div>
-            </div>
-            </div>
-        </div>
-    </footer>
-    
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if(mobileMenuBtn && mobileMenu) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-                const icon = mobileMenuBtn.querySelector('i');
-                if(mobileMenu.classList.contains('hidden')) {
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                } else {
-                    icon.classList.remove('fa-bars');
-                    icon.classList.add('fa-times');
+        // 根据登录用户名控制 私密🤫房间 显示/隐藏
+        function checkSecretRoomPermission(username) {
+            if (ALLOW_USER_LIST.includes(username)) {
+                secretRoomItem.style.display = 'flex';
+            } else {
+                secretRoomItem.style.display = 'none';
+                // 如果当前正好在该私密房，强制切回公共房
+                if (currentRoom === 'private-260120') {
+                    enterRoom(DEFAULT_ROOM);
                 }
-            });
+            }
         }
 
-        // Simple parallax effect for blobs
-        document.addEventListener('mousemove', (e) => {
-            const blobs = document.querySelectorAll('.shape-blob');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 20;
-                blob.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
+        // 主题初始化
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeToggle.textContent = '☀️';
+            } else if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.textContent = '🌙';
+            } else {
+                // 自动模式：跟随系统
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.setAttribute('data-theme', systemDark ? 'dark' : 'light');
+                themeToggle.textContent = '🌓';
+            }
+        }
+        function initTheme() {
+            // 优先使用保存的主题，默认自动模式
+            const saved = localStorage.getItem('theme');
+            if (saved) {
+                applyTheme(saved);
+            } else {
+                localStorage.setItem('theme', 'auto');
+                applyTheme('auto');
+            }
+        }
+        // 监听系统主题变化（自动模式时）
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (localStorage.getItem('theme') === 'auto') {
+                applyTheme('auto');
+            }
+        });
+        function toggleTheme() {
+            const cur = localStorage.getItem('theme') || 'auto';
+            let next;
+            if (cur === 'light') {
+                next = 'dark';
+            } else if (cur === 'dark') {
+                next = 'auto';
+            } else {
+                next = 'light';
+            }
+            localStorage.setItem('theme', next);
+            applyTheme(next);
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // 关于弹窗
+        const aboutItem = document.getElementById('aboutItem');
+        const aboutModalOverlay = document.getElementById('aboutModalOverlay');
+        const aboutCloseBtn = document.getElementById('aboutCloseBtn');
+        
+        function showAboutModal() {
+            aboutModalOverlay.classList.add('show');
+        }
+        
+        function hideAboutModal() {
+            aboutModalOverlay.classList.remove('show');
+        }
+        
+        aboutItem.addEventListener('click', showAboutModal);
+        aboutCloseBtn.addEventListener('click', hideAboutModal);
+        aboutModalOverlay.addEventListener('click', (e) => {
+            if (e.target === aboutModalOverlay) {
+                hideAboutModal();
+            }
         });
 
-        // Hero Carousel Logic
-        const slides = document.querySelectorAll('.carousel-slide');
-        const dots = document.querySelectorAll('.carousel-dot');
-        const prevBtn = document.getElementById('carousel-prev');
-        const nextBtn = document.getElementById('carousel-next');
-        const playPauseBtn = document.getElementById('carousel-play-pause');
+        // 存储工具
+        function getSavedRoom() {
+            const saved = localStorage.getItem('lastRoom');
+            return saved && KNOWN_ROOM_IDS.includes(saved) ? saved : DEFAULT_ROOM;
+        }
+        function saveRoom(id) { localStorage.setItem('lastRoom', id); }
+        function isPrivateRoomVerified(roomId) { 
+            if (!currentUser) return false;
+            return localStorage.getItem('privateRoomVerified_' + currentUser.username + '_' + roomId) === 'true'; 
+        }
+        function setPrivateRoomVerified(roomId, v) { 
+            if (!currentUser) return;
+            localStorage.setItem('privateRoomVerified_' + currentUser.username + '_' + roomId, v ? 'true' : 'false'); 
+        }
         
-        if (slides.length > 0) {
-            let currentSlide = 0;
-            let isPlaying = true;
-            let slideInterval;
-            const intervalTime = 5000; // 5 seconds
+        // 用户登录状态
+        function saveUserSession(user) {
+            currentUser = user;
+            localStorage.setItem('chatUser', JSON.stringify(user));
+            updateUsernameDisplay();
+            // 登录后立即校验房间权限
+            checkSecretRoomPermission(user.username);
+        }
+        function loadUserSession() {
+            const user = localStorage.getItem('chatUser');
+            if(user) {
+                currentUser = JSON.parse(user);
+                // 读取本地用户后校验权限
+                checkSecretRoomPermission(currentUser.username);
+                return true;
+            }
+            return false;
+        }
+        function updateUsernameDisplay() {
+            const name = currentUser?.username || '';
+            currentUsernameDisplay.textContent = name ? `👤 ${name}` : '';
+        }
 
-            function updateSlide(index) {
-                // Update Slides
-                slides.forEach(slide => {
-                    slide.classList.remove('opacity-100', 'z-10');
-                    slide.classList.add('opacity-0', 'z-0');
-                });
-                slides[index].classList.remove('opacity-0', 'z-0');
-                slides[index].classList.add('opacity-100', 'z-10');
+        // 切换登录/注册模式
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            if(isLoginMode) {
+                authSubtitle.textContent = '账号登录';
+                authBtn.textContent = '登录';
+                switchMode.textContent = '立即注册';
+            } else {
+                authSubtitle.textContent = '账号注册';
+                authBtn.textContent = '注册';
+                switchMode.textContent = '返回登录';
+            }
+            authTip.textContent = '';
+        }
+        switchMode.addEventListener('click', toggleAuthMode);
 
-                // Update Dots
-                dots.forEach(dot => {
-                    const bar = dot.querySelector('div');
-                    // Reset animation
-                    bar.style.transition = 'none';
-                    bar.style.width = '0%';
-                });
-                
-                // Animate current dot
-                // Force reflow
-                void dots[index].offsetWidth;
-                
-                const activeBar = dots[index].querySelector('div');
-                activeBar.style.transition = 'width 5000ms linear'; // Match interval
-                
-                if(isPlaying) {
-                    // Small delay to ensure transition applies
-                    setTimeout(() => {
-                        activeBar.style.width = '100%';
-                    }, 50);
-                } else {
-                    activeBar.style.width = '100%'; // Full if paused? Or static? Let's make it full.
+        // 验证输入
+        function validateAuthInput() {
+            const username = authUsername.value.trim();
+            const password = authPassword.value.trim();
+            
+            if(!username) {
+                authTip.textContent = '用户名不能为空';
+                return null;
+            }
+            if(username.length > 20) {
+                authTip.textContent = '用户名不能超过20字符';
+                return null;
+            }
+            if(!password) {
+                authTip.textContent = '密码不能为空';
+                return null;
+            }
+            if(password.length < 6) {
+                authTip.textContent = '密码至少6位';
+                return null;
+            }
+            
+            return { username, password };
+        }
+
+        // 注册处理
+        async function handleRegister() {
+            const data = validateAuthInput();
+            if(!data) return;
+            
+            try {
+                // 检查用户名是否已存在
+                const snapshot = await usersRef.child(data.username).once('value');
+                if(snapshot.exists()) {
+                    authTip.textContent = '用户名已被注册';
+                    return;
                 }
                 
-                currentSlide = index;
-            }
-
-            function nextSlide() {
-                let next = (currentSlide + 1) % slides.length;
-                updateSlide(next);
-            }
-
-            function prevSlide() {
-                let prev = (currentSlide - 1 + slides.length) % slides.length;
-                updateSlide(prev);
-            }
-
-            function startAutoPlay() {
-                if(slideInterval) clearInterval(slideInterval);
-                isPlaying = true;
-                if(playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-pause text-xs"></i>';
+                // 保存注册数据用于确认后使用
+                pendingRegisterData = data;
                 
-                // Trigger animation for current slide if not already
-                const activeBar = dots[currentSlide].querySelector('div');
-                activeBar.style.transition = 'width 5000ms linear';
-                setTimeout(() => {
-                    activeBar.style.width = '100%';
-                }, 50);
+                // 显示密码确认弹窗
+                passwordDisplay.textContent = data.password;
+                passwordConfirmMask.classList.add('show');
                 
-                slideInterval = setInterval(nextSlide, intervalTime);
+            } catch (err) {
+                console.error(err);
+                authTip.textContent = '注册失败，请重试';
             }
-
-            function stopAutoPlay() {
-                isPlaying = false;
-                if(playPauseBtn) playPauseBtn.innerHTML = '<i class="fas fa-play text-xs"></i>';
-                clearInterval(slideInterval);
+        }
+        
+        // 确认注册
+        async function confirmRegister() {
+            if(!pendingRegisterData) return;
+            
+            try {
+                const data = pendingRegisterData;
                 
-                // Pause animation (freeze width)
-                const activeBar = dots[currentSlide].querySelector('div');
-                const computedWidth = window.getComputedStyle(activeBar).width;
-                activeBar.style.transition = 'none';
-                activeBar.style.width = computedWidth;
+                // 密码加密
+                const hashedPwd = await sha256(data.password);
+                const userData = {
+                    username: data.username,
+                    password: hashedPwd,
+                    createdAt: Date.now()
+                };
+                
+                // 写入数据库
+                await usersRef.child(data.username).set(userData);
+                authTip.textContent = '';
+                
+                // 隐藏弹窗
+                passwordConfirmMask.classList.remove('show');
+                pendingRegisterData = null;
+                
+                alert('注册成功！请登录');
+                toggleAuthMode();
+            } catch (err) {
+                console.error(err);
+                authTip.textContent = '注册失败，请重试';
+                passwordConfirmMask.classList.remove('show');
+                pendingRegisterData = null;
             }
+        }
 
-            // Event Listeners
-            if(nextBtn) {
-                nextBtn.addEventListener('click', () => {
-                    stopAutoPlay(); 
-                    nextSlide();
-                    startAutoPlay();
-                });
+        // 登录处理
+        async function handleLogin() {
+            const data = validateAuthInput();
+            if(!data) return;
+            
+            try {
+                const snapshot = await usersRef.child(data.username).once('value');
+                if(!snapshot.exists()) {
+                    authTip.textContent = '用户名不存在';
+                    return;
+                }
+                
+                const userData = snapshot.val();
+                const hashedPwd = await sha256(data.password);
+                
+                if(userData.password !== hashedPwd) {
+                    authTip.textContent = '密码错误';
+                    return;
+                }
+                
+                // 登录成功
+                saveUserSession({ username: data.username });
+                authMask.style.display = 'none';
+                initializeChat();
+            } catch (err) {
+                console.error(err);
+                authTip.textContent = '登录失败，请重试';
             }
+        }
 
-            if(prevBtn) {
-                prevBtn.addEventListener('click', () => {
-                    stopAutoPlay();
-                    prevSlide();
-                    startAutoPlay();
-                });
+        // 认证按钮点击
+        authBtn.addEventListener('click', () => {
+            if(isLoginMode) handleLogin();
+            else handleRegister();
+        });
+        // 回车提交
+        authPassword.addEventListener('keypress', e => {
+            if(e.key === 'Enter') authBtn.click();
+        });
+
+        // 聊天室功能
+        function enterRoom(roomId) {
+            // 显示过渡动画
+            transitionText.textContent = '在' + ROOMS[roomId].name + '中';
+            // 先重置为初始大小，确保有缩放动画
+            transitionCircle.style.transition = 'none';
+            transitionCircle.style.transform = 'scale(1)';
+            transitionSubtext.style.opacity = '1';
+            transitionContent.style.opacity = '1';
+            
+            // 强制重绘
+            void transitionCircle.offsetWidth;
+            
+            // 恢复过渡效果
+            transitionCircle.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+            transitionOverlay.classList.remove('fade-out');
+            transitionOverlay.classList.add('show');
+            
+            // 根据屏幕尺寸计算缩放值，确保圆圈不会超出屏幕
+            const minDim = Math.min(window.innerWidth, window.innerHeight);
+            const maxScale = minDim / 48 * 0.95;
+            const scale = Math.min(25, maxScale);
+            transitionCircle.style.transform = 'scale(' + scale + ')';
+            
+            // 根据文字长度动态调整字体大小，确保不换行且能完整显示
+            const text = '在' + ROOMS[roomId].name + '中';
+            const baseFontSize = scale * 0.25;
+            // 根据文字长度调整字体，8个字符用原大小，超过8个字符则缩小
+            const textLengthFactor = Math.max(0.5, 8 / Math.max(text.length, 1));
+            const fontSize = baseFontSize * textLengthFactor;
+            transitionText.style.fontSize = fontSize + 'px';
+            // 小字保持与圆圈同步缩放
+            transitionSubtext.style.fontSize = (scale * 0.28) + 'px';
+            
+            // 动画持续时间（毫秒）
+            const animationDuration = 500;
+
+            if (messagesCallback) {
+                database.ref('rooms/' + currentRoom + '/messages').off('child_added', messagesCallback);
+                messagesCallback = null;
             }
+            if (onlineUsersCallback) {
+                database.ref('rooms/' + currentRoom + '/onlineUsers').off('value', onlineUsersCallback);
+                onlineUsersCallback = null;
+            }
+            if (currentUserRef) { currentUserRef.remove(); currentUserRef = null; }
 
-            if(playPauseBtn) {
-                playPauseBtn.addEventListener('click', () => {
-                    if(isPlaying) {
-                        stopAutoPlay();
-                    } else {
-                        nextSlide(); 
-                        startAutoPlay();
+            currentRoom = roomId;
+            saveRoom(roomId);
+            currentRoomName.textContent = ROOMS[roomId].name;
+            roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
+            messagesContainer.innerHTML = ' <div class="system-tip"> ' + ROOMS[roomId].name + ' 正在线上</div>';
+
+            const roomRef = database.ref('rooms/' + roomId);
+            const messagesRef = roomRef.child('messages');
+            const onlineUsersRef = roomRef.child('onlineUsers');
+
+            // 先获取历史消息数量
+            messagesRef.limitToLast(50).once('value').then(snapshot => {
+                const messages = snapshot.val();
+                const totalMessages = messages ? Object.keys(messages).length : 0;
+                let loadedCount = 0;
+                let hideTriggered = false;
+
+                // 隐藏动画的函数，确保字体显示完整后再隐藏
+                function hideTransition() {
+                    if (!hideTriggered) {
+                        hideTriggered = true;
+                        transitionOverlay.classList.add('fade-out');
                     }
-                });
-            }
+                }
 
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    stopAutoPlay();
-                    updateSlide(index);
-                    startAutoPlay();
-                });
+                // 如果没有历史消息，动画持续animationDuration后隐藏
+                if (totalMessages === 0) {
+                    setTimeout(hideTransition, animationDuration);
+                }
+
+                messagesCallback = snapshot => {
+                    const msg = snapshot.val();
+                    if (msg && msg.timestamp) {
+                        displayMessage(msg);
+                        loadedCount++;
+                        // 所有历史消息加载完成后，等待animationDuration后隐藏
+                        if (loadedCount >= totalMessages) {
+                            setTimeout(hideTransition, animationDuration);
+                        }
+                    }
+                };
+                onlineUsersCallback = snapshot => updateOnlineUsers(snapshot);
+
+                messagesRef.limitToLast(50).on('child_added', messagesCallback);
+                onlineUsersRef.on('value', onlineUsersCallback);
+
+                if (currentUser && isConnected) {
+                    currentUserRef = onlineUsersRef.push({ 
+                        userId: currentUser.username, 
+                        username: currentUser.username 
+                    });
+                    currentUserRef.onDisconnect().remove();
+                }
+
+                if (window.innerWidth <= 768) {
+                    roomSidebar.classList.remove('show');
+                    onlineSidebar.classList.remove('show');
+                    mobileMask.classList.remove('show');
+                }
             });
-
-            // Initialize
-            startAutoPlay();
         }
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var links = document.querySelectorAll('a[href^="http://"],a[href^="https://"]');
-            links.forEach(function (link) {
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
+
+        function enterPrivateRoom() {
+            const pwd = pwdInput.value.trim();
+            if (!pwd) { pwdTip.innerText = "请输入密码"; return; }
+            const target = targetRoomId || 'private-260120';
+            if (pwd === ROOMS[target].password) {
+                pwdTip.innerText = "";
+                setPrivateRoomVerified(target, true);
+                roomSelectMask.classList.remove("show");
+                chatWrap.style.display = "flex";
+                enterRoom(target);
+                targetRoomId = null;
+            } else {
+                pwdTip.innerText = "密码错误，请重新输入";
+                pwdInput.value = "";
+                pwdInput.focus();
+            }
+        }
+
+        publicBtn.addEventListener('click', () => {
+            roomSelectMask.classList.remove("show");
+            chatWrap.style.display = "flex";
+            enterRoom('public');
+        });
+        privateBtn.addEventListener('click', enterPrivateRoom);
+        pwdInput.addEventListener('keydown', e => { if (e.key === 'Enter') enterPrivateRoom(); });
+
+        roomItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const roomId = item.dataset.room;
+                if (roomId === currentRoom) return;
+                if (ROOMS[roomId].needPassword && !isPrivateRoomVerified(roomId)) {
+                    targetRoomId = roomId;
+                    roomSelectMask.classList.add("show");
+                    chatWrap.style.display = "flex";
+                    pwdInput.value = "";
+                    pwdTip.innerText = "";
+                    pwdInput.focus();
+                } else {
+                    enterRoom(roomId);
+                }
             });
         });
+
+        toggleLeftBtn.addEventListener('click', () => {
+            const opening = !roomSidebar.classList.contains('show');
+            roomSidebar.classList.toggle('show');
+            onlineSidebar.classList.remove('show');
+            mobileMask.classList.toggle('show', opening);
+        });
+        toggleRightBtn.addEventListener('click', () => {
+            const opening = !onlineSidebar.classList.contains('show');
+            onlineSidebar.classList.toggle('show');
+            roomSidebar.classList.remove('show');
+            mobileMask.classList.toggle('show', opening);
+        });
+        mobileMask.addEventListener('click', () => {
+            roomSidebar.classList.remove('show');
+            onlineSidebar.classList.remove('show');
+            mobileMask.classList.remove('show');
+        });
+
+        function updateOnlineUsers(snapshot) {
+            onlineUsersContainer.innerHTML = '';
+            const users = snapshot.val() || {};
+            const arr = Object.values(users);
+            onlineCount.textContent = arr.length;
+            arr.forEach(user => {
+                const div = document.createElement('div');
+                div.className = 'online-item';
+                div.innerHTML = `<div class="online-dot"></div><div class="online-username">${escapeHTML(user.username)}</div>`;
+                onlineUsersContainer.appendChild(div);
+            });
+        }
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        connectedRef.on('value', snapshot => {
+            isConnected = snapshot.val();
+            if (isConnected) {
+                connectionStatus.textContent = '已连接';
+                connectionStatus.classList.add('connected');
+                sendButton.disabled = false;
+                
+                if (currentRoom && currentUser) {
+                    const ref = database.ref('rooms/' + currentRoom).child('onlineUsers');
+                    currentUserRef = ref.push({ 
+                        userId: currentUser.username, 
+                        username: currentUser.username 
+                    });
+                    currentUserRef.onDisconnect().remove();
+                }
+            } else {
+                connectionStatus.textContent = '连接中断';
+                connectionStatus.classList.remove('connected');
+                sendButton.disabled = true;
+            }
+        });
+
+        function sendMessage() {
+            if (!isConnected || !currentRoom || !currentUser) { 
+                alert('请先登录'); 
+                return; 
+            }
+            
+            const text = messageInput.value.trim();
+            if (!text) { return; }
+
+            database.ref('rooms/' + currentRoom).child('messages').push({
+                username: currentUser.username,
+                text,
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                userId: currentUser.username
+            }).catch(err => { console.error(err); alert('发送失败'); });
+            messageInput.value = '';
+            messageInput.focus();
+        }
+
+        sendButton.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // 退出登录
+        logoutBtn.addEventListener('click', () => {
+            if(confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('chatUser');
+                localStorage.removeItem('lastRoom');
+                localStorage.removeItem('theme');
+                // 清除所有聊天室密码验证记录
+                for (let i = localStorage.length - 1; i >= 0; i--) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('privateRoomVerified_')) {
+                        localStorage.removeItem(key);
+                    }
+                }
+                location.reload();
+            }
+        });
+
+        let lastMessageUserId = null;
+        
+        function displayMessage(msg) {
+            const isMe = currentUser && msg.userId === currentUser.username;
+            const time = new Date(msg.timestamp).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            const row = document.createElement('div');
+            const isGrouped = currentRoom === 'public' && lastMessageUserId === msg.userId;
+            
+            if (currentRoom === 'public') {
+                row.className = `msg-row discord ${isMe ? 'me' : ''} ${isGrouped ? 'grouped' : ''}`;
+                row.innerHTML = `
+                    <div class="msg-avatar">${escapeHTML(msg.username.charAt(0))}</div>
+                    <div class="msg-box">
+                        <span class="msg-name">${escapeHTML(msg.username)}</span>
+                        <span class="msg-content">${escapeHTML(msg.text)}</span>
+                        <span class="msg-time">${time}</span>
+                    </div>
+                `;
+            } else {
+                row.className = `msg-row ${isMe ? 'me' : ''}`;
+                row.innerHTML = `
+                    <div class="msg-avatar">${escapeHTML(msg.username.charAt(0))}</div>
+                    <div class="msg-box">
+                        <div class="msg-name">${escapeHTML(msg.username)}</div>
+                        <div class="msg-bubble">${escapeHTML(msg.text)}</div>
+                        <div class="msg-time">${time}</div>
+                    </div>
+                `;
+            }
+            messagesContainer.appendChild(row);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            lastMessageUserId = msg.userId;
+        }
+
+        function initializeChat() {
+            const saved = getSavedRoom();
+            // 先校验权限，再进入房间
+            if (saved === 'public') {
+                roomSelectMask.classList.remove("show");
+                chatWrap.style.display = "flex";
+                enterRoom('public');
+            } else if (saved.startsWith('private-') && !isPrivateRoomVerified(saved)) {
+                targetRoomId = saved;
+                chatWrap.style.display = "flex";
+                roomSelectMask.classList.add("show");
+                pwdInput.value = "";
+                pwdTip.innerText = "";
+                pwdInput.focus();
+            } else {
+                // 非白名单用户禁止进入🤫房间
+                if(saved === 'private-260120' && !ALLOW_USER_LIST.includes(currentUser?.username)){
+                    enterRoom(DEFAULT_ROOM);
+                    roomSelectMask.classList.remove("show");
+                    chatWrap.style.display = "flex";
+                }else{
+                    roomSelectMask.classList.remove("show");
+                    chatWrap.style.display = "flex";
+                    enterRoom(saved);
+                }
+            }
+        }
+
+        // 页面加载
+        window.addEventListener('load', () => {
+            initTheme();
+            if(loadUserSession()) {
+                // 已登录
+                authMask.style.display = 'none';
+                updateUsernameDisplay();
+                initializeChat();
+            } else {
+                // 未登录，显示登录界面
+                authMask.style.display = 'flex';
+                // 未登录时先隐藏私密房
+                secretRoomItem.style.display = 'none';
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                roomSidebar.classList.remove('show');
+                onlineSidebar.classList.remove('show');
+                mobileMask.classList.remove('show');
+            }
+        });
+
+        // 密码确认弹窗
+        const passwordConfirmMask = document.getElementById('passwordConfirmMask');
+        const passwordDisplay = document.getElementById('passwordDisplay');
+        const btnModifyPassword = document.getElementById('btnModifyPassword');
+        const btnConfirmPassword = document.getElementById('btnConfirmPassword');
+
+        btnModifyPassword.addEventListener('click', () => {
+            passwordConfirmMask.classList.remove('show');
+            pendingRegisterData = null;
+            authPassword.focus();
+        });
+        btnConfirmPassword.addEventListener('click', confirmRegister);
     </script>
 </body>
 </html>
