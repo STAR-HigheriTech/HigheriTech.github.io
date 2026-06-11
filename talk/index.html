@@ -17,8 +17,8 @@
             --text-secondary: #666666;
             --text-muted: #999999;
             --border: #e0e0e0;
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
+            --primary: #ff81ca;
+            --primary-hover: #ff61c2;
             --primary-light: #dbeafe;
             --success: #10b981;
             --danger: #ef4444;
@@ -150,9 +150,19 @@
             -webkit-backdrop-filter: blur(4px);
             z-index: 9999;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding-top: env(safe-area-inset-top, 0px);
+        }
+        .remember-me-container {
+            position: absolute;
+            bottom: calc((100vh - 400px) / 4);
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .auth-box {
             background: rgba(255, 255, 255, 0.95);
@@ -205,6 +215,56 @@
             color: var(--danger);
             height: 18px;
             margin-bottom: 8px;
+        }
+        .remember-me {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: var(--text-primary);
+            width: 100%;
+        }
+        .remember-me input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            min-height: 30px;
+            margin: 0;
+            margin-right: 12px;
+            cursor: pointer;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background-color: var(--bg-secondary);
+            transition: all 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .remember-me input[type="checkbox"]:hover {
+            border-color: var(--primary);
+            background-color: var(--bg-primary);
+        }
+        .remember-me input[type="checkbox"]:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        .remember-me input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .remember-me label {
+            cursor: pointer;
+            user-select: none;
+            line-height: 1.5;
+            text-align: left;
         }
         .switch-text {
             font-size: 13px;
@@ -1337,6 +1397,12 @@
             <button class="auth-btn" id="authBtn">登录</button>
             <p class="switch-text">没有账号？<span id="switchMode">立即注册</span></p>
         </div>
+        <div class="remember-me-container">
+            <div class="remember-me">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">保存登录状态</label>
+            </div>
+        </div>
     </div>
 
     <div class="room-select-mask" id="roomSelectMask">
@@ -1514,7 +1580,7 @@
 
         const ROOMS = {
             'public': { name: '公共聊天室', needPassword: false, icon: '💬', desc: '自由交流' },
-            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '💕', desc: '密码保护' },
+            'private-260120': { name: '🤫', needPassword: true, password: '121027', icon: '💕', desc: '密码保护' },
 			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '⭐', desc: '密码保护' }
         };
         const DEFAULT_ROOM = 'public';
@@ -1666,28 +1732,33 @@
 
         // 存储工具
         function getSavedRoom() {
-            const saved = localStorage.getItem('lastRoom');
-            return saved && KNOWN_ROOM_IDS.includes(saved) ? saved : DEFAULT_ROOM;
+            // 不记忆聊天室切换状态，每次都返回默认聊天室
+            return DEFAULT_ROOM;
         }
-        function saveRoom(id) { localStorage.setItem('lastRoom', id); }
-        function isPrivateRoomVerified(roomId) { 
-            if (!currentUser) return false;
-            return localStorage.getItem('privateRoomVerified_' + currentUser.username + '_' + roomId) === 'true'; 
+        function saveRoom(id) {
+            // 不保存聊天室状态
         }
-        function setPrivateRoomVerified(roomId, v) { 
-            if (!currentUser) return;
-            localStorage.setItem('privateRoomVerified_' + currentUser.username + '_' + roomId, v ? 'true' : 'false'); 
+        function isPrivateRoomVerified(roomId) {
+            // 不记忆密码验证状态，每次都需要重新输入密码
+            return false;
+        }
+        function setPrivateRoomVerified(roomId, v) {
+            // 不保存密码验证状态
         }
         
         // 用户登录状态
-        function saveUserSession(user) {
+        function saveUserSession(user, rememberMe = false) {
             currentUser = user;
-            localStorage.setItem('chatUser', JSON.stringify(user));
+            // 只有勾选了"保存登录状态"时才保存到 localStorage
+            if (rememberMe) {
+                localStorage.setItem('chatUser', JSON.stringify(user));
+            }
             updateUsernameDisplay();
             // 登录后立即校验房间权限
             checkSecretRoomPermission(user.username);
         }
         function loadUserSession() {
+            // 尝试加载保存的登录状态
             const user = localStorage.getItem('chatUser');
             if(user) {
                 currentUser = JSON.parse(user);
@@ -1806,24 +1877,25 @@
         async function handleLogin() {
             const data = validateAuthInput();
             if(!data) return;
-            
+
             try {
                 const snapshot = await usersRef.child(data.username).once('value');
                 if(!snapshot.exists()) {
                     authTip.textContent = '用户名不存在';
                     return;
                 }
-                
+
                 const userData = snapshot.val();
                 const hashedPwd = await sha256(data.password);
-                
+
                 if(userData.password !== hashedPwd) {
                     authTip.textContent = '密码错误';
                     return;
                 }
-                
-                // 登录成功
-                saveUserSession({ username: data.username });
+
+                // 登录成功，根据复选框决定是否保存登录状态
+                const rememberMe = document.getElementById('rememberMe').checked;
+                saveUserSession({ username: data.username }, rememberMe);
                 authMask.style.display = 'none';
                 initializeChat();
             } catch (err) {
