@@ -584,6 +584,22 @@
         .room-item.private .room-avatar {
             background-color: #7c3aed;
         }
+        .room-badge {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            height: 20px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 0 6px;
+            margin-left: auto;
+            margin-right: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
         .room-avatar {
             width: 36px;
             height: 36px;
@@ -1498,6 +1514,7 @@
                         <div class="room-name">🤫</div>
                         <div class="room-desc">密码保护</div>
                     </div>
+                    <div class="room-badge" id="secretRoomBadge"></div>
                 </div>
 				<div class="room-item private" data-room="private-test-group">
                     <div class="room-avatar">⭐</div>
@@ -1694,6 +1711,40 @@
                 applyTheme('auto');
             }
         });
+        
+        // 通知功能 - 仅用于🤫聊天室
+        let unreadCount = 0;
+        function requestNotificationPermission() {
+            if (Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+        }
+        function sendSecretRoomNotification(username, content) {
+            if (Notification.permission === 'granted') {
+                const notification = new Notification('🤫 私密消息', {
+                    body: `${username}: ${content.length > 50 ? content.substring(0, 50) + '...' : content}`,
+                    icon: 'https://www.higheri.tech/favicon.ico',
+                    badge: 'https://www.higheri.tech/favicon.ico'
+                });
+                notification.onclick = () => {
+                    window.focus();
+                    notification.close();
+                };
+            }
+        }
+        function updateBadge(count) {
+            unreadCount = count;
+            const badge = document.getElementById('secretRoomBadge');
+            if (badge) {
+                if (count > 0) {
+                    badge.textContent = count > 9 ? '9+' : count;
+                    badge.style.display = 'flex';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+        
         function toggleTheme() {
             const cur = localStorage.getItem('theme') || 'auto';
             let next;
@@ -1897,6 +1948,8 @@
                 const rememberMe = document.getElementById('rememberMe').checked;
                 saveUserSession({ username: data.username }, rememberMe);
                 authMask.style.display = 'none';
+                // 请求通知权限（必须在用户交互后调用）
+                requestNotificationPermission();
                 initializeChat();
             } catch (err) {
                 console.error(err);
@@ -1965,6 +2018,12 @@
             saveRoom(roomId);
             currentRoomName.textContent = ROOMS[roomId].name;
             roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
+            
+            // 进入🤫聊天室时清除角标
+            if (roomId === 'private-260120') {
+                updateBadge(0);
+            }
+            
             messagesContainer.innerHTML = ' <div class="system-tip"> ' + ROOMS[roomId].name + ' 正在线上</div>';
 
             const roomRef = database.ref('rooms/' + roomId);
@@ -1996,6 +2055,19 @@
                     if (msg && msg.timestamp) {
                         displayMessage(msg);
                         loadedCount++;
+                        
+                        // 判断是否是新消息（不是历史消息）
+                        if (loadedCount > totalMessages) {
+                            // 仅🤫聊天室发送通知
+                            if (roomId === 'private-260120') {
+                                sendSecretRoomNotification(msg.username, msg.content);
+                                // 只有当不在🤫聊天室时才更新角标
+                                if (currentRoom !== 'private-260120') {
+                                    updateBadge(unreadCount + 1);
+                                }
+                            }
+                        }
+                        
                         // 所有历史消息加载完成后，等待animationDuration后隐藏
                         if (loadedCount >= totalMessages) {
                             setTimeout(hideTransition, animationDuration);
@@ -2233,6 +2305,9 @@
         // 页面加载
         window.addEventListener('load', () => {
             initTheme();
+            // 请求通知权限（用于🤫聊天室消息通知）
+            requestNotificationPermission();
+            
             if(loadUserSession()) {
                 // 已登录
                 authMask.style.display = 'none';
