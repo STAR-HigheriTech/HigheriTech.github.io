@@ -1265,8 +1265,6 @@
         @media (max-width: 768px) {
             .chat-wrap {
                 max-width: 100%;
-                flex-direction: column;
-                position: relative;
             }
 
             .room-sidebar {
@@ -1410,8 +1408,8 @@
             <h3>🌟 STAR Talk NeXus</h3>
             <p class="subtitle" id="authSubtitle">账号登录</p>
             <div class="auth-tip" id="authTip"></div>
-            <input type="text" class="input auth-input" id="authUsername" placeholder="用户名" maxlength="20" autocomplete="username">
-            <input type="password" class="input auth-input" id="authPassword" placeholder="密码" autocomplete="current-password">
+            <input type="text" class="input auth-input" id="authUsername" placeholder="用户名" maxlength="20" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+            <input type="password" class="input auth-input" id="authPassword" placeholder="密码" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
             <button class="auth-btn" id="authBtn">登录</button>
             <p class="switch-text">没有账号？<span id="switchMode">立即注册</span></p>
         </div>
@@ -1802,22 +1800,30 @@
         // 用户登录状态
         function saveUserSession(user, rememberMe = false) {
             currentUser = user;
-            // 只有勾选了"保存登录状态"时才保存到 localStorage
+            // 如果勾选了"保存登录状态"，保存到 localStorage
             if (rememberMe) {
                 localStorage.setItem('chatUser', JSON.stringify(user));
+                localStorage.setItem('chatRememberMe', 'true');
+            } else {
+                // 如果没有勾选，清除之前保存的登录状态
+                localStorage.removeItem('chatUser');
+                localStorage.removeItem('chatRememberMe');
             }
             updateUsernameDisplay();
             // 登录后立即校验房间权限
             checkSecretRoomPermission(user.username);
         }
         function loadUserSession() {
-            // 尝试加载保存的登录状态
-            const user = localStorage.getItem('chatUser');
-            if(user) {
-                currentUser = JSON.parse(user);
-                // 读取本地用户后校验权限
-                checkSecretRoomPermission(currentUser.username);
-                return true;
+            // 只有勾选了"保存登录状态"才自动登录
+            const rememberMe = localStorage.getItem('chatRememberMe');
+            if (rememberMe === 'true') {
+                const user = localStorage.getItem('chatUser');
+                if(user) {
+                    currentUser = JSON.parse(user);
+                    // 读取本地用户后校验权限
+                    checkSecretRoomPermission(currentUser.username);
+                    return true;
+                }
             }
             return false;
         }
@@ -1950,6 +1956,7 @@
                 const rememberMe = document.getElementById('rememberMe').checked;
                 saveUserSession({ username: data.username }, rememberMe);
                 authMask.style.display = 'none';
+                chatWrap.style.display = 'flex';
                 // 请求通知权限（必须在用户交互后调用）
                 requestNotificationPermission();
                 initializeChat();
@@ -2229,6 +2236,7 @@
         logoutBtn.addEventListener('click', () => {
             if(confirm('确定要退出登录吗？')) {
                 localStorage.removeItem('chatUser');
+                localStorage.removeItem('chatRememberMe');
                 localStorage.removeItem('lastRoom');
                 localStorage.removeItem('theme');
                 // 清除所有聊天室密码验证记录
@@ -2309,6 +2317,13 @@
             initTheme();
             // 请求通知权限（用于🤫聊天室消息通知）
             requestNotificationPermission();
+            
+            // 强制清空登录表单，防止浏览器自动填充或保留上次输入
+            setTimeout(() => {
+                authUsername.value = '';
+                authPassword.value = '';
+                document.getElementById('rememberMe').checked = false;
+            }, 100);
             
             if(loadUserSession()) {
                 // 已登录
