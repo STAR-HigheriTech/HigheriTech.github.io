@@ -54,7 +54,7 @@
         }
 
         body {
-            background-color: var(--bg-primary);
+            background-color: var(--bg-secondary);
             color: var(--text-primary);
             height: 100vh;
             overflow: hidden;
@@ -145,27 +145,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: transparent;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background-color: var(--bg-primary);
             z-index: 9999;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             padding-top: env(safe-area-inset-top, 0px);
         }
-        .remember-me-container {
-            position: absolute;
-            bottom: calc((100vh - 400px) / 4);
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
         .auth-box {
-            background: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 16px;
@@ -216,56 +204,6 @@
             height: 18px;
             margin-bottom: 8px;
         }
-        .remember-me {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            font-size: 28px;
-            color: var(--text-primary);
-            width: 100%;
-        }
-        .remember-me input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 30px;
-            height: 30px;
-            min-width: 30px;
-            min-height: 30px;
-            margin: 0;
-            margin-right: 12px;
-            cursor: pointer;
-            border: 2px solid var(--border);
-            border-radius: 8px;
-            background-color: var(--bg-secondary);
-            transition: all 0.2s ease;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .remember-me input[type="checkbox"]:hover {
-            border-color: var(--primary);
-            background-color: var(--bg-primary);
-        }
-        .remember-me input[type="checkbox"]:checked {
-            background-color: var(--primary);
-            border-color: var(--primary);
-        }
-        .remember-me input[type="checkbox"]:checked::after {
-            content: '✓';
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            line-height: 1;
-        }
-        .remember-me label {
-            cursor: pointer;
-            user-select: none;
-            line-height: 1.5;
-            text-align: left;
-        }
         .switch-text {
             font-size: 13px;
             color: var(--text-secondary);
@@ -284,41 +222,27 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: transparent;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            background-color: var(--bg-primary);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
             padding-top: env(safe-area-inset-top, 0px);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .room-select-mask.show {
-            opacity: 1;
-            pointer-events: auto;
         }
         .room-select-box {
-            background: rgba(255, 255, 255, 0.95);
+            background-color: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-radius: 16px;
             width: 400px;
             max-width: 90%;
             padding: 40px 32px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
             text-align: center;
-            transform: scale(0.8);
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .room-select-mask.show .room-select-box {
-            transform: scale(1);
         }
         [data-theme="dark"] .room-select-box {
-            background: rgba(35, 35, 35, 0.95);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+            background-color: rgba(45, 45, 45, 0.85);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
         .room-select-box h3 {
             font-size: 24px;
@@ -583,22 +507,6 @@
         }
         .room-item.private .room-avatar {
             background-color: #7c3aed;
-        }
-        .room-badge {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            min-width: 20px;
-            height: 20px;
-            background-color: #ef4444;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
-            border-radius: 10px;
-            padding: 0 6px;
-            margin-left: auto;
-            margin-right: 4px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
         .room-avatar {
             width: 36px;
@@ -1408,20 +1316,14 @@
             <h3>🌟 STAR Talk NeXus</h3>
             <p class="subtitle" id="authSubtitle">账号登录</p>
             <div class="auth-tip" id="authTip"></div>
-            <input type="text" class="input auth-input" id="authUsername" placeholder="用户名" maxlength="20" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
-            <input type="password" class="input auth-input" id="authPassword" placeholder="密码" autocomplete="current-password" autocapitalize="off" autocorrect="off" spellcheck="false">
+            <input type="text" class="input auth-input" id="authUsername" placeholder="用户名" maxlength="20" autocomplete="username">
+            <input type="password" class="input auth-input" id="authPassword" placeholder="密码" autocomplete="current-password">
             <button class="auth-btn" id="authBtn">登录</button>
             <p class="switch-text">没有账号？<span id="switchMode">立即注册</span></p>
         </div>
-        <div class="remember-me-container">
-            <div class="remember-me">
-                <input type="checkbox" id="rememberMe">
-                <label for="rememberMe">保存登录状态</label>
-            </div>
-        </div>
     </div>
 
-    <div class="room-select-mask" id="roomSelectMask">
+    <div class="room-select-mask" id="roomSelectMask" style="display: none;">
         <div class="room-select-box">
             <h3>STAR Talk NeXus</h3>
             <p class="subtitle">选择聊天室开始聊天</p>
@@ -1514,7 +1416,6 @@
                         <div class="room-name">🤫</div>
                         <div class="room-desc">密码保护</div>
                     </div>
-                    <div class="room-badge" id="secretRoomBadge"></div>
                 </div>
 				<div class="room-item private" data-room="private-test-group">
                     <div class="room-avatar">⭐</div>
@@ -1597,7 +1498,7 @@
 
         const ROOMS = {
             'public': { name: '公共聊天室', needPassword: false, icon: '💬', desc: '自由交流' },
-            'private-260120': { name: '🤫', needPassword: true, password: '121027', icon: '💕', desc: '密码保护' },
+            'private-260120': { name: '🤫', needPassword: true, password: '260120', icon: '💕', desc: '密码保护' },
 			'private-test-group': { name: 'STAR Talk 测试组后宫', needPassword: true, password: 'FVVEVANS', icon: '⭐', desc: '密码保护' }
         };
         const DEFAULT_ROOM = 'public';
@@ -1711,40 +1612,6 @@
                 applyTheme('auto');
             }
         });
-        
-        // 通知功能 - 仅用于🤫聊天室
-        let unreadCount = 0;
-        function requestNotificationPermission() {
-            if (Notification.permission === 'default') {
-                Notification.requestPermission();
-            }
-        }
-        function sendSecretRoomNotification(username, content) {
-            if (Notification.permission === 'granted') {
-                const notification = new Notification('🤫 私密消息', {
-                    body: `${username}: ${content.length > 50 ? content.substring(0, 50) + '...' : content}`,
-                    icon: 'https://www.higheri.tech/favicon.ico',
-                    badge: 'https://www.higheri.tech/favicon.ico'
-                });
-                notification.onclick = () => {
-                    window.focus();
-                    notification.close();
-                };
-            }
-        }
-        function updateBadge(count) {
-            unreadCount = count;
-            const badge = document.getElementById('secretRoomBadge');
-            if (badge) {
-                if (count > 0) {
-                    badge.textContent = count > 9 ? '9+' : count;
-                    badge.style.display = 'flex';
-                } else {
-                    badge.style.display = 'none';
-                }
-            }
-        }
-        
         function toggleTheme() {
             const cur = localStorage.getItem('theme') || 'auto';
             let next;
@@ -1783,48 +1650,23 @@
 
         // 存储工具
         function getSavedRoom() {
-            // 不记忆聊天室切换状态，每次都返回默认聊天室
-            return DEFAULT_ROOM;
+            const saved = localStorage.getItem('lastRoom');
+            return saved && KNOWN_ROOM_IDS.includes(saved) ? saved : DEFAULT_ROOM;
         }
-        function saveRoom(id) {
-            // 不保存聊天室状态
-        }
-        function isPrivateRoomVerified(roomId) {
-            // 不记忆密码验证状态，每次都需要重新输入密码
-            return false;
-        }
-        function setPrivateRoomVerified(roomId, v) {
-            // 不保存密码验证状态
-        }
+        function saveRoom(id) { /* 不再保存聊天室状态 */ }
+        function isPrivateRoomVerified(roomId) { return false; }
+        function setPrivateRoomVerified(roomId, v) { /* 不再保存密码验证状态 */ }
         
         // 用户登录状态
-        function saveUserSession(user, rememberMe = false) {
+        function saveUserSession(user) {
             currentUser = user;
-            // 如果勾选了"保存登录状态"，保存到 localStorage
-            if (rememberMe) {
-                localStorage.setItem('chatUser', JSON.stringify(user));
-                localStorage.setItem('chatRememberMe', 'true');
-            } else {
-                // 如果没有勾选，清除之前保存的登录状态
-                localStorage.removeItem('chatUser');
-                localStorage.removeItem('chatRememberMe');
-            }
+            /* 不再保存登录状态到 localStorage */
             updateUsernameDisplay();
             // 登录后立即校验房间权限
             checkSecretRoomPermission(user.username);
         }
         function loadUserSession() {
-            // 只有勾选了"保存登录状态"才自动登录
-            const rememberMe = localStorage.getItem('chatRememberMe');
-            if (rememberMe === 'true') {
-                const user = localStorage.getItem('chatUser');
-                if(user) {
-                    currentUser = JSON.parse(user);
-                    // 读取本地用户后校验权限
-                    checkSecretRoomPermission(currentUser.username);
-                    return true;
-                }
-            }
+            /* 不再从 localStorage 读取登录状态 */
             return false;
         }
         function updateUsernameDisplay() {
@@ -1936,29 +1778,25 @@
         async function handleLogin() {
             const data = validateAuthInput();
             if(!data) return;
-
+            
             try {
                 const snapshot = await usersRef.child(data.username).once('value');
                 if(!snapshot.exists()) {
                     authTip.textContent = '用户名不存在';
                     return;
                 }
-
+                
                 const userData = snapshot.val();
                 const hashedPwd = await sha256(data.password);
-
+                
                 if(userData.password !== hashedPwd) {
                     authTip.textContent = '密码错误';
                     return;
                 }
-
-                // 登录成功，根据复选框决定是否保存登录状态
-                const rememberMe = document.getElementById('rememberMe').checked;
-                saveUserSession({ username: data.username }, rememberMe);
+                
+                // 登录成功
+                saveUserSession({ username: data.username });
                 authMask.style.display = 'none';
-                chatWrap.style.display = 'flex';
-                // 请求通知权限（必须在用户交互后调用）
-                requestNotificationPermission();
                 initializeChat();
             } catch (err) {
                 console.error(err);
@@ -1978,10 +1816,6 @@
 
         // 聊天室功能
         function enterRoom(roomId) {
-            // 确保聊天内容容器可见（修复移动端显示问题）
-            messagesContainer.style.display = 'block';
-            messagesContainer.innerHTML = '';
-            
             // 显示过渡动画
             transitionText.textContent = '在' + ROOMS[roomId].name + '中';
             // 先重置为初始大小，确保有缩放动画
@@ -2031,12 +1865,6 @@
             saveRoom(roomId);
             currentRoomName.textContent = ROOMS[roomId].name;
             roomItems.forEach(item => item.classList.toggle('active', item.dataset.room === roomId));
-            
-            // 进入🤫聊天室时清除角标
-            if (roomId === 'private-260120') {
-                updateBadge(0);
-            }
-            
             messagesContainer.innerHTML = ' <div class="system-tip"> ' + ROOMS[roomId].name + ' 正在线上</div>';
 
             const roomRef = database.ref('rooms/' + roomId);
@@ -2068,19 +1896,6 @@
                     if (msg && msg.timestamp) {
                         displayMessage(msg);
                         loadedCount++;
-                        
-                        // 判断是否是新消息（不是历史消息）
-                        if (loadedCount > totalMessages) {
-                            // 仅🤫聊天室发送通知
-                            if (roomId === 'private-260120') {
-                                sendSecretRoomNotification(msg.username, msg.content);
-                                // 只有当不在🤫聊天室时才更新角标
-                                if (currentRoom !== 'private-260120') {
-                                    updateBadge(unreadCount + 1);
-                                }
-                            }
-                        }
-                        
                         // 所有历史消息加载完成后，等待animationDuration后隐藏
                         if (loadedCount >= totalMessages) {
                             setTimeout(hideTransition, animationDuration);
@@ -2115,7 +1930,7 @@
             if (pwd === ROOMS[target].password) {
                 pwdTip.innerText = "";
                 setPrivateRoomVerified(target, true);
-                roomSelectMask.classList.remove("show");
+                roomSelectMask.style.display = "none";
                 chatWrap.style.display = "flex";
                 enterRoom(target);
                 targetRoomId = null;
@@ -2127,7 +1942,7 @@
         }
 
         publicBtn.addEventListener('click', () => {
-            roomSelectMask.classList.remove("show");
+            roomSelectMask.style.display = "none";
             chatWrap.style.display = "flex";
             enterRoom('public');
         });
@@ -2140,8 +1955,8 @@
                 if (roomId === currentRoom) return;
                 if (ROOMS[roomId].needPassword && !isPrivateRoomVerified(roomId)) {
                     targetRoomId = roomId;
-                    roomSelectMask.classList.add("show");
-                    chatWrap.style.display = "flex";
+                    roomSelectMask.style.display = "flex";
+                    chatWrap.style.display = "none";
                     pwdInput.value = "";
                     pwdTip.innerText = "";
                     pwdInput.focus();
@@ -2240,16 +2055,8 @@
         logoutBtn.addEventListener('click', () => {
             if(confirm('确定要退出登录吗？')) {
                 localStorage.removeItem('chatUser');
-                localStorage.removeItem('chatRememberMe');
                 localStorage.removeItem('lastRoom');
                 localStorage.removeItem('theme');
-                // 清除所有聊天室密码验证记录
-                for (let i = localStorage.length - 1; i >= 0; i--) {
-                    const key = localStorage.key(i);
-                    if (key && key.startsWith('privateRoomVerified_')) {
-                        localStorage.removeItem(key);
-                    }
-                }
                 location.reload();
             }
         });
@@ -2292,13 +2099,13 @@
             const saved = getSavedRoom();
             // 先校验权限，再进入房间
             if (saved === 'public') {
-                roomSelectMask.classList.remove("show");
+                roomSelectMask.style.display = "none";
                 chatWrap.style.display = "flex";
                 enterRoom('public');
             } else if (saved.startsWith('private-') && !isPrivateRoomVerified(saved)) {
                 targetRoomId = saved;
-                chatWrap.style.display = "flex";
-                roomSelectMask.classList.add("show");
+                roomSelectMask.style.display = "flex";
+                chatWrap.style.display = "none";
                 pwdInput.value = "";
                 pwdTip.innerText = "";
                 pwdInput.focus();
@@ -2306,10 +2113,10 @@
                 // 非白名单用户禁止进入🤫房间
                 if(saved === 'private-260120' && !ALLOW_USER_LIST.includes(currentUser?.username)){
                     enterRoom(DEFAULT_ROOM);
-                    roomSelectMask.classList.remove("show");
+                    roomSelectMask.style.display = "none";
                     chatWrap.style.display = "flex";
                 }else{
-                    roomSelectMask.classList.remove("show");
+                    roomSelectMask.style.display = "none";
                     chatWrap.style.display = "flex";
                     enterRoom(saved);
                 }
@@ -2319,16 +2126,6 @@
         // 页面加载
         window.addEventListener('load', () => {
             initTheme();
-            // 请求通知权限（用于🤫聊天室消息通知）
-            requestNotificationPermission();
-            
-            // 强制清空登录表单，防止浏览器自动填充或保留上次输入
-            setTimeout(() => {
-                authUsername.value = '';
-                authPassword.value = '';
-                document.getElementById('rememberMe').checked = false;
-            }, 100);
-            
             if(loadUserSession()) {
                 // 已登录
                 authMask.style.display = 'none';
