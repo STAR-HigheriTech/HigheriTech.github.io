@@ -1955,11 +1955,40 @@
                 // 登录成功，根据复选框决定是否保存登录状态
                 const rememberMe = document.getElementById('rememberMe').checked;
                 saveUserSession({ username: data.username }, rememberMe);
+                
+                // 先显示过渡动画，再显示聊天界面
+                transitionText.textContent = '欢迎回来';
+                transitionSubtext.textContent = '正在进入聊天室';
+                
+                // 重置动画状态
+                transitionCircle.style.transition = 'none';
+                transitionCircle.style.transform = 'scale(1)';
+                transitionSubtext.style.opacity = '1';
+                transitionContent.style.opacity = '1';
+                void transitionCircle.offsetWidth;
+                transitionCircle.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                transitionOverlay.classList.remove('fade-out');
+                transitionOverlay.classList.add('show');
+                
+                // 计算缩放值
+                const minDim = Math.min(window.innerWidth, window.innerHeight);
+                const maxScale = minDim / 48 * 0.95;
+                const scale = Math.min(25, maxScale);
+                transitionCircle.style.transform = 'scale(' + scale + ')';
+                transitionText.style.fontSize = (scale * 0.25) + 'px';
+                transitionSubtext.style.fontSize = (scale * 0.28) + 'px';
+                
+                // 隐藏登录弹窗，显示聊天容器（但被动画层覆盖）
                 authMask.style.display = 'none';
                 chatWrap.style.display = 'flex';
+                
                 // 请求通知权限（必须在用户交互后调用）
                 requestNotificationPermission();
-                initializeChat();
+                
+                // 等待动画后初始化聊天
+                setTimeout(() => {
+                    initializeChat();
+                }, 300);
             } catch (err) {
                 console.error(err);
                 authTip.textContent = '登录失败，请重试';
@@ -1978,6 +2007,10 @@
 
         // 聊天室功能
         function enterRoom(roomId) {
+            // 确保聊天内容容器可见（修复移动端显示问题）
+            messagesContainer.style.display = 'block';
+            messagesContainer.innerHTML = '';
+            
             // 显示过渡动画
             transitionText.textContent = '在' + ROOMS[roomId].name + '中';
             // 先重置为初始大小，确保有缩放动画
@@ -2285,6 +2318,13 @@
         }
 
         function initializeChat() {
+            // 移动端初始化视图状态
+            if (window.innerWidth <= 768) {
+                roomSidebar.classList.remove('show');
+                onlineSidebar.classList.remove('show');
+                mobileMask.classList.remove('show');
+            }
+            
             const saved = getSavedRoom();
             // 先校验权限，再进入房间
             if (saved === 'public') {
