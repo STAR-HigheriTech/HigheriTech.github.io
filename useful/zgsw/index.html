@@ -3,647 +3,1442 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>自雇人士税务计算器（2026 排版优化版）</title>
+<title>JSON 对比工具</title>
+<!--
+  ============================================================================
+  JSON 对比工具 + Adsterra 广告位
+  ============================================================================
+  广告位说明（如需增加/删除，修改对应区块即可）：
+
+  [已启用]
+    · 顶部横幅 728x90   key: 2e1f559954f3b50dfb9e884b8a0cce46
+    · 底部横幅 320x50   key: 9818f64ba921d4a9edddd1713cdf5a50
+
+  [已注释，取消注释即启用]
+    · Popunder            （风险较高，会强制新窗口/标签）
+    · Social Bar          （悬浮条，可能遮挡内容）
+    · Native Banner       （异步加载）
+    · 468x60 / 300x250 / 160x300 / 160x600 等备用横幅
+
+  ⚠️  免责声明
+  以上第三方脚本在浏览器中拥有与本页面同等的执行权限，可能：
+    - 将访客强制跳转至其他站点（Popunder/Social Bar 常见）
+    - 收集浏览行为、设备信息
+    - 自动播放音频或弹出系统通知
+
+  请仅在「你信任该广告网络、且页面对你无敏感数据」的环境启用。
+  本工具本身不收集、不上传任何 JSON 内容（全部在本地完成）。
+  ============================================================================
+-->
 <style>
-  :root{
-    --bg:#f4f6fb;
-    --card:#ffffff;
-    --ink:#111827;
-    --ink-2:#374151;
-    --muted:#6b7280;
-    --line:#e5e7eb;
-    --line-2:#f1f3f7;
-    --primary:#4f46e5;
-    --primary-2:#4338ca;
-    --green:#059669;
-    --red:#dc2626;
-    --amber:#b45309;
-    --radius:16px;
-    --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
+  :root {
+    --bg: #f6f8fa;
+    --panel: #ffffff;
+    --panel-2: #f6f8fa;
+    --border: #d0d7de;
+    --border-strong: #afb8c1;
+    --text: #1f2328;
+    --text-dim: #656d76;
+    --text-faint: #8c959f;
+    --accent: #0969da;
+    --accent-hover: #0757b8;
+    --accent-bg: #ddf4ff;
+    --green: #1a7f37;
+    --green-bg: #e9f9ee;
+    --green-strong: #abf2bc;
+    --red: #cf222e;
+    --red-bg: #fff1f0;
+    --red-strong: #ffc1bc;
+    --yellow: #9a6700;
+    --yellow-bg: #fff8c5;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --shadow: 0 1px 2px rgba(31, 35, 40, .05);
   }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
-    background:var(--bg); color:var(--ink); line-height:1.55;
-    padding:28px 18px 40px;
-    -webkit-font-smoothing:antialiased;
-  }
-  .app{max-width:1120px;margin:0 auto}
 
-  /* ===== 头部 ===== */
-  .app-header{margin-bottom:22px}
-  .app-header h1{font-size:1.55rem;letter-spacing:-.3px;color:#0f172a}
-  .app-header h1 .ver{font-size:.68rem;font-weight:500;color:#fff;background:var(--primary);padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
-  .app-header p{font-size:.84rem;color:var(--muted);margin-top:4px}
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    height: 100dvh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
 
-  /* ===== 双栏布局 ===== */
-  .layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:20px;align-items:start}
-  @media(max-width:920px){.layout{grid-template-columns:1fr}}
+  .spacer { flex: 1; }
 
-  /* ===== 卡片 ===== */
-  .card{
-    background:var(--card);border-radius:var(--radius);
-    box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;
-    border:1px solid rgba(229,231,235,.7);
+  /* ---------- 顶栏 ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    z-index: 20;
   }
-  .card-head{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-  .card-head .num{
-    width:22px;height:22px;border-radius:7px;background:#eef2ff;color:var(--primary);
-    font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
-  }
-  .card-head h2{font-size:.95rem;font-weight:650;color:#0f172a}
-  .card-head .tag{
-    margin-left:auto;font-size:.66rem;font-weight:500;color:#4338ca;
-    background:#eef2ff;padding:2px 8px;border-radius:20px;white-space:nowrap;
-  }
-  .card-head .tag.warn{background:#fef3c7;color:#92400e}
+  .brand { font-weight: 700; font-size: 15px; letter-spacing: .2px; white-space: nowrap; }
+  .brand span { color: var(--accent); }
 
-  /* ===== 表单 ===== */
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
-  @media(max-width:560px){.grid{grid-template-columns:1fr}}
-  .field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink-2);margin-bottom:5px}
-  .field label .hint{font-weight:400;color:#9ca3af;font-size:.7rem;margin-left:4px}
-  .field input,.field select{
-    width:100%;padding:9px 11px;border:1px solid #d6dbe5;border-radius:10px;
-    font-size:.9rem;background:#fbfcfe;color:var(--ink);transition:.15s;
-  }
-  .field input:focus,.field select:focus{
-    outline:none;border-color:var(--primary);background:#fff;
-    box-shadow:0 0 0 3px rgba(79,70,229,.12);
-  }
-  .field .unit{font-size:.7rem;color:#9ca3af;margin-top:3px}
-  .radio-row{display:flex;gap:16px;flex-wrap:wrap;padding-top:2px}
-  .radio-row label{display:flex;align-items:center;gap:6px;font-size:.84rem;cursor:pointer;color:var(--ink-2)}
-  .radio-row input{accent-color:var(--primary);width:15px;height:15px}
+  .legend { display: flex; gap: 12px; font-size: 12px; color: var(--text-dim); }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .sw-del { background: var(--red-strong); }
+  .sw-ins { background: var(--green-strong); }
+  .sw-mod { background: var(--yellow-bg); border: 1px solid #e5c76b; }
 
-  /* ===== 折叠区 ===== */
-  .section-head{
-    display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;
-    font-size:.82rem;font-weight:600;color:#4b5563;
-    padding:11px 0 4px;margin-top:6px;border-top:1px dashed var(--line);
+  button {
+    font: inherit;
+    font-size: 12.5px;
+    padding: 5px 11px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #f6f8fa;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s, color .15s;
   }
-  .section-head .arrow{font-size:.62rem;color:#9ca3af;transition:transform .2s;display:inline-block}
-  .section-head.open .arrow{transform:rotate(90deg)}
-  .section-head .tag-mini{margin-left:auto;font-size:.64rem;font-weight:500;color:#9ca3af}
-  .collapsible-body{display:none;padding-top:8px}
-  .collapsible-body.open{display:block}
+  button:hover { background: #eef1f4; border-color: var(--border-strong); }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 20px;
+  }
+  button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
 
-  /* ===== 结果面板 ===== */
-  .result-col{position:sticky;top:20px}
-  @media(max-width:920px){.result-col{position:static}}
-  .result-panel{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-    border:1px solid rgba(229,231,235,.7);overflow:hidden;
+  .mini {
+    font-size: 11.5px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-dim);
   }
-  .hero{
-    background:linear-gradient(135deg,#1e1b4b,#312e81 60%,#3730a3);
-    color:#fff;padding:20px 22px;
-  }
-  .hero .label{font-size:.76rem;opacity:.72;letter-spacing:.2px}
-  .hero .amount{font-size:2.05rem;font-weight:750;letter-spacing:-1px;margin:2px 0 6px;font-variant-numeric:tabular-nums}
-  .hero .meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.74rem;opacity:.85}
-  .hero .meta .pill{background:rgba(255,255,255,.12);padding:2px 9px;border-radius:20px}
+  .mini:hover { background: #eaeef2; color: var(--text); }
 
-  .result-body{padding:16px 18px 18px}
-  .breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
-  @media(max-width:420px){.breakdown{grid-template-columns:1fr}}
-  .bk{
-    background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;
-    padding:11px 12px;min-width:0;
+  /* ---------- 广告位 ---------- */
+  .ad-slot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eef1f4;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    overflow: hidden;
+    min-height: 100px;
   }
-  .bk .l{font-size:.68rem;color:var(--muted);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .bk .v{font-size:1.02rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .bk .v.green{color:var(--green)}
-  .bk .n{font-size:.63rem;color:#9ca3af;margin-top:3px;line-height:1.35}
-
-  .detail-box{
-    background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;
-    padding:4px 13px;font-size:.79rem;color:#4b5563;margin-bottom:12px;
-    max-height:300px;overflow-y:auto;
+  .ad-slot.ad-bottom {
+    border-bottom: 0;
+    border-top: 1px solid var(--border);
+    min-height: 60px;
+    padding: 4px 0;
   }
-  .detail-box .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0}
-  .detail-box .row + .row{border-top:1px dashed var(--line)}
-  .detail-box .row .val{font-weight:650;color:var(--ink);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
-  .detail-box .row .val.neg{color:var(--red)}
-  .detail-box .row .val.pos{color:var(--green)}
-
-  .alert{
-    display:none;background:#fffbeb;border-left:3px solid #f59e0b;
-    padding:9px 12px;border-radius:0 8px 8px 0;font-size:.76rem;color:#92400e;margin-bottom:12px;
+  .ad-tag {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #8c959f;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 1;
   }
-  .alert.blue{background:#eff6ff;border-color:#3b82f6;color:#1e40af}
-  .alert.red{background:#fef2f2;border-color:#ef4444;color:#991b1b}
-
-  .actions{display:flex;gap:9px;flex-wrap:wrap}
-  .btn{
-    flex:1;min-width:120px;padding:9px 14px;border:1px solid #d6dbe5;border-radius:10px;
-    background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--ink-2);transition:.15s;
+  .ad-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
   }
-  .btn:hover{background:#f8fafc}
-  .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
-  .btn.primary:hover{background:var(--primary-2)}
-
-  /* ===== 小工具类 ===== */
-  .hidden{display:none!important}
-  .sp-total{font-size:.78rem;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
-  .sp-total strong{color:var(--ink);font-variant-numeric:tabular-nums}
-
-  /* ===== 脚注 ===== */
-  .disclaimer{
-    max-width:1120px;margin:6px auto 0;font-size:.73rem;color:#9ca3af;line-height:1.75;padding:0 4px;
+  .ad-wrap iframe {
+    max-width: 100%;
+    border: 0;
+    display: block;
   }
-  .disclaimer strong{color:#6b7280}
+
+  /* 主应用外壳：占满剩余高度 */
+  .app-shell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ---------- 编辑区 ---------- */
+  .editors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 12px 16px 4px;
+    height: clamp(150px, 28vh, 320px);
+    flex-shrink: 0;
+  }
+  .pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .pane:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(9, 105, 218, .1); }
+  .pane.has-err { border-color: var(--red); box-shadow: 0 0 0 3px rgba(207, 34, 46, .08); }
+  .pane.dragging { border-color: var(--accent); background: var(--accent-bg); }
+
+  .pane-head {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 6px 4px 10px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: var(--red); }
+  .dot-green { background: var(--green); }
+  .title { font-size: 12px; font-weight: 600; color: var(--text-dim); white-space: nowrap; }
+  .pane-head .mini { padding: 2px 6px; }
+
+  textarea {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    resize: none;
+    background: var(--panel);
+    color: var(--text);
+    padding: 8px 12px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    tab-size: 2;
+  }
+  textarea::placeholder { color: var(--text-faint); }
+
+  .err {
+    display: none;
+    padding: 5px 12px;
+    font-size: 11.5px;
+    color: var(--red);
+    background: var(--red-bg);
+    border-top: 1px solid var(--red-strong);
+    font-family: var(--mono);
+    word-break: break-word;
+    flex-shrink: 0;
+    max-height: 72px;
+    overflow: auto;
+  }
+  .err.show { display: block; }
+
+  /* ---------- 拖拽手柄 ---------- */
+  .h-resizer {
+    height: 8px;
+    flex-shrink: 0;
+    cursor: row-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .h-resizer::before {
+    content: '';
+    width: 44px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background .15s;
+  }
+  .h-resizer:hover::before { background: var(--border-strong); }
+
+  /* ---------- 工具栏 ---------- */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 16px 8px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    padding: 1px;
+  }
+  .nav-group button { border: 0; background: transparent; padding: 3px 8px; border-radius: 4px; font-size: 13px; }
+  .nav-group button:hover { background: #eaeef2; }
+  .nav-pos {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    min-width: 58px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .chk {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .chk input { accent-color: var(--accent); margin: 0; cursor: pointer; }
+  .sel { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-dim); white-space: nowrap; }
+  select {
+    font: inherit;
+    font-size: 12px;
+    padding: 2px 5px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    outline: 0;
+  }
+  select:focus { border-color: var(--accent); }
+
+  .stats {
+    display: flex;
+    gap: 12px;
+    font-size: 12.5px;
+    font-family: var(--mono);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .stat { white-space: nowrap; }
+  .s-add { color: var(--green); }
+  .s-del { color: var(--red); }
+  .s-mod { color: var(--yellow); }
+  .s-same { color: var(--text-faint); }
+  .s-time { color: var(--text-faint); font-size: 11.5px; }
+  .s-ok { color: var(--green); font-weight: 600; }
+  .s-stale { color: var(--yellow); }
+
+  /* ---------- 结果区 ---------- */
+  .result {
+    flex: 1;
+    min-height: 0;
+    margin: 0 16px 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .diff-scroll { flex: 1; min-height: 0; overflow: auto; }
+  #diffBody { position: relative; min-width: 100%; }
+
+  .banner {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--panel);
+  }
+  .banner.ok { background: var(--green-bg); color: var(--green); border-bottom-color: #b6f0c4; }
+
+  .drow {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 52px minmax(0, 1fr);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+  .drow > :nth-child(2) { border-right: 1px solid var(--border); }
+  .drow.diff:hover { background: #fafbfc; }
+
+  .ln {
+    padding: 0 8px 0 2px;
+    text-align: right;
+    color: var(--text-faint);
+    user-select: none;
+    font-size: 11.5px;
+    background: var(--panel-2);
+    border-right: 1px solid var(--border);
+  }
+  .cell {
+    padding: 0 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .cell.same { color: var(--text); }
+  .cell.del { background: var(--red-bg); }
+  .cell.ins { background: var(--green-bg); }
+  .cell.empty {
+    background-image: repeating-linear-gradient(
+      45deg, transparent, transparent 5px,
+      rgba(31, 35, 40, .035) 5px, rgba(31, 35, 40, .035) 10px
+    );
+  }
+
+  .chg-del { background: var(--red-strong); border-radius: 2px; }
+  .chg-ins { background: var(--green-strong); border-radius: 2px; }
+
+  .drow.current {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .fold-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 12px;
+    background: #f6f8fa;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+    color: var(--text-dim);
+    font-size: 11.5px;
+    font-family: var(--mono);
+    cursor: pointer;
+    user-select: none;
+  }
+  .fold-bar:hover { background: #eef1f4; color: var(--text); }
+  .fold-icon { width: 10px; color: var(--text-faint); }
+  .fold-bar.expanded { color: var(--text-dim); }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 56px 20px;
+    color: var(--text-faint);
+    font-size: 13px;
+    text-align: center;
+  }
+  .empty-state .big { font-size: 30px; opacity: .45; }
+  .empty-state.ok { color: var(--green); }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translate(-50%, 12px);
+    background: rgba(31, 35, 40, .92);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 999;
+    max-width: 80vw;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 滚动条 */
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #d0d7de;
+    border-radius: 6px;
+    border: 3px solid var(--panel);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #afb8c1; }
+
+  /* ---------- 响应式 ---------- */
+  @media (max-width: 820px) {
+    .editors {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      height: 280px;
+      gap: 8px;
+      padding: 8px 10px 2px;
+    }
+    .h-resizer { display: none; }
+    .legend { display: none; }
+    .result { margin: 0 10px 10px; }
+    .toolbar { padding: 2px 10px 8px; }
+    .brand { font-size: 14px; }
+    header { padding: 7px 10px; }
+    .drow { grid-template-columns: 42px minmax(0, 1fr) 42px minmax(0, 1fr); }
+    .ad-slot.ad-top { display: none; }  /* 移动端隐藏顶部 728x90 */
+  }
 </style>
 </head>
 <body>
-<div class="app">
 
-  <header class="app-header">
-    <h1>自雇人士税务计算器<span class="ver">2026</span></h1>
-    <p>个体工商户 · 个人独资企业 · 合伙企业个人合伙人 —— 基于现行主要政策估算</p>
-  </header>
-
-  <div class="layout">
-
-    <!-- ================= 左栏：输入 ================= -->
-    <main>
-
-      <!-- 01 主体与征收 -->
-      <section class="card">
-        <div class="card-head">
-          <span class="num">1</span>
-          <h2>经营主体与征收方式</h2>
-        </div>
-        <div class="grid">
-          <div class="field">
-            <label>主体类型</label>
-            <select id="entityType">
-              <option value="individual" selected>个体工商户（享 200 万以内减半）</option>
-              <option value="sole">个人独资企业（不享个体户减半）</option>
-              <option value="partner">合伙企业个人合伙人（不享个体户减半）</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>征收方式</label>
-            <select id="method">
-              <option value="audit" selected>查账征收</option>
-              <option value="deemed">核定征收（按应税所得率）</option>
-            </select>
-          </div>
-          <div class="field hidden" id="deemedRateField">
-            <label>核定应税所得率</label>
-            <input type="number" id="deemedRate" value="10" min="1" max="30" step="0.5">
-            <div class="unit">% · 各地/行业常见 5%–20%</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 02 收入与成本 -->
-      <section class="card">
-        <div class="card-head">
-          <span class="num">2</span>
-          <h2>收入与成本</h2>
-          <span class="tag">不含税金额</span>
-        </div>
-        <div class="grid">
-          <div class="field">
-            <label>全年营业收入</label>
-            <input type="number" id="revenue" value="800000" min="0" step="10000">
-            <div class="unit">元 / 年</div>
-          </div>
-          <div class="field">
-            <label>全年成本费用 <span class="hint">有合法凭证可扣除</span></label>
-            <input type="number" id="cost" value="300000" min="0" step="10000">
-            <div class="unit">元 / 年</div>
-          </div>
-        </div>
-
-        <div class="section-head open" id="vatToggle">
-          <span class="arrow">▶</span>
-          <span>增值税起征点模拟</span>
-          <span class="tag-mini">可选</span>
-        </div>
-        <div class="collapsible-body open" id="vatBody">
-          <div class="grid">
-            <div class="field">
-              <label>申报周期</label>
-              <select id="vatPeriod">
-                <option value="quarter" selected>按季申报（季度 ≤30 万免征）</option>
-                <option value="month">按月申报（月 ≤10 万免征）</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>收入分布</label>
-              <select id="vatDistribution">
-                <option value="even" selected>全年均匀分布</option>
-                <option value="custom">按季度分别输入</option>
-              </select>
-            </div>
-          </div>
-          <div class="grid hidden" id="quarterInputs" style="margin-top:12px">
-            <div class="field"><label>Q1 收入</label><input type="number" class="q-rev" data-q="1" value="200000" min="0" step="10000"></div>
-            <div class="field"><label>Q2 收入</label><input type="number" class="q-rev" data-q="2" value="200000" min="0" step="10000"></div>
-            <div class="field"><label>Q3 收入</label><input type="number" class="q-rev" data-q="3" value="200000" min="0" step="10000"></div>
-            <div class="field"><label>Q4 收入</label><input type="number" class="q-rev" data-q="4" value="200000" min="0" step="10000"></div>
-          </div>
-          <div class="unit" style="margin-top:8px">超过起征点后，3% 征收率减按 1% 计算增值税。</div>
-        </div>
-      </section>
-
-      <!-- 03 扣除与身份 -->
-      <section class="card">
-        <div class="card-head">
-          <span class="num">3</span>
-          <h2>扣除与身份信息</h2>
-        </div>
-
-        <div class="field">
-          <label>是否同时取得综合所得（工资薪金等）？</label>
-          <div class="radio-row">
-            <label><input type="radio" name="hasSalary" value="no" checked> 没有综合所得</label>
-            <label><input type="radio" name="hasSalary" value="yes"> 有综合所得</label>
-          </div>
-        </div>
-
-        <div id="salaryDeductionBox" class="hidden" style="margin-top:12px">
-          <div class="field">
-            <label>6 万元减除费用及专项附加扣除在何处扣除？</label>
-            <select id="deductAllocation">
-              <option value="salary" selected>全部在综合所得中扣除（经营所得不扣）</option>
-              <option value="business">全部在经营所得中扣除</option>
-              <option value="partial">部分在经营所得中扣除</option>
-            </select>
-          </div>
-          <div class="field hidden" id="partialDeductField" style="margin-top:10px">
-            <label>在经营所得中扣除的金额 <span class="hint">不超过 6 万 + 专项扣除合计</span></label>
-            <input type="number" id="partialDeductAmount" value="0" min="0" step="1000">
-            <div class="unit">元 / 年</div>
-          </div>
-        </div>
-
-        <div class="section-head" id="specialToggle">
-          <span class="arrow">▶</span>
-          <span>专项扣除与专项附加扣除明细</span>
-          <span class="tag-mini">展开填写</span>
-        </div>
-        <div class="collapsible-body" id="specialBody">
-          <div class="grid">
-            <div class="field"><label>社保等专项扣除</label><input type="number" class="sp-item" id="spSocial" value="0" min="0" step="1000"><div class="unit">个人缴纳社保</div></div>
-            <div class="field"><label>子女教育</label><input type="number" class="sp-item" id="spChild" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>继续教育</label><input type="number" class="sp-item" id="spEdu" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>大病医疗</label><input type="number" class="sp-item" id="spMedical" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>住房贷款利息</label><input type="number" class="sp-item" id="spLoan" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>住房租金</label><input type="number" class="sp-item" id="spRent" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>赡养老人</label><input type="number" class="sp-item" id="spElder" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>3 岁以下婴幼儿照护</label><input type="number" class="sp-item" id="spBaby" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-            <div class="field"><label>其他扣除（个人养老金等）</label><input type="number" class="sp-item" id="spOther" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
-          </div>
-          <div class="sp-total">专项扣除合计：<strong id="spTotalDisplay">¥ 0</strong> / 年</div>
-        </div>
-
-        <div class="grid" style="margin-top:14px">
-          <div class="field">
-            <label>已预缴经营所得个税</label>
-            <input type="number" id="prepaidIIT" value="0" min="0" step="1000">
-            <div class="unit">用于计算汇算补 / 退</div>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- ================= 右栏：结果 ================= -->
-    <aside class="result-col">
-      <div class="result-panel">
-
-        <div class="hero">
-          <div class="label">全年预计总税费（增值税 + 附加 + 经营所得个税）</div>
-          <div class="amount" id="totalTax">¥ 0</div>
-          <div class="meta">
-            <span class="pill" id="effectiveRate">综合税负率 0%</span>
-            <span class="pill" id="settleInfo">汇算应补/退：—</span>
-          </div>
-        </div>
-
-        <div class="result-body">
-
-          <div class="breakdown">
-            <div class="bk">
-              <div class="l">增值税</div>
-              <div class="v" id="vat">¥ 0</div>
-              <div class="n" id="vatNote">—</div>
-            </div>
-            <div class="bk">
-              <div class="l">附加税费</div>
-              <div class="v" id="surcharge">¥ 0</div>
-              <div class="n" id="surchargeNote">城建 + 教育附加 + 地方教育</div>
-            </div>
-            <div class="bk">
-              <div class="l">经营所得个税</div>
-              <div class="v" id="iit">¥ 0</div>
-              <div class="n" id="iitNote">—</div>
-            </div>
-          </div>
-
-          <div class="detail-box" id="detailBox"></div>
-
-          <div class="alert" id="alertNote"></div>
-
-          <div class="actions">
-            <button class="btn primary" id="copyBtn">复制结果</button>
-            <button class="btn" id="resetBtn">重置默认</button>
-          </div>
-
-        </div>
-      </div>
-    </aside>
-
+<header>
+  <div class="brand">JSON <span>对比</span></div>
+  <div class="legend">
+    <span><i class="sw sw-del"></i>删除</span>
+    <span><i class="sw sw-ins"></i>新增</span>
+    <span><i class="sw sw-mod"></i>修改</span>
   </div>
+  <div class="spacer"></div>
+  <button id="btnSample">示例</button>
+  <button id="btnSwap">⇄ 交换</button>
+  <button id="btnSummary">复制摘要</button>
+  <button id="btnClearAll">清空</button>
+</header>
 
-  <div class="disclaimer">
-    <strong>估算说明：</strong>增值税小规模纳税人月销售额 ≤10 万元（季度 ≤30 万元）免征，超过起征点后适用 3% 征收率的收入减按 1% 征收（至 2027-12-31）。经营所得适用 5%–35% 五级超额累进税率。个体工商户年应纳税所得额 ≤200 万元的部分减半征收，不区分征收方式；个人独资企业、合伙企业不适用；超过 200 万元时，仅就 ≤200 万元部分计算减半。同时取得综合所得和经营所得的，6 万元减除费用、专项扣除、专项附加扣除可在综合所得或经营所得中申报，但不得重复。核定征收（定率）下，投资者不得扣除 6 万元减除费用。附加税费以实际缴纳增值税为基数，城建税、教育费附加、地方教育附加享受“六税两费”减半（至 2027-12-31），本计算器默认市区城建税 7%。本工具为简化估算，实际税负以主管税务机关核定和申报结果为准。
+<!-- ============================================================
+     广告位：顶部横幅 728x90
+     key: 2e1f559954f3b50dfb9e884b8a0cce46
+     如不需要，整块删除或加 class="ad-slot ad-top" 后 display:none
+     ============================================================ -->
+<div class="ad-slot ad-top" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '2e1f559954f3b50dfb9e884b8a0cce46',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/2e1f559954f3b50dfb9e884b8a0cce46"></script>
   </div>
-
 </div>
 
+<div class="app-shell">
+
+  <div class="editors" id="editors">
+    <div class="pane" id="paneLeft">
+      <div class="pane-head">
+        <span class="dot dot-red"></span>
+        <span class="title">原始 JSON</span>
+        <div class="spacer"></div>
+        <button class="mini" data-act="upload" data-side="left" title="导入文件">导入</button>
+        <button class="mini" data-act="copy" data-side="left" title="复制内容">复制</button>
+        <button class="mini" data-act="format" data-side="left" title="格式化">格式化</button>
+        <button class="mini" data-act="minify" data-side="left" title="压缩">压缩</button>
+        <button class="mini" data-act="clear" data-side="left" title="清空">清空</button>
+      </div>
+      <textarea id="left" spellcheck="false" autocapitalize="off" autocomplete="off"
+        placeholder='粘贴原始 JSON，例如：{"name":"Alice","age":30}'></textarea>
+      <div class="err" id="errLeft"></div>
+    </div>
+
+    <div class="pane" id="paneRight">
+      <div class="pane-head">
+        <span class="dot dot-green"></span>
+        <span class="title">新的 JSON</span>
+        <div class="spacer"></div>
+        <button class="mini" data-act="upload" data-side="right" title="导入文件">导入</button>
+        <button class="mini" data-act="copy" data-side="right" title="复制内容">复制</button>
+        <button class="mini" data-act="format" data-side="right" title="格式化">格式化</button>
+        <button class="mini" data-act="minify" data-side="right" title="压缩">压缩</button>
+        <button class="mini" data-act="clear" data-side="right" title="清空">清空</button>
+      </div>
+      <textarea id="right" spellcheck="false" autocapitalize="off" autocomplete="off"
+        placeholder='粘贴新的 JSON，例如：{"name":"Alice","age":31}'></textarea>
+      <div class="err" id="errRight"></div>
+    </div>
+  </div>
+
+  <div class="h-resizer" id="resizer" title="拖动调整编辑区高度"></div>
+
+  <div class="toolbar">
+    <button id="btnCompare" class="primary">对比</button>
+    <div class="nav-group">
+      <button id="btnPrev" title="上一个差异 (Alt+↑)">↑</button>
+      <span class="nav-pos" id="navPos">—</span>
+      <button id="btnNext" title="下一个差异 (Alt+↓)">↓</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="optSort"> 键排序</label>
+    <label class="chk" title="数组元素按内容排序后对比，可能改变语义"><input type="checkbox" id="optSortArr"> 数组排序</label>
+    <label class="chk"><input type="checkbox" id="optCharDiff" checked> 字符级高亮</label>
+    <label class="chk"><input type="checkbox" id="optAuto"> 自动对比</label>
+    <label class="sel">相同行
+      <select id="sameMode">
+        <option value="fold" selected>折叠</option>
+        <option value="all">全部</option>
+        <option value="hide">隐藏</option>
+      </select>
+    </label>
+    <div class="spacer"></div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="result" id="resultPane">
+    <div class="diff-scroll" id="diffScroll">
+      <div id="diffBody"></div>
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<!-- ============================================================
+     广告位：底部横幅 320x50
+     key: 9818f64ba921d4a9edddd1713cdf5a50
+     移动端友好尺寸，桌面端居中显示
+     ============================================================ -->
+<div class="ad-slot ad-bottom" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '9818f64ba921d4a9edddd1713cdf5a50',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/9818f64ba921d4a9edddd1713cdf5a50"></script>
+  </div>
+</div>
+
+<!-- ============================================================
+     【可选】Popunder / Social Bar
+     默认注释。取消注释即启用；会强制新窗口或悬浮条。
+     风险较高：可能劫持点击、生成弹窗。确认接受后再开启。
+     ============================================================
+<script data-cfasync="false" src="https://abscloud.org/1/95c0b8994e06fa340bfb17c0cd84ee52"></script>
+<script data-cfasync="false" src="https://bauval.org/14/a80d5108e21e9de4f66aa34f60060622"></script>
+<script async data-cfasync="false" src="https://bauval.org/21/ffb62d24b50d78db0e8127fe49bc5deb"></script>
+<div id="container-ffb62d24b50d78db0e8127fe49bc5deb"></div>
+-->
+
+<!-- ============================================================
+     【可选】备用横幅（放在页面任意位置，自行移动）
+     ============================================================
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'f4d7dcfaa708a992ae59d667cc7e6445',
+        'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/f4d7dcfaa708a992ae59d667cc7e6445"></script>
+  </div>
+</div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'c2ab5f1ad43c48c41873e2bb4b69d7ee',
+        'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/c2ab5f1ad43c48c41873e2bb4b69d7ee"></script>
+  </div>
+</div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '95973b02ef235d7d25576f53278b021f',
+        'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/95973b02ef235d7d25576f53278b021f"></script>
+  </div>
+</div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '31c5c8484ad890ab3516ba34c003eeba',
+        'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/31c5c8484ad890ab3516ba34c003eeba"></script>
+  </div>
+</div>
+-->
+
 <script>
-(function(){
-  const $ = id => document.getElementById(id);
-  const $$ = sel => document.querySelectorAll(sel);
+(function () {
+  'use strict';
 
-  const IIT_BRACKETS = [
-    {limit:30000, rate:.05, deduction:0},
-    {limit:90000, rate:.10, deduction:1500},
-    {limit:300000, rate:.20, deduction:10500},
-    {limit:500000, rate:.30, deduction:40500},
-    {limit:Infinity, rate:.35, deduction:65500}
-  ];
-  const VAT_RATE = .01;
-  const VAT_MONTH_THRESHOLD = 100000;
-  const VAT_QUARTER_THRESHOLD = 300000;
-  const CITY_TAX_RATES = {city:.07, county:.05, other:.01};
-  const INDIVIDUAL_HALF_CAP = 2000000;
+  /* =========================================================
+   *  常量与工具
+   * ======================================================= */
+  const LS_KEY = 'json-diff-tool-v2';
+  const FOLD_THRESHOLD = 5;
+  const SIM_THRESHOLD = 0.3;
+  const LINE_DP_LIMIT = 4e6;
+  const TOKEN_DP_LIMIT = 100000;
+  const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
-  const entityTypeEl = $('entityType'), methodEl = $('method'), deemedRateField = $('deemedRateField'), deemedRateEl = $('deemedRate');
-  const revenueEl = $('revenue'), costEl = $('cost');
-  const vatPeriodEl = $('vatPeriod'), vatDistributionEl = $('vatDistribution'), quarterInputs = $('quarterInputs');
-  const hasSalaryRadios = document.querySelectorAll('input[name="hasSalary"]');
-  const salaryDeductionBox = $('salaryDeductionBox'), deductAllocationEl = $('deductAllocation'), partialDeductField = $('partialDeductField'), partialDeductAmountEl = $('partialDeductAmount');
-  const spItems = document.querySelectorAll('.sp-item');
-  const prepaidIITEl = $('prepaidIIT');
+  const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ESC_MAP[c]);
 
-  const totalTaxEl = $('totalTax'), effectiveRateEl = $('effectiveRate'), settleInfoEl = $('settleInfo');
-  const vatEl = $('vat'), vatNoteEl = $('vatNote');
-  const surchargeEl = $('surcharge'), surchargeNoteEl = $('surchargeNote');
-  const iitEl = $('iit'), iitNoteEl = $('iitNote');
-  const detailBox = $('detailBox'), alertNote = $('alertNote'), spTotalDisplay = $('spTotalDisplay');
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    left: $('left'), right: $('right'),
+    paneLeft: $('paneLeft'), paneRight: $('paneRight'),
+    errLeft: $('errLeft'), errRight: $('errRight'),
+    editors: $('editors'), resizer: $('resizer'),
+    diffBody: $('diffBody'), diffScroll: $('diffScroll'),
+    stats: $('stats'), navPos: $('navPos'),
+    optSort: $('optSort'), optSortArr: $('optSortArr'),
+    optCharDiff: $('optCharDiff'), optAuto: $('optAuto'),
+    sameMode: $('sameMode'),
+  };
 
-  const money = n => '¥ ' + Math.round(Number(n) || 0).toLocaleString('zh-CN');
-  const num = v => { const n = Number(v); return isFinite(n) ? n : 0; };
-  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+  /* =========================================================
+   *  状态
+   * ======================================================= */
+  let lastRows = [];
+  let lastStat = null;
+  let lastMs = 0;
+  const expandedFolds = new Set();
+  let navIndex = -1;
+  let stale = false;
+  let autoTimer = null;
+  let saveTimer = null;
 
-  function getHasSalary(){ for (const r of hasSalaryRadios) if (r.checked) return r.value === 'yes'; return false; }
-  function getSpTotal(){ let s = 0; spItems.forEach(el => s += Math.max(0, num(el.value))); return s; }
+  const SAMPLE_OLD = {
+    name: "Alice", age: 30, email: "alice@example.com",
+    hobbies: ["reading", "hiking"],
+    address: { city: "Beijing", zip: "100000" },
+    active: true
+  };
+  const SAMPLE_NEW = {
+    name: "Alice", age: 31, email: "alice@example.com",
+    hobbies: ["reading", "hiking", "coding"],
+    address: { city: "Shanghai", zip: "200000" },
+    active: false, role: "admin"
+  };
 
-  function calcVAT(revenue, period, distribution){
-    if (distribution === 'custom') {
-      const quarters = [1,2,3,4].map(q => {
-        const el = document.querySelector(`.q-rev[data-q="${q}"]`);
-        return Math.max(0, num(el ? el.value : 0));
-      });
-      let tax = 0, rows = [];
-      if (period === 'quarter') {
-        quarters.forEach((rev, i) => {
-          if (rev > VAT_QUARTER_THRESHOLD) tax += rev * VAT_RATE;
-          rows.push({label:`Q${i+1} 收入 ${money(rev)}`, val: rev <= VAT_QUARTER_THRESHOLD ? '免征' : `缴 ${money(rev * VAT_RATE)}`});
+  /* =========================================================
+   *  提示 & 错误
+   * ======================================================= */
+  let toastTimer = null;
+  function toast(msg) {
+    let el = $('toast');
+    if (!el) { el = document.createElement('div'); el.id = 'toast'; document.body.appendChild(el); }
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 1700);
+  }
+
+  function showError(side, msg) {
+    const pane = side === 'left' ? els.paneLeft : els.paneRight;
+    const err = side === 'left' ? els.errLeft : els.errRight;
+    err.textContent = msg;
+    err.classList.add('show');
+    pane.classList.add('has-err');
+  }
+  function clearSideError(side) {
+    const pane = side === 'left' ? els.paneLeft : els.paneRight;
+    const err = side === 'left' ? els.errLeft : els.errRight;
+    err.classList.remove('show');
+    err.textContent = '';
+    pane.classList.remove('has-err');
+  }
+  function clearErrors() { clearSideError('left'); clearSideError('right'); }
+
+  function showParseError(side, text, err, interactive) {
+    const ta = side === 'left' ? els.left : els.right;
+    const msg = (err && err.message) ? err.message : String(err);
+    let prefix = '';
+    const m = /position (\d+)/i.exec(msg);
+    if (m && interactive) {
+      const pos = Math.min(Number(m[1]), text.length);
+      const before = text.slice(0, pos);
+      const line = before.split('\n').length;
+      const col = pos - before.lastIndexOf('\n');
+      prefix = '第 ' + line + ' 行第 ' + col + ' 列：';
+      try { ta.focus(); ta.setSelectionRange(pos, Math.min(pos + 1, text.length)); } catch (_) {}
+    }
+    showError(side, prefix + msg);
+  }
+
+  /* =========================================================
+   *  安全归一化（防原型污染）
+   * ======================================================= */
+  function normalize(v, sortKeysFlag, sortArrays) {
+    if (Array.isArray(v)) {
+      const arr = v.map((x) => normalize(x, sortKeysFlag, sortArrays));
+      if (sortArrays) {
+        arr.sort((a, b) => {
+          const sa = JSON.stringify(a), sb = JSON.stringify(b);
+          return sa < sb ? -1 : sa > sb ? 1 : 0;
         });
-        return {tax, note: tax === 0 ? '各季度均未超起征点，免征' : '部分季度超起征点，按 1% 征收', rows};
-      } else {
-        quarters.forEach((rev, i) => {
-          const monthly = rev / 3;
-          if (monthly > VAT_MONTH_THRESHOLD) tax += rev * VAT_RATE;
-          rows.push({label:`Q${i+1} 月均 ${money(monthly)}`, val: monthly <= VAT_MONTH_THRESHOLD ? '免征' : `缴 ${money(rev * VAT_RATE)}`});
-        });
-        return {tax, note: tax === 0 ? '月均均未超起征点，免征' : '部分月份超起征点，按 1% 征收', rows};
+      }
+      return arr;
+    }
+    if (v && typeof v === 'object') {
+      const o = Object.create(null);
+      let keys = Object.keys(v);
+      if (sortKeysFlag) keys = keys.sort();
+      for (const k of keys) o[k] = normalize(v[k], sortKeysFlag, sortArrays);
+      return o;
+    }
+    return v;
+  }
+
+  /* =========================================================
+   *  行级 Diff
+   * ======================================================= */
+  function diffLines(a, b) {
+    const ops = [];
+    let start = 0;
+    const maxStart = Math.min(a.length, b.length);
+    while (start < maxStart && a[start] === b[start]) start++;
+
+    let endA = a.length, endB = b.length;
+    while (endA > start && endB > start && a[endA - 1] === b[endB - 1]) { endA--; endB--; }
+
+    for (let i = 0; i < start; i++) ops.push({ type: 'same', a: i, b: i });
+
+    const n = endA - start, m = endB - start;
+    if (n > 0 && m > 0 && n * m <= LINE_DP_LIMIT) {
+      const dp = new Array(n + 1);
+      for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
+      for (let i = n - 1; i >= 0; i--) {
+        const row = dp[i], next = dp[i + 1];
+        const ai = a[start + i];
+        for (let j = m - 1; j >= 0; j--) {
+          row[j] = ai === b[start + j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
+        }
+      }
+      let i = 0, j = 0;
+      while (i < n && j < m) {
+        if (a[start + i] === b[start + j]) {
+          ops.push({ type: 'same', a: start + i, b: start + j }); i++; j++;
+        } else if (dp[i + 1][j] >= dp[i][j + 1]) {
+          ops.push({ type: 'del', a: start + i }); i++;
+        } else {
+          ops.push({ type: 'ins', b: start + j }); j++;
+        }
+      }
+      while (i < n) { ops.push({ type: 'del', a: start + i }); i++; }
+      while (j < m) { ops.push({ type: 'ins', b: start + j }); j++; }
+    } else {
+      for (let i = 0; i < n; i++) ops.push({ type: 'del', a: start + i });
+      for (let j = 0; j < m; j++) ops.push({ type: 'ins', b: start + j });
+    }
+
+    const tail = a.length - endA;
+    for (let k = 0; k < tail; k++) ops.push({ type: 'same', a: endA + k, b: endB + k });
+    return ops;
+  }
+
+  /* =========================================================
+   *  字符级 Diff
+   * ======================================================= */
+  function tokenize(s) {
+    return s.match(/[A-Za-z0-9_$]+|\s+|[\s\S]/g) || [];
+  }
+
+  function inlineDiff(oldStr, newStr, enable) {
+    if (!enable) return { old: esc(oldStr), new: esc(newStr), sim: 1 };
+    const A = tokenize(oldStr), B = tokenize(newStr);
+    const n = A.length, m = B.length;
+    if (!n || !m) return { old: esc(oldStr), new: esc(newStr), sim: n === m ? 1 : 0 };
+    if (n * m > TOKEN_DP_LIMIT) {
+      return { old: esc(oldStr), new: esc(newStr), sim: Math.min(n, m) / Math.max(n, m) };
+    }
+
+    const dp = new Array(n + 1);
+    for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
+    for (let i = n - 1; i >= 0; i--) {
+      const row = dp[i], next = dp[i + 1];
+      for (let j = m - 1; j >= 0; j--) {
+        row[j] = A[i] === B[j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
       }
     }
-    if (revenue <= 0) return {tax:0, note:'无收入', rows:[]};
-    const periodsPerYear = period === 'quarter' ? 4 : 12;
-    const perPeriod = revenue / periodsPerYear;
-    const threshold = period === 'quarter' ? VAT_QUARTER_THRESHOLD : VAT_MONTH_THRESHOLD;
-    const periodLabel = period === 'quarter' ? '季度' : '月';
-    if (perPeriod <= threshold) {
-      return {tax:0, note:`每${periodLabel}收入 ${money(perPeriod)} ≤ 起征点，免征`, rows:[{label:`每${periodLabel}均收入`, val:money(perPeriod)}]};
+
+    const seq = [];
+    let i = 0, j = 0;
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { seq.push({ t: 'same', i, j }); i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) { seq.push({ t: 'del', i }); i++; }
+      else { seq.push({ t: 'ins', j }); j++; }
     }
-    return {
-      tax: revenue * VAT_RATE,
-      note:`每${periodLabel}收入 ${money(perPeriod)} 超过起征点，全额按 1% 征收`,
-      rows:[{label:`每${periodLabel}均收入`, val:money(perPeriod)}, {label:'超过起征点', val:'按 1% 全额计税'}]
-    };
+    while (i < n) { seq.push({ t: 'del', i }); i++; }
+    while (j < m) { seq.push({ t: 'ins', j }); j++; }
+
+    const sim = dp[0][0] / Math.max(n, m);
+
+    function build(side) {
+      const toks = side === 'a' ? A : B;
+      let out = '', buf = '', marked = false;
+      const flush = () => {
+        if (!buf) return;
+        out += marked
+          ? '<span class="' + (side === 'a' ? 'chg-del' : 'chg-ins') + '">' + esc(buf) + '</span>'
+          : esc(buf);
+        buf = '';
+      };
+      for (const op of seq) {
+        if (side === 'a' && op.t === 'ins') continue;
+        if (side === 'b' && op.t === 'del') continue;
+        const mark = side === 'a' ? op.t === 'del' : op.t === 'ins';
+        if (mark !== marked) { flush(); marked = mark; }
+        buf += toks[side === 'a' ? op.i : op.j];
+      }
+      flush();
+      return out;
+    }
+    return { old: build('a'), new: build('b'), sim };
   }
 
-  function calcSurcharge(vatTax){
-    if (vatTax <= 0) return {tax:0, note:'增值税免征，附加税同步免征'};
-    const beforeHalf = vatTax * (CITY_TAX_RATES.city + .03 + .02);
-    return {tax: beforeHalf * .5, note:'增值税额 × 12% × 50%（六税两费减半）'};
-  }
-
-  function calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, deductAllocation, partialAmount, spTotal){
-    let taxable = 0;
-    if (method === 'deemed') {
-      taxable = revenue * deemedRate;
-    } else {
-      taxable = revenue - cost;
-      if (!hasSalary) {
-        taxable -= 60000;
-        taxable -= spTotal;
-      } else {
-        if (deductAllocation === 'business') {
-          taxable -= 60000;
-          taxable -= spTotal;
-        } else if (deductAllocation === 'partial') {
-          taxable -= Math.min(Math.max(0, partialAmount), 60000 + spTotal);
+  /* =========================================================
+   *  构建对比行
+   * ======================================================= */
+  function buildRows(ops, a, b, charDiff) {
+    const rows = [];
+    const stat = { add: 0, del: 0, mod: 0, same: 0 };
+    let i = 0;
+    while (i < ops.length) {
+      const op = ops[i];
+      if (op.type === 'same') {
+        rows.push({
+          type: 'same',
+          left: { no: op.a + 1, html: esc(a[op.a]) },
+          right: { no: op.b + 1, html: esc(b[op.b]) },
+        });
+        stat.same++;
+        i++;
+        continue;
+      }
+      const dels = [], inss = [];
+      while (i < ops.length && ops[i].type !== 'same') {
+        if (ops[i].type === 'del') dels.push(ops[i].a);
+        else inss.push(ops[i].b);
+        i++;
+      }
+      const cnt = Math.max(dels.length, inss.length);
+      for (let k = 0; k < cnt; k++) {
+        const da = dels[k], ib = inss[k];
+        if (da !== undefined && ib !== undefined) {
+          const d = inlineDiff(a[da], b[ib], charDiff);
+          if (d.sim >= SIM_THRESHOLD) {
+            rows.push({
+              type: 'mod',
+              left: { no: da + 1, html: d.old },
+              right: { no: ib + 1, html: d.new },
+            });
+            stat.mod++;
+          } else {
+            rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
+            rows.push({ type: 'ins', left: null, right: { no: ib + 1, html: esc(b[ib]) } });
+            stat.del++; stat.add++;
+          }
+        } else if (da !== undefined) {
+          rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
+          stat.del++;
+        } else {
+          rows.push({ type: 'ins', left: null, right: { no: ib + 1, html: esc(b[ib]) } });
+          stat.add++;
         }
       }
     }
-    if (taxable < 0) taxable = 0;
-    return {taxable};
+    return { rows, stat };
   }
 
-  function calcIIT(taxable, entityType){
-    if (taxable <= 0) return {tax:0, bracketRate:0, deduction:0, halfApplied:false, note:'应纳税所得额 ≤0', detail:[]};
-    let rate = 0, deduction = 0, totalTax = 0;
-    for (const b of IIT_BRACKETS) {
-      if (taxable <= b.limit) { rate = b.rate; deduction = b.deduction; totalTax = taxable * rate - deduction; break; }
+  /* =========================================================
+   *  统计
+   * ======================================================= */
+  function updateStatsHtml() {
+    if (!lastStat) { els.stats.innerHTML = ''; return; }
+    const s = lastStat;
+    const total = s.add + s.del + s.mod;
+    const parts = [];
+    if (total === 0) parts.push('<span class="stat s-ok">✓ 完全一致</span>');
+    else {
+      parts.push('<span class="stat s-add">＋ ' + s.add + '</span>');
+      parts.push('<span class="stat s-del">－ ' + s.del + '</span>');
+      parts.push('<span class="stat s-mod">～ ' + s.mod + '</span>');
+      if (s.same) parts.push('<span class="stat s-same">＝ ' + s.same + '</span>');
     }
-    if (totalTax < 0) totalTax = 0;
-    let halfApplied = false, finalTax = totalTax, detail = [];
-    if (entityType === 'individual') {
-      halfApplied = true;
-      if (taxable <= INDIVIDUAL_HALF_CAP) {
-        finalTax = totalTax * 0.5;
-        detail.push({label:'个体户减半优惠（≤200 万部分）', val:'税额 × 50%'});
+    parts.push('<span class="stat s-time">' + lastMs.toFixed(0) + ' ms</span>');
+    if (stale) parts.push('<span class="stat s-stale">● 内容已修改</span>');
+    els.stats.innerHTML = parts.join('');
+  }
+
+  function markStale() {
+    if (!lastRows.length) return;
+    stale = true;
+    updateStatsHtml();
+  }
+
+  /* =========================================================
+   *  折叠处理
+   * ======================================================= */
+  function prepareRows(rows, mode, expanded) {
+    if (mode === 'all') return rows.map((r) => ({ kind: 'row', row: r }));
+    if (mode === 'hide') {
+      return rows.filter((r) => r.type !== 'same').map((r) => ({ kind: 'row', row: r }));
+    }
+    const out = [];
+    let i = 0;
+    while (i < rows.length) {
+      if (rows[i].type !== 'same') { out.push({ kind: 'row', row: rows[i] }); i++; continue; }
+      let j = i;
+      while (j < rows.length && rows[j].type === 'same') j++;
+      const len = j - i;
+      if (len > FOLD_THRESHOLD) {
+        const id = 'fold-' + rows[i].left.no + '-' + len;
+        const exp = expanded.has(id);
+        out.push({
+          kind: 'fold', id, count: len,
+          startLine: rows[i].left.no, endLine: rows[j - 1].left.no,
+          expanded: exp,
+        });
+        if (exp) for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
       } else {
-        const taxOn200 = INDIVIDUAL_HALF_CAP * 0.35 - 65500;
-        const reduction = taxOn200 * 0.5;
-        finalTax = totalTax - reduction;
-        detail.push({label:'200 万以内部分应纳税额', val:money(taxOn200)});
-        detail.push({label:'减半减免额', val:'− ' + money(reduction)});
-        detail.push({label:'超过 200 万部分不享受减半', val:''});
+        for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
       }
-    } else {
-      detail.push({label:'个人独资/合伙企业不适用个体户减半', val:''});
+      i = j;
     }
+    return out;
+  }
+
+  /* =========================================================
+   *  渲染
+   * ======================================================= */
+  function renderResult() {
+    if (!lastRows.length) return;
+    const mode = els.sameMode.value;
+    const items = prepareRows(lastRows, mode, expandedFolds);
+    const total = lastStat ? (lastStat.add + lastStat.del + lastStat.mod) : 0;
+    const html = [];
+    if (total === 0) html.push('<div class="banner ok">✓ 两侧 JSON 完全一致</div>');
+
+    for (const item of items) {
+      if (item.kind === 'fold') {
+        const exp = item.expanded;
+        html.push(
+          '<div class="fold-bar' + (exp ? ' expanded' : '') + '" data-fold="' + esc(item.id) + '" title="点击' + (exp ? '收起' : '展开') + '">' +
+            '<span class="fold-icon">' + (exp ? '▾' : '▸') + '</span>' +
+            '<span>' + (exp ? '收起' : '省略') + ' ' + item.count + ' 行相同内容（第 ' + item.startLine + '–' + item.endLine + ' 行）</span>' +
+          '</div>'
+        );
+        continue;
+      }
+      const r = item.row;
+      const isDiff = r.type !== 'same';
+      html.push('<div class="drow' + (isDiff ? ' diff' : '') + '"' + (isDiff ? ' data-diff="1"' : '') + '>');
+      if (r.left) {
+        const cls = r.type === 'ins' ? 'same' : 'del';
+        html.push('<div class="ln">' + r.left.no + '</div>');
+        html.push('<div class="cell ' + cls + '">' + r.left.html + '</div>');
+      } else html.push('<div class="ln"></div><div class="cell empty"></div>');
+      if (r.right) {
+        const cls = r.type === 'del' ? 'same' : 'ins';
+        html.push('<div class="ln">' + r.right.no + '</div>');
+        html.push('<div class="cell ' + cls + '">' + r.right.html + '</div>');
+      } else html.push('<div class="ln"></div><div class="cell empty"></div>');
+      html.push('</div>');
+    }
+
+    els.diffBody.innerHTML = html.join('');
+    updateNav();
+  }
+
+  function resetResult(msg) {
+    lastRows = []; lastStat = null; lastMs = 0; navIndex = -1; stale = false;
+    expandedFolds.clear();
+    els.stats.innerHTML = '';
+    els.diffBody.innerHTML =
+      '<div class="empty-state"><div class="big">⇄</div><div>' + esc(msg) + '</div></div>';
+    updateNav();
+    els.diffScroll.scrollTop = 0;
+  }
+
+  /* =========================================================
+   *  差异导航
+   * ======================================================= */
+  function diffEls() { return els.diffBody.querySelectorAll('.drow.diff'); }
+
+  function updateNav() {
+    const list = diffEls();
+    if (navIndex >= list.length) navIndex = list.length - 1;
+    list.forEach((el, i) => el.classList.toggle('current', i === navIndex));
+    els.navPos.textContent = list.length ? ((navIndex >= 0 ? navIndex + 1 : '–') + ' / ' + list.length) : '—';
+  }
+
+  function goDiff(delta) {
+    const list = diffEls();
+    if (!list.length) return;
+    if (navIndex < 0) navIndex = delta > 0 ? 0 : list.length - 1;
+    else navIndex = (navIndex + delta + list.length) % list.length;
+    updateNav();
+    const el = list[navIndex];
+    els.diffScroll.scrollTo({
+      top: Math.max(0, el.offsetTop - els.diffScroll.clientHeight / 2 + el.offsetHeight / 2),
+      behavior: 'smooth',
+    });
+  }
+
+  /* =========================================================
+   *  主对比
+   * ======================================================= */
+  function hasBoth() {
+    return els.left.value.trim() !== '' && els.right.value.trim() !== '';
+  }
+
+  function doCompare(interactive) {
+    const t0 = performance.now();
+    clearErrors();
+
+    const ltxt = els.left.value.replace(/^\uFEFF/, '').trim();
+    const rtxt = els.right.value.replace(/^\uFEFF/, '').trim();
+
+    if (!ltxt && !rtxt) { resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」'); return; }
+    if (!ltxt || !rtxt) { resetResult('请两侧都填入 JSON 内容再进行对比'); return; }
+
+    let lo, ro;
+    try { lo = JSON.parse(ltxt); }
+    catch (e) { showParseError('left', ltxt, e, !!interactive); resetResult('左侧 JSON 解析失败，请检查语法'); return; }
+    try { ro = JSON.parse(rtxt); }
+    catch (e) { showParseError('right', rtxt, e, !!interactive); resetResult('右侧 JSON 解析失败，请检查语法'); return; }
+
+    try {
+      const sortK = els.optSort.checked, sortA = els.optSortArr.checked;
+      if (sortK || sortA) {
+        lo = normalize(lo, sortK, sortA);
+        ro = normalize(ro, sortK, sortA);
+      }
+      const a = JSON.stringify(lo, null, 2).split('\n');
+      const b = JSON.stringify(ro, null, 2).split('\n');
+      const ops = diffLines(a, b);
+      const built = buildRows(ops, a, b, els.optCharDiff.checked);
+
+      lastRows = built.rows;
+      lastStat = built.stat;
+      lastMs = performance.now() - t0;
+      stale = false; navIndex = -1;
+      expandedFolds.clear();
+
+      updateStatsHtml();
+      renderResult();
+
+      const first = els.diffBody.querySelector('.drow.diff');
+      els.diffScroll.scrollTop = first ? Math.max(0, first.offsetTop - 40) : 0;
+    } catch (e) {
+      resetResult('对比过程出错：' + (e && e.message ? e.message : e));
+      showError('left', '对比过程出错：' + (e && e.message ? e.message : e));
+    }
+  }
+
+  /* =========================================================
+   *  侧栏操作
+   * ======================================================= */
+  function formatSide(side, minify) {
+    const ta = side === 'left' ? els.left : els.right;
+    const raw = ta.value.replace(/^\uFEFF/, '');
+    if (!raw.trim()) return;
+    try {
+      const obj = JSON.parse(raw);
+      ta.value = minify ? JSON.stringify(obj) : JSON.stringify(obj, null, 2);
+      clearSideError(side);
+      saveStateDebounced();
+      markStale();
+    } catch (e) {
+      showParseError(side, raw, e, true);
+    }
+  }
+
+  function clearSide(side) {
+    const ta = side === 'left' ? els.left : els.right;
+    ta.value = '';
+    clearSideError(side);
+    saveStateDebounced();
+    markStale();
+    if (!els.left.value.trim() && !els.right.value.trim()) {
+      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+    }
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast('已复制到剪贴板');
+      return true;
+    } catch (_) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
+      ta.remove();
+      toast(ok ? '已复制到剪贴板' : '复制失败');
+      return ok;
+    }
+  }
+
+  function copySide(side) {
+    const ta = side === 'left' ? els.left : els.right;
+    if (!ta.value) { toast('内容为空'); return; }
+    copyText(ta.value);
+  }
+
+  function triggerUpload(side) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,.txt,application/json,text/plain';
+    input.onchange = () => { if (input.files && input.files[0]) loadFile(input.files[0], side); };
+    input.click();
+  }
+
+  function loadFile(file, side) {
+    if (file.size > MAX_FILE_SIZE) { toast('文件过大（最大 20MB）'); return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const ta = side === 'left' ? els.left : els.right;
+      ta.value = String(reader.result || '');
+      clearSideError(side);
+      saveStateDebounced();
+      if (hasBoth()) doCompare(false);
+      else if (els.optAuto.checked) scheduleAutoCompare();
+      toast('已导入 ' + file.name);
+    };
+    reader.onerror = () => toast('文件读取失败');
+    reader.readAsText(file, 'utf-8');
+  }
+
+  /* =========================================================
+   *  持久化
+   * ======================================================= */
+  function collectState() {
     return {
-      tax: finalTax, bracketRate: rate, deduction, halfApplied,
-      note: halfApplied ? (taxable <= INDIVIDUAL_HALF_CAP ? '适用 200 万以内减半' : '超过 200 万，仅 200 万以内部分减半') : '不适用个体户减半',
-      detail
+      left: els.left.value,
+      right: els.right.value,
+      sortKeys: els.optSort.checked,
+      sortArrays: els.optSortArr.checked,
+      charDiff: els.optCharDiff.checked,
+      autoCompare: els.optAuto.checked,
+      sameMode: els.sameMode.value,
+      editorH: els.editors.style.height || '',
     };
   }
 
-  function calc(){
-    const revenue = Math.max(0, num(revenueEl.value));
-    const cost = Math.max(0, num(costEl.value));
-    const entityType = entityTypeEl.value;
-    const method = methodEl.value;
-    const deemedRate = clamp(num(deemedRateEl.value) / 100, .01, .30);
-    const hasSalary = getHasSalary();
-    const deductAllocation = deductAllocationEl.value;
-    const partialAmount = Math.max(0, num(partialDeductAmountEl.value));
-    const spTotal = getSpTotal();
-    const prepaid = Math.max(0, num(prepaidIITEl.value));
-
-    const vatResult = calcVAT(revenue, vatPeriodEl.value, vatDistributionEl.value);
-    const surResult = calcSurcharge(vatResult.tax);
-    const tiResult = calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, deductAllocation, partialAmount, spTotal);
-    const taxable = tiResult.taxable;
-    const iitResult = calcIIT(taxable, entityType);
-
-    const totalTax = vatResult.tax + surResult.tax + iitResult.tax;
-    const effectiveRate = revenue > 0 ? (totalTax / revenue) * 100 : 0;
-    const settle = iitResult.tax - prepaid;
-
-    totalTaxEl.textContent = money(totalTax);
-    effectiveRateEl.textContent = `综合税负率 ${effectiveRate.toFixed(2)}%`;
-    settleInfoEl.textContent = settle >= 0 ? `汇算应补：${money(settle)}` : `汇算应退：${money(Math.abs(settle))}`;
-    settleInfoEl.style.color = settle > 0 ? '#fecaca' : (settle < 0 ? '#bbf7d0' : '#e5e7eb');
-
-    vatEl.textContent = money(vatResult.tax);
-    vatEl.className = 'v' + (vatResult.tax === 0 ? ' green' : '');
-    vatNoteEl.textContent = vatResult.note;
-
-    surchargeEl.textContent = money(surResult.tax);
-    surchargeEl.className = 'v' + (surResult.tax === 0 ? ' green' : '');
-    surchargeNoteEl.textContent = surResult.note;
-
-    iitEl.textContent = money(iitResult.tax);
-    iitEl.className = 'v' + (iitResult.tax === 0 ? ' green' : '');
-    iitNoteEl.textContent = iitResult.note;
-
-    const rows = [];
-    rows.push({label:'全年营业收入', val:money(revenue)});
-    if (method === 'audit') rows.push({label:'减：成本费用', val:'− ' + money(cost), cls:'neg'});
-    else rows.push({label:`核定应税所得（× ${(deemedRate*100).toFixed(1)}%）`, val:money(taxable)});
-    if (vatResult.rows && vatResult.rows.length) vatResult.rows.forEach(r => rows.push({label:'增值税 · ' + r.label, val:r.val}));
-    rows.push({label:'经营所得应纳税所得额', val:money(taxable)});
-    rows.push({label:'适用税率 / 速算扣除数', val: iitResult.bracketRate > 0 ? `${(iitResult.bracketRate*100).toFixed(0)}% / ${money(iitResult.deduction)}` : '—'});
-    iitResult.detail.forEach(d => { if (d.val) rows.push({label:d.label, val:d.val, cls: d.val.startsWith('−') ? 'neg' : ''}); });
-    rows.push({label:'经营所得个税（减免后）', val:money(iitResult.tax)});
-    if (prepaid > 0) {
-      rows.push({label:'减：已预缴', val:'− ' + money(prepaid), cls:'neg'});
-      rows.push({label: settle >= 0 ? '汇算应补' : '汇算应退', val:money(Math.abs(settle)), cls: settle >= 0 ? 'neg' : 'pos'});
-    }
-    detailBox.innerHTML = rows.map(r => `<div class="row"><span>${r.label}</span><span class="val ${r.cls||''}">${r.val}</span></div>`).join('');
-
-    let alertHtml = '', alertCls = '';
-    if (method === 'deemed') {
-      alertHtml = '核定征收（定率）下，6 万元减除费用、专项扣除、专项附加扣除均不得在经营所得中扣除。';
-      alertCls = 'blue';
-    } else if (hasSalary && deductAllocation === 'salary') {
-      alertHtml = '已选择“6 万及专项附加全部在综合所得扣除”，经营所得中不再重复扣除。如需降低经营所得个税，可切换为全部/部分在经营所得扣除，但需确保综合所得端不重复享受。';
-      alertCls = 'blue';
-    } else if (entityType !== 'individual') {
-      alertHtml = '当前主体为个人独资企业或合伙企业个人合伙人，不适用个体工商户 ≤200 万元部分减半政策。';
-      alertCls = 'red';
-    } else if (vatResult.tax === 0 && totalTax === 0) {
-      alertHtml = '当前增值税未超起征点且经营所得应纳税所得额为 0，总税费可能为 0，但仍需按规定申报（零申报）。';
-      alertCls = '';
-    }
-    if (alertHtml) { alertNote.style.display = 'block'; alertNote.className = 'alert ' + alertCls; alertNote.textContent = alertHtml; }
-    else alertNote.style.display = 'none';
-
-    spTotalDisplay.textContent = money(spTotal);
+  function saveState() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(collectState())); } catch (_) {}
+  }
+  function saveStateDebounced() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveState, 400);
+  }
+  function loadState() {
+    let s = null;
+    try { s = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (_) { return false; }
+    if (!s || typeof s !== 'object') return false;
+    if (typeof s.left === 'string') els.left.value = s.left;
+    if (typeof s.right === 'string') els.right.value = s.right;
+    if (typeof s.sortKeys === 'boolean') els.optSort.checked = s.sortKeys;
+    if (typeof s.sortArrays === 'boolean') els.optSortArr.checked = s.sortArrays;
+    if (typeof s.charDiff === 'boolean') els.optCharDiff.checked = s.charDiff;
+    if (typeof s.autoCompare === 'boolean') els.optAuto.checked = s.autoCompare;
+    if (['fold', 'all', 'hide'].indexOf(s.sameMode) >= 0) els.sameMode.value = s.sameMode;
+    if (typeof s.editorH === 'string' && s.editorH) els.editors.style.height = s.editorH;
+    return true;
   }
 
-  function toggleDeemed(){ deemedRateField.classList.toggle('hidden', methodEl.value !== 'deemed'); }
-  methodEl.addEventListener('change', () => { toggleDeemed(); calc(); });
-
-  function toggleSalaryDeduction(){
-    const has = getHasSalary();
-    salaryDeductionBox.classList.toggle('hidden', !has);
-    if (!has) partialDeductField.classList.add('hidden');
-    else partialDeductField.classList.toggle('hidden', deductAllocationEl.value !== 'partial');
+  /* =========================================================
+   *  自动对比
+   * ======================================================= */
+  function scheduleAutoCompare() {
+    if (!els.optAuto.checked) return;
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(() => { if (hasBoth()) doCompare(false); }, 600);
   }
-  hasSalaryRadios.forEach(r => r.addEventListener('change', () => { toggleSalaryDeduction(); calc(); }));
-  deductAllocationEl.addEventListener('change', () => {
-    partialDeductField.classList.toggle('hidden', deductAllocationEl.value !== 'partial');
-    calc();
+
+  /* =========================================================
+   *  事件
+   * ======================================================= */
+  $('btnCompare').addEventListener('click', () => doCompare(true));
+  $('btnPrev').addEventListener('click', () => goDiff(-1));
+  $('btnNext').addEventListener('click', () => goDiff(1));
+
+  $('btnSample').addEventListener('click', () => {
+    els.left.value = JSON.stringify(SAMPLE_OLD, null, 2);
+    els.right.value = JSON.stringify(SAMPLE_NEW, null, 2);
+    clearErrors(); saveStateDebounced(); doCompare(true);
   });
 
-  function toggleVatCustom(){ quarterInputs.classList.toggle('hidden', vatDistributionEl.value !== 'custom'); }
-  vatDistributionEl.addEventListener('change', () => { toggleVatCustom(); calc(); });
-
-  function setupCollapsible(toggleId, bodyId){
-    const t = $(toggleId), b = $(bodyId);
-    if (!t || !b) return;
-    t.addEventListener('click', () => { t.classList.toggle('open'); b.classList.toggle('open'); });
-  }
-  setupCollapsible('specialToggle','specialBody');
-  setupCollapsible('vatToggle','vatBody');
-
-  [revenueEl, costEl, deemedRateEl, prepaidIITEl, partialDeductAmountEl].forEach(el => {
-    el.addEventListener('input', calc); el.addEventListener('change', calc);
+  $('btnSwap').addEventListener('click', () => {
+    const t = els.left.value;
+    els.left.value = els.right.value;
+    els.right.value = t;
+    clearErrors(); saveStateDebounced();
+    if (hasBoth()) doCompare(true); else markStale();
   });
-  spItems.forEach(el => el.addEventListener('input', calc));
-  $$('.q-rev').forEach(el => el.addEventListener('input', calc));
-  entityTypeEl.addEventListener('change', calc);
 
-  $('copyBtn').addEventListener('click', () => {
-    const lines = [];
-    lines.push('自雇人士税务估算结果');
-    lines.push('总税费：' + totalTaxEl.textContent + '（' + effectiveRateEl.textContent + '）');
-    lines.push('增值税：' + vatEl.textContent);
-    lines.push('附加税费：' + surchargeEl.textContent);
-    lines.push('经营所得个税：' + iitEl.textContent);
-    lines.push(settleInfoEl.textContent);
-    lines.push('— 明细 —');
-    detailBox.querySelectorAll('.row').forEach(r => lines.push(r.children[0].textContent + '：' + r.children[1].textContent));
-    const text = lines.join('\n');
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = $('copyBtn'); const old = btn.textContent;
-        btn.textContent = '已复制 ✓'; setTimeout(() => btn.textContent = old, 1400);
-      });
+  $('btnClearAll').addEventListener('click', () => {
+    els.left.value = ''; els.right.value = '';
+    clearErrors(); saveStateDebounced();
+    resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+  });
+
+  $('btnSummary').addEventListener('click', () => {
+    if (!lastStat) { toast('暂无对比结果'); return; }
+    const s = lastStat;
+    const total = s.add + s.del + s.mod;
+    const lines = ['JSON 对比结果'];
+    if (total === 0) lines.push('两侧完全一致');
+    else {
+      lines.push('新增 ' + s.add + ' 行');
+      lines.push('删除 ' + s.del + ' 行');
+      lines.push('修改 ' + s.mod + ' 行');
+      lines.push('相同 ' + s.same + ' 行');
+    }
+    lines.push('用时 ' + lastMs.toFixed(0) + ' ms');
+    if (stale) lines.push('（注意：内容已修改，结果可能过期）');
+    copyText(lines.join('\n'));
+  });
+
+  document.querySelectorAll('.pane-head').forEach((head) => {
+    head.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      const side = btn.dataset.side, act = btn.dataset.act;
+      if (act === 'format') formatSide(side, false);
+      else if (act === 'minify') formatSide(side, true);
+      else if (act === 'copy') copySide(side);
+      else if (act === 'clear') clearSide(side);
+      else if (act === 'upload') triggerUpload(side);
+    });
+  });
+
+  [els.left, els.right].forEach((ta) => {
+    const side = ta === els.left ? 'left' : 'right';
+    ta.addEventListener('input', () => {
+      clearSideError(side);
+      saveStateDebounced();
+      markStale();
+      scheduleAutoCompare();
+    });
+    ta.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || e.shiftKey) return;
+      e.preventDefault();
+      let ok = false;
+      try { ok = document.execCommand('insertText', false, '  '); } catch (_) { ok = false; }
+      if (!ok) {
+        const s = ta.selectionStart, en = ta.selectionEnd;
+        ta.setRangeText('  ', s, en, 'end');
+        ta.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+    ta.addEventListener('dragover', (e) => e.preventDefault());
+    ta.addEventListener('drop', (e) => e.preventDefault());
+  });
+
+  [['left', els.paneLeft], ['right', els.paneRight]].forEach(([side, pane]) => {
+    pane.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); pane.classList.add('dragging'); });
+    pane.addEventListener('dragenter', (e) => { e.preventDefault(); pane.classList.add('dragging'); });
+    pane.addEventListener('dragleave', (e) => { if (!pane.contains(e.relatedTarget)) pane.classList.remove('dragging'); });
+    pane.addEventListener('drop', (e) => {
+      e.preventDefault(); e.stopPropagation();
+      pane.classList.remove('dragging');
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) loadFile(f, side);
+    });
+  });
+
+  els.optSort.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optSortArr.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optCharDiff.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optAuto.addEventListener('change', () => { saveStateDebounced(); if (els.optAuto.checked) scheduleAutoCompare(); });
+  els.sameMode.addEventListener('change', () => { saveStateDebounced(); if (lastRows.length) renderResult(); });
+
+  els.diffBody.addEventListener('click', (e) => {
+    const bar = e.target.closest('.fold-bar');
+    if (!bar) return;
+    const id = bar.dataset.fold;
+    if (!id) return;
+    if (expandedFolds.has(id)) expandedFolds.delete(id); else expandedFolds.add(id);
+    renderResult();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key === 'Enter') { e.preventDefault(); doCompare(true); }
+    else if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); goDiff(1); }
+    else if (e.altKey && e.key === 'ArrowUp') { e.preventDefault(); goDiff(-1); }
+  });
+
+  /* =========================================================
+   *  编辑区高度拖拽
+   * ======================================================= */
+  (function initResizer() {
+    let dragging = false, startY = 0, startH = 0;
+    els.resizer.addEventListener('mousedown', (e) => {
+      dragging = true; startY = e.clientY;
+      startH = els.editors.getBoundingClientRect().height;
+      document.body.style.cursor = 'row-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const maxH = window.innerHeight - 260;
+      const h = Math.max(130, Math.min(startH + (e.clientY - startY), maxH));
+      els.editors.style.height = h + 'px';
+    });
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      saveStateDebounced();
+    });
+  })();
+
+  /* =========================================================
+   *  初始化
+   * ======================================================= */
+  (function init() {
+    const loaded = loadState();
+    if (!loaded || (!els.left.value.trim() && !els.right.value.trim())) {
+      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+    } else if (hasBoth()) {
+      doCompare(false);
     } else {
-      const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); } catch(e) {}
-      document.body.removeChild(ta);
+      resetResult('请两侧都填入 JSON 内容再进行对比');
     }
-  });
+    saveStateDebounced();
+  })();
 
-  $('resetBtn').addEventListener('click', () => {
-    entityTypeEl.value = 'individual'; methodEl.value = 'audit';
-    revenueEl.value = 800000; costEl.value = 300000; deemedRateEl.value = 10;
-    vatPeriodEl.value = 'quarter'; vatDistributionEl.value = 'even';
-    document.querySelectorAll('input[name="hasSalary"]')[0].checked = true;
-    deductAllocationEl.value = 'salary'; partialDeductAmountEl.value = 0;
-    spItems.forEach(el => el.value = 0);
-    prepaidIITEl.value = 0;
-    $$('.q-rev').forEach((el, i) => el.value = [200000,200000,200000,200000][i]);
-    toggleDeemed(); toggleSalaryDeduction(); toggleVatCustom(); calc();
-  });
-
-  toggleDeemed(); toggleSalaryDeduction(); toggleVatCustom(); calc();
 })();
 </script>
 </body>
