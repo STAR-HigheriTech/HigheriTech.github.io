@@ -3,237 +3,367 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>自雇人士税务计算器（2026 修复增强版）</title>
+<title>自雇人士税务计算器（2026 排版优化版）</title>
 <style>
+  :root{
+    --bg:#f4f6fb;
+    --card:#ffffff;
+    --ink:#111827;
+    --ink-2:#374151;
+    --muted:#6b7280;
+    --line:#e5e7eb;
+    --line-2:#f1f3f7;
+    --primary:#4f46e5;
+    --primary-2:#4338ca;
+    --green:#059669;
+    --red:#dc2626;
+    --amber:#b45309;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(16,24,40,.04), 0 8px 24px rgba(16,24,40,.06);
+  }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;line-height:1.6;padding:24px 16px}
-  .container{max-width:900px;margin:0 auto}
-  h1{font-size:1.55rem;margin-bottom:4px;color:#16213e}
-  .subtitle{font-size:.86rem;color:#6b7280;margin-bottom:22px}
-  .card{background:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04)}
-  .card-title{font-size:.96rem;font-weight:600;margin-bottom:14px;color:#16213e;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .badge{font-size:.68rem;font-weight:500;background:#eef2ff;color:#4338ca;padding:2px 8px;border-radius:20px}
-  .badge.warn{background:#fef3c7;color:#92400e}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
-  @media(max-width:620px){.form-grid{grid-template-columns:1fr}}
-  .field label{display:block;font-size:.82rem;font-weight:500;color:#374151;margin-bottom:4px}
-  .hint{font-size:.7rem;color:#9ca3af;font-weight:400;margin-left:4px}
-  .field input,.field select{width:100%;padding:8px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:.9rem;background:#fafafa}
-  .field input:focus,.field select:focus{outline:none;border-color:#6366f1;background:#fff;box-shadow:0 0 0 3px rgba(99,102,241,.12)}
-  .field .unit{font-size:.72rem;color:#9ca3af;margin-top:2px}
-  .radio-row{display:flex;gap:16px;flex-wrap:wrap;padding-top:3px}
-  .radio-row label{display:flex;align-items:center;gap:5px;font-size:.85rem;cursor:pointer}
-  .toggle-row{display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap}
-  .toggle-row input[type=checkbox]{width:17px;height:17px;accent-color:#6366f1;cursor:pointer}
-  .section-sub{font-size:.84rem;font-weight:600;color:#4b5563;margin:14px 0 8px;padding-top:10px;border-top:1px dashed #e5e7eb}
-  .collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}
-  .collapsible .arrow{transition:transform .2s;font-size:.7rem;color:#9ca3af}
-  .collapsible.open .arrow{transform:rotate(90deg)}
-  .collapsible-body{display:none;margin-top:10px}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.55;
+    padding:28px 18px 40px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{max-width:1120px;margin:0 auto}
+
+  /* ===== 头部 ===== */
+  .app-header{margin-bottom:22px}
+  .app-header h1{font-size:1.55rem;letter-spacing:-.3px;color:#0f172a}
+  .app-header h1 .ver{font-size:.68rem;font-weight:500;color:#fff;background:var(--primary);padding:2px 8px;border-radius:20px;vertical-align:middle;margin-left:6px}
+  .app-header p{font-size:.84rem;color:var(--muted);margin-top:4px}
+
+  /* ===== 双栏布局 ===== */
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:20px;align-items:start}
+  @media(max-width:920px){.layout{grid-template-columns:1fr}}
+
+  /* ===== 卡片 ===== */
+  .card{
+    background:var(--card);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:18px 20px;margin-bottom:16px;
+    border:1px solid rgba(229,231,235,.7);
+  }
+  .card-head{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .card-head .num{
+    width:22px;height:22px;border-radius:7px;background:#eef2ff;color:var(--primary);
+    font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex:0 0 auto;
+  }
+  .card-head h2{font-size:.95rem;font-weight:650;color:#0f172a}
+  .card-head .tag{
+    margin-left:auto;font-size:.66rem;font-weight:500;color:#4338ca;
+    background:#eef2ff;padding:2px 8px;border-radius:20px;white-space:nowrap;
+  }
+  .card-head .tag.warn{background:#fef3c7;color:#92400e}
+
+  /* ===== 表单 ===== */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .field label{display:block;font-size:.8rem;font-weight:600;color:var(--ink-2);margin-bottom:5px}
+  .field label .hint{font-weight:400;color:#9ca3af;font-size:.7rem;margin-left:4px}
+  .field input,.field select{
+    width:100%;padding:9px 11px;border:1px solid #d6dbe5;border-radius:10px;
+    font-size:.9rem;background:#fbfcfe;color:var(--ink);transition:.15s;
+  }
+  .field input:focus,.field select:focus{
+    outline:none;border-color:var(--primary);background:#fff;
+    box-shadow:0 0 0 3px rgba(79,70,229,.12);
+  }
+  .field .unit{font-size:.7rem;color:#9ca3af;margin-top:3px}
+  .radio-row{display:flex;gap:16px;flex-wrap:wrap;padding-top:2px}
+  .radio-row label{display:flex;align-items:center;gap:6px;font-size:.84rem;cursor:pointer;color:var(--ink-2)}
+  .radio-row input{accent-color:var(--primary);width:15px;height:15px}
+
+  /* ===== 折叠区 ===== */
+  .section-head{
+    display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;
+    font-size:.82rem;font-weight:600;color:#4b5563;
+    padding:11px 0 4px;margin-top:6px;border-top:1px dashed var(--line);
+  }
+  .section-head .arrow{font-size:.62rem;color:#9ca3af;transition:transform .2s;display:inline-block}
+  .section-head.open .arrow{transform:rotate(90deg)}
+  .section-head .tag-mini{margin-left:auto;font-size:.64rem;font-weight:500;color:#9ca3af}
+  .collapsible-body{display:none;padding-top:8px}
   .collapsible-body.open{display:block}
 
-  .result-total{background:linear-gradient(135deg,#1e1b4b,#312e81);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px}
-  .result-total .label{font-size:.8rem;opacity:.75;margin-bottom:3px}
-  .result-total .amount{font-size:2rem;font-weight:700;letter-spacing:-.5px}
-  .result-total .sub{font-size:.78rem;opacity:.7;margin-top:4px;display:flex;gap:16px;flex-wrap:wrap}
-  .breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  @media(max-width:560px){.breakdown{grid-template-columns:1fr 1fr}}
-  .bk{background:#f9fafb;border-radius:9px;padding:12px 14px;border:1px solid #f3f4f6}
-  .bk .l{font-size:.72rem;color:#6b7280;margin-bottom:2px}
-  .bk .v{font-size:1.05rem;font-weight:650;color:#111827}
-  .bk .v.green{color:#059669}
-  .bk .n{font-size:.68rem;color:#9ca3af;margin-top:2px}
+  /* ===== 结果面板 ===== */
+  .result-col{position:sticky;top:20px}
+  @media(max-width:920px){.result-col{position:static}}
+  .result-panel{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    border:1px solid rgba(229,231,235,.7);overflow:hidden;
+  }
+  .hero{
+    background:linear-gradient(135deg,#1e1b4b,#312e81 60%,#3730a3);
+    color:#fff;padding:20px 22px;
+  }
+  .hero .label{font-size:.76rem;opacity:.72;letter-spacing:.2px}
+  .hero .amount{font-size:2.05rem;font-weight:750;letter-spacing:-1px;margin:2px 0 6px;font-variant-numeric:tabular-nums}
+  .hero .meta{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.74rem;opacity:.85}
+  .hero .meta .pill{background:rgba(255,255,255,.12);padding:2px 9px;border-radius:20px}
 
-  .detail-box{background:#f9fafb;border-radius:9px;padding:14px 16px;margin-top:12px;font-size:.82rem;color:#4b5563;border:1px solid #f3f4f6}
-  .detail-box .row{display:flex;justify-content:space-between;padding:4px 0;gap:12px}
-  .detail-box .row+.row{border-top:1px dashed #e5e7eb}
-  .detail-box .row .val{font-weight:600;color:#111827;text-align:right;white-space:nowrap}
-  .detail-box .row .val.neg{color:#dc2626}
-  .detail-box .row .val.pos{color:#059669}
+  .result-body{padding:16px 18px 18px}
+  .breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+  @media(max-width:420px){.breakdown{grid-template-columns:1fr}}
+  .bk{
+    background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;
+    padding:11px 12px;min-width:0;
+  }
+  .bk .l{font-size:.68rem;color:var(--muted);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bk .v{font-size:1.02rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bk .v.green{color:var(--green)}
+  .bk .n{font-size:.63rem;color:#9ca3af;margin-top:3px;line-height:1.35}
 
-  .q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-  @media(max-width:560px){.q-grid{grid-template-columns:1fr 1fr}}
-  .q-grid .field label{font-size:.76rem}
+  .detail-box{
+    background:#f8fafc;border:1px solid var(--line-2);border-radius:11px;
+    padding:4px 13px;font-size:.79rem;color:#4b5563;margin-bottom:12px;
+    max-height:300px;overflow-y:auto;
+  }
+  .detail-box .row{display:flex;justify-content:space-between;gap:12px;padding:6px 0}
+  .detail-box .row + .row{border-top:1px dashed var(--line)}
+  .detail-box .row .val{font-weight:650;color:var(--ink);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .detail-box .row .val.neg{color:var(--red)}
+  .detail-box .row .val.pos{color:var(--green)}
 
-  .alert{background:#fffbeb;border-left:3px solid #f59e0b;padding:9px 12px;border-radius:0 7px 7px 0;font-size:.78rem;color:#92400e;margin-top:10px;display:none}
-  .alert.red{background:#fef2f2;border-color:#ef4444;color:#991b1b}
+  .alert{
+    display:none;background:#fffbeb;border-left:3px solid #f59e0b;
+    padding:9px 12px;border-radius:0 8px 8px 0;font-size:.76rem;color:#92400e;margin-bottom:12px;
+  }
   .alert.blue{background:#eff6ff;border-color:#3b82f6;color:#1e40af}
+  .alert.red{background:#fef2f2;border-color:#ef4444;color:#991b1b}
 
-  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
-  .btn{padding:8px 16px;border:1px solid #d1d5db;border-radius:8px;background:#fff;font-size:.82rem;cursor:pointer;font-weight:500;color:#374151}
-  .btn:hover{background:#f9fafb}
-  .btn.primary{background:#4f46e5;color:#fff;border-color:#4f46e5}
-  .btn.primary:hover{background:#4338ca}
+  .actions{display:flex;gap:9px;flex-wrap:wrap}
+  .btn{
+    flex:1;min-width:120px;padding:9px 14px;border:1px solid #d6dbe5;border-radius:10px;
+    background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;color:var(--ink-2);transition:.15s;
+  }
+  .btn:hover{background:#f8fafc}
+  .btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+  .btn.primary:hover{background:var(--primary-2)}
 
-  .disclaimer{font-size:.74rem;color:#9ca3af;margin-top:18px;line-height:1.7;padding:0 4px}
-  .disclaimer strong{color:#6b7280}
+  /* ===== 小工具类 ===== */
   .hidden{display:none!important}
+  .sp-total{font-size:.78rem;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+  .sp-total strong{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* ===== 脚注 ===== */
+  .disclaimer{
+    max-width:1120px;margin:6px auto 0;font-size:.73rem;color:#9ca3af;line-height:1.75;padding:0 4px;
+  }
+  .disclaimer strong{color:#6b7280}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="app">
 
-  <h1>自雇人士税务计算器 <span style="font-size:.7rem;color:#6b7280;font-weight:400;">2026 修复增强版</span></h1>
-  <p class="subtitle">适用于个体工商户、个人独资企业、合伙企业个人合伙人 · 基于 2026 年现行主要政策</p>
+  <header class="app-header">
+    <h1>自雇人士税务计算器<span class="ver">2026</span></h1>
+    <p>个体工商户 · 个人独资企业 · 合伙企业个人合伙人 —— 基于现行主要政策估算</p>
+  </header>
 
-  <!-- 经营主体 -->
-  <div class="card">
-    <div class="card-title">经营主体与征收方式</div>
-    <div class="form-grid">
-      <div class="field">
-        <label>主体类型</label>
-        <select id="entityType">
-          <option value="individual" selected>个体工商户（可享 200 万以内减半）</option>
-          <option value="sole">个人独资企业（不享受个体户减半）</option>
-          <option value="partner">合伙企业个人合伙人（不享受个体户减半）</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>征收方式</label>
-        <select id="method">
-          <option value="audit" selected>查账征收</option>
-          <option value="deemed">核定征收（按应税所得率）</option>
-        </select>
-      </div>
-      <div class="field hidden" id="deemedRateField">
-        <label>核定应税所得率</label>
-        <input type="number" id="deemedRate" value="10" min="1" max="30" step="0.5">
-        <div class="unit">% （各地/行业不同，常见 5%–20%）</div>
-      </div>
-    </div>
-  </div>
+  <div class="layout">
 
-  <!-- 收入成本 -->
-  <div class="card">
-    <div class="card-title">收入与成本 <span class="badge">不含税</span></div>
-    <div class="form-grid">
-      <div class="field">
-        <label>全年营业收入</label>
-        <input type="number" id="revenue" value="800000" min="0" step="10000">
-        <div class="unit">元/年</div>
-      </div>
-      <div class="field">
-        <label>全年成本费用 <span class="hint">有合法凭证可税前扣除</span></label>
-        <input type="number" id="cost" value="300000" min="0" step="10000">
-        <div class="unit">元/年</div>
-      </div>
-    </div>
+    <!-- ================= 左栏：输入 ================= -->
+    <main>
 
-    <div class="section-sub collapsible open" id="vatToggle">
-      <span class="arrow">▶</span> 增值税起征点模拟（可选按季分布）
-    </div>
-    <div class="collapsible-body open" id="vatBody">
-      <div class="form-grid">
-        <div class="field">
-          <label>增值税申报周期</label>
-          <select id="vatPeriod">
-            <option value="quarter" selected>按季申报（季度 ≤30 万免征）</option>
-            <option value="month">按月申报（月 ≤10 万免征）</option>
-          </select>
+      <!-- 01 主体与征收 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">1</span>
+          <h2>经营主体与征收方式</h2>
         </div>
+        <div class="grid">
+          <div class="field">
+            <label>主体类型</label>
+            <select id="entityType">
+              <option value="individual" selected>个体工商户（享 200 万以内减半）</option>
+              <option value="sole">个人独资企业（不享个体户减半）</option>
+              <option value="partner">合伙企业个人合伙人（不享个体户减半）</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>征收方式</label>
+            <select id="method">
+              <option value="audit" selected>查账征收</option>
+              <option value="deemed">核定征收（按应税所得率）</option>
+            </select>
+          </div>
+          <div class="field hidden" id="deemedRateField">
+            <label>核定应税所得率</label>
+            <input type="number" id="deemedRate" value="10" min="1" max="30" step="0.5">
+            <div class="unit">% · 各地/行业常见 5%–20%</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 收入与成本 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">2</span>
+          <h2>收入与成本</h2>
+          <span class="tag">不含税金额</span>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>全年营业收入</label>
+            <input type="number" id="revenue" value="800000" min="0" step="10000">
+            <div class="unit">元 / 年</div>
+          </div>
+          <div class="field">
+            <label>全年成本费用 <span class="hint">有合法凭证可扣除</span></label>
+            <input type="number" id="cost" value="300000" min="0" step="10000">
+            <div class="unit">元 / 年</div>
+          </div>
+        </div>
+
+        <div class="section-head open" id="vatToggle">
+          <span class="arrow">▶</span>
+          <span>增值税起征点模拟</span>
+          <span class="tag-mini">可选</span>
+        </div>
+        <div class="collapsible-body open" id="vatBody">
+          <div class="grid">
+            <div class="field">
+              <label>申报周期</label>
+              <select id="vatPeriod">
+                <option value="quarter" selected>按季申报（季度 ≤30 万免征）</option>
+                <option value="month">按月申报（月 ≤10 万免征）</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>收入分布</label>
+              <select id="vatDistribution">
+                <option value="even" selected>全年均匀分布</option>
+                <option value="custom">按季度分别输入</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid hidden" id="quarterInputs" style="margin-top:12px">
+            <div class="field"><label>Q1 收入</label><input type="number" class="q-rev" data-q="1" value="200000" min="0" step="10000"></div>
+            <div class="field"><label>Q2 收入</label><input type="number" class="q-rev" data-q="2" value="200000" min="0" step="10000"></div>
+            <div class="field"><label>Q3 收入</label><input type="number" class="q-rev" data-q="3" value="200000" min="0" step="10000"></div>
+            <div class="field"><label>Q4 收入</label><input type="number" class="q-rev" data-q="4" value="200000" min="0" step="10000"></div>
+          </div>
+          <div class="unit" style="margin-top:8px">超过起征点后，3% 征收率减按 1% 计算增值税。</div>
+        </div>
+      </section>
+
+      <!-- 03 扣除与身份 -->
+      <section class="card">
+        <div class="card-head">
+          <span class="num">3</span>
+          <h2>扣除与身份信息</h2>
+        </div>
+
         <div class="field">
-          <label>收入分布假设</label>
-          <select id="vatDistribution">
-            <option value="even" selected>全年均匀分布</option>
-            <option value="custom">按季度分别输入</option>
-          </select>
+          <label>是否同时取得综合所得（工资薪金等）？</label>
+          <div class="radio-row">
+            <label><input type="radio" name="hasSalary" value="no" checked> 没有综合所得</label>
+            <label><input type="radio" name="hasSalary" value="yes"> 有综合所得</label>
+          </div>
+        </div>
+
+        <div id="salaryDeductionBox" class="hidden" style="margin-top:12px">
+          <div class="field">
+            <label>6 万元减除费用及专项附加扣除在何处扣除？</label>
+            <select id="deductAllocation">
+              <option value="salary" selected>全部在综合所得中扣除（经营所得不扣）</option>
+              <option value="business">全部在经营所得中扣除</option>
+              <option value="partial">部分在经营所得中扣除</option>
+            </select>
+          </div>
+          <div class="field hidden" id="partialDeductField" style="margin-top:10px">
+            <label>在经营所得中扣除的金额 <span class="hint">不超过 6 万 + 专项扣除合计</span></label>
+            <input type="number" id="partialDeductAmount" value="0" min="0" step="1000">
+            <div class="unit">元 / 年</div>
+          </div>
+        </div>
+
+        <div class="section-head" id="specialToggle">
+          <span class="arrow">▶</span>
+          <span>专项扣除与专项附加扣除明细</span>
+          <span class="tag-mini">展开填写</span>
+        </div>
+        <div class="collapsible-body" id="specialBody">
+          <div class="grid">
+            <div class="field"><label>社保等专项扣除</label><input type="number" class="sp-item" id="spSocial" value="0" min="0" step="1000"><div class="unit">个人缴纳社保</div></div>
+            <div class="field"><label>子女教育</label><input type="number" class="sp-item" id="spChild" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>继续教育</label><input type="number" class="sp-item" id="spEdu" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>大病医疗</label><input type="number" class="sp-item" id="spMedical" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>住房贷款利息</label><input type="number" class="sp-item" id="spLoan" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>住房租金</label><input type="number" class="sp-item" id="spRent" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>赡养老人</label><input type="number" class="sp-item" id="spElder" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>3 岁以下婴幼儿照护</label><input type="number" class="sp-item" id="spBaby" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+            <div class="field"><label>其他扣除（个人养老金等）</label><input type="number" class="sp-item" id="spOther" value="0" min="0" step="1000"><div class="unit">元 / 年</div></div>
+          </div>
+          <div class="sp-total">专项扣除合计：<strong id="spTotalDisplay">¥ 0</strong> / 年</div>
+        </div>
+
+        <div class="grid" style="margin-top:14px">
+          <div class="field">
+            <label>已预缴经营所得个税</label>
+            <input type="number" id="prepaidIIT" value="0" min="0" step="1000">
+            <div class="unit">用于计算汇算补 / 退</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ================= 右栏：结果 ================= -->
+    <aside class="result-col">
+      <div class="result-panel">
+
+        <div class="hero">
+          <div class="label">全年预计总税费（增值税 + 附加 + 经营所得个税）</div>
+          <div class="amount" id="totalTax">¥ 0</div>
+          <div class="meta">
+            <span class="pill" id="effectiveRate">综合税负率 0%</span>
+            <span class="pill" id="settleInfo">汇算应补/退：—</span>
+          </div>
+        </div>
+
+        <div class="result-body">
+
+          <div class="breakdown">
+            <div class="bk">
+              <div class="l">增值税</div>
+              <div class="v" id="vat">¥ 0</div>
+              <div class="n" id="vatNote">—</div>
+            </div>
+            <div class="bk">
+              <div class="l">附加税费</div>
+              <div class="v" id="surcharge">¥ 0</div>
+              <div class="n" id="surchargeNote">城建 + 教育附加 + 地方教育</div>
+            </div>
+            <div class="bk">
+              <div class="l">经营所得个税</div>
+              <div class="v" id="iit">¥ 0</div>
+              <div class="n" id="iitNote">—</div>
+            </div>
+          </div>
+
+          <div class="detail-box" id="detailBox"></div>
+
+          <div class="alert" id="alertNote"></div>
+
+          <div class="actions">
+            <button class="btn primary" id="copyBtn">复制结果</button>
+            <button class="btn" id="resetBtn">重置默认</button>
+          </div>
+
         </div>
       </div>
-      <div class="q-grid hidden" id="quarterInputs" style="margin-top:10px">
-        <div class="field"><label>Q1 收入</label><input type="number" class="q-rev" data-q="1" value="200000" min="0" step="10000"></div>
-        <div class="field"><label>Q2 收入</label><input type="number" class="q-rev" data-q="2" value="200000" min="0" step="10000"></div>
-        <div class="field"><label>Q3 收入</label><input type="number" class="q-rev" data-q="3" value="200000" min="0" step="10000"></div>
-        <div class="field"><label>Q4 收入</label><input type="number" class="q-rev" data-q="4" value="200000" min="0" step="10000"></div>
-      </div>
-      <div class="unit" style="margin-top:6px">超过起征点后，按 3% 征收率减按 1% 计算增值税。</div>
-    </div>
-  </div>
+    </aside>
 
-  <!-- 扣除信息 -->
-  <div class="card">
-    <div class="card-title">扣除与身份信息</div>
-
-    <div class="field">
-      <label>是否同时取得综合所得（工资薪金等）？</label>
-      <div class="radio-row">
-        <label><input type="radio" name="hasSalary" value="no" checked> 没有综合所得</label>
-        <label><input type="radio" name="hasSalary" value="yes"> 有综合所得</label>
-      </div>
-    </div>
-
-    <div id="salaryDeductionBox" class="hidden">
-      <div class="field" style="margin-top:10px">
-        <label>6 万元减除费用及专项附加扣除在何处扣除？</label>
-        <select id="deductAllocation">
-          <option value="salary" selected>全部在综合所得中扣除（经营所得不扣）</option>
-          <option value="business">全部在经营所得中扣除</option>
-          <option value="partial">部分在经营所得中扣除</option>
-        </select>
-      </div>
-      <div class="field hidden" id="partialDeductField" style="margin-top:8px">
-        <label>在经营所得中扣除的金额 <span class="hint">不超过 6 万 + 专项扣除/附加扣除合计</span></label>
-        <input type="number" id="partialDeductAmount" value="0" min="0" step="1000">
-        <div class="unit">元/年</div>
-      </div>
-    </div>
-
-    <div class="section-sub collapsible" id="specialToggle">
-      <span class="arrow">▶</span> 专项扣除与专项附加扣除明细（展开填写）
-    </div>
-    <div class="collapsible-body" id="specialBody">
-      <div class="form-grid">
-        <div class="field"><label>社保等专项扣除</label><input type="number" class="sp-item" id="spSocial" value="0" min="0" step="1000"><div class="unit">元/年（个人缴纳社保）</div></div>
-        <div class="field"><label>子女教育</label><input type="number" class="sp-item" id="spChild" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>继续教育</label><input type="number" class="sp-item" id="spEdu" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>大病医疗</label><input type="number" class="sp-item" id="spMedical" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>住房贷款利息</label><input type="number" class="sp-item" id="spLoan" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>住房租金</label><input type="number" class="sp-item" id="spRent" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>赡养老人</label><input type="number" class="sp-item" id="spElder" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>3 岁以下婴幼儿照护</label><input type="number" class="sp-item" id="spBaby" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-        <div class="field"><label>其他扣除（个人养老金等）</label><input type="number" class="sp-item" id="spOther" value="0" min="0" step="1000"><div class="unit">元/年</div></div>
-      </div>
-      <div style="font-size:.78rem;color:#6b7280;margin-top:8px;">合计：<strong id="spTotalDisplay">¥ 0</strong> / 年</div>
-    </div>
-
-    <div class="form-grid" style="margin-top:12px">
-      <div class="field">
-        <label>已预缴经营所得个税</label>
-        <input type="number" id="prepaidIIT" value="0" min="0" step="1000">
-        <div class="unit">元（用于计算汇算补/退）</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 结果 -->
-  <div class="result-total">
-    <div class="label">全年预计总税费（增值税 + 附加 + 经营所得个税）</div>
-    <div class="amount" id="totalTax">¥ 0</div>
-    <div class="sub">
-      <span id="effectiveRate">综合税负率 0%</span>
-      <span id="settleInfo">汇算应补/退：—</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">税费分项</div>
-    <div class="breakdown">
-      <div class="bk"><div class="l">增值税</div><div class="v" id="vat">¥ 0</div><div class="n" id="vatNote">—</div></div>
-      <div class="bk"><div class="l">附加税费</div><div class="v" id="surcharge">¥ 0</div><div class="n" id="surchargeNote">城建 + 教育费附加 + 地方教育附加</div></div>
-      <div class="bk"><div class="l">经营所得个税</div><div class="v" id="iit">¥ 0</div><div class="n" id="iitNote">—</div></div>
-    </div>
-
-    <div class="detail-box" id="detailBox"></div>
-    <div class="alert" id="alertNote"></div>
-
-    <div class="actions" style="margin-top:14px">
-      <button class="btn primary" id="copyBtn">复制计算结果</button>
-      <button class="btn" id="resetBtn">重置为默认值</button>
-    </div>
   </div>
 
   <div class="disclaimer">
-    <strong>政策依据与估算说明：</strong>增值税小规模纳税人月销售额 ≤10 万元（季度 ≤30 万元）免征，超过起征点后适用 3% 征收率的收入减按 1% 征收（至 2027-12-31）[reference:0][reference:1]。经营所得适用 5%–35% 五级超额累进税率。个体工商户年应纳税所得额 ≤200 万元的部分减半征收，不区分征收方式，个人独资企业、合伙企业不适用；超过 200 万元时，仅就 ≤200 万元部分计算减半，超过部分正常计税。同时取得综合所得和经营所得的，6 万元减除费用、专项扣除、专项附加扣除可在综合所得或经营所得中申报，但不得重复。核定征收（定率）下，投资者无法扣除 6 万元减除费用。附加税费以实际缴纳的增值税为基数，城建税、教育费附加、地方教育附加享受“六税两费”减半（至 2027-12-31）[reference:7]；城建税税率因地区不同（市区 7%、县城/镇 5%、其他 1%），本计算器默认市区 7%。本工具为简化估算，实际税负以主管税务机关核定和申报结果为准。
+    <strong>估算说明：</strong>增值税小规模纳税人月销售额 ≤10 万元（季度 ≤30 万元）免征，超过起征点后适用 3% 征收率的收入减按 1% 征收（至 2027-12-31）。经营所得适用 5%–35% 五级超额累进税率。个体工商户年应纳税所得额 ≤200 万元的部分减半征收，不区分征收方式；个人独资企业、合伙企业不适用；超过 200 万元时，仅就 ≤200 万元部分计算减半。同时取得综合所得和经营所得的，6 万元减除费用、专项扣除、专项附加扣除可在综合所得或经营所得中申报，但不得重复。核定征收（定率）下，投资者不得扣除 6 万元减除费用。附加税费以实际缴纳增值税为基数，城建税、教育费附加、地方教育附加享受“六税两费”减半（至 2027-12-31），本计算器默认市区城建税 7%。本工具为简化估算，实际税负以主管税务机关核定和申报结果为准。
   </div>
+
 </div>
 
 <script>
@@ -241,7 +371,6 @@
   const $ = id => document.getElementById(id);
   const $$ = sel => document.querySelectorAll(sel);
 
-  // ===== 税率常量 =====
   const IIT_BRACKETS = [
     {limit:30000, rate:.05, deduction:0},
     {limit:90000, rate:.10, deduction:1500},
@@ -249,14 +378,12 @@
     {limit:500000, rate:.30, deduction:40500},
     {limit:Infinity, rate:.35, deduction:65500}
   ];
-  const VAT_RATE = .01;           // 3% 减按 1%
+  const VAT_RATE = .01;
   const VAT_MONTH_THRESHOLD = 100000;
   const VAT_QUARTER_THRESHOLD = 300000;
-  const SUR_RATE = .12;           // 城建 7% + 教育 3% + 地方教育 2%
   const CITY_TAX_RATES = {city:.07, county:.05, other:.01};
   const INDIVIDUAL_HALF_CAP = 2000000;
 
-  // ===== DOM =====
   const entityTypeEl = $('entityType'), methodEl = $('method'), deemedRateField = $('deemedRateField'), deemedRateEl = $('deemedRate');
   const revenueEl = $('revenue'), costEl = $('cost');
   const vatPeriodEl = $('vatPeriod'), vatDistributionEl = $('vatDistribution'), quarterInputs = $('quarterInputs');
@@ -271,7 +398,6 @@
   const iitEl = $('iit'), iitNoteEl = $('iitNote');
   const detailBox = $('detailBox'), alertNote = $('alertNote'), spTotalDisplay = $('spTotalDisplay');
 
-  // ===== 工具 =====
   const money = n => '¥ ' + Math.round(Number(n) || 0).toLocaleString('zh-CN');
   const num = v => { const n = Number(v); return isFinite(n) ? n : 0; };
   const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -279,43 +405,33 @@
   function getHasSalary(){ for (const r of hasSalaryRadios) if (r.checked) return r.value === 'yes'; return false; }
   function getSpTotal(){ let s = 0; spItems.forEach(el => s += Math.max(0, num(el.value))); return s; }
 
-  // ===== 增值税 =====
-  // 返回 { tax, note, detailRows }
   function calcVAT(revenue, period, distribution){
-    const threshold = period === 'quarter' ? VAT_QUARTER_THRESHOLD : VAT_MONTH_THRESHOLD;
-    const periodLabel = period === 'quarter' ? '季度' : '月';
-
     if (distribution === 'custom') {
-      // 按季度输入；若选择按月申报，则将季度收入平均到 3 个月（简化）
       const quarters = [1,2,3,4].map(q => {
         const el = document.querySelector(`.q-rev[data-q="${q}"]`);
         return Math.max(0, num(el ? el.value : 0));
       });
-      let tax = 0, rows = [], exemptPeriods = 0;
+      let tax = 0, rows = [];
       if (period === 'quarter') {
         quarters.forEach((rev, i) => {
-          if (rev <= VAT_QUARTER_THRESHOLD) { exemptPeriods++; }
-          else { tax += rev * VAT_RATE; }
+          if (rev > VAT_QUARTER_THRESHOLD) tax += rev * VAT_RATE;
           rows.push({label:`Q${i+1} 收入 ${money(rev)}`, val: rev <= VAT_QUARTER_THRESHOLD ? '免征' : `缴 ${money(rev * VAT_RATE)}`});
         });
-        const note = tax === 0 ? '各季度均未超起征点，免征' : `部分季度超起征点，按 1% 征收`;
-        return {tax, note, rows};
+        return {tax, note: tax === 0 ? '各季度均未超起征点，免征' : '部分季度超起征点，按 1% 征收', rows};
       } else {
-        // 按月：季度收入均分 3 个月
         quarters.forEach((rev, i) => {
           const monthly = rev / 3;
-          if (monthly <= VAT_MONTH_THRESHOLD) { exemptPeriods += 3; }
-          else { tax += rev * VAT_RATE; }
+          if (monthly > VAT_MONTH_THRESHOLD) tax += rev * VAT_RATE;
           rows.push({label:`Q${i+1} 月均 ${money(monthly)}`, val: monthly <= VAT_MONTH_THRESHOLD ? '免征' : `缴 ${money(rev * VAT_RATE)}`});
         });
         return {tax, note: tax === 0 ? '月均均未超起征点，免征' : '部分月份超起征点，按 1% 征收', rows};
       }
     }
-
-    // 均匀分布
     if (revenue <= 0) return {tax:0, note:'无收入', rows:[]};
     const periodsPerYear = period === 'quarter' ? 4 : 12;
     const perPeriod = revenue / periodsPerYear;
+    const threshold = period === 'quarter' ? VAT_QUARTER_THRESHOLD : VAT_MONTH_THRESHOLD;
+    const periodLabel = period === 'quarter' ? '季度' : '月';
     if (perPeriod <= threshold) {
       return {tax:0, note:`每${periodLabel}收入 ${money(perPeriod)} ≤ 起征点，免征`, rows:[{label:`每${periodLabel}均收入`, val:money(perPeriod)}]};
     }
@@ -326,85 +442,50 @@
     };
   }
 
-  // ===== 附加税 =====
   function calcSurcharge(vatTax){
     if (vatTax <= 0) return {tax:0, note:'增值税免征，附加税同步免征'};
-    // 六税两费减半：城建7% + 教育3% + 地方教育2%，合计12%，再减半
-    const cityRate = CITY_TAX_RATES.city; // 默认市区 7%
-    const education = .03, localEducation = .02;
-    const beforeHalf = vatTax * (cityRate + education + localEducation);
-    return {tax: beforeHalf * .5, note:`增值税额 × 12% × 50%（六税两费减半）`};
+    const beforeHalf = vatTax * (CITY_TAX_RATES.city + .03 + .02);
+    return {tax: beforeHalf * .5, note:'增值税额 × 12% × 50%（六税两费减半）'};
   }
 
-  // ===== 经营所得应纳税所得额 =====
-  function calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, entityType, deductAllocation, partialAmount, spTotal){
+  function calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, deductAllocation, partialAmount, spTotal){
     let taxable = 0;
-    let notes = [];
-    const isDeemed = method === 'deemed';
-
-    if (isDeemed) {
+    if (method === 'deemed') {
       taxable = revenue * deemedRate;
-      notes.push(`核定：收入 × ${(deemedRate*100).toFixed(1)}%`);
-      // 核定征收下，投资者不得扣除 6 万元减除费用及专项扣除/附加
-      // 无论是否有综合所得，均不扣
     } else {
       taxable = revenue - cost;
-      notes.push('查账：收入 − 成本费用');
-
-      // 6 万元 + 专项扣除/专项附加扣除的扣除规则
-      // 核定征收不扣；查账征收下：
-      // 无综合所得：必须扣 6 万 + spTotal
-      // 有综合所得：按 allocation 选择
       if (!hasSalary) {
         taxable -= 60000;
         taxable -= spTotal;
-        notes.push('− 6 万 − 专项扣除/附加');
       } else {
         if (deductAllocation === 'business') {
           taxable -= 60000;
           taxable -= spTotal;
-          notes.push('− 6 万 − 专项扣除/附加（在经营所得扣除）');
         } else if (deductAllocation === 'partial') {
-          const allowed = Math.min(Math.max(0, partialAmount), 60000 + spTotal);
-          taxable -= allowed;
-          notes.push(`− 在经营所得中扣除 ${money(allowed)}`);
-        } else {
-          notes.push('有综合所得，6 万及专项附加在综合所得扣除');
+          taxable -= Math.min(Math.max(0, partialAmount), 60000 + spTotal);
         }
       }
     }
-
     if (taxable < 0) taxable = 0;
-    return {taxable, notes};
+    return {taxable};
   }
 
-  // ===== 经营所得个税（含个体户减半分段） =====
   function calcIIT(taxable, entityType){
     if (taxable <= 0) return {tax:0, bracketRate:0, deduction:0, halfApplied:false, note:'应纳税所得额 ≤0', detail:[]};
-
     let rate = 0, deduction = 0, totalTax = 0;
     for (const b of IIT_BRACKETS) {
-      if (taxable <= b.limit) {
-        rate = b.rate; deduction = b.deduction;
-        totalTax = taxable * rate - deduction;
-        break;
-      }
+      if (taxable <= b.limit) { rate = b.rate; deduction = b.deduction; totalTax = taxable * rate - deduction; break; }
     }
     if (totalTax < 0) totalTax = 0;
-
     let halfApplied = false, finalTax = totalTax, detail = [];
-
     if (entityType === 'individual') {
       halfApplied = true;
       if (taxable <= INDIVIDUAL_HALF_CAP) {
-        // 全额在 200 万以内，减半全部税额
         finalTax = totalTax * 0.5;
         detail.push({label:'个体户减半优惠（≤200 万部分）', val:'税额 × 50%'});
       } else {
-        // 超过 200 万：仅 ≤200 万部分的应纳税额减半
-        // 200 万落在 35% 档，速算扣除数 65500
-        const taxOn200 = INDIVIDUAL_HALF_CAP * 0.35 - 65500; // 634500
-        const reduction = taxOn200 * 0.5; // 317250
+        const taxOn200 = INDIVIDUAL_HALF_CAP * 0.35 - 65500;
+        const reduction = taxOn200 * 0.5;
         finalTax = totalTax - reduction;
         detail.push({label:'200 万以内部分应纳税额', val:money(taxOn200)});
         detail.push({label:'减半减免额', val:'− ' + money(reduction)});
@@ -413,18 +494,13 @@
     } else {
       detail.push({label:'个人独资/合伙企业不适用个体户减半', val:''});
     }
-
     return {
-      tax: finalTax,
-      bracketRate: rate,
-      deduction,
-      halfApplied,
+      tax: finalTax, bracketRate: rate, deduction, halfApplied,
       note: halfApplied ? (taxable <= INDIVIDUAL_HALF_CAP ? '适用 200 万以内减半' : '超过 200 万，仅 200 万以内部分减半') : '不适用个体户减半',
       detail
     };
   }
 
-  // ===== 主计算 =====
   function calc(){
     const revenue = Math.max(0, num(revenueEl.value));
     const cost = Math.max(0, num(costEl.value));
@@ -437,25 +513,20 @@
     const spTotal = getSpTotal();
     const prepaid = Math.max(0, num(prepaidIITEl.value));
 
-    // 增值税
     const vatResult = calcVAT(revenue, vatPeriodEl.value, vatDistributionEl.value);
-    // 附加
     const surResult = calcSurcharge(vatResult.tax);
-    // 应纳税所得额
-    const tiResult = calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, entityType, deductAllocation, partialAmount, spTotal);
+    const tiResult = calcTaxableIncome(revenue, cost, method, deemedRate, hasSalary, deductAllocation, partialAmount, spTotal);
     const taxable = tiResult.taxable;
-    // 经营所得个税
     const iitResult = calcIIT(taxable, entityType);
 
     const totalTax = vatResult.tax + surResult.tax + iitResult.tax;
     const effectiveRate = revenue > 0 ? (totalTax / revenue) * 100 : 0;
     const settle = iitResult.tax - prepaid;
 
-    // ===== 渲染 =====
     totalTaxEl.textContent = money(totalTax);
     effectiveRateEl.textContent = `综合税负率 ${effectiveRate.toFixed(2)}%`;
     settleInfoEl.textContent = settle >= 0 ? `汇算应补：${money(settle)}` : `汇算应退：${money(Math.abs(settle))}`;
-    settleInfoEl.style.color = settle > 0 ? '#fca5a5' : (settle < 0 ? '#86efac' : '#e5e7eb');
+    settleInfoEl.style.color = settle > 0 ? '#fecaca' : (settle < 0 ? '#bbf7d0' : '#e5e7eb');
 
     vatEl.textContent = money(vatResult.tax);
     vatEl.className = 'v' + (vatResult.tax === 0 ? ' green' : '');
@@ -469,75 +540,49 @@
     iitEl.className = 'v' + (iitResult.tax === 0 ? ' green' : '');
     iitNoteEl.textContent = iitResult.note;
 
-    // 明细
     const rows = [];
     rows.push({label:'全年营业收入', val:money(revenue)});
-    if (method === 'audit') {
-      rows.push({label:'减：成本费用', val:'− ' + money(cost), cls:'neg'});
-    } else {
-      rows.push({label:`核定应税所得（× ${(deemedRate*100).toFixed(1)}%）`, val:money(taxable)});
-    }
-    // 增值税明细
-    if (vatResult.rows && vatResult.rows.length) {
-      vatResult.rows.forEach(r => rows.push({label:'增值税 · ' + r.label, val:r.val}));
-    }
-    // 经营所得应纳税所得额
+    if (method === 'audit') rows.push({label:'减：成本费用', val:'− ' + money(cost), cls:'neg'});
+    else rows.push({label:`核定应税所得（× ${(deemedRate*100).toFixed(1)}%）`, val:money(taxable)});
+    if (vatResult.rows && vatResult.rows.length) vatResult.rows.forEach(r => rows.push({label:'增值税 · ' + r.label, val:r.val}));
     rows.push({label:'经营所得应纳税所得额', val:money(taxable)});
     rows.push({label:'适用税率 / 速算扣除数', val: iitResult.bracketRate > 0 ? `${(iitResult.bracketRate*100).toFixed(0)}% / ${money(iitResult.deduction)}` : '—'});
-    // 个体户减半明细
-    iitResult.detail.forEach(d => {
-      if (d.val) rows.push({label:d.label, val:d.val, cls: d.val.startsWith('−') ? 'neg' : ''});
-    });
+    iitResult.detail.forEach(d => { if (d.val) rows.push({label:d.label, val:d.val, cls: d.val.startsWith('−') ? 'neg' : ''}); });
     rows.push({label:'经营所得个税（减免后）', val:money(iitResult.tax)});
     if (prepaid > 0) {
       rows.push({label:'减：已预缴', val:'− ' + money(prepaid), cls:'neg'});
       rows.push({label: settle >= 0 ? '汇算应补' : '汇算应退', val:money(Math.abs(settle)), cls: settle >= 0 ? 'neg' : 'pos'});
     }
-    detailBox.innerHTML = rows.map(r =>
-      `<div class="row"><span>${r.label}</span><span class="val ${r.cls||''}">${r.val}</span></div>`
-    ).join('');
+    detailBox.innerHTML = rows.map(r => `<div class="row"><span>${r.label}</span><span class="val ${r.cls||''}">${r.val}</span></div>`).join('');
 
-    // 提示
     let alertHtml = '', alertCls = '';
     if (method === 'deemed') {
       alertHtml = '核定征收（定率）下，6 万元减除费用、专项扣除、专项附加扣除均不得在经营所得中扣除。';
       alertCls = 'blue';
     } else if (hasSalary && deductAllocation === 'salary') {
-      alertHtml = '你选择了“有综合所得且 6 万及专项附加全部在综合所得扣除”，经营所得中不再重复扣除。如希望降低经营所得个税，可切换为“全部/部分在经营所得中扣除”，但需确保综合所得端不再重复享受。';
+      alertHtml = '已选择“6 万及专项附加全部在综合所得扣除”，经营所得中不再重复扣除。如需降低经营所得个税，可切换为全部/部分在经营所得扣除，但需确保综合所得端不重复享受。';
       alertCls = 'blue';
     } else if (entityType !== 'individual') {
-      alertHtml = '当前主体为个人独资企业或合伙企业个人合伙人，不适用个体工商户年应纳税所得额 ≤200 万元部分减半政策。';
+      alertHtml = '当前主体为个人独资企业或合伙企业个人合伙人，不适用个体工商户 ≤200 万元部分减半政策。';
       alertCls = 'red';
     } else if (vatResult.tax === 0 && totalTax === 0) {
       alertHtml = '当前增值税未超起征点且经营所得应纳税所得额为 0，总税费可能为 0，但仍需按规定申报（零申报）。';
       alertCls = '';
     }
-
-    if (alertHtml) {
-      alertNote.style.display = 'block';
-      alertNote.className = 'alert ' + alertCls;
-      alertNote.textContent = alertHtml;
-    } else {
-      alertNote.style.display = 'none';
-    }
+    if (alertHtml) { alertNote.style.display = 'block'; alertNote.className = 'alert ' + alertCls; alertNote.textContent = alertHtml; }
+    else alertNote.style.display = 'none';
 
     spTotalDisplay.textContent = money(spTotal);
   }
 
-  // ===== 事件绑定 =====
-  function toggleDeemed(){
-    deemedRateField.classList.toggle('hidden', methodEl.value !== 'deemed');
-  }
+  function toggleDeemed(){ deemedRateField.classList.toggle('hidden', methodEl.value !== 'deemed'); }
   methodEl.addEventListener('change', () => { toggleDeemed(); calc(); });
 
   function toggleSalaryDeduction(){
     const has = getHasSalary();
     salaryDeductionBox.classList.toggle('hidden', !has);
-    if (!has) {
-      partialDeductField.classList.add('hidden');
-    } else {
-      partialDeductField.classList.toggle('hidden', deductAllocationEl.value !== 'partial');
-    }
+    if (!has) partialDeductField.classList.add('hidden');
+    else partialDeductField.classList.toggle('hidden', deductAllocationEl.value !== 'partial');
   }
   hasSalaryRadios.forEach(r => r.addEventListener('change', () => { toggleSalaryDeduction(); calc(); }));
   deductAllocationEl.addEventListener('change', () => {
@@ -545,31 +590,24 @@
     calc();
   });
 
-  function toggleVatCustom(){
-    quarterInputs.classList.toggle('hidden', vatDistributionEl.value !== 'custom');
-  }
+  function toggleVatCustom(){ quarterInputs.classList.toggle('hidden', vatDistributionEl.value !== 'custom'); }
   vatDistributionEl.addEventListener('change', () => { toggleVatCustom(); calc(); });
 
-  // 折叠面板
   function setupCollapsible(toggleId, bodyId){
     const t = $(toggleId), b = $(bodyId);
     if (!t || !b) return;
-    t.addEventListener('click', () => {
-      t.classList.toggle('open');
-      b.classList.toggle('open');
-    });
+    t.addEventListener('click', () => { t.classList.toggle('open'); b.classList.toggle('open'); });
   }
   setupCollapsible('specialToggle','specialBody');
   setupCollapsible('vatToggle','vatBody');
 
-  // 输入监听
-  const inputs = [revenueEl, costEl, deemedRateEl, prepaidIITEl, partialDeductAmountEl];
-  inputs.forEach(el => { el.addEventListener('input', calc); el.addEventListener('change', calc); });
+  [revenueEl, costEl, deemedRateEl, prepaidIITEl, partialDeductAmountEl].forEach(el => {
+    el.addEventListener('input', calc); el.addEventListener('change', calc);
+  });
   spItems.forEach(el => el.addEventListener('input', calc));
   $$('.q-rev').forEach(el => el.addEventListener('input', calc));
   entityTypeEl.addEventListener('change', calc);
 
-  // 复制
   $('copyBtn').addEventListener('click', () => {
     const lines = [];
     lines.push('自雇人士税务估算结果');
@@ -579,9 +617,7 @@
     lines.push('经营所得个税：' + iitEl.textContent);
     lines.push(settleInfoEl.textContent);
     lines.push('— 明细 —');
-    detailBox.querySelectorAll('.row').forEach(r => {
-      lines.push(r.children[0].textContent + '：' + r.children[1].textContent);
-    });
+    detailBox.querySelectorAll('.row').forEach(r => lines.push(r.children[0].textContent + '：' + r.children[1].textContent));
     const text = lines.join('\n');
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
@@ -595,7 +631,6 @@
     }
   });
 
-  // 重置
   $('resetBtn').addEventListener('click', () => {
     entityTypeEl.value = 'individual'; methodEl.value = 'audit';
     revenueEl.value = 800000; costEl.value = 300000; deemedRateEl.value = 10;
@@ -608,11 +643,7 @@
     toggleDeemed(); toggleSalaryDeduction(); toggleVatCustom(); calc();
   });
 
-  // 初始化
-  toggleDeemed();
-  toggleSalaryDeduction();
-  toggleVatCustom();
-  calc();
+  toggleDeemed(); toggleSalaryDeduction(); toggleVatCustom(); calc();
 })();
 </script>
 </body>
