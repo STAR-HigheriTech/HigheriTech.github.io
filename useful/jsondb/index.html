@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON 对比工具</title>
+<style>
+  :root {
+    --bg: #f6f8fa;
+    --panel: #ffffff;
+    --panel-2: #f6f8fa;
+    --border: #d0d7de;
+    --border-strong: #afb8c1;
+    --text: #1f2328;
+    --text-dim: #656d76;
+    --text-faint: #8c959f;
+    --accent: #0969da;
+    --accent-hover: #0757b8;
+    --accent-bg: #ddf4ff;
+    --green: #1a7f37;
+    --green-bg: #e9f9ee;
+    --green-strong: #abf2bc;
+    --red: #cf222e;
+    --red-bg: #fff1f0;
+    --red-strong: #ffc1bc;
+    --yellow: #9a6700;
+    --yellow-bg: #fff8c5;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --shadow: 0 1px 2px rgba(31, 35, 40, .05);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    height: 100dvh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .spacer { flex: 1; }
+
+  /* ---------- 顶栏 ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    z-index: 20;
+  }
+  .brand { font-weight: 700; font-size: 15px; letter-spacing: .2px; white-space: nowrap; }
+  .brand span { color: var(--accent); }
+
+  .legend { display: flex; gap: 12px; font-size: 12px; color: var(--text-dim); }
+  .legend span { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  .sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+  .sw-del { background: var(--red-strong); }
+  .sw-ins { background: var(--green-strong); }
+  .sw-mod { background: var(--yellow-bg); border: 1px solid #e5c76b; }
+
+  button {
+    font: inherit;
+    font-size: 12.5px;
+    padding: 5px 11px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: #f6f8fa;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background .15s, border-color .15s, color .15s;
+  }
+  button:hover { background: #eef1f4; border-color: var(--border-strong); }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 20px;
+  }
+  button.primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+
+  .mini {
+    font-size: 11.5px;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: transparent;
+    border-color: transparent;
+    color: var(--text-dim);
+  }
+  .mini:hover { background: #eaeef2; color: var(--text); }
+
+  /* ---------- 编辑区 ---------- */
+  .editors {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 12px 16px 4px;
+    height: clamp(150px, 30vh, 340px);
+    flex-shrink: 0;
+  }
+  .pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .pane:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(9, 105, 218, .1); }
+  .pane.has-err { border-color: var(--red); box-shadow: 0 0 0 3px rgba(207, 34, 46, .08); }
+  .pane.dragging { border-color: var(--accent); background: var(--accent-bg); }
+
+  .pane-head {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 6px 4px 10px;
+    background: var(--panel-2);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-red { background: var(--red); }
+  .dot-green { background: var(--green); }
+  .title { font-size: 12px; font-weight: 600; color: var(--text-dim); white-space: nowrap; }
+  .pane-head .mini { padding: 2px 6px; }
+
+  textarea {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    resize: none;
+    background: var(--panel);
+    color: var(--text);
+    padding: 8px 12px;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    tab-size: 2;
+  }
+  textarea::placeholder { color: var(--text-faint); }
+
+  .err {
+    display: none;
+    padding: 5px 12px;
+    font-size: 11.5px;
+    color: var(--red);
+    background: var(--red-bg);
+    border-top: 1px solid var(--red-strong);
+    font-family: var(--mono);
+    word-break: break-word;
+    flex-shrink: 0;
+    max-height: 72px;
+    overflow: auto;
+  }
+  .err.show { display: block; }
+
+  /* ---------- 拖拽手柄 ---------- */
+  .h-resizer {
+    height: 8px;
+    flex-shrink: 0;
+    cursor: row-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+  .h-resizer::before {
+    content: '';
+    width: 44px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border);
+    transition: background .15s;
+  }
+  .h-resizer:hover::before { background: var(--border-strong); }
+
+  /* ---------- 工具栏 ---------- */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 2px 16px 8px;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+  }
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    padding: 1px;
+  }
+  .nav-group button { border: 0; background: transparent; padding: 3px 8px; border-radius: 4px; font-size: 13px; }
+  .nav-group button:hover { background: #eaeef2; }
+  .nav-pos {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--text-dim);
+    min-width: 58px;
+    text-align: center;
+    user-select: none;
+  }
+
+  .chk {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  .chk input { accent-color: var(--accent); margin: 0; cursor: pointer; }
+  .sel { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--text-dim); white-space: nowrap; }
+  select {
+    font: inherit;
+    font-size: 12px;
+    padding: 2px 5px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--panel);
+    color: var(--text);
+    cursor: pointer;
+    outline: 0;
+  }
+  select:focus { border-color: var(--accent); }
+
+  .stats {
+    display: flex;
+    gap: 12px;
+    font-size: 12.5px;
+    font-family: var(--mono);
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .stat { white-space: nowrap; }
+  .s-add { color: var(--green); }
+  .s-del { color: var(--red); }
+  .s-mod { color: var(--yellow); }
+  .s-same { color: var(--text-faint); }
+  .s-time { color: var(--text-faint); font-size: 11.5px; }
+  .s-ok { color: var(--green); font-weight: 600; }
+  .s-stale { color: var(--yellow); }
+
+  /* ---------- 结果区 ---------- */
+  .result {
+    flex: 1;
+    min-height: 0;
+    margin: 0 16px 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .diff-scroll { flex: 1; min-height: 0; overflow: auto; }
+  #diffBody { position: relative; min-width: 100%; }
+
+  .banner {
+    padding: 9px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--panel);
+  }
+  .banner.ok { background: var(--green-bg); color: var(--green); border-bottom-color: #b6f0c4; }
+
+  .drow {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr) 52px minmax(0, 1fr);
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+  }
+  .drow > :nth-child(2) { border-right: 1px solid var(--border); }
+  .drow.diff:hover { background: #fafbfc; }
+
+  .ln {
+    padding: 0 8px 0 2px;
+    text-align: right;
+    color: var(--text-faint);
+    user-select: none;
+    font-size: 11.5px;
+    background: var(--panel-2);
+    border-right: 1px solid var(--border);
+  }
+  .cell {
+    padding: 0 10px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+  .cell.same { color: var(--text); }
+  .cell.del { background: var(--red-bg); }
+  .cell.ins { background: var(--green-bg); }
+  .cell.empty {
+    background-image: repeating-linear-gradient(
+      45deg, transparent, transparent 5px,
+      rgba(31, 35, 40, .035) 5px, rgba(31, 35, 40, .035) 10px
+    );
+  }
+
+  .chg-del { background: var(--red-strong); border-radius: 2px; }
+  .chg-ins { background: var(--green-strong); border-radius: 2px; }
+
+  .drow.current {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* 折叠条 */
+  .fold-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 3px 12px;
+    background: #f6f8fa;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+    color: var(--text-dim);
+    font-size: 11.5px;
+    font-family: var(--mono);
+    cursor: pointer;
+    user-select: none;
+  }
+  .fold-bar:hover { background: #eef1f4; color: var(--text); }
+  .fold-icon { width: 10px; color: var(--text-faint); }
+  .fold-bar.expanded { color: var(--text-dim); }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 56px 20px;
+    color: var(--text-faint);
+    font-size: 13px;
+    text-align: center;
+  }
+  .empty-state .big { font-size: 30px; opacity: .45; }
+  .empty-state.ok { color: var(--green); }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translate(-50%, 12px);
+    background: rgba(31, 35, 40, .92);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 12.5px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 999;
+    max-width: 80vw;
+  }
+  #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* 滚动条 */
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: #d0d7de;
+    border-radius: 6px;
+    border: 3px solid var(--panel);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #afb8c1; }
+
+  @media (max-width: 820px) {
+    .editors {
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 1fr;
+      height: 300px;
+      gap: 8px;
+      padding: 8px 10px 2px;
+    }
+    .h-resizer { display: none; }
+    .legend { display: none; }
+    .result { margin: 0 10px 10px; }
+    .toolbar { padding: 2px 10px 8px; }
+    .brand { font-size: 14px; }
+    header { padding: 7px 10px; }
+    .drow { grid-template-columns: 42px minmax(0, 1fr) 42px minmax(0, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">JSON <span>对比</span></div>
+  <div class="legend">
+    <span><i class="sw sw-del"></i>删除</span>
+    <span><i class="sw sw-ins"></i>新增</span>
+    <span><i class="sw sw-mod"></i>修改</span>
+  </div>
+  <div class="spacer"></div>
+  <button id="btnSample">示例</button>
+  <button id="btnSwap">⇄ 交换</button>
+  <button id="btnSummary">复制摘要</button>
+  <button id="btnClearAll">清空</button>
+</header>
+
+<div class="editors" id="editors">
+  <div class="pane" id="paneLeft">
+    <div class="pane-head">
+      <span class="dot dot-red"></span>
+      <span class="title">原始 JSON</span>
+      <div class="spacer"></div>
+      <button class="mini" data-act="upload" data-side="left" title="导入文件">导入</button>
+      <button class="mini" data-act="copy" data-side="left" title="复制内容">复制</button>
+      <button class="mini" data-act="format" data-side="left" title="格式化">格式化</button>
+      <button class="mini" data-act="minify" data-side="left" title="压缩">压缩</button>
+      <button class="mini" data-act="clear" data-side="left" title="清空">清空</button>
+    </div>
+    <textarea id="left" spellcheck="false" autocapitalize="off" autocomplete="off"
+      placeholder='粘贴原始 JSON，例如：{"name":"Alice","age":30}'></textarea>
+    <div class="err" id="errLeft"></div>
+  </div>
+
+  <div class="pane" id="paneRight">
+    <div class="pane-head">
+      <span class="dot dot-green"></span>
+      <span class="title">新的 JSON</span>
+      <div class="spacer"></div>
+      <button class="mini" data-act="upload" data-side="right" title="导入文件">导入</button>
+      <button class="mini" data-act="copy" data-side="right" title="复制内容">复制</button>
+      <button class="mini" data-act="format" data-side="right" title="格式化">格式化</button>
+      <button class="mini" data-act="minify" data-side="right" title="压缩">压缩</button>
+      <button class="mini" data-act="clear" data-side="right" title="清空">清空</button>
+    </div>
+    <textarea id="right" spellcheck="false" autocapitalize="off" autocomplete="off"
+      placeholder='粘贴新的 JSON，例如：{"name":"Alice","age":31}'></textarea>
+    <div class="err" id="errRight"></div>
+  </div>
+</div>
+
+<div class="h-resizer" id="resizer" title="拖动调整编辑区高度"></div>
+
+<div class="toolbar">
+  <button id="btnCompare" class="primary">对比</button>
+  <div class="nav-group">
+    <button id="btnPrev" title="上一个差异 (Alt+↑)">↑</button>
+    <span class="nav-pos" id="navPos">—</span>
+    <button id="btnNext" title="下一个差异 (Alt+↓)">↓</button>
+  </div>
+  <label class="chk"><input type="checkbox" id="optSort"> 键排序</label>
+  <label class="chk" title="数组元素按内容排序后对比，可能改变语义"><input type="checkbox" id="optSortArr"> 数组排序</label>
+  <label class="chk"><input type="checkbox" id="optCharDiff" checked> 字符级高亮</label>
+  <label class="chk"><input type="checkbox" id="optAuto"> 自动对比</label>
+  <label class="sel">相同行
+    <select id="sameMode">
+      <option value="fold" selected>折叠</option>
+      <option value="all">全部</option>
+      <option value="hide">隐藏</option>
+    </select>
+  </label>
+  <div class="spacer"></div>
+  <div class="stats" id="stats"></div>
+</div>
+
+<div class="result" id="resultPane">
+  <div class="diff-scroll" id="diffScroll">
+    <div id="diffBody"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* =========================================================
+   *  常量与工具
+   * ======================================================= */
+  const LS_KEY = 'json-diff-tool-v2';
+  const FOLD_THRESHOLD = 5;          // 连续相同行超过该值则折叠
+  const SIM_THRESHOLD = 0.3;         // 行内相似度低于该值则拆成删除+新增
+  const LINE_DP_LIMIT = 4e6;         // 行级 DP 上限
+  const TOKEN_DP_LIMIT = 100000;     // 字符级 DP 上限
+  const MAX_FILE_SIZE = 20 * 1024 * 1024;
+
+  const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ESC_MAP[c]);
+
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    left: $('left'),
+    right: $('right'),
+    paneLeft: $('paneLeft'),
+    paneRight: $('paneRight'),
+    errLeft: $('errLeft'),
+    errRight: $('errRight'),
+    editors: $('editors'),
+    resizer: $('resizer'),
+    diffBody: $('diffBody'),
+    diffScroll: $('diffScroll'),
+    stats: $('stats'),
+    navPos: $('navPos'),
+    optSort: $('optSort'),
+    optSortArr: $('optSortArr'),
+    optCharDiff: $('optCharDiff'),
+    optAuto: $('optAuto'),
+    sameMode: $('sameMode'),
+  };
+
+  /* =========================================================
+   *  状态
+   * ======================================================= */
+  let lastRows = [];            // 原始行数据
+  let lastStat = null;          // 统计
+  let lastMs = 0;               // 耗时
+  let expandedFolds = new Set();
+  let navIndex = -1;
+  let stale = false;            // 内容已修改但未重新对比
+  let autoTimer = null;
+  let saveTimer = null;
+
+  const SAMPLE_OLD = {
+    name: "Alice",
+    age: 30,
+    email: "alice@example.com",
+    hobbies: ["reading", "hiking"],
+    address: { city: "Beijing", zip: "100000" },
+    active: true
+  };
+  const SAMPLE_NEW = {
+    name: "Alice",
+    age: 31,
+    email: "alice@example.com",
+    hobbies: ["reading", "hiking", "coding"],
+    address: { city: "Shanghai", zip: "200000" },
+    active: false,
+    role: "admin"
+  };
+
+  /* =========================================================
+   *  提示 & 错误
+   * ======================================================= */
+  let toastTimer = null;
+  function toast(msg) {
+    let el = $('toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'toast';
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 1700);
+  }
+
+  function showError(side, msg) {
+    const pane = side === 'left' ? els.paneLeft : els.paneRight;
+    const err = side === 'left' ? els.errLeft : els.errRight;
+    err.textContent = msg;
+    err.classList.add('show');
+    pane.classList.add('has-err');
+  }
+
+  function clearSideError(side) {
+    const pane = side === 'left' ? els.paneLeft : els.paneRight;
+    const err = side === 'left' ? els.errLeft : els.errRight;
+    err.classList.remove('show');
+    err.textContent = '';
+    pane.classList.remove('has-err');
+  }
+
+  function clearErrors() {
+    clearSideError('left');
+    clearSideError('right');
+  }
+
+  function showParseError(side, text, err, interactive) {
+    const ta = side === 'left' ? els.left : els.right;
+    const msg = (err && err.message) ? err.message : String(err);
+    let prefix = '';
+    const m = /position (\d+)/i.exec(msg);
+    if (m && interactive) {
+      const pos = Math.min(Number(m[1]), text.length);
+      const before = text.slice(0, pos);
+      const line = before.split('\n').length;
+      const col = pos - before.lastIndexOf('\n');
+      prefix = '第 ' + line + ' 行第 ' + col + ' 列：';
+      try {
+        ta.focus();
+        ta.setSelectionRange(pos, Math.min(pos + 1, text.length));
+      } catch (_) { /* ignore */ }
+    }
+    showError(side, prefix + msg);
+  }
+
+  /* =========================================================
+   *  原型污染安全的数据归一化
+   * ======================================================= */
+  function normalize(v, sortKeysFlag, sortArrays) {
+    if (Array.isArray(v)) {
+      const arr = v.map((x) => normalize(x, sortKeysFlag, sortArrays));
+      if (sortArrays) {
+        arr.sort((a, b) => {
+          const sa = JSON.stringify(a);
+          const sb = JSON.stringify(b);
+          return sa < sb ? -1 : sa > sb ? 1 : 0;
+        });
+      }
+      return arr;
+    }
+    if (v && typeof v === 'object') {
+      // 使用 null 原型，避免 __proto__ 等键造成原型污染
+      const o = Object.create(null);
+      let keys = Object.keys(v);
+      if (sortKeysFlag) keys = keys.sort();
+      for (const k of keys) o[k] = normalize(v[k], sortKeysFlag, sortArrays);
+      return o;
+    }
+    return v;
+  }
+
+  /* =========================================================
+   *  行级 Diff（LCS）
+   * ======================================================= */
+  function diffLines(a, b) {
+    const ops = [];
+    let start = 0;
+    const maxStart = Math.min(a.length, b.length);
+    while (start < maxStart && a[start] === b[start]) start++;
+
+    let endA = a.length;
+    let endB = b.length;
+    while (endA > start && endB > start && a[endA - 1] === b[endB - 1]) {
+      endA--; endB--;
+    }
+
+    for (let i = 0; i < start; i++) ops.push({ type: 'same', a: i, b: i });
+
+    const n = endA - start;
+    const m = endB - start;
+
+    if (n > 0 && m > 0 && n * m <= LINE_DP_LIMIT) {
+      const dp = new Array(n + 1);
+      for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
+      for (let i = n - 1; i >= 0; i--) {
+        const row = dp[i];
+        const next = dp[i + 1];
+        const ai = a[start + i];
+        for (let j = m - 1; j >= 0; j--) {
+          row[j] = ai === b[start + j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
+        }
+      }
+      let i = 0;
+      let j = 0;
+      while (i < n && j < m) {
+        if (a[start + i] === b[start + j]) {
+          ops.push({ type: 'same', a: start + i, b: start + j });
+          i++; j++;
+        } else if (dp[i + 1][j] >= dp[i][j + 1]) {
+          ops.push({ type: 'del', a: start + i });
+          i++;
+        } else {
+          ops.push({ type: 'ins', b: start + j });
+          j++;
+        }
+      }
+      while (i < n) { ops.push({ type: 'del', a: start + i }); i++; }
+      while (j < m) { ops.push({ type: 'ins', b: start + j }); j++; }
+    } else {
+      for (let i = 0; i < n; i++) ops.push({ type: 'del', a: start + i });
+      for (let j = 0; j < m; j++) ops.push({ type: 'ins', b: start + j });
+    }
+
+    const tail = a.length - endA;
+    for (let k = 0; k < tail; k++) {
+      ops.push({ type: 'same', a: endA + k, b: endB + k });
+    }
+    return ops;
+  }
+
+  /* =========================================================
+   *  字符级 Diff
+   * ======================================================= */
+  function tokenize(s) {
+    return s.match(/[A-Za-z0-9_$]+|\s+|[\s\S]/g) || [];
+  }
+
+  function inlineDiff(oldStr, newStr, enable) {
+    if (!enable) {
+      return { old: esc(oldStr), new: esc(newStr), sim: 1 };
+    }
+    const A = tokenize(oldStr);
+    const B = tokenize(newStr);
+    const n = A.length;
+    const m = B.length;
+
+    if (!n || !m) {
+      return { old: esc(oldStr), new: esc(newStr), sim: n === m ? 1 : 0 };
+    }
+    if (n * m > TOKEN_DP_LIMIT) {
+      const sim = Math.min(n, m) / Math.max(n, m);
+      return { old: esc(oldStr), new: esc(newStr), sim };
+    }
+
+    const dp = new Array(n + 1);
+    for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
+    for (let i = n - 1; i >= 0; i--) {
+      const row = dp[i];
+      const next = dp[i + 1];
+      for (let j = m - 1; j >= 0; j--) {
+        row[j] = A[i] === B[j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
+      }
+    }
+
+    const seq = [];
+    let i = 0;
+    let j = 0;
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { seq.push({ t: 'same', i, j }); i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) { seq.push({ t: 'del', i }); i++; }
+      else { seq.push({ t: 'ins', j }); j++; }
+    }
+    while (i < n) { seq.push({ t: 'del', i }); i++; }
+    while (j < m) { seq.push({ t: 'ins', j }); j++; }
+
+    const lcs = dp[0][0];
+    const sim = lcs / Math.max(n, m);
+
+    function build(side) {
+      const toks = side === 'a' ? A : B;
+      let out = '';
+      let buf = '';
+      let marked = false;
+      const flush = () => {
+        if (!buf) return;
+        out += marked
+          ? '<span class="' + (side === 'a' ? 'chg-del' : 'chg-ins') + '">' + esc(buf) + '</span>'
+          : esc(buf);
+        buf = '';
+      };
+      for (const op of seq) {
+        if (side === 'a' && op.t === 'ins') continue;
+        if (side === 'b' && op.t === 'del') continue;
+        const mark = side === 'a' ? op.t === 'del' : op.t === 'ins';
+        if (mark !== marked) { flush(); marked = mark; }
+        buf += toks[side === 'a' ? op.i : op.j];
+      }
+      flush();
+      return out;
+    }
+
+    return { old: build('a'), new: build('b'), sim };
+  }
+
+  /* =========================================================
+   *  构建对比行
+   * ======================================================= */
+  function buildRows(ops, a, b, charDiff) {
+    const rows = [];
+    const stat = { add: 0, del: 0, mod: 0, same: 0 };
+    let i = 0;
+
+    while (i < ops.length) {
+      const op = ops[i];
+      if (op.type === 'same') {
+        rows.push({
+          type: 'same',
+          left: { no: op.a + 1, html: esc(a[op.a]) },
+          right: { no: op.b + 1, html: esc(b[op.b]) },
+        });
+        stat.same++;
+        i++;
+        continue;
+      }
+
+      const dels = [];
+      const inss = [];
+      while (i < ops.length && ops[i].type !== 'same') {
+        if (ops[i].type === 'del') dels.push(ops[i].a);
+        else inss.push(ops[i].b);
+        i++;
+      }
+
+      const cnt = Math.max(dels.length, inss.length);
+      for (let k = 0; k < cnt; k++) {
+        const da = dels[k];
+        const ib = inss[k];
+
+        if (da !== undefined && ib !== undefined) {
+          const d = inlineDiff(a[da], b[ib], charDiff);
+          if (d.sim >= SIM_THRESHOLD) {
+            rows.push({
+              type: 'mod',
+              left: { no: da + 1, html: d.old },
+              right: { no: ib + 1, html: d.new },
+            });
+            stat.mod++;
+          } else {
+            // 相似度太低：拆成删除 + 新增，更直观
+            rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
+            rows.push({ type: 'ins', left: null, right: { no: ib + 1, html: esc(b[ib]) } });
+            stat.del++;
+            stat.add++;
+          }
+        } else if (da !== undefined) {
+          rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
+          stat.del++;
+        } else {
+          rows.push({ type: 'ins', left: null, right: { no: ib + 1, html: esc(b[ib]) } });
+          stat.add++;
+        }
+      }
+    }
+    return { rows, stat };
+  }
+
+  /* =========================================================
+   *  统计区
+   * ======================================================= */
+  function updateStatsHtml() {
+    if (!lastStat) {
+      els.stats.innerHTML = '';
+      return;
+    }
+    const s = lastStat;
+    const total = s.add + s.del + s.mod;
+    const parts = [];
+    if (total === 0) {
+      parts.push('<span class="stat s-ok">✓ 完全一致</span>');
+    } else {
+      parts.push('<span class="stat s-add">＋ ' + s.add + '</span>');
+      parts.push('<span class="stat s-del">－ ' + s.del + '</span>');
+      parts.push('<span class="stat s-mod">～ ' + s.mod + '</span>');
+      if (s.same) parts.push('<span class="stat s-same">＝ ' + s.same + '</span>');
+    }
+    parts.push('<span class="stat s-time">' + lastMs.toFixed(0) + ' ms</span>');
+    if (stale) parts.push('<span class="stat s-stale">● 内容已修改</span>');
+    els.stats.innerHTML = parts.join('');
+  }
+
+  function markStale() {
+    if (!lastRows.length) return;
+    stale = true;
+    updateStatsHtml();
+  }
+
+  /* =========================================================
+   *  折叠处理
+   * ======================================================= */
+  function prepareRows(rows, mode, expanded) {
+    if (mode === 'all') return rows.map((r) => ({ kind: 'row', row: r }));
+    if (mode === 'hide') {
+      return rows.filter((r) => r.type !== 'same').map((r) => ({ kind: 'row', row: r }));
+    }
+    const out = [];
+    let i = 0;
+    while (i < rows.length) {
+      if (rows[i].type !== 'same') {
+        out.push({ kind: 'row', row: rows[i] });
+        i++;
+        continue;
+      }
+      let j = i;
+      while (j < rows.length && rows[j].type === 'same') j++;
+      const len = j - i;
+      if (len > FOLD_THRESHOLD) {
+        const id = 'fold-' + rows[i].left.no + '-' + len;
+        const exp = expanded.has(id);
+        out.push({
+          kind: 'fold',
+          id,
+          count: len,
+          startLine: rows[i].left.no,
+          endLine: rows[j - 1].left.no,
+          expanded: exp,
+        });
+        if (exp) {
+          for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
+        }
+      } else {
+        for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
+      }
+      i = j;
+    }
+    return out;
+  }
+
+  /* =========================================================
+   *  渲染
+   * ======================================================= */
+  function renderResult() {
+    if (!lastRows.length) return;
+    const mode = els.sameMode.value;
+    const items = prepareRows(lastRows, mode, expandedFolds);
+    const total = lastStat ? (lastStat.add + lastStat.del + lastStat.mod) : 0;
+    const html = [];
+
+    if (total === 0) {
+      html.push('<div class="banner ok">✓ 两侧 JSON 完全一致</div>');
+    }
+
+    for (const item of items) {
+      if (item.kind === 'fold') {
+        const exp = item.expanded;
+        html.push(
+          '<div class="fold-bar' + (exp ? ' expanded' : '') + '" data-fold="' + esc(item.id) + '" title="点击' + (exp ? '收起' : '展开') + '">' +
+            '<span class="fold-icon">' + (exp ? '▾' : '▸') + '</span>' +
+            '<span>' + (exp ? '收起' : '省略') + ' ' + item.count + ' 行相同内容（第 ' + item.startLine + '–' + item.endLine + ' 行）</span>' +
+          '</div>'
+        );
+        continue;
+      }
+
+      const r = item.row;
+      const isDiff = r.type !== 'same';
+      html.push('<div class="drow' + (isDiff ? ' diff' : '') + '"' + (isDiff ? ' data-diff="1"' : '') + '>');
+
+      if (r.left) {
+        const cls = r.type === 'ins' ? 'same' : 'del';
+        html.push('<div class="ln">' + r.left.no + '</div>');
+        html.push('<div class="cell ' + cls + '">' + r.left.html + '</div>');
+      } else {
+        html.push('<div class="ln"></div><div class="cell empty"></div>');
+      }
+
+      if (r.right) {
+        const cls = r.type === 'del' ? 'same' : 'ins';
+        html.push('<div class="ln">' + r.right.no + '</div>');
+        html.push('<div class="cell ' + cls + '">' + r.right.html + '</div>');
+      } else {
+        html.push('<div class="ln"></div><div class="cell empty"></div>');
+      }
+
+      html.push('</div>');
+    }
+
+    els.diffBody.innerHTML = html.join('');
+    updateNav();
+  }
+
+  function resetResult(msg) {
+    lastRows = [];
+    lastStat = null;
+    lastMs = 0;
+    navIndex = -1;
+    stale = false;
+    expandedFolds.clear();
+    els.stats.innerHTML = '';
+    els.diffBody.innerHTML =
+      '<div class="empty-state"><div class="big">⇄</div><div>' + esc(msg) + '</div></div>';
+    updateNav();
+    els.diffScroll.scrollTop = 0;
+  }
+
+  /* =========================================================
+   *  差异导航
+   * ======================================================= */
+  function diffEls() {
+    return els.diffBody.querySelectorAll('.drow.diff');
+  }
+
+  function updateNav() {
+    const list = diffEls();
+    if (navIndex >= list.length) navIndex = list.length - 1;
+    list.forEach((el, i) => el.classList.toggle('current', i === navIndex));
+    if (!list.length) {
+      els.navPos.textContent = '—';
+    } else {
+      els.navPos.textContent = (navIndex >= 0 ? (navIndex + 1) : '–') + ' / ' + list.length;
+    }
+  }
+
+  function goDiff(delta) {
+    const list = diffEls();
+    if (!list.length) return;
+    if (navIndex < 0) navIndex = delta > 0 ? 0 : list.length - 1;
+    else navIndex = (navIndex + delta + list.length) % list.length;
+    updateNav();
+    const el = list[navIndex];
+    const top = el.offsetTop - els.diffScroll.clientHeight / 2 + el.offsetHeight / 2;
+    els.diffScroll.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  /* =========================================================
+   *  主对比流程
+   * ======================================================= */
+  function hasBoth() {
+    return els.left.value.trim() !== '' && els.right.value.trim() !== '';
+  }
+
+  function doCompare(interactive) {
+    const t0 = performance.now();
+    clearErrors();
+
+    const ltxt = els.left.value.replace(/^\uFEFF/, '').trim();
+    const rtxt = els.right.value.replace(/^\uFEFF/, '').trim();
+
+    if (!ltxt && !rtxt) {
+      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+      return;
+    }
+    if (!ltxt || !rtxt) {
+      resetResult('请两侧都填入 JSON 内容再进行对比');
+      return;
+    }
+
+    let lo, ro;
+    try {
+      lo = JSON.parse(ltxt);
+    } catch (e) {
+      showParseError('left', ltxt, e, !!interactive);
+      resetResult('左侧 JSON 解析失败，请检查语法');
+      return;
+    }
+    try {
+      ro = JSON.parse(rtxt);
+    } catch (e) {
+      showParseError('right', rtxt, e, !!interactive);
+      resetResult('右侧 JSON 解析失败，请检查语法');
+      return;
+    }
+
+    try {
+      const sortK = els.optSort.checked;
+      const sortA = els.optSortArr.checked;
+      if (sortK || sortA) {
+        lo = normalize(lo, sortK, sortA);
+        ro = normalize(ro, sortK, sortA);
+      }
+
+      const a = JSON.stringify(lo, null, 2).split('\n');
+      const b = JSON.stringify(ro, null, 2).split('\n');
+
+      const ops = diffLines(a, b);
+      const built = buildRows(ops, a, b, els.optCharDiff.checked);
+
+      lastRows = built.rows;
+      lastStat = built.stat;
+      lastMs = performance.now() - t0;
+      stale = false;
+      navIndex = -1;
+      expandedFolds.clear();
+
+      updateStatsHtml();
+      renderResult();
+
+      const first = els.diffBody.querySelector('.drow.diff');
+      if (first) {
+        els.diffScroll.scrollTop = Math.max(0, first.offsetTop - 40);
+      } else {
+        els.diffScroll.scrollTop = 0;
+      }
+    } catch (e) {
+      resetResult('对比过程出错：' + (e && e.message ? e.message : e));
+      showError('left', '对比过程出错：' + (e && e.message ? e.message : e));
+    }
+  }
+
+  /* =========================================================
+   *  侧栏操作
+   * ======================================================= */
+  function formatSide(side, minify) {
+    const ta = side === 'left' ? els.left : els.right;
+    const raw = ta.value.replace(/^\uFEFF/, '');
+    if (!raw.trim()) return;
+    try {
+      const obj = JSON.parse(raw);
+      ta.value = minify ? JSON.stringify(obj) : JSON.stringify(obj, null, 2);
+      clearSideError(side);
+      saveStateDebounced();
+      markStale();
+    } catch (e) {
+      showParseError(side, raw, e, true);
+    }
+  }
+
+  function clearSide(side) {
+    const ta = side === 'left' ? els.left : els.right;
+    ta.value = '';
+    clearSideError(side);
+    saveStateDebounced();
+    markStale();
+    if (!els.left.value.trim() && !els.right.value.trim()) {
+      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+    }
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast('已复制到剪贴板');
+      return true;
+    } catch (_) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch (_) { ok = false; }
+      ta.remove();
+      toast(ok ? '已复制到剪贴板' : '复制失败');
+      return ok;
+    }
+  }
+
+  function copySide(side) {
+    const ta = side === 'left' ? els.left : els.right;
+    if (!ta.value) { toast('内容为空'); return; }
+    copyText(ta.value);
+  }
+
+  function triggerUpload(side) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,.txt,application/json,text/plain';
+    input.onchange = () => {
+      if (input.files && input.files[0]) loadFile(input.files[0], side);
+    };
+    input.click();
+  }
+
+  function loadFile(file, side) {
+    if (file.size > MAX_FILE_SIZE) {
+      toast('文件过大（最大 20MB）');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const ta = side === 'left' ? els.left : els.right;
+      ta.value = String(reader.result || '');
+      clearSideError(side);
+      saveStateDebounced();
+      if (hasBoth()) doCompare(false);
+      else if (els.optAuto.checked) scheduleAutoCompare();
+      toast('已导入 ' + file.name);
+    };
+    reader.onerror = () => toast('文件读取失败');
+    reader.readAsText(file, 'utf-8');
+  }
+
+  /* =========================================================
+   *  持久化
+   * ======================================================= */
+  function collectState() {
+    return {
+      left: els.left.value,
+      right: els.right.value,
+      sortKeys: els.optSort.checked,
+      sortArrays: els.optSortArr.checked,
+      charDiff: els.optCharDiff.checked,
+      autoCompare: els.optAuto.checked,
+      sameMode: els.sameMode.value,
+      editorH: els.editors.style.height || '',
+    };
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify(collectState()));
+    } catch (_) { /* 容量不足时忽略 */ }
+  }
+
+  function saveStateDebounced() {
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(saveState, 400);
+  }
+
+  function loadState() {
+    let s = null;
+    try {
+      s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    } catch (_) { return false; }
+    if (!s || typeof s !== 'object') return false;
+
+    if (typeof s.left === 'string') els.left.value = s.left;
+    if (typeof s.right === 'string') els.right.value = s.right;
+    if (typeof s.sortKeys === 'boolean') els.optSort.checked = s.sortKeys;
+    if (typeof s.sortArrays === 'boolean') els.optSortArr.checked = s.sortArrays;
+    if (typeof s.charDiff === 'boolean') els.optCharDiff.checked = s.charDiff;
+    if (typeof s.autoCompare === 'boolean') els.optAuto.checked = s.autoCompare;
+    if (['fold', 'all', 'hide'].indexOf(s.sameMode) >= 0) els.sameMode.value = s.sameMode;
+    if (typeof s.editorH === 'string' && s.editorH) {
+      els.editors.style.height = s.editorH;
+    }
+    return true;
+  }
+
+  /* =========================================================
+   *  自动对比
+   * ======================================================= */
+  function scheduleAutoCompare() {
+    if (!els.optAuto.checked) return;
+    clearTimeout(autoTimer);
+    autoTimer = setTimeout(() => {
+      if (hasBoth()) doCompare(false);
+    }, 600);
+  }
+
+  /* =========================================================
+   *  事件绑定
+   * ======================================================= */
+  $('btnCompare').addEventListener('click', () => doCompare(true));
+
+  $('btnPrev').addEventListener('click', () => goDiff(-1));
+  $('btnNext').addEventListener('click', () => goDiff(1));
+
+  $('btnSample').addEventListener('click', () => {
+    els.left.value = JSON.stringify(SAMPLE_OLD, null, 2);
+    els.right.value = JSON.stringify(SAMPLE_NEW, null, 2);
+    clearErrors();
+    saveStateDebounced();
+    doCompare(true);
+  });
+
+  $('btnSwap').addEventListener('click', () => {
+    const t = els.left.value;
+    els.left.value = els.right.value;
+    els.right.value = t;
+    clearErrors();
+    saveStateDebounced();
+    if (hasBoth()) doCompare(true);
+    else markStale();
+  });
+
+  $('btnClearAll').addEventListener('click', () => {
+    els.left.value = '';
+    els.right.value = '';
+    clearErrors();
+    saveStateDebounced();
+    resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+  });
+
+  $('btnSummary').addEventListener('click', () => {
+    if (!lastStat) { toast('暂无对比结果'); return; }
+    const s = lastStat;
+    const total = s.add + s.del + s.mod;
+    const lines = ['JSON 对比结果'];
+    if (total === 0) {
+      lines.push('两侧完全一致');
+    } else {
+      lines.push('新增 ' + s.add + ' 行');
+      lines.push('删除 ' + s.del + ' 行');
+      lines.push('修改 ' + s.mod + ' 行');
+      lines.push('相同 ' + s.same + ' 行');
+    }
+    lines.push('用时 ' + lastMs.toFixed(0) + ' ms');
+    if (stale) lines.push('（注意：内容已修改，结果可能过期）');
+    copyText(lines.join('\n'));
+  });
+
+  // 面板头部按钮（事件委托）
+  document.querySelectorAll('.pane-head').forEach((head) => {
+    head.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-act]');
+      if (!btn) return;
+      const side = btn.dataset.side;
+      const act = btn.dataset.act;
+      if (act === 'format') formatSide(side, false);
+      else if (act === 'minify') formatSide(side, true);
+      else if (act === 'copy') copySide(side);
+      else if (act === 'clear') clearSide(side);
+      else if (act === 'upload') triggerUpload(side);
+    });
+  });
+
+  // 输入事件
+  [els.left, els.right].forEach((ta) => {
+    const side = ta === els.left ? 'left' : 'right';
+    ta.addEventListener('input', () => {
+      clearSideError(side);
+      saveStateDebounced();
+      markStale();
+      scheduleAutoCompare();
+    });
+    // Tab 插入缩进
+    ta.addEventListener('keydown', (e) => {
+      if (e.key !== 'Tab' || e.shiftKey) return;
+      e.preventDefault();
+      let ok = false;
+      try {
+        ok = document.execCommand('insertText', false, '  ');
+      } catch (_) { ok = false; }
+      if (!ok) {
+        const start = ta.selectionStart;
+        const end = ta.selectionEnd;
+        ta.setRangeText('  ', start, end, 'end');
+        ta.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    });
+    // 阻止文件拖入 textarea 时插入路径
+    ta.addEventListener('dragover', (e) => e.preventDefault());
+    ta.addEventListener('drop', (e) => e.preventDefault());
+  });
+
+  // 文件拖放
+  [['left', els.paneLeft], ['right', els.paneRight]].forEach(([side, pane]) => {
+    pane.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pane.classList.add('dragging');
+    });
+    pane.addEventListener('dragenter', (e) => {
+      e.preventDefault();
+      pane.classList.add('dragging');
+    });
+    pane.addEventListener('dragleave', (e) => {
+      if (!pane.contains(e.relatedTarget)) pane.classList.remove('dragging');
+    });
+    pane.addEventListener('drop', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      pane.classList.remove('dragging');
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) loadFile(f, side);
+    });
+  });
+
+  // 选项变化
+  els.optSort.addEventListener('change', () => {
+    saveStateDebounced();
+    if (hasBoth()) doCompare(false);
+  });
+  els.optSortArr.addEventListener('change', () => {
+    saveStateDebounced();
+    if (hasBoth()) doCompare(false);
+  });
+  els.optCharDiff.addEventListener('change', () => {
+    saveStateDebounced();
+    if (hasBoth()) doCompare(false);
+  });
+  els.optAuto.addEventListener('change', () => {
+    saveStateDebounced();
+    if (els.optAuto.checked) scheduleAutoCompare();
+  });
+  els.sameMode.addEventListener('change', () => {
+    saveStateDebounced();
+    if (lastRows.length) renderResult();
+  });
+
+  // 折叠条点击（事件委托）
+  els.diffBody.addEventListener('click', (e) => {
+    const bar = e.target.closest('.fold-bar');
+    if (!bar) return;
+    const id = bar.dataset.fold;
+    if (!id) return;
+    if (expandedFolds.has(id)) expandedFolds.delete(id);
+    else expandedFolds.add(id);
+    renderResult();
+  });
+
+  // 全局快捷键
+  document.addEventListener('keydown', (e) => {
+    const mod = e.ctrlKey || e.metaKey;
+    if (mod && e.key === 'Enter') {
+      e.preventDefault();
+      doCompare(true);
+    } else if (e.altKey && e.key === 'ArrowDown') {
+      e.preventDefault();
+      goDiff(1);
+    } else if (e.altKey && e.key === 'ArrowUp') {
+      e.preventDefault();
+      goDiff(-1);
+    }
+  });
+
+  /* =========================================================
+   *  编辑区高度拖拽
+   * ======================================================= */
+  (function initResizer() {
+    let dragging = false;
+    let startY = 0;
+    let startH = 0;
+
+    els.resizer.addEventListener('mousedown', (e) => {
+      dragging = true;
+      startY = e.clientY;
+      startH = els.editors.getBoundingClientRect().height;
+      document.body.style.cursor = 'row-resize';
+      document.body.style.userSelect = 'none';
+      e.preventDefault();
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!dragging) return;
+      const maxH = window.innerHeight - 260;
+      const h = Math.max(130, Math.min(startH + (e.clientY - startY), maxH));
+      els.editors.style.height = h + 'px';
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      saveStateDebounced();
+    });
+  })();
+
+  /* =========================================================
+   *  初始化
+   * ======================================================= */
+  (function init() {
+    const loaded = loadState();
+    if (!loaded || (!els.left.value.trim() && !els.right.value.trim())) {
+      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
+    } else if (hasBoth()) {
+      doCompare(false);
+    } else {
+      resetResult('请两侧都填入 JSON 内容再进行对比');
+    }
+    saveStateDebounced();
+  })();
+
+})();
+</script>
+</body>
+</html>
