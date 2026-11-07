@@ -236,6 +236,50 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
         }
+
+        /* ============================================
+           广告位统一容器样式
+           ============================================ */
+        .ad-slot {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 2rem auto;
+            overflow: hidden;
+            max-width: 100%;
+        }
+
+        .ad-slot--framed {
+            max-width: 970px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+
+        .ad-slot--inline {
+            margin: 2rem auto;
+        }
+
+        .ad-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin: 2.5rem auto;
+            max-width: 1100px;
+            padding: 0 1rem;
+        }
+
+        .ad-slot iframe {
+            max-width: 100%;
+            border: 0;
+        }
+
+        /* 广告脚本占位不参与布局塌陷 */
+        .ad-slot > div:empty {
+            min-height: 0;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-primary selection:text-white pb-20">
@@ -398,7 +442,7 @@
                     <div class="max-w-3xl w-full py-12 md:py-20">
                         <div class="hero-panel rounded-[28px] border border-white/10 backdrop-blur-[14px] shadow-[0_12px_40px_rgba(15,23,42,0.55)] px-6 py-8 md:px-10 md:py-10 max-w-2xl" style="background: rgba(191, 219, 254, 0.65);">
                         <div class="section-kicker mb-5 mx-auto" style="background: rgba(255, 255, 255, 0.8); color: #475569; border-color: rgba(0, 0, 0, 0.06);">
-                            7.1 全新发布
+                            7.2 全新发布
                         </div>
                         <h1 class="section-title font-semibold mb-6" style="color: #1f2937;">
                             更快更强大，<br>
@@ -408,11 +452,11 @@
                             </span>
                         </h1>
                         <p class="text-lg md:text-xl mb-10 max-w-xl leading-relaxed" style="color: #374151;">
-                            STAR Hira 7.1 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
+                            STAR Hira 7.2 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
                         </p>
                         <div class="flex flex-wrap gap-4">
                             <a href="#products" class="inline-flex items-center gap-2 px-8 py-4 text-white font-semibold text-lg rounded-lg hover:-translate-y-0.5 transition-all" style="background: linear-gradient(135deg, #8b5cf6, #06b6d4); box-shadow: 0 16px 36px rgba(139, 92, 246, 0.22), 0 0 20px rgba(139, 92, 246, 0.15);">
-                                立即下载 7.1 <i class="fas fa-download"></i>
+                                立即下载 7.2 <i class="fas fa-download"></i>
                             </a>
                             <a href="https://docs.higheri.tech/" class="inline-flex items-center gap-2 px-8 py-4 bg-white/80 hover:bg-white border border-slate-200 text-slate-950 font-semibold text-lg transition-all rounded-lg">
                                 查看更新日志
@@ -629,6 +673,24 @@
         </div>
     </div>
 
+    <!-- ======================================================
+         广告位 #1  Banner 728x90  (Banner 728x90_1)
+         ====================================================== -->
+    <div class="bg-white pt-6">
+        <div class="ad-slot ad-slot--framed">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : '2e1f559954f3b50dfb9e884b8a0cce46',
+                'format' : 'iframe',
+                'height' : 90,
+                'width' : 728,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://bauval.org/22/2e1f559954f3b50dfb9e884b8a0cce46"></script>
+        </div>
+    </div>
+
     <!-- Hero Ad Card - Prominent Style -->
     <div class="bg-gradient-to-b bg-white py-10">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -707,6 +769,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ======================================================
+         广告位 #2  Banner 468x60  (Banner 468x60_1)
+         ====================================================== -->
+    <div class="bg-gray-100 pb-10">
+        <div class="ad-slot ad-slot--inline">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : 'f4d7dcfaa708a992ae59d667cc7e6445',
+                'format' : 'iframe',
+                'height' : 60,
+                'width' : 468,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://bauval.org/22/f4d7dcfaa708a992ae59d667cc7e6445"></script>
         </div>
     </div>
 
@@ -840,6 +920,24 @@
         </div>
     </div>
 
+    <!-- ======================================================
+         广告位 #3  Banner 300x250  (Banner 300x250_1)
+         ====================================================== -->
+    <div class="bg-white pb-16">
+        <div class="ad-slot ad-slot--inline">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : 'c2ab5f1ad43c48c41873e2bb4b69d7ee',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://bauval.org/22/c2ab5f1ad43c48c41873e2bb4b69d7ee"></script>
+        </div>
+    </div>
+
     <!-- Bold Bento Grid Products -->
     <div id="products" class="py-28 bg-gray-100 relative overflow-hidden">
         <div class="absolute inset-0 bg-grid-pattern opacity-100"></div>
@@ -879,7 +977,7 @@
                                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400">Hira</span>
                             </span></h3>
                             <p class="text-slate-300 text-lg mb-8 max-w-xl leading-8">
-                                STAR Hira 7.1 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
+                                STAR Hira 7.2 全新重构侧边栏，集成垂直标签页、搜索框、历史记录、收藏夹、下载管理、插件扩展管理，让浏览效率全面升级。
                             </p>
                             <div class="flex flex-wrap gap-4 justify-center md:justify-start">
                                 <a href="VIEW/hira/index.html" class="px-8 py-3 bg-white text-slate-950 font-semibold rounded-lg transition-all shadow-lg shadow-slate-950/20 flex items-center gap-2 hover:-translate-y-0.5">
@@ -1008,6 +1106,41 @@
 
                 <!-- (Moved to top) -->
                 
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================
+         广告位 #4  Banner 160x300 + 160x600 并排
+         (Banner 160x300_1 / Banner 160x600_1)
+         ====================================================== -->
+    <div class="bg-gray-100 pb-16">
+        <div class="ad-row items-start">
+            <!-- 160x600 -->
+            <div class="ad-slot ad-slot--inline" style="margin:0;">
+                <script type="text/javascript">
+                  atOptions = {
+                    'key' : '31c5c8484ad890ab3516ba34c003eeba',
+                    'format' : 'iframe',
+                    'height' : 600,
+                    'width' : 160,
+                    'params' : {}
+                  };
+                </script>
+                <script type="text/javascript" src="https://bauval.org/22/31c5c8484ad890ab3516ba34c003eeba"></script>
+            </div>
+            <!-- 160x300 -->
+            <div class="ad-slot ad-slot--inline" style="margin:0;">
+                <script type="text/javascript">
+                  atOptions = {
+                    'key' : '95973b02ef235d7d25576f53278b021f',
+                    'format' : 'iframe',
+                    'height' : 300,
+                    'width' : 160,
+                    'params' : {}
+                  };
+                </script>
+                <script type="text/javascript" src="https://bauval.org/22/95973b02ef235d7d25576f53278b021f"></script>
             </div>
         </div>
     </div>
@@ -1194,6 +1327,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- ======================================================
+         广告位 #5  Banner 320x50  (Banner 320x50_1)
+         ====================================================== -->
+    <div class="bg-gray-100 pb-10">
+        <div class="ad-slot ad-slot--inline">
+            <script type="text/javascript">
+              atOptions = {
+                'key' : '9818f64ba921d4a9edddd1713cdf5a50',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+              };
+            </script>
+            <script type="text/javascript" src="https://bauval.org/22/9818f64ba921d4a9edddd1713cdf5a50"></script>
         </div>
     </div>
 
@@ -1400,6 +1551,8 @@
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Open-Source</a></li>
                         <li><a href="https://github.com/STAR-HigheriTech" class="hover:text-primary transition-colors">Community</a></li>
                         <li><a href="https://docs.higheri.tech/" class="hover:text-primary transition-colors">Blog</a></li>
+                        <!-- Smartlink 赞助链接 -->
+                        <li><a href="https://araplhn.org/4/1e560e49161fa9dd8f84175e9c64e56b" rel="nofollow sponsored noopener noreferrer" class="text-slate-400 hover:text-primary transition-colors">Sponsored</a></li>
                     </ul>
                 </div>
 
@@ -1594,5 +1747,20 @@
             });
         });
     </script>
+
+    <!-- ======================================================
+         Popunder 广告脚本（静默加载，不占布局）
+         Popunder_1 + Popunder
+         ====================================================== -->
+    <script data-cfasync="false" src="https://abscloud.org/1/95c0b8994e06fa340bfb17c0cd84ee52"></script>
+    <script data-cfasync="false" src="https://bauval.org/14/a80d5108e21e9de4f66aa34f60060622"></script>
+
+    <!-- ======================================================
+         Social Bar 广告（固定悬浮，自动挂载到容器）
+         SocialBar_1
+         ====================================================== -->
+    <div id="container-ffb62d24b50d78db0e8127fe49bc5deb"></div>
+    <script async="async" data-cfasync="false" src="https://bauval.org/21/ffb62d24b50d78db0e8127fe49bc5deb"></script>
+
 </body>
 </html>
