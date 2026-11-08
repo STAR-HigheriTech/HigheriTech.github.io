@@ -1,9 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JSON 对比工具</title>
+<!--
+  ============================================================================
+  JSON 对比工具 + Adsterra 广告位
+  ============================================================================
+  广告位说明（如需增加/删除，修改对应区块即可）：
+
+  [已启用]
+    · 顶部横幅 728x90   key: 2e1f559954f3b50dfb9e884b8a0cce46
+    · 底部横幅 320x50   key: 9818f64ba921d4a9edddd1713cdf5a50
+
+  [已注释，取消注释即启用]
+    · Popunder            （风险较高，会强制新窗口/标签）
+    · Social Bar          （悬浮条，可能遮挡内容）
+    · Native Banner       （异步加载）
+    · 468x60 / 300x250 / 160x300 / 160x600 等备用横幅
+
+  ⚠️  免责声明
+  以上第三方脚本在浏览器中拥有与本页面同等的执行权限，可能：
+    - 将访客强制跳转至其他站点（Popunder/Social Bar 常见）
+    - 收集浏览行为、设备信息
+    - 自动播放音频或弹出系统通知
+
+  请仅在「你信任该广告网络、且页面对你无敏感数据」的环境启用。
+  本工具本身不收集、不上传任何 JSON 内容（全部在本地完成）。
+  ============================================================================
+-->
 <style>
   :root {
     --bg: #f6f8fa;
@@ -101,13 +127,66 @@
   }
   .mini:hover { background: #eaeef2; color: var(--text); }
 
+  /* ---------- 广告位 ---------- */
+  .ad-slot {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #eef1f4;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    overflow: hidden;
+    min-height: 100px;
+  }
+  .ad-slot.ad-bottom {
+    border-bottom: 0;
+    border-top: 1px solid var(--border);
+    min-height: 60px;
+    padding: 4px 0;
+  }
+  .ad-tag {
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    font-size: 9px;
+    font-weight: 600;
+    color: #8c959f;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .ad-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .ad-wrap iframe {
+    max-width: 100%;
+    border: 0;
+    display: block;
+  }
+
+  /* 主应用外壳：占满剩余高度 */
+  .app-shell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
   /* ---------- 编辑区 ---------- */
   .editors {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     padding: 12px 16px 4px;
-    height: clamp(150px, 30vh, 340px);
+    height: clamp(150px, 28vh, 320px);
     flex-shrink: 0;
   }
   .pane {
@@ -335,7 +414,6 @@
     z-index: 2;
   }
 
-  /* 折叠条 */
   .fold-bar {
     display: flex;
     align-items: center;
@@ -397,11 +475,12 @@
   }
   ::-webkit-scrollbar-thumb:hover { background: #afb8c1; }
 
+  /* ---------- 响应式 ---------- */
   @media (max-width: 820px) {
     .editors {
       grid-template-columns: 1fr;
       grid-template-rows: 1fr 1fr;
-      height: 300px;
+      height: 280px;
       gap: 8px;
       padding: 8px 10px 2px;
     }
@@ -412,6 +491,7 @@
     .brand { font-size: 14px; }
     header { padding: 7px 10px; }
     .drow { grid-template-columns: 42px minmax(0, 1fr) 42px minmax(0, 1fr); }
+    .ad-slot.ad-top { display: none; }  /* 移动端隐藏顶部 728x90 */
   }
 </style>
 </head>
@@ -431,69 +511,182 @@
   <button id="btnClearAll">清空</button>
 </header>
 
-<div class="editors" id="editors">
-  <div class="pane" id="paneLeft">
-    <div class="pane-head">
-      <span class="dot dot-red"></span>
-      <span class="title">原始 JSON</span>
-      <div class="spacer"></div>
-      <button class="mini" data-act="upload" data-side="left" title="导入文件">导入</button>
-      <button class="mini" data-act="copy" data-side="left" title="复制内容">复制</button>
-      <button class="mini" data-act="format" data-side="left" title="格式化">格式化</button>
-      <button class="mini" data-act="minify" data-side="left" title="压缩">压缩</button>
-      <button class="mini" data-act="clear" data-side="left" title="清空">清空</button>
+<!-- ============================================================
+     广告位：顶部横幅 728x90
+     key: 2e1f559954f3b50dfb9e884b8a0cce46
+     如不需要，整块删除或加 class="ad-slot ad-top" 后 display:none
+     ============================================================ -->
+<div class="ad-slot ad-top" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '2e1f559954f3b50dfb9e884b8a0cce46',
+        'format' : 'iframe',
+        'height' : 90,
+        'width' : 728,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/2e1f559954f3b50dfb9e884b8a0cce46"></script>
+  </div>
+</div>
+
+<div class="app-shell">
+
+  <div class="editors" id="editors">
+    <div class="pane" id="paneLeft">
+      <div class="pane-head">
+        <span class="dot dot-red"></span>
+        <span class="title">原始 JSON</span>
+        <div class="spacer"></div>
+        <button class="mini" data-act="upload" data-side="left" title="导入文件">导入</button>
+        <button class="mini" data-act="copy" data-side="left" title="复制内容">复制</button>
+        <button class="mini" data-act="format" data-side="left" title="格式化">格式化</button>
+        <button class="mini" data-act="minify" data-side="left" title="压缩">压缩</button>
+        <button class="mini" data-act="clear" data-side="left" title="清空">清空</button>
+      </div>
+      <textarea id="left" spellcheck="false" autocapitalize="off" autocomplete="off"
+        placeholder='粘贴原始 JSON，例如：{"name":"Alice","age":30}'></textarea>
+      <div class="err" id="errLeft"></div>
     </div>
-    <textarea id="left" spellcheck="false" autocapitalize="off" autocomplete="off"
-      placeholder='粘贴原始 JSON，例如：{"name":"Alice","age":30}'></textarea>
-    <div class="err" id="errLeft"></div>
-  </div>
 
-  <div class="pane" id="paneRight">
-    <div class="pane-head">
-      <span class="dot dot-green"></span>
-      <span class="title">新的 JSON</span>
-      <div class="spacer"></div>
-      <button class="mini" data-act="upload" data-side="right" title="导入文件">导入</button>
-      <button class="mini" data-act="copy" data-side="right" title="复制内容">复制</button>
-      <button class="mini" data-act="format" data-side="right" title="格式化">格式化</button>
-      <button class="mini" data-act="minify" data-side="right" title="压缩">压缩</button>
-      <button class="mini" data-act="clear" data-side="right" title="清空">清空</button>
+    <div class="pane" id="paneRight">
+      <div class="pane-head">
+        <span class="dot dot-green"></span>
+        <span class="title">新的 JSON</span>
+        <div class="spacer"></div>
+        <button class="mini" data-act="upload" data-side="right" title="导入文件">导入</button>
+        <button class="mini" data-act="copy" data-side="right" title="复制内容">复制</button>
+        <button class="mini" data-act="format" data-side="right" title="格式化">格式化</button>
+        <button class="mini" data-act="minify" data-side="right" title="压缩">压缩</button>
+        <button class="mini" data-act="clear" data-side="right" title="清空">清空</button>
+      </div>
+      <textarea id="right" spellcheck="false" autocapitalize="off" autocomplete="off"
+        placeholder='粘贴新的 JSON，例如：{"name":"Alice","age":31}'></textarea>
+      <div class="err" id="errRight"></div>
     </div>
-    <textarea id="right" spellcheck="false" autocapitalize="off" autocomplete="off"
-      placeholder='粘贴新的 JSON，例如：{"name":"Alice","age":31}'></textarea>
-    <div class="err" id="errRight"></div>
+  </div>
+
+  <div class="h-resizer" id="resizer" title="拖动调整编辑区高度"></div>
+
+  <div class="toolbar">
+    <button id="btnCompare" class="primary">对比</button>
+    <div class="nav-group">
+      <button id="btnPrev" title="上一个差异 (Alt+↑)">↑</button>
+      <span class="nav-pos" id="navPos">—</span>
+      <button id="btnNext" title="下一个差异 (Alt+↓)">↓</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="optSort"> 键排序</label>
+    <label class="chk" title="数组元素按内容排序后对比，可能改变语义"><input type="checkbox" id="optSortArr"> 数组排序</label>
+    <label class="chk"><input type="checkbox" id="optCharDiff" checked> 字符级高亮</label>
+    <label class="chk"><input type="checkbox" id="optAuto"> 自动对比</label>
+    <label class="sel">相同行
+      <select id="sameMode">
+        <option value="fold" selected>折叠</option>
+        <option value="all">全部</option>
+        <option value="hide">隐藏</option>
+      </select>
+    </label>
+    <div class="spacer"></div>
+    <div class="stats" id="stats"></div>
+  </div>
+
+  <div class="result" id="resultPane">
+    <div class="diff-scroll" id="diffScroll">
+      <div id="diffBody"></div>
+    </div>
+  </div>
+
+</div><!-- /app-shell -->
+
+<!-- ============================================================
+     广告位：底部横幅 320x50
+     key: 9818f64ba921d4a9edddd1713cdf5a50
+     移动端友好尺寸，桌面端居中显示
+     ============================================================ -->
+<div class="ad-slot ad-bottom" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '9818f64ba921d4a9edddd1713cdf5a50',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/9818f64ba921d4a9edddd1713cdf5a50"></script>
   </div>
 </div>
 
-<div class="h-resizer" id="resizer" title="拖动调整编辑区高度"></div>
+<!-- ============================================================
+     【可选】Popunder / Social Bar
+     默认注释。取消注释即启用；会强制新窗口或悬浮条。
+     风险较高：可能劫持点击、生成弹窗。确认接受后再开启。
+     ============================================================
+<script data-cfasync="false" src="https://abscloud.org/1/95c0b8994e06fa340bfb17c0cd84ee52"></script>
+<script data-cfasync="false" src="https://bauval.org/14/a80d5108e21e9de4f66aa34f60060622"></script>
+<script async data-cfasync="false" src="https://bauval.org/21/ffb62d24b50d78db0e8127fe49bc5deb"></script>
+<div id="container-ffb62d24b50d78db0e8127fe49bc5deb"></div>
+-->
 
-<div class="toolbar">
-  <button id="btnCompare" class="primary">对比</button>
-  <div class="nav-group">
-    <button id="btnPrev" title="上一个差异 (Alt+↑)">↑</button>
-    <span class="nav-pos" id="navPos">—</span>
-    <button id="btnNext" title="下一个差异 (Alt+↓)">↓</button>
-  </div>
-  <label class="chk"><input type="checkbox" id="optSort"> 键排序</label>
-  <label class="chk" title="数组元素按内容排序后对比，可能改变语义"><input type="checkbox" id="optSortArr"> 数组排序</label>
-  <label class="chk"><input type="checkbox" id="optCharDiff" checked> 字符级高亮</label>
-  <label class="chk"><input type="checkbox" id="optAuto"> 自动对比</label>
-  <label class="sel">相同行
-    <select id="sameMode">
-      <option value="fold" selected>折叠</option>
-      <option value="all">全部</option>
-      <option value="hide">隐藏</option>
-    </select>
-  </label>
-  <div class="spacer"></div>
-  <div class="stats" id="stats"></div>
-</div>
-
-<div class="result" id="resultPane">
-  <div class="diff-scroll" id="diffScroll">
-    <div id="diffBody"></div>
+<!-- ============================================================
+     【可选】备用横幅（放在页面任意位置，自行移动）
+     ============================================================
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'f4d7dcfaa708a992ae59d667cc7e6445',
+        'format' : 'iframe', 'height' : 60, 'width' : 468, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/f4d7dcfaa708a992ae59d667cc7e6445"></script>
   </div>
 </div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : 'c2ab5f1ad43c48c41873e2bb4b69d7ee',
+        'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/c2ab5f1ad43c48c41873e2bb4b69d7ee"></script>
+  </div>
+</div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '95973b02ef235d7d25576f53278b021f',
+        'format' : 'iframe', 'height' : 300, 'width' : 160, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/95973b02ef235d7d25576f53278b021f"></script>
+  </div>
+</div>
+
+<div class="ad-slot" aria-label="广告位">
+  <span class="ad-tag">Ad</span>
+  <div class="ad-wrap">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '31c5c8484ad890ab3516ba34c003eeba',
+        'format' : 'iframe', 'height' : 600, 'width' : 160, 'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/31c5c8484ad890ab3516ba34c003eeba"></script>
+  </div>
+</div>
+-->
 
 <script>
 (function () {
@@ -503,10 +696,10 @@
    *  常量与工具
    * ======================================================= */
   const LS_KEY = 'json-diff-tool-v2';
-  const FOLD_THRESHOLD = 5;          // 连续相同行超过该值则折叠
-  const SIM_THRESHOLD = 0.3;         // 行内相似度低于该值则拆成删除+新增
-  const LINE_DP_LIMIT = 4e6;         // 行级 DP 上限
-  const TOKEN_DP_LIMIT = 100000;     // 字符级 DP 上限
+  const FOLD_THRESHOLD = 5;
+  const SIM_THRESHOLD = 0.3;
+  const LINE_DP_LIMIT = 4e6;
+  const TOKEN_DP_LIMIT = 100000;
   const MAX_FILE_SIZE = 20 * 1024 * 1024;
 
   const ESC_MAP = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
@@ -514,53 +707,40 @@
 
   const $ = (id) => document.getElementById(id);
   const els = {
-    left: $('left'),
-    right: $('right'),
-    paneLeft: $('paneLeft'),
-    paneRight: $('paneRight'),
-    errLeft: $('errLeft'),
-    errRight: $('errRight'),
-    editors: $('editors'),
-    resizer: $('resizer'),
-    diffBody: $('diffBody'),
-    diffScroll: $('diffScroll'),
-    stats: $('stats'),
-    navPos: $('navPos'),
-    optSort: $('optSort'),
-    optSortArr: $('optSortArr'),
-    optCharDiff: $('optCharDiff'),
-    optAuto: $('optAuto'),
+    left: $('left'), right: $('right'),
+    paneLeft: $('paneLeft'), paneRight: $('paneRight'),
+    errLeft: $('errLeft'), errRight: $('errRight'),
+    editors: $('editors'), resizer: $('resizer'),
+    diffBody: $('diffBody'), diffScroll: $('diffScroll'),
+    stats: $('stats'), navPos: $('navPos'),
+    optSort: $('optSort'), optSortArr: $('optSortArr'),
+    optCharDiff: $('optCharDiff'), optAuto: $('optAuto'),
     sameMode: $('sameMode'),
   };
 
   /* =========================================================
    *  状态
    * ======================================================= */
-  let lastRows = [];            // 原始行数据
-  let lastStat = null;          // 统计
-  let lastMs = 0;               // 耗时
-  let expandedFolds = new Set();
+  let lastRows = [];
+  let lastStat = null;
+  let lastMs = 0;
+  const expandedFolds = new Set();
   let navIndex = -1;
-  let stale = false;            // 内容已修改但未重新对比
+  let stale = false;
   let autoTimer = null;
   let saveTimer = null;
 
   const SAMPLE_OLD = {
-    name: "Alice",
-    age: 30,
-    email: "alice@example.com",
+    name: "Alice", age: 30, email: "alice@example.com",
     hobbies: ["reading", "hiking"],
     address: { city: "Beijing", zip: "100000" },
     active: true
   };
   const SAMPLE_NEW = {
-    name: "Alice",
-    age: 31,
-    email: "alice@example.com",
+    name: "Alice", age: 31, email: "alice@example.com",
     hobbies: ["reading", "hiking", "coding"],
     address: { city: "Shanghai", zip: "200000" },
-    active: false,
-    role: "admin"
+    active: false, role: "admin"
   };
 
   /* =========================================================
@@ -569,11 +749,7 @@
   let toastTimer = null;
   function toast(msg) {
     let el = $('toast');
-    if (!el) {
-      el = document.createElement('div');
-      el.id = 'toast';
-      document.body.appendChild(el);
-    }
+    if (!el) { el = document.createElement('div'); el.id = 'toast'; document.body.appendChild(el); }
     el.textContent = msg;
     el.classList.add('show');
     clearTimeout(toastTimer);
@@ -587,7 +763,6 @@
     err.classList.add('show');
     pane.classList.add('has-err');
   }
-
   function clearSideError(side) {
     const pane = side === 'left' ? els.paneLeft : els.paneRight;
     const err = side === 'left' ? els.errLeft : els.errRight;
@@ -595,11 +770,7 @@
     err.textContent = '';
     pane.classList.remove('has-err');
   }
-
-  function clearErrors() {
-    clearSideError('left');
-    clearSideError('right');
-  }
+  function clearErrors() { clearSideError('left'); clearSideError('right'); }
 
   function showParseError(side, text, err, interactive) {
     const ta = side === 'left' ? els.left : els.right;
@@ -612,31 +783,26 @@
       const line = before.split('\n').length;
       const col = pos - before.lastIndexOf('\n');
       prefix = '第 ' + line + ' 行第 ' + col + ' 列：';
-      try {
-        ta.focus();
-        ta.setSelectionRange(pos, Math.min(pos + 1, text.length));
-      } catch (_) { /* ignore */ }
+      try { ta.focus(); ta.setSelectionRange(pos, Math.min(pos + 1, text.length)); } catch (_) {}
     }
     showError(side, prefix + msg);
   }
 
   /* =========================================================
-   *  原型污染安全的数据归一化
+   *  安全归一化（防原型污染）
    * ======================================================= */
   function normalize(v, sortKeysFlag, sortArrays) {
     if (Array.isArray(v)) {
       const arr = v.map((x) => normalize(x, sortKeysFlag, sortArrays));
       if (sortArrays) {
         arr.sort((a, b) => {
-          const sa = JSON.stringify(a);
-          const sb = JSON.stringify(b);
+          const sa = JSON.stringify(a), sb = JSON.stringify(b);
           return sa < sb ? -1 : sa > sb ? 1 : 0;
         });
       }
       return arr;
     }
     if (v && typeof v === 'object') {
-      // 使用 null 原型，避免 __proto__ 等键造成原型污染
       const o = Object.create(null);
       let keys = Object.keys(v);
       if (sortKeysFlag) keys = keys.sort();
@@ -647,7 +813,7 @@
   }
 
   /* =========================================================
-   *  行级 Diff（LCS）
+   *  行级 Diff
    * ======================================================= */
   function diffLines(a, b) {
     const ops = [];
@@ -655,40 +821,30 @@
     const maxStart = Math.min(a.length, b.length);
     while (start < maxStart && a[start] === b[start]) start++;
 
-    let endA = a.length;
-    let endB = b.length;
-    while (endA > start && endB > start && a[endA - 1] === b[endB - 1]) {
-      endA--; endB--;
-    }
+    let endA = a.length, endB = b.length;
+    while (endA > start && endB > start && a[endA - 1] === b[endB - 1]) { endA--; endB--; }
 
     for (let i = 0; i < start; i++) ops.push({ type: 'same', a: i, b: i });
 
-    const n = endA - start;
-    const m = endB - start;
-
+    const n = endA - start, m = endB - start;
     if (n > 0 && m > 0 && n * m <= LINE_DP_LIMIT) {
       const dp = new Array(n + 1);
       for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
       for (let i = n - 1; i >= 0; i--) {
-        const row = dp[i];
-        const next = dp[i + 1];
+        const row = dp[i], next = dp[i + 1];
         const ai = a[start + i];
         for (let j = m - 1; j >= 0; j--) {
           row[j] = ai === b[start + j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
         }
       }
-      let i = 0;
-      let j = 0;
+      let i = 0, j = 0;
       while (i < n && j < m) {
         if (a[start + i] === b[start + j]) {
-          ops.push({ type: 'same', a: start + i, b: start + j });
-          i++; j++;
+          ops.push({ type: 'same', a: start + i, b: start + j }); i++; j++;
         } else if (dp[i + 1][j] >= dp[i][j + 1]) {
-          ops.push({ type: 'del', a: start + i });
-          i++;
+          ops.push({ type: 'del', a: start + i }); i++;
         } else {
-          ops.push({ type: 'ins', b: start + j });
-          j++;
+          ops.push({ type: 'ins', b: start + j }); j++;
         }
       }
       while (i < n) { ops.push({ type: 'del', a: start + i }); i++; }
@@ -699,9 +855,7 @@
     }
 
     const tail = a.length - endA;
-    for (let k = 0; k < tail; k++) {
-      ops.push({ type: 'same', a: endA + k, b: endB + k });
-    }
+    for (let k = 0; k < tail; k++) ops.push({ type: 'same', a: endA + k, b: endB + k });
     return ops;
   }
 
@@ -713,35 +867,25 @@
   }
 
   function inlineDiff(oldStr, newStr, enable) {
-    if (!enable) {
-      return { old: esc(oldStr), new: esc(newStr), sim: 1 };
-    }
-    const A = tokenize(oldStr);
-    const B = tokenize(newStr);
-    const n = A.length;
-    const m = B.length;
-
-    if (!n || !m) {
-      return { old: esc(oldStr), new: esc(newStr), sim: n === m ? 1 : 0 };
-    }
+    if (!enable) return { old: esc(oldStr), new: esc(newStr), sim: 1 };
+    const A = tokenize(oldStr), B = tokenize(newStr);
+    const n = A.length, m = B.length;
+    if (!n || !m) return { old: esc(oldStr), new: esc(newStr), sim: n === m ? 1 : 0 };
     if (n * m > TOKEN_DP_LIMIT) {
-      const sim = Math.min(n, m) / Math.max(n, m);
-      return { old: esc(oldStr), new: esc(newStr), sim };
+      return { old: esc(oldStr), new: esc(newStr), sim: Math.min(n, m) / Math.max(n, m) };
     }
 
     const dp = new Array(n + 1);
     for (let i = 0; i <= n; i++) dp[i] = new Uint32Array(m + 1);
     for (let i = n - 1; i >= 0; i--) {
-      const row = dp[i];
-      const next = dp[i + 1];
+      const row = dp[i], next = dp[i + 1];
       for (let j = m - 1; j >= 0; j--) {
         row[j] = A[i] === B[j] ? next[j + 1] + 1 : Math.max(next[j], row[j + 1]);
       }
     }
 
     const seq = [];
-    let i = 0;
-    let j = 0;
+    let i = 0, j = 0;
     while (i < n && j < m) {
       if (A[i] === B[j]) { seq.push({ t: 'same', i, j }); i++; j++; }
       else if (dp[i + 1][j] >= dp[i][j + 1]) { seq.push({ t: 'del', i }); i++; }
@@ -750,14 +894,11 @@
     while (i < n) { seq.push({ t: 'del', i }); i++; }
     while (j < m) { seq.push({ t: 'ins', j }); j++; }
 
-    const lcs = dp[0][0];
-    const sim = lcs / Math.max(n, m);
+    const sim = dp[0][0] / Math.max(n, m);
 
     function build(side) {
       const toks = side === 'a' ? A : B;
-      let out = '';
-      let buf = '';
-      let marked = false;
+      let out = '', buf = '', marked = false;
       const flush = () => {
         if (!buf) return;
         out += marked
@@ -775,7 +916,6 @@
       flush();
       return out;
     }
-
     return { old: build('a'), new: build('b'), sim };
   }
 
@@ -786,7 +926,6 @@
     const rows = [];
     const stat = { add: 0, del: 0, mod: 0, same: 0 };
     let i = 0;
-
     while (i < ops.length) {
       const op = ops[i];
       if (op.type === 'same') {
@@ -799,20 +938,15 @@
         i++;
         continue;
       }
-
-      const dels = [];
-      const inss = [];
+      const dels = [], inss = [];
       while (i < ops.length && ops[i].type !== 'same') {
         if (ops[i].type === 'del') dels.push(ops[i].a);
         else inss.push(ops[i].b);
         i++;
       }
-
       const cnt = Math.max(dels.length, inss.length);
       for (let k = 0; k < cnt; k++) {
-        const da = dels[k];
-        const ib = inss[k];
-
+        const da = dels[k], ib = inss[k];
         if (da !== undefined && ib !== undefined) {
           const d = inlineDiff(a[da], b[ib], charDiff);
           if (d.sim >= SIM_THRESHOLD) {
@@ -823,11 +957,9 @@
             });
             stat.mod++;
           } else {
-            // 相似度太低：拆成删除 + 新增，更直观
             rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
             rows.push({ type: 'ins', left: null, right: { no: ib + 1, html: esc(b[ib]) } });
-            stat.del++;
-            stat.add++;
+            stat.del++; stat.add++;
           }
         } else if (da !== undefined) {
           rows.push({ type: 'del', left: { no: da + 1, html: esc(a[da]) }, right: null });
@@ -842,19 +974,15 @@
   }
 
   /* =========================================================
-   *  统计区
+   *  统计
    * ======================================================= */
   function updateStatsHtml() {
-    if (!lastStat) {
-      els.stats.innerHTML = '';
-      return;
-    }
+    if (!lastStat) { els.stats.innerHTML = ''; return; }
     const s = lastStat;
     const total = s.add + s.del + s.mod;
     const parts = [];
-    if (total === 0) {
-      parts.push('<span class="stat s-ok">✓ 完全一致</span>');
-    } else {
+    if (total === 0) parts.push('<span class="stat s-ok">✓ 完全一致</span>');
+    else {
       parts.push('<span class="stat s-add">＋ ' + s.add + '</span>');
       parts.push('<span class="stat s-del">－ ' + s.del + '</span>');
       parts.push('<span class="stat s-mod">～ ' + s.mod + '</span>');
@@ -882,11 +1010,7 @@
     const out = [];
     let i = 0;
     while (i < rows.length) {
-      if (rows[i].type !== 'same') {
-        out.push({ kind: 'row', row: rows[i] });
-        i++;
-        continue;
-      }
+      if (rows[i].type !== 'same') { out.push({ kind: 'row', row: rows[i] }); i++; continue; }
       let j = i;
       while (j < rows.length && rows[j].type === 'same') j++;
       const len = j - i;
@@ -894,16 +1018,11 @@
         const id = 'fold-' + rows[i].left.no + '-' + len;
         const exp = expanded.has(id);
         out.push({
-          kind: 'fold',
-          id,
-          count: len,
-          startLine: rows[i].left.no,
-          endLine: rows[j - 1].left.no,
+          kind: 'fold', id, count: len,
+          startLine: rows[i].left.no, endLine: rows[j - 1].left.no,
           expanded: exp,
         });
-        if (exp) {
-          for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
-        }
+        if (exp) for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
       } else {
         for (let k = i; k < j; k++) out.push({ kind: 'row', row: rows[k] });
       }
@@ -921,10 +1040,7 @@
     const items = prepareRows(lastRows, mode, expandedFolds);
     const total = lastStat ? (lastStat.add + lastStat.del + lastStat.mod) : 0;
     const html = [];
-
-    if (total === 0) {
-      html.push('<div class="banner ok">✓ 两侧 JSON 完全一致</div>');
-    }
+    if (total === 0) html.push('<div class="banner ok">✓ 两侧 JSON 完全一致</div>');
 
     for (const item of items) {
       if (item.kind === 'fold') {
@@ -937,27 +1053,19 @@
         );
         continue;
       }
-
       const r = item.row;
       const isDiff = r.type !== 'same';
       html.push('<div class="drow' + (isDiff ? ' diff' : '') + '"' + (isDiff ? ' data-diff="1"' : '') + '>');
-
       if (r.left) {
         const cls = r.type === 'ins' ? 'same' : 'del';
         html.push('<div class="ln">' + r.left.no + '</div>');
         html.push('<div class="cell ' + cls + '">' + r.left.html + '</div>');
-      } else {
-        html.push('<div class="ln"></div><div class="cell empty"></div>');
-      }
-
+      } else html.push('<div class="ln"></div><div class="cell empty"></div>');
       if (r.right) {
         const cls = r.type === 'del' ? 'same' : 'ins';
         html.push('<div class="ln">' + r.right.no + '</div>');
         html.push('<div class="cell ' + cls + '">' + r.right.html + '</div>');
-      } else {
-        html.push('<div class="ln"></div><div class="cell empty"></div>');
-      }
-
+      } else html.push('<div class="ln"></div><div class="cell empty"></div>');
       html.push('</div>');
     }
 
@@ -966,11 +1074,7 @@
   }
 
   function resetResult(msg) {
-    lastRows = [];
-    lastStat = null;
-    lastMs = 0;
-    navIndex = -1;
-    stale = false;
+    lastRows = []; lastStat = null; lastMs = 0; navIndex = -1; stale = false;
     expandedFolds.clear();
     els.stats.innerHTML = '';
     els.diffBody.innerHTML =
@@ -982,19 +1086,13 @@
   /* =========================================================
    *  差异导航
    * ======================================================= */
-  function diffEls() {
-    return els.diffBody.querySelectorAll('.drow.diff');
-  }
+  function diffEls() { return els.diffBody.querySelectorAll('.drow.diff'); }
 
   function updateNav() {
     const list = diffEls();
     if (navIndex >= list.length) navIndex = list.length - 1;
     list.forEach((el, i) => el.classList.toggle('current', i === navIndex));
-    if (!list.length) {
-      els.navPos.textContent = '—';
-    } else {
-      els.navPos.textContent = (navIndex >= 0 ? (navIndex + 1) : '–') + ' / ' + list.length;
-    }
+    els.navPos.textContent = list.length ? ((navIndex >= 0 ? navIndex + 1 : '–') + ' / ' + list.length) : '—';
   }
 
   function goDiff(delta) {
@@ -1004,12 +1102,14 @@
     else navIndex = (navIndex + delta + list.length) % list.length;
     updateNav();
     const el = list[navIndex];
-    const top = el.offsetTop - els.diffScroll.clientHeight / 2 + el.offsetHeight / 2;
-    els.diffScroll.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    els.diffScroll.scrollTo({
+      top: Math.max(0, el.offsetTop - els.diffScroll.clientHeight / 2 + el.offsetHeight / 2),
+      behavior: 'smooth',
+    });
   }
 
   /* =========================================================
-   *  主对比流程
+   *  主对比
    * ======================================================= */
   function hasBoth() {
     return els.left.value.trim() !== '' && els.right.value.trim() !== '';
@@ -1022,61 +1122,37 @@
     const ltxt = els.left.value.replace(/^\uFEFF/, '').trim();
     const rtxt = els.right.value.replace(/^\uFEFF/, '').trim();
 
-    if (!ltxt && !rtxt) {
-      resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
-      return;
-    }
-    if (!ltxt || !rtxt) {
-      resetResult('请两侧都填入 JSON 内容再进行对比');
-      return;
-    }
+    if (!ltxt && !rtxt) { resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」'); return; }
+    if (!ltxt || !rtxt) { resetResult('请两侧都填入 JSON 内容再进行对比'); return; }
 
     let lo, ro;
-    try {
-      lo = JSON.parse(ltxt);
-    } catch (e) {
-      showParseError('left', ltxt, e, !!interactive);
-      resetResult('左侧 JSON 解析失败，请检查语法');
-      return;
-    }
-    try {
-      ro = JSON.parse(rtxt);
-    } catch (e) {
-      showParseError('right', rtxt, e, !!interactive);
-      resetResult('右侧 JSON 解析失败，请检查语法');
-      return;
-    }
+    try { lo = JSON.parse(ltxt); }
+    catch (e) { showParseError('left', ltxt, e, !!interactive); resetResult('左侧 JSON 解析失败，请检查语法'); return; }
+    try { ro = JSON.parse(rtxt); }
+    catch (e) { showParseError('right', rtxt, e, !!interactive); resetResult('右侧 JSON 解析失败，请检查语法'); return; }
 
     try {
-      const sortK = els.optSort.checked;
-      const sortA = els.optSortArr.checked;
+      const sortK = els.optSort.checked, sortA = els.optSortArr.checked;
       if (sortK || sortA) {
         lo = normalize(lo, sortK, sortA);
         ro = normalize(ro, sortK, sortA);
       }
-
       const a = JSON.stringify(lo, null, 2).split('\n');
       const b = JSON.stringify(ro, null, 2).split('\n');
-
       const ops = diffLines(a, b);
       const built = buildRows(ops, a, b, els.optCharDiff.checked);
 
       lastRows = built.rows;
       lastStat = built.stat;
       lastMs = performance.now() - t0;
-      stale = false;
-      navIndex = -1;
+      stale = false; navIndex = -1;
       expandedFolds.clear();
 
       updateStatsHtml();
       renderResult();
 
       const first = els.diffBody.querySelector('.drow.diff');
-      if (first) {
-        els.diffScroll.scrollTop = Math.max(0, first.offsetTop - 40);
-      } else {
-        els.diffScroll.scrollTop = 0;
-      }
+      els.diffScroll.scrollTop = first ? Math.max(0, first.offsetTop - 40) : 0;
     } catch (e) {
       resetResult('对比过程出错：' + (e && e.message ? e.message : e));
       showError('left', '对比过程出错：' + (e && e.message ? e.message : e));
@@ -1120,14 +1196,10 @@
     } catch (_) {
       const ta = document.createElement('textarea');
       ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
       let ok = false;
-      try {
-        ok = document.execCommand('copy');
-      } catch (_) { ok = false; }
+      try { ok = document.execCommand('copy'); } catch (_) { ok = false; }
       ta.remove();
       toast(ok ? '已复制到剪贴板' : '复制失败');
       return ok;
@@ -1144,17 +1216,12 @@
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json,.txt,application/json,text/plain';
-    input.onchange = () => {
-      if (input.files && input.files[0]) loadFile(input.files[0], side);
-    };
+    input.onchange = () => { if (input.files && input.files[0]) loadFile(input.files[0], side); };
     input.click();
   }
 
   function loadFile(file, side) {
-    if (file.size > MAX_FILE_SIZE) {
-      toast('文件过大（最大 20MB）');
-      return;
-    }
+    if (file.size > MAX_FILE_SIZE) { toast('文件过大（最大 20MB）'); return; }
     const reader = new FileReader();
     reader.onload = () => {
       const ta = side === 'left' ? els.left : els.right;
@@ -1186,23 +1253,16 @@
   }
 
   function saveState() {
-    try {
-      localStorage.setItem(LS_KEY, JSON.stringify(collectState()));
-    } catch (_) { /* 容量不足时忽略 */ }
+    try { localStorage.setItem(LS_KEY, JSON.stringify(collectState())); } catch (_) {}
   }
-
   function saveStateDebounced() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(saveState, 400);
   }
-
   function loadState() {
     let s = null;
-    try {
-      s = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
-    } catch (_) { return false; }
+    try { s = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (_) { return false; }
     if (!s || typeof s !== 'object') return false;
-
     if (typeof s.left === 'string') els.left.value = s.left;
     if (typeof s.right === 'string') els.right.value = s.right;
     if (typeof s.sortKeys === 'boolean') els.optSort.checked = s.sortKeys;
@@ -1210,9 +1270,7 @@
     if (typeof s.charDiff === 'boolean') els.optCharDiff.checked = s.charDiff;
     if (typeof s.autoCompare === 'boolean') els.optAuto.checked = s.autoCompare;
     if (['fold', 'all', 'hide'].indexOf(s.sameMode) >= 0) els.sameMode.value = s.sameMode;
-    if (typeof s.editorH === 'string' && s.editorH) {
-      els.editors.style.height = s.editorH;
-    }
+    if (typeof s.editorH === 'string' && s.editorH) els.editors.style.height = s.editorH;
     return true;
   }
 
@@ -1222,42 +1280,33 @@
   function scheduleAutoCompare() {
     if (!els.optAuto.checked) return;
     clearTimeout(autoTimer);
-    autoTimer = setTimeout(() => {
-      if (hasBoth()) doCompare(false);
-    }, 600);
+    autoTimer = setTimeout(() => { if (hasBoth()) doCompare(false); }, 600);
   }
 
   /* =========================================================
-   *  事件绑定
+   *  事件
    * ======================================================= */
   $('btnCompare').addEventListener('click', () => doCompare(true));
-
   $('btnPrev').addEventListener('click', () => goDiff(-1));
   $('btnNext').addEventListener('click', () => goDiff(1));
 
   $('btnSample').addEventListener('click', () => {
     els.left.value = JSON.stringify(SAMPLE_OLD, null, 2);
     els.right.value = JSON.stringify(SAMPLE_NEW, null, 2);
-    clearErrors();
-    saveStateDebounced();
-    doCompare(true);
+    clearErrors(); saveStateDebounced(); doCompare(true);
   });
 
   $('btnSwap').addEventListener('click', () => {
     const t = els.left.value;
     els.left.value = els.right.value;
     els.right.value = t;
-    clearErrors();
-    saveStateDebounced();
-    if (hasBoth()) doCompare(true);
-    else markStale();
+    clearErrors(); saveStateDebounced();
+    if (hasBoth()) doCompare(true); else markStale();
   });
 
   $('btnClearAll').addEventListener('click', () => {
-    els.left.value = '';
-    els.right.value = '';
-    clearErrors();
-    saveStateDebounced();
+    els.left.value = ''; els.right.value = '';
+    clearErrors(); saveStateDebounced();
     resetResult('在左右两侧分别粘贴 JSON，然后点击「对比」');
   });
 
@@ -1266,9 +1315,8 @@
     const s = lastStat;
     const total = s.add + s.del + s.mod;
     const lines = ['JSON 对比结果'];
-    if (total === 0) {
-      lines.push('两侧完全一致');
-    } else {
+    if (total === 0) lines.push('两侧完全一致');
+    else {
       lines.push('新增 ' + s.add + ' 行');
       lines.push('删除 ' + s.del + ' 行');
       lines.push('修改 ' + s.mod + ' 行');
@@ -1279,13 +1327,11 @@
     copyText(lines.join('\n'));
   });
 
-  // 面板头部按钮（事件委托）
   document.querySelectorAll('.pane-head').forEach((head) => {
     head.addEventListener('click', (e) => {
       const btn = e.target.closest('button[data-act]');
       if (!btn) return;
-      const side = btn.dataset.side;
-      const act = btn.dataset.act;
+      const side = btn.dataset.side, act = btn.dataset.act;
       if (act === 'format') formatSide(side, false);
       else if (act === 'minify') formatSide(side, true);
       else if (act === 'copy') copySide(side);
@@ -1294,7 +1340,6 @@
     });
   });
 
-  // 输入事件
   [els.left, els.right].forEach((ta) => {
     const side = ta === els.left ? 'left' : 'right';
     ta.addEventListener('input', () => {
@@ -1303,121 +1348,73 @@
       markStale();
       scheduleAutoCompare();
     });
-    // Tab 插入缩进
     ta.addEventListener('keydown', (e) => {
       if (e.key !== 'Tab' || e.shiftKey) return;
       e.preventDefault();
       let ok = false;
-      try {
-        ok = document.execCommand('insertText', false, '  ');
-      } catch (_) { ok = false; }
+      try { ok = document.execCommand('insertText', false, '  '); } catch (_) { ok = false; }
       if (!ok) {
-        const start = ta.selectionStart;
-        const end = ta.selectionEnd;
-        ta.setRangeText('  ', start, end, 'end');
+        const s = ta.selectionStart, en = ta.selectionEnd;
+        ta.setRangeText('  ', s, en, 'end');
         ta.dispatchEvent(new Event('input', { bubbles: true }));
       }
     });
-    // 阻止文件拖入 textarea 时插入路径
     ta.addEventListener('dragover', (e) => e.preventDefault());
     ta.addEventListener('drop', (e) => e.preventDefault());
   });
 
-  // 文件拖放
   [['left', els.paneLeft], ['right', els.paneRight]].forEach(([side, pane]) => {
-    pane.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      pane.classList.add('dragging');
-    });
-    pane.addEventListener('dragenter', (e) => {
-      e.preventDefault();
-      pane.classList.add('dragging');
-    });
-    pane.addEventListener('dragleave', (e) => {
-      if (!pane.contains(e.relatedTarget)) pane.classList.remove('dragging');
-    });
+    pane.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation(); pane.classList.add('dragging'); });
+    pane.addEventListener('dragenter', (e) => { e.preventDefault(); pane.classList.add('dragging'); });
+    pane.addEventListener('dragleave', (e) => { if (!pane.contains(e.relatedTarget)) pane.classList.remove('dragging'); });
     pane.addEventListener('drop', (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+      e.preventDefault(); e.stopPropagation();
       pane.classList.remove('dragging');
       const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
       if (f) loadFile(f, side);
     });
   });
 
-  // 选项变化
-  els.optSort.addEventListener('change', () => {
-    saveStateDebounced();
-    if (hasBoth()) doCompare(false);
-  });
-  els.optSortArr.addEventListener('change', () => {
-    saveStateDebounced();
-    if (hasBoth()) doCompare(false);
-  });
-  els.optCharDiff.addEventListener('change', () => {
-    saveStateDebounced();
-    if (hasBoth()) doCompare(false);
-  });
-  els.optAuto.addEventListener('change', () => {
-    saveStateDebounced();
-    if (els.optAuto.checked) scheduleAutoCompare();
-  });
-  els.sameMode.addEventListener('change', () => {
-    saveStateDebounced();
-    if (lastRows.length) renderResult();
-  });
+  els.optSort.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optSortArr.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optCharDiff.addEventListener('change', () => { saveStateDebounced(); if (hasBoth()) doCompare(false); });
+  els.optAuto.addEventListener('change', () => { saveStateDebounced(); if (els.optAuto.checked) scheduleAutoCompare(); });
+  els.sameMode.addEventListener('change', () => { saveStateDebounced(); if (lastRows.length) renderResult(); });
 
-  // 折叠条点击（事件委托）
   els.diffBody.addEventListener('click', (e) => {
     const bar = e.target.closest('.fold-bar');
     if (!bar) return;
     const id = bar.dataset.fold;
     if (!id) return;
-    if (expandedFolds.has(id)) expandedFolds.delete(id);
-    else expandedFolds.add(id);
+    if (expandedFolds.has(id)) expandedFolds.delete(id); else expandedFolds.add(id);
     renderResult();
   });
 
-  // 全局快捷键
   document.addEventListener('keydown', (e) => {
     const mod = e.ctrlKey || e.metaKey;
-    if (mod && e.key === 'Enter') {
-      e.preventDefault();
-      doCompare(true);
-    } else if (e.altKey && e.key === 'ArrowDown') {
-      e.preventDefault();
-      goDiff(1);
-    } else if (e.altKey && e.key === 'ArrowUp') {
-      e.preventDefault();
-      goDiff(-1);
-    }
+    if (mod && e.key === 'Enter') { e.preventDefault(); doCompare(true); }
+    else if (e.altKey && e.key === 'ArrowDown') { e.preventDefault(); goDiff(1); }
+    else if (e.altKey && e.key === 'ArrowUp') { e.preventDefault(); goDiff(-1); }
   });
 
   /* =========================================================
    *  编辑区高度拖拽
    * ======================================================= */
   (function initResizer() {
-    let dragging = false;
-    let startY = 0;
-    let startH = 0;
-
+    let dragging = false, startY = 0, startH = 0;
     els.resizer.addEventListener('mousedown', (e) => {
-      dragging = true;
-      startY = e.clientY;
+      dragging = true; startY = e.clientY;
       startH = els.editors.getBoundingClientRect().height;
       document.body.style.cursor = 'row-resize';
       document.body.style.userSelect = 'none';
       e.preventDefault();
     });
-
     window.addEventListener('mousemove', (e) => {
       if (!dragging) return;
       const maxH = window.innerHeight - 260;
       const h = Math.max(130, Math.min(startH + (e.clientY - startY), maxH));
       els.editors.style.height = h + 'px';
     });
-
     window.addEventListener('mouseup', () => {
       if (!dragging) return;
       dragging = false;
